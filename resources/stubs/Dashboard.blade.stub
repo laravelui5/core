@@ -1,0 +1,35 @@
+<mvc:View
+    controllerName="io.pragmatiqu.dashboard.controller.Dashboard"
+    displayBlock="true"
+    xmlns="sap.m"
+    xmlns:f="sap.f"
+    xmlns:cards="sap.f.cards"
+    xmlns:w="sap.ui.integration.widgets"
+    xmlns:mvc="sap.ui.core.mvc"
+>
+    <App id="app">
+        <Page
+            title="{i18n>appTitle}"
+            id="page">
+            <content>
+                <!--+
+                    | UI5 Dashboard Fragment Template
+                    |
+                    | Use the <x-ui5-element id="your-artifact-id" /> tag to inject a registered tile,
+                    | card, or other UI5 artifact into the dashboard at this position. The `id` attribute
+                    | must reference a valid artifact namespace (e.g. "io.pragmatiqu.offers.tiles.pending").
+                    |
+                    | The rendering will resolve dynamically at runtime based on the artifact’s
+                    | provider logic and current data context.
+                    |
+                    | Note:
+                    | The XML namespace declarations (xmlns) must match the SAP UI5 controls you use
+                    | within the fragment. A default set of commonly used namespaces (sap.m, sap.f,
+                    | sap.ui.core, sap.ui.integration.widgets) has already been included here.
+                    | You may remove or add entries depending on the actual controls required
+                    | in your specific use case.
+                    +-->
+            </content>
+        </Page>
+    </App>
+</mvc:View>

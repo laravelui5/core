@@ -1,0 +1,48 @@
+<?php
+
+namespace {{ namespace }};
+
+use LaravelUi5\Core\Ui5\Contracts\ProviderInterface;
+use LaravelUi5\Core\Ui5\Data\Payload;
+use LaravelUi5\Core\Ui5\Data\NumericContentData;
+use LaravelUi5\Core\Ui5\Enums\DeviationIndicator;
+use LaravelUi5\Core\Ui5\Enums\LoadState;
+use LaravelUi5\Core\Ui5\Enums\ValueColor;
+
+class Provider implements ProviderInterface
+{
+    public function calculate(): NumericContentData
+    {
+        return new NumericContentData(
+            value: 42,
+            valueColor: ValueColor::Good,
+            indicator: DeviationIndicator::Up,
+            scale: '€',
+            state: LoadState::Loaded
+        );
+    }
+
+    public function render(Payload $data): string
+    {
+        if (!$data instanceof NumericContentData) {
+            return '';
+        }
+
+        return <<<XML
+<GenericTile
+    header="Eine Überschrift"
+    frameType="TwoByOne"
+>
+    <TileContent unit="EUR">
+        <NumericContent
+            value="{$data->value}"
+            valueColor="{$data->valueColor->value}"
+            indicator="{$data->indicator->value}"
+            scale="{$data->scale}"
+            state="{$data->state->value}"
+        />
+    </TileContent>
+</GenericTile>
+XML;
+    }
+}

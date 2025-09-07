@@ -1,0 +1,75 @@
+{
+    "name": "laravelui5/core",
+    "description": "Foundation layer for integrating OpenUI5 into Laravel applications. Provides the runtime and developer tooling to build UI5 apps in a Laravel-native workflow.",
+    "keywords": [
+        "laravel",
+        "laravel-package",
+        "openui5",
+        "ui5",
+        "odata",
+        "fiori",
+        "microfrontend",
+        "enterprise",
+        "adminpanel",
+        "sdk",
+        "enterprise-apps"
+    ],
+    "type": "library",
+    "license": "Apache-2.0",
+    "homepage": "https://laravelui5.com",
+    "support": {
+        "issues": "https://github.com/laravelui5/core/issues",
+        "source": "https://github.com/laravelui5/core",
+        "docs": "https://laravelui5.com/guide/"
+    },
+    "authors": [
+        {
+            "name": "Michael Gerzabek",
+            "email": "michael.gerzabek@gmail.com",
+            "homepage": "https://pragmatiqu.io"
+        }
+    ],
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/pragmatiqu/lodata"
+        }
+    ],
+    "require": {
+        "ext-simplexml": "*",
+        "php": "^8.2",
+        "ext-dom": "*",
+        "ext-libxml": "*",
+        "doctrine/dbal": "^4.3",
+        "flat3/lodata": "dev-ServiceLocator",
+        "league/flysystem": "^3.0",
+        "maatwebsite/excel": "^3.1",
+        "spatie/laravel-pdf": "^1.6",
+        "symfony/http-foundation": "^7.0",
+        "symfony/yaml": "^7.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "LaravelUi5\\Core\\": "src/"
+        }
+    },
+    "require-dev": {
+        "orchestra/testbench": "^10.6",
+        "phpunit/phpunit": "12.3.7",
+        "pestphp/pest": "^4.0",
+        "pestphp/pest-plugin-laravel": "^4.0"
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "suggest": {
+        "flat3/lodata": "Provides OData v4 support. This package uses a fork (branch ServiceLocator) until upstream support for multiple endpoints is merged."
+    }
+}

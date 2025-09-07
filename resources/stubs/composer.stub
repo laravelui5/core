@@ -1,0 +1,11 @@
+{
+    "name": "{{ packagePrefix }}/{{ urlKey }}",
+    "description": "{{ description }}",
+    "autoload": {
+        "psr-4": {
+            {{ namespace }}: "src/"
+        }
+    },
+    "require": {
+    }
+}

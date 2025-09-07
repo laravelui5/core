@@ -1,0 +1,9 @@
+sap.ui.define([
+    "io/pragmatiqu/core/BaseController"
+], function (BaseController) {
+    "use strict";
+
+    return BaseController.extend("{{ ui5Namespace }}.controller.App", {
+
+    });
+});

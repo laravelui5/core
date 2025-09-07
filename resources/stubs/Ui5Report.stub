@@ -1,0 +1,83 @@
+<?php
+
+namespace {{ namespace }};
+
+use LaravelUi5\Core\Ui5\Contracts\Ui5ModuleInterface;
+use LaravelUi5\Core\Ui5\Contracts\Ui5ReportInterface;
+use LaravelUi5\Core\Ui5\Contracts\ReportDataProviderInterface;
+use LaravelUi5\Core\Enums\ArtifactType;
+
+class Report implements Ui5ReportInterface
+{
+
+    public function __construct(protected Ui5ModuleInterface $module)
+    {
+    }
+
+    public function getModule(): ?Ui5ModuleInterface
+    {
+        return $this->module;
+    }
+
+    public function getNamespace(): string
+    {
+        return 'io.pragmatiqu.{{ app }}.reports.{{ urlKey }}';
+    }
+
+    public function getType(): ArtifactType
+    {
+        return ArtifactType::Report;
+    }
+
+    public function getVersion(): string
+    {
+        return '1.0.0';
+    }
+
+    public function getTitle(): string
+    {
+        return '{{ title }}';
+    }
+
+    public function getDescription(): string
+    {
+        return '{{ description }}';
+    }
+
+    public function getSlug(): string
+    {
+        return '{{ urlKey }}';
+    }
+
+    public function getProvider(): ReportDataProviderInterface
+    {
+        return new Provider();
+    }
+
+    public function getViewPath(): string
+    {
+        return __DIR__ . '/../../../resources/ui5/reports/{{ urlKey }}/Report.view.xml';
+    }
+
+    public function getControllerPath(): string
+    {
+        return __DIR__ . '/../../../resources/ui5/reports/{{ urlKey }}/Report.controller.js';
+    }
+
+    public function getReportView(): string
+    {
+        return __DIR__ . '/../../../resources/ui5/reports/{{ urlKey }}/report.blade.php';
+    }
+
+    public function getSupportedFormats(): array
+    {
+        return {{ formats }};
+    }
+
+    public function getActions(): array
+    {
+        return [
+            {{ actionEntry }}
+        ];
+    }
+}

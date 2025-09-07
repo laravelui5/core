@@ -1,0 +1,18 @@
+<mvc:View
+    controllerName="{{ ui5Namespace }}.controller.App"
+    displayBlock="true"
+    xmlns="sap.m"
+    xmlns:mvc="sap.ui.core.mvc"
+>
+    <App id="app">
+        <Page title="{i18n>appTitle}">
+            <content>
+                <IllustratedMessage
+                    description="You've successfully setup your LaravelUi5 App"
+                    enableVerticalResponsiveness="true"
+                    illustrationType="sapIllus-Achievement"
+                />
+            </content>
+        </Page>
+    </App>
+</mvc:View>

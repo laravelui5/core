@@ -1,0 +1,57 @@
+{
+    "_version": "1.60.0",
+    "sap.app": {
+        "id": "io.pragmatiqu.report",
+        "type": 1,
+        "title": "Report",
+        "description": "Generic Ui5 Report Application",
+        "applicationVersion": {
+            "version": "1.0.0"
+        }
+    },
+    "sap.ui": {
+        "technology": "UI5",
+        "deviceTypes": {
+            "desktop": true,
+            "tablet": true,
+            "phone": true
+        }
+    },
+    "sap.ui5": {
+        "rootView": {
+            "viewName": "io.pragmatiqu.report.view.Report",
+            "type": "XML",
+            "async": true,
+            "id": "app"
+        },
+        "dependencies": {
+            "minUI5Version": "1.136.1",
+            "libs": {
+                "sap.ui.core": {},
+                "sap.m": {},
+                "sap.f": {},
+                "sap.ui.integration": {}
+            }
+        },
+        "handleValidation": true,
+        "contentDensities": {
+            "compact": true,
+            "cozy": true
+        },
+        "models": {
+            "i18n": {
+                "type": "sap.ui.model.resource.ResourceModel",
+                "settings": {
+                    "bundleName": "io.pragmatiqu.report.i18n.i18n",
+                    "supportedLocales": [
+                        "",
+                        "en"
+                    ],
+                    "fallbackLocale": ""
+                }
+            }
+        },
+        "laravel": {},
+        "actions": {}
+    }
+}

@@ -1,0 +1,14 @@
+# Ensure LF line endings everywhere
+* text=auto eol=lf
+
+# Exclude non-essential files from distribution archives (Composer installs)
+.github/ export-ignore
+.editorconfig export-ignore
+.gitattributes export-ignore
+/docs/ export-ignore
+/tests/ export-ignore
+/ROADMAP.md export-ignore
+/CHANGELOG.md export-ignore
+
+# Mark documentation folder as documentation for GitHub Linguist
+/docs/* linguist-documentation

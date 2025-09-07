@@ -1,0 +1,12 @@
+This product includes software developed by:
+
+- Pragmatiqu IT GmbH (https://laravelui5.com)
+- SAP SE (OpenUI5: https://github.com/SAP/openui5)
+- Taylor Otwell and Laravel contributors (Laravel Framework: https://laravel.com)
+- Flat3 Software (Lodata: https://github.com/flat3/lodata)
+- Symfony contributors (https://symfony.com)
+- Doctrine Project (https://www.doctrine-project.org/projects/dbal.html)
+- Spatie (Laravel PDF: https://spatie.be)
+- Maatwebsite (Laravel Excel: https://laravel-excel.com)
+
+This project is licensed under the Apache License, Version 2.0. See the LICENSE file for details.

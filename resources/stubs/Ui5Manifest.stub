@@ -1,0 +1,13 @@
+<?php
+
+namespace {{ phpNamespace }};
+
+use LaravelUi5\Core\Ui5\AbstractLaravelUi5Manifest;
+
+class {{ class }}Manifest extends AbstractLaravelUi5Manifest
+{
+    protected function enhanceFragment(string $module): array
+    {
+        return [];
+    }
+}

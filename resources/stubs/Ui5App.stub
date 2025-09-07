@@ -1,0 +1,93 @@
+<?php
+
+namespace {{ namespace }};
+
+use Flat3\Lodata\Endpoint;
+use LaravelUi5\Core\Ui5\Contracts\LaravelUi5ManifestInterface;
+use LaravelUi5\Core\Ui5\Contracts\Ui5ModuleInterface;
+use LaravelUi5\Core\Ui5\Contracts\Ui5AppInterface;
+use LaravelUi5\Core\Enums\ArtifactType;
+use LaravelUi5\Core\Traits\HasAssetsTrait;
+
+class {{ class }} extends Endpoint implements Ui5AppInterface
+{
+    use HasAssetsTrait;
+
+    public function __construct(protected Ui5ModuleInterface $module)
+    {
+    }
+
+    public function getModule(): ?Ui5ModuleInterface
+    {
+        return $this->module;
+    }
+
+    public function getSlug(): string
+    {
+        return $this->module->getSlug();
+    }
+
+    public function getType(): ArtifactType
+    {
+        return ArtifactType::Application;
+    }
+
+    public function getNamespace(): string
+    {
+        return '{{ ui5Namespace }}';
+    }
+
+    public function getVersion(): string
+    {
+        return '{{ appVersion }}';
+    }
+
+    public function getTitle(): string
+    {
+        return '{{ title }}';
+    }
+
+    public function getDescription(): string
+    {
+        return '{{ description }}';
+    }
+
+    public function getUi5BootstrapAttributes(): array
+    {
+        return {{ bootstrapAttributes }};
+    }
+
+    public function getResourceNamespaces(): array
+    {
+        return {{ resourceNamespaces }};
+    }
+
+    public function getAdditionalHeadScript(): ?string
+    {
+        return <<<JS
+{{ inlineScript }}
+JS;
+    }
+
+    public function getAdditionalInlineCss(): ?string
+    {
+        return <<<CSS
+{{ inlineCss }}
+CSS;
+    }
+
+    public function getManifestPath(): string
+    {
+        return __DIR__ . '/../resources/ui5/manifest.json';
+    }
+
+    public function getLaravelUiManifest(): LaravelUi5ManifestInterface
+    {
+        return app({{ name }}Manifest::class);
+    }
+
+    public function getVendor(): string
+    {
+        return '{{ vendor }}';
+    }
+}

@@ -1,0 +1,27 @@
+<mvc:View
+    controllerName="io.pragmatiqu.report.controller.Report"
+    displayBlock="true"
+    xmlns="sap.m"
+    xmlns:mvc="sap.ui.core.mvc"
+>
+    <App id="app">
+        <Page
+            title="{i18n>appTitle}"
+            id="page">
+            <content>
+                <!--+
+                    | UI5 Report Template
+                    |
+                    | This view serves as the base layout for rendering reports within a Laravel UI5
+                    | application.
+                    |
+                    | Developers can extend this layout to support export buttons, variant handling,
+                    | or custom filters if required.
+                    |
+                    | Namespace declarations (xmlns) include basic controls (`sap.m`, `sap.ui.core.mvc`) —
+                    | adjust as needed depending on your selection UI or embedded components.
+                    +-->
+            </content>
+        </Page>
+    </App>
+</mvc:View>

@@ -1,0 +1,62 @@
+<?php
+
+namespace {{ phpNamespace }};
+
+use LaravelUi5\Core\Enums\ArtifactType;
+use LaravelUi5\Core\Enums\HttpMethod;
+use LaravelUi5\Core\Ui5\Contracts\ActionHandlerInterface;
+use LaravelUi5\Core\Ui5\Contracts\Ui5ModuleInterface;
+use {{ useVariant }};
+
+class Action {{ variant }}
+{
+
+    public function __construct(protected Ui5ModuleInterface $module)
+    {
+    }
+
+    public function getModule(): ?Ui5ModuleInterface
+    {
+        return $this->module;
+    }
+
+    public function getNamespace(): string
+    {
+        return '{{ ui5Namespace }}';
+    }
+
+    public function getType(): ArtifactType
+    {
+        return ArtifactType::Action;
+    }
+
+    public function getVersion(): string
+    {
+        return '1.0.0';
+    }
+
+    public function getTitle(): string
+    {
+        return '{{ title }}';
+    }
+
+    public function getDescription(): string
+    {
+        return '{{ description }}';
+    }
+
+    public function getSlug(): string
+    {
+        return '{{ slug }}';
+    }
+
+    public function getMethod(): HttpMethod
+    {
+        return HttpMethod::{{ method }};
+    }
+
+    public function getHandler(): ActionHandlerInterface
+    {
+        return new Handler();
+    }
+}

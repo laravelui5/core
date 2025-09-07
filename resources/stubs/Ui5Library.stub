@@ -1,0 +1,57 @@
+<?php
+
+namespace {{ namespace }};
+
+use LaravelUi5\Core\Ui5\Contracts\Ui5ModuleInterface;
+use LaravelUi5\Core\Ui5\Contracts\Ui5LibraryInterface;
+use LaravelUi5\Core\Enums\ArtifactType;
+use LaravelUi5\Core\Traits\HasAssetsTrait;
+
+class {{ class }} implements Ui5LibraryInterface
+{
+    use HasAssetsTrait;
+
+    public function __construct(protected Ui5ModuleInterface $module)
+    {
+    }
+
+    public function getModule(): ?Ui5ModuleInterface
+    {
+        return $this->module;
+    }
+
+    public function getSlug(): string
+    {
+        return $this->module->getSlug();
+    }
+
+    public function getType(): ArtifactType
+    {
+        return ArtifactType::Library;
+    }
+
+    public function getNamespace(): string
+    {
+        return '{{ ui5Namespace }}';
+    }
+
+    public function getVersion(): string
+    {
+        return '{{ version }}';
+    }
+
+    public function getTitle(): string
+    {
+        return '{{ title }}';
+    }
+
+    public function getDescription(): string
+    {
+        return '{{ description }}';
+    }
+
+    public function getVendor(): string
+    {
+        return '{{ vendor }}';
+    }
+}

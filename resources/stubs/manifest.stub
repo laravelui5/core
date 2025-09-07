@@ -1,0 +1,54 @@
+{
+    "_version": "1.60.0",
+    "sap.app": {
+        "id": "{{ ui5Namespace }}",
+        "type": 1,
+        "title": "{{ title }}",
+        "description": "{{ description }}",
+        "applicationVersion": {
+            "version": "{{ version }}"
+        }
+    },
+    "sap.ui": {
+        "technology": "UI5",
+        "deviceTypes": {
+            "desktop": true,
+            "tablet": true,
+            "phone": true
+        }
+    },
+    "sap.ui5": {
+        "rootView": {
+            "viewName": "{{ ui5Namespace }}.view.App",
+            "type": "XML",
+            "async": true,
+            "id": "app"
+        },
+        "dependencies": {
+            "minUI5Version": "1.136.1",
+            "libs": {
+                "sap.ui.core": {},
+                "sap.m": {},
+                "io.pragmatiqu.core": {}
+            }
+        },
+        "handleValidation": true,
+        "contentDensities": {
+            "compact": true,
+            "cozy": true
+        },
+        "models": {
+            "i18n": {
+                "type": "sap.ui.model.resource.ResourceModel",
+                "settings": {
+                    "bundleName": "{{ ui5Namespace }}.i18n.i18n",
+                    "supportedLocales": [
+                        "",
+                        "en"
+                    ],
+                    "fallbackLocale": ""
+                }
+            }
+        }
+    }
+}

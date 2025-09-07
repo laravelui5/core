@@ -1,0 +1,69 @@
+<?php
+
+namespace {{ namespace }};
+
+use LaravelUi5\Core\Ui5\Contracts\Ui5ModuleInterface;
+use LaravelUi5\Core\Ui5\Contracts\Ui5TileInterface;
+use LaravelUi5\Core\Enums\ArtifactType;
+
+class Tile implements Ui5TileInterface
+{
+    public function __construct(protected Ui5ModuleInterface $module)
+    {
+    }
+
+    public function getModule(): ?Ui5ModuleInterface
+    {
+        return $this->module;
+    }
+
+    public function getType(): ArtifactType
+    {
+        return ArtifactType::Library;
+    }
+
+    public function getNamespace(): string
+    {
+        return '{{ ui5Namespace }}';
+    }
+
+    public function getVersion(): string
+    {
+        return '1.0.0';
+    }
+
+    public function getTitle(): string
+    {
+        return '{{ title }}';
+    }
+
+    public function getDescription(): string
+    {
+        return '{{ description }}';
+    }
+
+    public function getUrlKey(): string
+    {
+        return '{{ urlKey }}';
+    }
+
+    /**
+     * Resolves the tile into a UI5-compatible XML representation.
+     *
+     * This method explicitly separates data calculation from rendering,
+     * making the internal lifecycle transparent and extensible. It follows the
+     * recommended flow for dynamic UI5 components: first compute the domain-specific
+     * data via `calculate()`, then pass it into `render()` to generate the final output.
+     *
+     * Developers customizing tile behavior can independently extend either step:
+     * data sourcing (via calculate) or presentation logic (via render), without creating coupling.
+     *
+     * @return string Rendered XML representation of the tile, ready for injection into a UI5 dashboard.
+     */
+    public function resolve(): string
+    {
+        $provider = new Provider();
+        $data = $provider->calculate();
+        return $provider->render($data);
+    }
+}

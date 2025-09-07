@@ -1,0 +1,51 @@
+<?php
+
+namespace {{ namespace }};
+
+use LaravelUi5\Core\Ui5\Contracts\Ui5ModuleInterface;
+use LaravelUi5\Core\Ui5\Contracts\Ui5DashboardInterface;
+use LaravelUi5\Core\Enums\ArtifactType;
+
+class {{ class }} implements Ui5DashboardInterface
+{
+
+    public function getModule(): ?Ui5ModuleInterface
+    {
+        return null;
+    }
+
+    public function getType(): ArtifactType
+    {
+        return ArtifactType::Dashboard;
+    }
+
+    public function getNamespace(): string
+    {
+        return '{{ ui5Namespace }}';
+    }
+
+    public function getVersion(): string
+    {
+        return '1.0.0';
+    }
+
+    public function getTitle(): string
+    {
+        return '{{ title }}';
+    }
+
+    public function getDescription(): string
+    {
+        return '{{ description }}';
+    }
+
+    public function getSlug(): string
+    {
+        return '{{ url_key }}';
+    }
+
+    public function getDashboard(): string
+    {
+        return __DIR__ . '{{ path }}';
+    }
+}
