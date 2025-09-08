@@ -1,0 +1,1 @@
+import{_ as e,c as a,o as t}from"./chunks/framework.C4nOkCZI.js";const _=JSON.parse('{"title":"","description":"","frontmatter":{},"headers":[],"relativePath":"guide/frontend/facade.md","filePath":"guide/frontend/facade.md"}'),n={name:"guide/frontend/facade.md"};function r(d,o,c,s,f,i){return t(),a("div")}const m=e(n,[["render",r]]);export{_ as __pageData,m as default};
