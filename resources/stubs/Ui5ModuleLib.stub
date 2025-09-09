@@ -58,4 +58,9 @@ class {{ moduleClass }} extends Ui5Module
     {
         return [];
     }
+
+    public function getResources(): array
+    {
+        return [];
+    }
 }
