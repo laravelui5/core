@@ -115,6 +115,27 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Registered UI5 Reports
+    |--------------------------------------------------------------------------
+    |
+    | Reports are standalone UI5 artifacts representing business evaluations
+    | with an optional selection mask, a rendered result view, and follow-up
+    | actions such as exports or workflow triggers.
+    |
+    | Reports are not bound to a specific module and are resolved by global
+    | namespace. Each report must implement the Ui5ReportInterface and
+    | register a unique urlKey and JavaScript namespace for reverse lookup
+    | and permission control.
+    |
+    | Example:
+    | \Vendor\Package\Reports\Hours\Report::class
+    |
+    */
+    'reports' => [
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | Active System
     |--------------------------------------------------------------------------
     |
