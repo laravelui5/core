@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [1.0.0-RC3] - 2025-09-17
+- Removed optional dependencies
+- Refactored Ui5ReportInterface. Exports should be implemented as dedicated report actions
+
 ## [1.0.0-RC2] - 2025-09-09
 - Added missing function to the module templates
 

@@ -45,10 +45,10 @@ it('generates urlKey from card artifact', function () {
 });
 
 it('generates urlKey from report artifact', function () {
-    $report = collect(getModule()->getReports())->first();
+    $report = new Tests\Fixture\Hello\Reports\World\Report();
     $key = ArtifactType::urlKeyFromArtifact($report);
 
-    expect($key)->toBe('report/hello/world');
+    expect($key)->toBe('report/hello-world-report');
 });
 
 it('parses urlKey from app path', function () {
@@ -87,10 +87,10 @@ it('parses urlKey from card path', function () {
 });
 
 it('parses urlKey from report path', function () {
-    $path = 'report/hello/world';
+    $path = 'report/hello-world';
     $key = ArtifactType::urlKeyFromPath($path);
 
-    expect($key)->toBe('report/hello/world');
+    expect($key)->toBe('report/hello-world');
 });
 
 it('throws for invalid path with too few segments', function () {

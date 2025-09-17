@@ -77,13 +77,6 @@ interface Ui5ModuleInterface extends SluggableInterface
     public function getKpis(): array;
 
     /**
-     * Returns an array of all reports provided by this module.
-     *
-     * @return Ui5ReportInterface[]
-     */
-    public function getReports(): array;
-
-    /**
      * Returns an array of all tiles for launchpad or navigation purposes.
      *
      * @return Ui5TileInterface[]

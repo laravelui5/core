@@ -22,6 +22,8 @@ class Ui5Registry implements Ui5RegistryInterface
 
         $modules = $config['modules'] ?? [];
         foreach ($modules as $slug => $moduleClass) {
+
+            /** @var Ui5ModuleInterface $module */
             $module = new $moduleClass($slug);
 
             $this->modules[$slug] = $module;
@@ -38,9 +40,6 @@ class Ui5Registry implements Ui5RegistryInterface
             foreach ($module->getKpis() as $kpi) {
                 $this->registerArtifact($kpi, $slug);
             }
-            foreach ($module->getReports() as $report) {
-                $this->registerArtifact($report, $slug);
-            }
             foreach ($module->getTiles() as $tile) {
                 $this->registerArtifact($tile, $slug);
             }
@@ -56,6 +55,12 @@ class Ui5Registry implements Ui5RegistryInterface
         foreach ($dashboards as $dashboardClass) {
             $dashboard = new $dashboardClass;
             $this->registerArtifact($dashboard, null);
+        }
+
+        $reports = $config['reports'] ?? [];
+        foreach ($reports as $reportClass) {
+            $report = new $reportClass;
+            $this->registerArtifact($report, null);
         }
     }
 

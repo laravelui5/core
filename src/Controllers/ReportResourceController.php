@@ -20,8 +20,8 @@ class ReportResourceController
         }
 
         $path = match ($extension) {
-            'js' => $report->getControllerPath(),
-            'xml' => $report->getViewPath(),
+            'js' => $report->getSelectionControllerPath(),
+            'xml' => $report->getSelectionViewPath(),
             default => throw new NotFoundHttpException("Unsupported file extension [$extension]."),
         };
 

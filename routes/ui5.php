@@ -35,12 +35,12 @@ Route::get('app/report/{slug}/view/Report.view.{extension}', ReportResourceContr
 /**
  * REPORTACTION entrypoint (HTML|PDF|XSLX)
  */
-Route::get('report/{module}/{slug}/{action}', ReportActionDispatcher::class);
+Route::get('report/{slug}/{action}', ReportActionDispatcher::class);
 
 /**
  * REPORT entrypoint (HTML|PDF|XSLX)
  */
-Route::get('report/{module}/{slug}', ReportController::class);
+Route::get('report/{slug}', ReportController::class);
 
 /**
  * APPLICATION entrypoint (index.html)

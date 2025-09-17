@@ -21,17 +21,17 @@ interface Ui5ReportInterface extends Ui5ArtifactInterface, SluggableInterface
     /**
      * Returns the class that handles data retrieval and export logic.
      */
-    public function getProvider(): ReportDataProviderInterface;
+    public function getProvider(): DataProviderInterface;
 
     /**
      * Returns the path to the UI5 selection view Blade template.
      */
-    public function getViewPath(): string;
+    public function getSelectionViewPath(): string;
 
     /**
      * Returns the path to the UI5 report result view Blade template.
      */
-    public function getControllerPath(): string;
+    public function getSelectionControllerPath(): string;
 
     /**
      * Returns the path to the Laravel Blade view used to render the final report output.
@@ -40,15 +40,6 @@ interface Ui5ReportInterface extends Ui5ArtifactInterface, SluggableInterface
      * and can render tables, charts, summaries or any other layout.
      */
     public function getReportView(): string;
-
-    /**
-     * Returns the supported output formats for this report.
-     *
-     * Common formats: ['html', 'pdf', 'xlsx', 'csv', 'json']
-     *
-     * @return string[]
-     */
-    public function getSupportedFormats(): array;
 
     /**
      * Returns a list of available follow-up actions.

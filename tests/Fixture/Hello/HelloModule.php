@@ -46,13 +46,6 @@ class HelloModule extends Ui5Module
         return [];
     }
 
-    public function getReports(): array
-    {
-        return [
-            new Reports\World\Report($this)
-        ];
-    }
-
     public function getTiles(): array
     {
         return [];

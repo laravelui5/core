@@ -22,7 +22,6 @@ class ReportActionDispatcher
     public function __invoke(
         Ui5Context        $context,
         ExecutableHandler $handler,
-        string $module,
         string $slug,
         string $action
     ): JsonResponse

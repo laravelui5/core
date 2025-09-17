@@ -4,24 +4,24 @@ namespace Tests\Fixture\Hello\Reports\World;
 
 use LaravelUi5\Core\Ui5\Contracts\Ui5ModuleInterface;
 use LaravelUi5\Core\Ui5\Contracts\Ui5ReportInterface;
-use LaravelUi5\Core\Ui5\Contracts\ReportDataProviderInterface;
+use LaravelUi5\Core\Ui5\Contracts\DataProviderInterface;
 use LaravelUi5\Core\Enums\ArtifactType;
 
 class Report implements Ui5ReportInterface
 {
 
-    public function __construct(protected Ui5ModuleInterface $module)
+    public function __construct()
     {
     }
 
     public function getModule(): ?Ui5ModuleInterface
     {
-        return $this->module;
+        return null;
     }
 
     public function getNamespace(): string
     {
-        return 'io.pragmatiqu.hello.reports.world';
+        return 'io.pragmatiqu.reports.hello-world-report';
     }
 
     public function getType(): ArtifactType
@@ -46,20 +46,20 @@ class Report implements Ui5ReportInterface
 
     public function getSlug(): string
     {
-        return 'world';
+        return 'hello-world-report';
     }
 
-    public function getProvider(): ReportDataProviderInterface
+    public function getProvider(): DataProviderInterface
     {
         return new Provider();
     }
 
-    public function getViewPath(): string
+    public function getSelectionViewPath(): string
     {
         return __DIR__ . '/../../../resources/ui5/reports/world/Report.view.xml';
     }
 
-    public function getControllerPath(): string
+    public function getSelectionControllerPath(): string
     {
         return __DIR__ . '/../../../resources/ui5/reports/world/Report.controller.js';
     }
@@ -67,11 +67,6 @@ class Report implements Ui5ReportInterface
     public function getReportView(): string
     {
         return __DIR__ . '/../../../resources/ui5/reports/world/report.blade.php';
-    }
-
-    public function getSupportedFormats(): array
-    {
-        return ['html', 'pdf'];
     }
 
     public function getActions(): array

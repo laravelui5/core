@@ -186,10 +186,10 @@ enum ArtifactType: int
             self::Application => "app/{$artifact->getModule()->getSlug()}",
             self::Library => "lib/{$artifact->getModule()->getSlug()}",
             self::Card => "card/{$artifact->getModule()->getSlug()}/{$artifact->getSlug()}",
-            self::Report => "report/{$artifact->getModule()->getSlug()}/{$artifact->getSlug()}",
             self::Action => "api/{$artifact->getModule()->getSlug()}/{$artifact->getSlug()}",
             self::Resource => "resource/{$artifact->getModule()->getSlug()}/{$artifact->getSlug()}",
             self::Dashboard => "dashboard/{$artifact->getSlug()}",
+            self::Report => "report/{$artifact->getSlug()}",
             self::Module, self::Tile, self::Kpi => null,
         };
     }
@@ -229,11 +229,9 @@ enum ArtifactType: int
             'app' => "app/" . $parts[1],
             'lib' => "lib/" . $parts[1],
             'dashboard' => "dashboard/" . $parts[1],
+            'report' => "report/" . $parts[1],
             'card' => isset($parts[2])
                 ? "card/" . $parts[1] . "/" . $parts[2]
-                : null,
-            'report' => isset($parts[2])
-                ? "report/" . $parts[1] . "/" . $parts[2]
                 : null,
             'api' => isset($parts[2])
                 ? "api/" . $parts[1] . "/" . $parts[2]

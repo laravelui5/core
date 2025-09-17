@@ -20,6 +20,7 @@ class CreateUi5CacheCommand extends Command
         $config = config('ui5');
         $modules = $config['modules'] ?? [];
         $dashboards = $config['dashboards'] ?? [];
+        $reports = $config['reports'] ?? [];
 
         $moduleCache = [];
         $artifactCache = [];
@@ -40,7 +41,6 @@ class CreateUi5CacheCommand extends Command
                 $module->hasLibrary() ? $module->getLibrary() : null,
                 ...$module->getCards(),
                 ...$module->getKpis(),
-                ...$module->getReports(),
                 ...$module->getTiles(),
                 ...$module->getActions(),
                 ...$module->getResources(),
@@ -65,20 +65,8 @@ class CreateUi5CacheCommand extends Command
             }
         }
 
-        foreach ($dashboards as $dashboardClass) {
-            $dashboard = new $dashboardClass;
-            if (!$dashboard instanceof Ui5ArtifactInterface) {
-                continue;
-            }
-
-            $ns = $dashboard->getNamespace();
-            $artifactCache[$ns] = $dashboardClass;
-
-            if ($dashboard instanceof SluggableInterface) {
-                $urlKey = ArtifactType::urlKeyFromArtifact($dashboard, null);
-                $slugs[$urlKey] = $dashboardClass;
-            }
-        }
+        $this->mapClasses($dashboards, $slugs);
+        $this->mapClasses($reports, $slugs);
 
         // Final structure
         $data = [
@@ -93,6 +81,23 @@ class CreateUi5CacheCommand extends Command
         $this->components->info('UI5 cache file created: bootstrap/cache/ui5.php');
 
         return self::SUCCESS;
+    }
+
+    protected function mapClasses(array $classes, array &$slugs): void
+    {
+        foreach ($classes as $class) {
+            $instance = new $class;
+            if (!$instance instanceof Ui5ArtifactInterface) {
+                continue;
+            }
+
+            $ns = $instance->getNamespace();
+            $artifactCache[$ns] = $class;
+            if ($instance instanceof SluggableInterface) {
+                $urlKey = ArtifactType::urlKeyFromArtifact($instance, null);
+                $slugs[$urlKey] = $class;
+            }
+        }
     }
 
     protected function writeCacheFile(array $data): void

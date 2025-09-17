@@ -44,11 +44,6 @@ class CoreModule extends Ui5Module
         return [];
     }
 
-    public function getReports(): array
-    {
-        return [];
-    }
-
     public function getTiles(): array
     {
         return [];

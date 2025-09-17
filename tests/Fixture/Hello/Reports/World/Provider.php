@@ -2,35 +2,12 @@
 
 namespace Tests\Fixture\Hello\Reports\World;
 
-use Flat3\Lodata\EntityType;
 use LaravelUi5\Core\Ui5\AbstractDataProvider;
-use LaravelUi5\Core\Ui5\Contracts\ReportDataProviderInterface;
 
-class Provider extends AbstractDataProvider implements ReportDataProviderInterface
+class Provider extends AbstractDataProvider
 {
-
-    public function getEntityType(): ?EntityType
-    {
-        return null;
-    }
-
     public function execute(): array
     {
         return [];
-    }
-
-    public function getExportData(array $context): mixed
-    {
-        return null;
-    }
-
-    public function getReportName(): string
-    {
-        return 'Report.pdf';
-    }
-
-    public function getExportName(): ?string
-    {
-        return 'Report.xlsx';
     }
 }
