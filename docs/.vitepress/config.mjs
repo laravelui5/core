@@ -4,6 +4,7 @@ import {defineConfig} from 'vitepress'
 export default defineConfig({
     title: "LaravelUi5",
     description: "The Lean Enterprise Stack",
+    publicDir: "public",
     themeConfig: {
         logo: '/logo-icon.svg',
 
