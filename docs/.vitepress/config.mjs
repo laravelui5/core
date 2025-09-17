@@ -82,7 +82,7 @@ export default defineConfig({
         },
 
         socialLinks: [
-            {icon: 'github', link: 'https://github.com/pragmatiqu/laravel-ui5-core'}
+            {icon: 'github', link: 'https://github.com/laravelui5/core'}
         ]
     }
 })
