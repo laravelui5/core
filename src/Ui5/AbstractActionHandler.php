@@ -2,23 +2,22 @@
 
 namespace LaravelUi5\Core\Ui5;
 
-use LaravelUi5\Core\Contracts\Ui5Config;
+use LaravelUi5\Core\Contracts\Ui5Args;
 use LaravelUi5\Core\Ui5\Contracts\ActionHandlerInterface;
-use LaravelUi5\Core\Ui5\Contracts\ConfigurableInterface;
+use LaravelUi5\Core\Ui5\Contracts\ParameterizableInterface;
 
-abstract class AbstractActionHandler implements ActionHandlerInterface, ConfigurableInterface
+abstract class AbstractActionHandler implements ActionHandlerInterface, ParameterizableInterface
 {
+    protected Ui5Args $args;
 
-    protected Ui5Config $config;
+     public function withArgs(Ui5Args $args): static
+     {
+         $this->args = $args;
+         return $this;
+     }
 
-    public function withConfig(Ui5Config $config): static
-    {
-        $this->config = $config;
-        return $this;
-    }
-
-    public function config(): Ui5Config
-    {
-        return $this->config;
-    }
-}
+     public function args(): Ui5Args
+     {
+         return $this->args;
+     }
+ }
