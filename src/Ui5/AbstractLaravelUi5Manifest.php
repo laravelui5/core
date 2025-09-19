@@ -8,7 +8,7 @@ use LaravelUi5\Core\Exceptions\InvalidHttpMethodActionException;
 use LaravelUi5\Core\Exceptions\InvalidParameterSourceException;
 use LaravelUi5\Core\Ui5\Contracts\LaravelUi5ManifestInterface;
 use LaravelUi5\Core\Ui5\Contracts\LaravelUi5ManifestKeys;
-use LaravelUi5\Core\Ui5\Contracts\Ui5ActionInterface;
+use LaravelUi5\Core\Ui5\Contracts\ParameterizableInterface;
 use LaravelUi5\Core\Ui5\Contracts\Ui5RegistryInterface;
 use ReflectionClass;
 use RuntimeException;
@@ -87,7 +87,7 @@ abstract class AbstractLaravelUi5Manifest implements LaravelUi5ManifestInterface
                 throw new InvalidHttpMethodActionException($action->getNamespace(), $action->getMethod()->label());
             }
 
-            $uri = collect($this->getPathParameters($action))
+            $uri = collect($this->getPathParameters($action->getHandler()))
                 ->map(fn(string $parameter) => "/{{$parameter}}")
                 ->implode('');
 
@@ -100,9 +100,9 @@ abstract class AbstractLaravelUi5Manifest implements LaravelUi5ManifestInterface
         return $actions;
     }
 
-    protected function getPathParameters(Ui5ActionInterface $action): array
+    protected function getPathParameters(ParameterizableInterface $target): array
     {
-        $reflection = new ReflectionClass($action);
+        $reflection = new ReflectionClass($target);
         $attributes = $reflection->getAttributes(Parameter::class);
         $parameters = [];
         foreach ($attributes as $attr) {

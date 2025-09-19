@@ -19,7 +19,6 @@ use LaravelUi5\Core\Exceptions\InvalidParameterTypeException;
 use LaravelUi5\Core\Exceptions\InvalidParameterValueException;
 use LaravelUi5\Core\Exceptions\InvalidPathException;
 use LaravelUi5\Core\Exceptions\MissingRequiredParameterException;
-use LaravelUi5\Core\Exceptions\MissingUriKeyException;
 use LaravelUi5\Core\Exceptions\NoModelFoundForParameterException;
 use LaravelUi5\Core\Ui5\Contracts\ParameterizableInterface;
 use ReflectionClass;
@@ -40,6 +39,7 @@ readonly class ParameterResolver implements ParameterResolverInterface
         $attributes = $reflection->getAttributes(Parameter::class);
         $uriKeys = $this->getUriKeys();
         $out = [];
+        $index = 0;
 
         /** @var Parameter $attribute */
         foreach ($attributes as $a) {
@@ -50,10 +50,7 @@ readonly class ParameterResolver implements ParameterResolverInterface
             // 1. Get the raw value
             switch ($attribute->source) {
                 case ParameterSource::Path:
-                    if (null === $attribute->uriKey) {
-                        throw new MissingUriKeyException($name);
-                    }
-                    $raw = $uriKeys[$attribute->uriKeyPosition] ?? null;
+                    $raw = $uriKeys[$index] ?? null;
                     break;
                 case ParameterSource::Query:
                     $raw = $this->request->query($name);

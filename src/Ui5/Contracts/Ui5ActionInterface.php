@@ -16,7 +16,7 @@ use LaravelUi5\Core\Enums\HttpMethod;
  * Characteristics:
  * - Actions are always *mutating* operations (never pure reads).
  * - Therefore, they must only be exposed as *POST endpoints*.
- * - Route parameters (IDs, slugs) are declared on the Action and resolved
+ * - Route parameters (IDs, slugs) are declared on the ActionHandler and resolved
  *   via {@see ParameterizableInterface}. The dispatcher validates and
  *   injects these before calling the handler.
  * - Body parameters (form data, payloads) are validated *inside the
@@ -24,8 +24,6 @@ use LaravelUi5\Core\Enums\HttpMethod;
  *
  * Responsibilities:
  * - Define the action’s slug (via {@see SluggableInterface}).
- * - Optionally implement {@see ParameterizableInterface} to declare
- *   URI parameters.
  * - Provide the {@see ActionHandlerInterface} that executes the logic.
  *
  * Each Action must have a unique slug within its module. The slug is used

@@ -23,14 +23,12 @@ namespace LaravelUi5\Core\Ui5\Contracts;
  *   feature flags that influence runtime behavior.
  *
  * Notes:
- * - URI parameters are resolved at the Action level (via
- *   {@see Ui5ActionInterface} + {@see ParameterizableInterface}),
- *   not on the handler itself.
+ * - Input expectations are declared via {@see ParameterizableInterface},
  * - ActionHandlers must always return a structured result, even if
  *   no payload is strictly required (e.g., a simple status + message).
  * - Dependencies (repositories, services) should be injected via
  *   constructor dependency injection for testability and clarity.
  */
-interface ActionHandlerInterface extends ExecutableInterface
+interface ActionHandlerInterface extends ExecutableInterface, ParameterizableInterface
 {
 }
