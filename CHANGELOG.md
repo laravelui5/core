@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-## [1.0.0-RC5] - 2025-09-
+## [1.0.0-RC5] - 2025-09-20
 - Corrected ParameterResolver
 - Parameters have to be declared on the ActionHandler (not the Ui5Action)
 
