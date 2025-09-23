@@ -3,7 +3,7 @@
  */
 
 /**
- * Initialization Code and shared classes of library io.pragmatiqu.tools
+ * Initialization Code and shared classes of library com.laravelui5.core
  */
 sap.ui.define([
 	"sap/base/util/ObjectPath",
@@ -14,7 +14,7 @@ sap.ui.define([
 	// delegate further initialization of this library to the Core
 	// Hint: sap.ui.getCore() must still be used to support preload with sync bootstrap!
 	sap.ui.getCore().initLibrary({
-		name: "io.pragmatiqu.core",
+		name: "com.laravelui5.core",
 		version: "1.0.0",
 		dependencies: [
 			// keep in sync with the ui5.yaml and .library files
@@ -24,23 +24,23 @@ sap.ui.define([
 		interfaces: [],
 		controls: [],
 		elements: [
-			"io.pragmatiqu.core.LaravelUi5",
-			"io.pragmatiqu.core.Connection",
-			"io.pragmatiqu.core.ContextProvider",
-			"io.pragmatiqu.core.BaseController"
+			"com.laravelui5.core.LaravelUi5",
+			"com.laravelui5.core.Connection",
+			"com.laravelui5.core.ContextProvider",
+			"com.laravelui5.core.BaseController"
 		],
 		noLibraryCSS: true // if no CSS is provided, you can disable the library.css load here
 	});
 
 
 	/**
-	 * Some description about <code>io.pragmatiqu.core</code>
+	 * Some description about <code>com.laravelui5.core</code>
 	 *
 	 * @namespace
-	 * @alias io.pragmatiqu.core
+	 * @alias com.laravelui5.core
 	 * @author Michael Gerzabek
 	 * @version 1.0.0
 	 * @public
 	 */
-	return ObjectPath.get("io.pragmatiqu.core");
+	return ObjectPath.get("com.laravelui5.core");
 });

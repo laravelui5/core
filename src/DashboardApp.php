@@ -32,7 +32,7 @@ class DashboardApp implements Ui5AppInterface
 
     public function getNamespace(): string
     {
-        return 'io.pragmatiqu.dashboard';
+        return 'com.laravelui5.dashboard';
     }
 
     public function getVersion(): string
@@ -54,7 +54,7 @@ class DashboardApp implements Ui5AppInterface
     {
         return array(
             'theme' => 'sap_horizon',
-            'oninit' => 'module:io/pragmatiqu/dashboard/Component',
+            'oninit' => 'module:com/laravelui5/dashboard/Component',
             'async' => 'true',
             'compatversion' => 'edge',
             'frameoptions' => 'trusted',
@@ -73,7 +73,7 @@ class DashboardApp implements Ui5AppInterface
         return <<<JS
 sap.ui.getCore().attachInit(function () {
     sap.ui.core.Component.create({
-      name: "io.pragmatiqu.dashboard",
+      name: "com.laravelui5.dashboard",
       manifest: true,
       async: true
     }).then(function (oComponent) {

@@ -21,7 +21,7 @@ class Report implements Ui5ReportInterface
 
     public function getNamespace(): string
     {
-        return 'io.pragmatiqu.reports.hello-world-report';
+        return 'com.laravelui5.reports.hello-world-report';
     }
 
     public function getType(): ArtifactType

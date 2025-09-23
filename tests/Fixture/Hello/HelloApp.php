@@ -32,7 +32,7 @@ class HelloApp implements Ui5AppInterface
 
     public function getNamespace(): string
     {
-        return 'io.pragmatiqu.hello';
+        return 'com.laravelui5.hello';
     }
 
     public function getVersion(): string
@@ -59,7 +59,7 @@ class HelloApp implements Ui5AppInterface
     {
         return array (
           'theme' => 'sap_horizon',
-          'oninit' => 'module:io/pragmatiqu/hello/Component',
+          'oninit' => 'module:com/laravelui5/hello/Component',
           'async' => 'true',
           'compatversion' => 'edge',
           'frameoptions' => 'trusted',
@@ -71,7 +71,7 @@ class HelloApp implements Ui5AppInterface
     public function getResourceNamespaces(): array
     {
         return [
-            'io.pragmatiqu.core'
+            'com.laravelui5.core'
         ];
     }
 
@@ -80,7 +80,7 @@ class HelloApp implements Ui5AppInterface
         return <<<JS
 sap.ui.getCore().attachInit(function () {
     sap.ui.core.Component.create({
-      name: "io.pragmatiqu.hello",
+      name: "com.laravelui5.hello",
       manifest: true,
       async: true
     }).then(function (oComponent) {
@@ -105,7 +105,7 @@ JS;
         return <<<JSON
 {
     "rootView": {
-        "viewName": "io.pragmatiqu.hello.view.App",
+        "viewName": "com.laravelui5.hello.view.App",
         "type": "XML",
         "async": true,
         "id": "app"
@@ -115,7 +115,7 @@ JS;
         "libs": {
             "sap.ui.core": [],
             "sap.m": [],
-            "io.pragmatiqu.core": []
+            "com.laravelui5.core": []
         }
     },
     "handleValidation": true,
@@ -127,7 +127,7 @@ JS;
         "i18n": {
             "type": "sap.ui.model.resource.ResourceModel",
             "settings": {
-                "bundleName": "io.pragmatiqu.hello.i18n.i18n",
+                "bundleName": "com.laravelui5.hello.i18n.i18n",
                 "supportedLocales": [
                     "",
                     "de"

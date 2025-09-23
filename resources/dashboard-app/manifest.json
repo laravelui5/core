@@ -19,7 +19,7 @@
     },
     "sap.ui5": {
         "rootView": {
-            "viewName": "io.pragmatiqu.dashboard.view.Dashboard",
+            "viewName": "com.laravelui5.dashboard.view.Dashboard",
             "type": "XML",
             "async": true,
             "id": "app"
@@ -42,7 +42,7 @@
             "i18n": {
                 "type": "sap.ui.model.resource.ResourceModel",
                 "settings": {
-                    "bundleName": "io.pragmatiqu.dashboard.i18n.i18n",
+                    "bundleName": "com.laravelui5.dashboard.i18n.i18n",
                     "supportedLocales": [
                         "",
                         "en"

@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [1.0.0] - 2025-09-23
+- Move namespace of core lib from io.pragmatiqu to com.laravelui5
+
 ## [1.0.0-RC5] - 2025-09-20
 - Corrected ParameterResolver
 - Parameters have to be declared on the ActionHandler (not the Ui5Action)

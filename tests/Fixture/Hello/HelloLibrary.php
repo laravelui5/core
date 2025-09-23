@@ -32,7 +32,7 @@ class HelloLibrary implements Ui5LibraryInterface
 
     public function getNamespace(): string
     {
-        return 'io.pragmatiqu.hello';
+        return 'com.laravelui5.hello';
     }
 
     public function getVersion(): string

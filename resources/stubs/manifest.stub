@@ -29,7 +29,7 @@
             "libs": {
                 "sap.ui.core": {},
                 "sap.m": {},
-                "io.pragmatiqu.core": {}
+                "com.laravelui5.core": {}
             }
         },
         "handleValidation": true,

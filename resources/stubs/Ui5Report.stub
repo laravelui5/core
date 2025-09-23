@@ -21,7 +21,7 @@ class Report implements Ui5ReportInterface
 
     public function getNamespace(): string
     {
-        return 'io.pragmatiqu.reports.{{ urlKey }}';
+        return '{{ ui5Namespace }}';
     }
 
     public function getType(): ArtifactType

@@ -38,7 +38,7 @@ sap.ui.define([
             // to safely access modules inside a preloaded UI5 library.
             // ---
             const that = this;
-            sap.ui.require(["io/pragmatiqu/core/LaravelUi5"], function (LaravelUi5) {
+            sap.ui.require(["com/laravelui5/core/LaravelUi5"], function (LaravelUi5) {
                 LaravelUi5.init(that);
             });
 

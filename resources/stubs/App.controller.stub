@@ -1,5 +1,5 @@
 sap.ui.define([
-    "io/pragmatiqu/core/BaseController"
+    "com/laravelui5/core/BaseController"
 ], function (BaseController) {
     "use strict";
 

@@ -10,12 +10,12 @@ It provides a clean, centralized API for accessing backend actions, endpoints, a
 You activate the SDK once in your `Component.js`:
 
 ```js
-import LaravelUi5 from "io/pragmatiqu/core/LaravelUi5";
+import LaravelUi5 from "com/laravelui5/core/LaravelUi5";
 
 init() {
   UIComponent.prototype.init.apply(this, arguments);
     const that = this;
-    sap.ui.require(["io/pragmatiqu/core/LaravelUi5"], function (LaravelUi5) {
+    sap.ui.require(["com/laravelui5/core/LaravelUi5"], function (LaravelUi5) {
         LaravelUi5.init(that);
     });
 }

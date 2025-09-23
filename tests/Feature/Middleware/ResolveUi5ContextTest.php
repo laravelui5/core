@@ -18,7 +18,7 @@ it('does register Ui5Context in the container for ui5 routes', function () {
     $middleware->handle($request, function ($req) {
         expect(app()->bound(Ui5Context::class))->toBeTrue();
         $context = app(Ui5Context::class);
-        expect($context->artifact->getNamespace())->toBe('io.pragmatiqu.hello');
+        expect($context->artifact->getNamespace())->toBe('com.laravelui5.hello');
         return response('OK');
     });
 });

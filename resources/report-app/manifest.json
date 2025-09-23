@@ -1,7 +1,7 @@
 {
     "_version": "1.60.0",
     "sap.app": {
-        "id": "io.pragmatiqu.report",
+        "id": "com.laravelui5.report",
         "type": 1,
         "title": "Report",
         "description": "Generic Ui5 Report Application",
@@ -19,7 +19,7 @@
     },
     "sap.ui5": {
         "rootView": {
-            "viewName": "io.pragmatiqu.report.view.Report",
+            "viewName": "com.laravelui5.report.view.Report",
             "type": "XML",
             "async": true,
             "id": "app"
@@ -42,7 +42,7 @@
             "i18n": {
                 "type": "sap.ui.model.resource.ResourceModel",
                 "settings": {
-                    "bundleName": "io.pragmatiqu.report.i18n.i18n",
+                    "bundleName": "com.laravelui5.report.i18n.i18n",
                     "supportedLocales": [
                         "",
                         "en"

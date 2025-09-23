@@ -3,7 +3,7 @@ sap.ui.define([
 ], function (Controller) {
     "use strict";
 
-    return Controller.extend("io.pragmatiqu.dashboard.controller.Dashboard", {
+    return Controller.extend("com.laravelui5.dashboard.controller.Dashboard", {
         /**
          * Convenience method for accessing the component of the controller's view.
          * @returns {sap.ui.core.Component} The component of the controller's view

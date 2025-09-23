@@ -22,7 +22,7 @@ class Action extends AbstractUi5Action
 
     public function getNamespace(): string
     {
-        return 'io.pragmatiqu.hello.actions.world';
+        return 'com.laravelui5.hello.actions.world';
     }
 
     public function getType(): ArtifactType

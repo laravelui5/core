@@ -12,6 +12,7 @@ class GenerateUi5ReportCommand extends BaseGenerator
     protected $signature = 'ui5:report
                             {name : The report in the form App/Report}
                             {--php-ns-prefix=Pragmatiqu : The namespace prefix for the php package}
+                            {--js-ns-prefix=io.pragmatiqu : Root namespace prefix for JS artifacts}
                             {--actions=}
                             {--title=}
                             {--description=}
@@ -47,7 +48,9 @@ class GenerateUi5ReportCommand extends BaseGenerator
         $targetPath = base_path("ui5/{$app}/src/Reports/{$reportNamespace}");
         $resourcesPath = base_path("ui5/{$app}/resources/ui5/reports/{$urlKey}");
         $phpNamespacePrefix = rtrim($this->option('php-ns-prefix'), '\\');
-        $namespace = "{$phpNamespacePrefix}\\{$app}\\Reports\\$reportNamespace";
+        $jsPrefix = rtrim($this->option('js-ns-prefix'), '.');
+        $phpNamespace = "{$phpNamespacePrefix}\\{$app}\\Reports\\$reportNamespace";
+        $jsNamespace = "{$jsPrefix}.reports.{$urlKey}";
 
         if (File::exists("$targetPath/Report.php")) {
             $this->components->error("Ui5Report {$reportName} already exists.");
@@ -63,7 +66,8 @@ class GenerateUi5ReportCommand extends BaseGenerator
 
         // Create Ui5Report
         $this->files->put("$targetPath/Report.php", $this->compileStub('Ui5Report.stub', [
-            'namespace' => $namespace,
+            'namespace' => $phpNamespace,
+            'ui5Namespace' => $jsNamespace,
             'app' => Str::kebab($app),
             'urlKey' => $urlKey,
             'slug' => $slug,
@@ -75,7 +79,7 @@ class GenerateUi5ReportCommand extends BaseGenerator
 
         // Create ReportDataProvider
         $this->files->put("$targetPath/Provider.php", $this->compileStub('ReportProvider.stub', [
-            'namespace' => $namespace,
+            'namespace' => $phpNamespace,
             'name' => 'Report'
         ]));
 
@@ -85,7 +89,7 @@ class GenerateUi5ReportCommand extends BaseGenerator
                 $actionClass = "{$action}Action";
                 $this->files->put("$targetPath/$actionClass.php", $this->compileStub('ReportAction.stub', [
                     'name' => $actionClass,
-                    'namespace' => $namespace,
+                    'namespace' => $phpNamespace,
                     'action' => $action
                 ]));
             }

@@ -31,7 +31,7 @@ class Card implements Ui5CardInterface
 
     public function getNamespace(): string
     {
-        return 'io.pragmatiqu.hello.work-hours';
+        return 'com.laravelui5.hello.work-hours';
     }
 
     public function getVersion(): string

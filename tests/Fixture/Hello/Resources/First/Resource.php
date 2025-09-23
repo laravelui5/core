@@ -21,7 +21,7 @@ class Resource implements Ui5ResourceInterface
 
     public function getNamespace(): string
     {
-        return 'io.pragmatiqu.hello.resources.first';
+        return 'com.laravelui5.hello.resources.first';
     }
 
     public function getType(): ArtifactType

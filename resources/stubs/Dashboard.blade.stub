@@ -1,5 +1,5 @@
 <mvc:View
-    controllerName="io.pragmatiqu.dashboard.controller.Dashboard"
+    controllerName="com.laravelui5.dashboard.controller.Dashboard"
     displayBlock="true"
     xmlns="sap.m"
     xmlns:f="sap.f"

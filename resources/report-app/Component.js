@@ -9,7 +9,7 @@ sap.ui.define([
 ) {
     "use strict";
 
-    return UIComponent.extend("io.pragmatiqu.report.Component", {
+    return UIComponent.extend("com.laravelui5.report.Component", {
         metadata: {
             manifest: "json",
             interfaces: ["sap.ui.core.IAsyncContentCreation"]

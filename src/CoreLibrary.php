@@ -32,7 +32,7 @@ class CoreLibrary implements Ui5LibraryInterface
 
     public function getNamespace(): string
     {
-        return 'io.pragmatiqu.core';
+        return 'com.laravelui5.core';
     }
 
     public function getVersion(): string

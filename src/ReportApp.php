@@ -32,7 +32,7 @@ class ReportApp implements Ui5AppInterface
 
     public function getNamespace(): string
     {
-        return 'io.pragmatiqu.report';
+        return 'com.laravelui5.report';
     }
 
     public function getVersion(): string
@@ -54,7 +54,7 @@ class ReportApp implements Ui5AppInterface
     {
         return array (
   'theme' => 'sap_horizon',
-  'oninit' => 'module:io/pragmatiqu/report/Component',
+  'oninit' => 'module:com/laravelui5/report/Component',
   'async' => 'true',
   'compatversion' => 'edge',
   'frameoptions' => 'trusted',
@@ -74,7 +74,7 @@ class ReportApp implements Ui5AppInterface
         return <<<JS
 sap.ui.getCore().attachInit(function () {
     sap.ui.core.Component.create({
-      name: "io.pragmatiqu.report",
+      name: "com.laravelui5.report",
       manifest: true,
       async: true
     }).then(function (oComponent) {
