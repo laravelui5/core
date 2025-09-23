@@ -6,6 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [1.0.0] - 2025-09-23
 - Move namespace of core lib from io.pragmatiqu to com.laravelui5
+- added the video course
 
 ## [1.0.0-RC5] - 2025-09-20
 - Corrected ParameterResolver
