@@ -4,7 +4,11 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-## [1.0.0] - 2025-09-23
+## [1.0.0] - 2025-09-25
+- First public release
+- Set the correct videos
+
+## [1.0.0-RC6] - 2025-09-23
 - Move namespace of core lib from io.pragmatiqu to com.laravelui5
 - added the video course
 
