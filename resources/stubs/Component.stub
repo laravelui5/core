@@ -23,7 +23,7 @@ sap.ui.define([
             // Short answer: `library-preload.js` timing.
             //
             // When OpenUI5 loads your self-contained app, it tries to fetch all required modules early.
-            // But if your app depends on a custom library (like `io.pragmatiqu.core`),
+            // But if your app depends on a custom library (like `com.laravelui5.core`),
             // and that library is bundled in a `library-preload.js` file,
             // you need to wait until it's fully registered *before* using its exports.
             //

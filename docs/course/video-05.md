@@ -5,8 +5,51 @@ In this video, we’ll connect your UI to real data using OData. You’ll see wh
 
 <Youtube id="aEM8WkNnCDw" />
 
-**Referenced links**
+## References
 
-* [OASIS OData standard](https://www.oasis-open.org/committees/odata/)
-* [OpenUI5 Model docs](https://github.com/UI5/docs/blob/main/docs/04_Essentials/models-d2c8cf7.md)
-* [Lodata.io](https://lodata.io)
+* [OASIS OData standard](https://www.oasis-open.org/committees/odata/){target="_blank"}
+* [OpenUI5 Model docs](https://github.com/UI5/docs/blob/main/docs/04_Essentials/models-d2c8cf7.md){target="_blank"}
+* [Lodata.io](https://lodata.io){target="_blank"}
+
+## Quick Reference
+
+These are the commands and snippets from this video. For the why and the bigger picture, be sure to follow along in the video above.
+
+**1. Extending Endpoint**
+
+Open `ui5/Users/src/UsersApp.php` and make the class extend `Flat3\Lodata\Endpoint`.
+
+Then add the parent call to the constructor
+
+```php
+parent::__construct($module->getSlug());
+```
+
+and the `discover` method
+
+```php
+public function discover(Model $model): Model
+{
+    return $model->discover(User::class);
+}
+```
+
+## Code
+
+To get the exact code with all edits in this video applied, run
+
+```bash
+git checkout episode-04
+```
+
+**2. Test in Browser**
+
+In your browser open [http://127.0.0.1:8000/odata/users/$metadata](http://127.0.0.1:8000/odata/users/$metadata){target="_blank"}
+
+## Code
+
+To get the exact code with all edits in this video applied, run
+
+```bash
+git checkout episode-05
+```

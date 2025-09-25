@@ -92,11 +92,11 @@ export default defineConfig({
                         {
                             text: 'Getting Set Up',
                             items: [
-                                { text: 'Installation (5:48)', link: '/course/video-02' },
+                                { text: 'Installation (5:47)', link: '/course/video-02' },
                                 { text: 'Core Setup (7:24)', link: '/course/video-03' },
                                 { text: 'Scaffolding an App (12:34)', link: '/course/video-04' },
                                 { text: 'Enabling OData (8:52)', link: '/course/video-05' },
-                                { text: 'Configuration (7:52)', link: '/course/video-06' },
+                                { text: 'Configuration (7:49)', link: '/course/video-06' },
                             ]
                         },
                         {
