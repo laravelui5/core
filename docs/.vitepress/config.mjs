@@ -106,7 +106,7 @@ export default defineConfig({
                                 { text: 'Live Search (17:16)', link: '/course/video-08' },
                                 { text: 'The Detail Page (13:16)', link: '/course/video-09' },
                                 { text: 'SAP & the Rest of Us (6:53)', link: '/course/video-10' },
-                                { text: 'The Lock Function (24:44)', link: '/course/video-11' },
+                                { text: 'The Lock Function (24:55)', link: '/course/video-11' },
                             ]
                         },
                         {
