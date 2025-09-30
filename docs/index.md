@@ -28,7 +28,7 @@ features:
     title: Structured. Scalable. Laravel-native.
     details: Built-in conventions for feature modules, API structure, user flows — ready for SaaS, dashboards, and internal tools.
 ---
-
+<!--
 ## LaravelUi5 is built for real-world teams
 
 Whether you’re coding solo, leading a team, or running an agency — LaravelUi5 gives you a clear path to enterprise-ready UIs.
@@ -62,3 +62,4 @@ Give your team a scalable strategy.
 - Grow from prototype to SaaS without re-architecture.
 
 <img src="https://projectcloud.ch/assets/report.jpg" alt="Report" style="width: 400px; border-radius: 8px;" />
+-->
