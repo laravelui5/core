@@ -1,3 +1,9 @@
+<script setup>
+defineProps({
+    id: { type: String, required: true }
+})
+</script>
+
 <template>
     <div class="video-wrapper">
         <iframe
@@ -8,12 +14,6 @@
         ></iframe>
     </div>
 </template>
-
-<script setup>
-defineProps({
-    id: { type: String, required: true }
-})
-</script>
 
 <style scoped>
 .video-wrapper {

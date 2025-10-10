@@ -11,11 +11,8 @@ hero:
       text: Getting started
       link: /guide/
     - theme: alt
-      text: Video Course
-      link: /course/
-    - theme: alt
       text: Join the Journey
-      link: "https://pragmatiqu.io/openui5-into-the-wild/"
+      link: /journey/
 
 features:
   - icon: 🧱
