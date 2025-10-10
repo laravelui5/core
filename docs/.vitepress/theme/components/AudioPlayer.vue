@@ -22,7 +22,7 @@ function togglePlay() {
 </script>
 
 <template>
-    <div class="flex items-center gap-3 mb-6 text-[0.95rem] text-gray-800">
+    <div class="flex items-center gap-3 mb-6 text-[0.95rem] text">
         <audio ref="audio" :src="src" @ended="isPlaying = false" preload="metadata"></audio>
 
         <button
@@ -33,8 +33,17 @@ function togglePlay() {
             <span v-else>■</span>
         </button>
 
-        <p v-if="caption" class="italic text-gray-600 m-0">
+        <p v-if="caption" class="italic m-0">
             {{ caption }}
         </p>
     </div>
 </template>
+
+<style scoped>
+.text {
+    color: #1e2939
+}
+.dark .text {
+    color: #dfdfd6
+}
+</style>
