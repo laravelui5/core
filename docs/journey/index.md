@@ -4,6 +4,11 @@ title: The Cathedral of Laravel
 
 # The Cathedral of Laravel
 
+<AudioPlayer
+    src="https://cdn.jessas.org/The-Cathedral-of-Laravel.mp3"
+    caption="Read by Jessica & Brandon @ ElevenLabs.io"
+/>
+
 He cracks his knuckles.
 
 Late night.  

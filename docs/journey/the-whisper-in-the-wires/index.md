@@ -4,6 +4,11 @@ title: The Whisper in the Wires
 
 # The Whisper in the Wires
 
+<AudioPlayer
+src="https://cdn.jessas.org/The-Whisper-in-the-Wires.mp3"
+caption="Read by Jessica @ ElevenLabs.io"
+/>
+
 *“Maybe we should try something new here.”*
 
 The words don’t leave.  

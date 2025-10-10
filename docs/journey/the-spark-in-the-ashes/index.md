@@ -5,6 +5,11 @@ title: The Spark in the Ashes
 
 # The Spark in the Ashes
 
+<AudioPlayer
+src="https://cdn.jessas.org/The-Spark-in-the-Ashes.mp3"
+caption="Read by Jessica @ ElevenLabs.io"
+/>
+
 The room is quiet now.
 
 Laptop shut. Screen black.

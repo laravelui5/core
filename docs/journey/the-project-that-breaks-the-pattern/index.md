@@ -4,6 +4,11 @@ title: The Project That Breaks the Pattern
 
 # The Project That Breaks the Pattern
 
+<AudioPlayer
+src="https://cdn.jessas.org/The-Project-That-Breaks-the-Pattern.mp3"
+caption="Read by Jessica @ ElevenLabs.io"
+/>
+
 *“Maybe… we should try something new here.”*
 
 The words hang in the air.  
