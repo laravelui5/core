@@ -65,6 +65,11 @@ final class LaravelUi5ManifestKeys
     public const SETTINGS = 'settings';
 
     /**
+     * Defines navigation intents defined by semantic object graph.
+     */
+    public const INTENTS = 'intents';
+
+    /**
      * Returns all known manifest keys in the order they are typically rendered.
      *
      * This list can be used to validate manifest fragments or for documentation
@@ -82,6 +87,7 @@ final class LaravelUi5ManifestKeys
             self::ABILITIES,
             self::ROLES,
             self::SETTINGS,
+            self::INTENTS,
         ];
     }
 }

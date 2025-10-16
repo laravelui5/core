@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [1.0.2] - 2025-10-16
+- Always initialize baseUrl in Connection.js
+- Added Dialog to ArtifactType and a new interface for global dialogs, Ui5DialogInterface
+- Added Installation to SettingScope default for setting values provided by the dev
+
+### Added
+- SemanticObject attribute to identify main business object of a module 
+- SemanticLink attribute to annotate Eloquent relationships for links on semantic model objects
+- Ability attribute to tag classes with semantic authorization keys 
+- Role attribute to tag modules with semantic authorization bags
+
 ## [1.0.1] - 2025-10-13
 - Make mainService URI optional in ui5-core-lib
 

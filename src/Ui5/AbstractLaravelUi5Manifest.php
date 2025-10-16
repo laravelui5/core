@@ -34,6 +34,8 @@ abstract class AbstractLaravelUi5Manifest implements LaravelUi5ManifestInterface
      * This includes core sections (actions, reports, routes, meta) and
      * any application-specific extensions provided by `augmentFragment()`.
      *
+     * @param string $module the module slug
+     *
      * @return array<string, mixed>
      */
     public function getLaravelUi5Fragment(string $module): array
@@ -42,6 +44,7 @@ abstract class AbstractLaravelUi5Manifest implements LaravelUi5ManifestInterface
             LaravelUi5ManifestKeys::ACTIONS => $this->buildActions($module),
             LaravelUi5ManifestKeys::REPORTS => $this->buildReports($module),
             LaravelUi5ManifestKeys::ROUTES => $this->buildRoutes($module),
+            LaravelUi5ManifestKeys::INTENTS => $this->buildIntents($module),
             LaravelUi5ManifestKeys::META => $this->buildMeta($module),
         ];
 
@@ -140,6 +143,11 @@ abstract class AbstractLaravelUi5Manifest implements LaravelUi5ManifestInterface
         );
     }
 
+    protected function buildIntents(string $module): array
+    {
+        return $this->registry->resolveIntents($module);
+    }
+
     /**
      * Returns static metadata like version, client, branding flags etc.
      *
@@ -151,4 +159,5 @@ abstract class AbstractLaravelUi5Manifest implements LaravelUi5ManifestInterface
             'generator' => 'LaravelUi5 Core',
         ];
     }
+
 }

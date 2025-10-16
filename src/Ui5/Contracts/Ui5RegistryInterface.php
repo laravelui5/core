@@ -83,6 +83,14 @@ interface Ui5RegistryInterface
     public function resolve(string $namespace): ?string;
 
     /**
+     * Resolves a list of navigation intents in the semantic graph.
+     *
+     * @param string $slug
+     * @return array
+     */
+    public function resolveIntents(string $slug): array;
+
+    /**
      * Resolves an array of resource roots (namespace => URL) from an array of namespaces.
      */
     public function resolveRoots(array $namespaces): array;

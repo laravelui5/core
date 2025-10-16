@@ -13,6 +13,13 @@ namespace LaravelUi5\Core\Enums;
 enum SettingScope: int
 {
     /**
+     * The base or installation-wide default.
+     * Defined by the developer via attributes or config files.
+     * Cannot be changed at runtime.
+     */
+    case Installation = 0;
+
+    /**
      * The setting applies to the entire tenant (defaults).
      * Commonly provided by the vendor (e.g., Pragmatiqu IT).
      */
@@ -42,6 +49,7 @@ enum SettingScope: int
     public function label(): string
     {
         return match ($this) {
+            self::Installation => 'INSTALLATION',
             self::Tenant => 'TENANT',
             self::App => 'APP',
             self::Team => 'TEAM',
