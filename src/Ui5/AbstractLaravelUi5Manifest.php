@@ -44,8 +44,12 @@ abstract class AbstractLaravelUi5Manifest implements LaravelUi5ManifestInterface
             LaravelUi5ManifestKeys::ACTIONS => $this->buildActions($module),
             LaravelUi5ManifestKeys::REPORTS => $this->buildReports($module),
             LaravelUi5ManifestKeys::ROUTES => $this->buildRoutes($module),
-            LaravelUi5ManifestKeys::INTENTS => $this->buildIntents($module),
             LaravelUi5ManifestKeys::META => $this->buildMeta($module),
+            LaravelUi5ManifestKeys::RESOURCES => $this->buildResources($module),
+            LaravelUi5ManifestKeys::ABILITIES => $this->buildAbilities($module),
+            LaravelUi5ManifestKeys::ROLES => $this->buildRoles($module),
+            LaravelUi5ManifestKeys::SETTINGS => $this->buildSettings($module),
+            LaravelUi5ManifestKeys::INTENTS => $this->buildIntents($module),
         ];
 
         $fragment = array_merge($core, $this->enhanceFragment($module));
@@ -143,11 +147,6 @@ abstract class AbstractLaravelUi5Manifest implements LaravelUi5ManifestInterface
         );
     }
 
-    protected function buildIntents(string $module): array
-    {
-        return $this->registry->resolveIntents($module);
-    }
-
     /**
      * Returns static metadata like version, client, branding flags etc.
      *
@@ -160,4 +159,28 @@ abstract class AbstractLaravelUi5Manifest implements LaravelUi5ManifestInterface
         ];
     }
 
+    protected function buildResources(string $module): array
+    {
+        return [];
+    }
+
+    protected function buildAbilities(string $module): array
+    {
+        return [];
+    }
+
+    protected function buildRoles(string $module): array
+    {
+        return [];
+    }
+
+    protected function buildSettings(string $module): array
+    {
+        return [];
+    }
+
+    protected function buildIntents(string $module): array
+    {
+        return $this->registry->resolveIntents($module);
+    }
 }

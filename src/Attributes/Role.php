@@ -14,7 +14,7 @@ use Attribute;
  * Example:
  * ```php
  * #[Role('Accountant', 'Responsible for financial postings and reporting.')]
- * class AccountantRole {}
+ * class AccountingModule {}
  * ```
  *
  * Roles are typically referenced by `Ability` or `Group` assignments

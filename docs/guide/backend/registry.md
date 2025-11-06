@@ -49,63 +49,6 @@ On construction, all artifacts are instantiated and registered into lookup maps 
 
 This is ideal for development, but less performant in production.
 
-## Cached Registry (Production)
-
-In production environments, use the `CachedUi5Registry`, which reads from a precompiled file:
-
-```php
-bootstrap/cache/ui5.php
-```
-
-This file is created via:
-
-```bash
-php artisan ui5:cache
-```
-
-It stores artifact and module mappings. Lazy loading is supported. Classes are resolved using Laravel's container and instantiated on demand.
-
-To activate the cached registry, set in `config/ui5.php`:
-
-```php
-'registry' => \LaravelUi5\Core\Ui5\CachedUi5Registry::class,
-```
-
-## Syncing to the Database
-
-To store and query artifact metadata in the database (e.g., for dashboards, runtime configuration or permissions), LaravelUi5 provides a migration-based table `artifacts`.
-
-Once the migration is run via:
-
-```bash
-php artisan migrate
-```
-
-You can sync current artifacts using:
-
-```bash
-php artisan ui5:sync
-```
-
-This command will:
-
-* Read from the active registry implementation
-* Create or update `Artifact` Eloquent records for each namespace
-* Store type, version, title, description, and `url_key`
-
-To force updates even if a record exists:
-
-```bash
-php artisan ui5:sync --force
-```
-
-## Artisan Commands
-
-| Command     | Description                                 |
-|:------------|:--------------------------------------------|
-| `ui5:cache` | Generate a performance-optimized cache file |
-| `ui5:sync`  | Sync artifact metadata into the database    |
-
 ## API Overview
 
 The `Ui5RegistryInterface` defines a robust contract for artifact resolution:
@@ -137,3 +80,156 @@ public function resolveRoots(array $namespaces): array;
 * *Resolve module from URL*: `/ui5/app/users/overview` → `users`
 * *Render dynamic tag*: `<x-ui5-element id="io.pragmatiqu.users.cards.summary" />`
 * *Dispatch backend action*: Call `Ui5Registry::get('io.pragmatiqu.users.actions.toggle-lock')`
+
+---
+---
+
+## Understanding the Ui5Registry Layers
+
+The **Ui5Registry** is the central lookup and introspection service  
+in the LaravelUi5 Core. It represents the *semantic heart* of the entire system —  
+bridging PHP metadata, Laravel runtime, and UI5 manifest output.
+
+To keep things maintainable and predictable, the Registry operates across **three distinct layers** that are summarized in the following sections.
+
+### Lookup Layer
+
+> “What exists, and how can I find it?”
+
+This layer provides **fast, structural access** to all registered modules and artifacts.  
+It doesn’t use Reflection — it simply exposes already-known objects (from cache or boot discovery).
+
+#### Responsibilities
+- Fast lookup of modules and artifacts  
+- Routing-safe and rendering-safe resolution  
+- Base for all higher-level layers
+
+#### Typical Methods
+```php
+$module = $registry->getModule('users');
+$artifact = $registry->get('io.pragmatiqu.users.cards.summary');
+$allModules = $registry->modules();
+````
+
+| Method                | Purpose                    |
+|:----------------------|:---------------------------|
+| `get()`               | Find artifact by namespace |
+| `getModule()`         | Find module by slug        |
+| `has()`               | Check if artifact exists   |
+| `fromSlug()`          | Reverse-lookup by slug     |
+| `slugFor()`           | Get full route slug        |
+| `all()` / `modules()` | List everything            |
+
+### Introspection Layer
+
+> “Which metadata is defined through PHP Attributes?”
+
+This layer performs **deep reflection** over all LaravelUi5 modules,
+collecting metadata such as roles, abilities, semantic objects, and settings.
+It’s the **source of truth** for the SDK, manifest generation, and permission systems.
+
+#### Responsibilities
+
+* Parse PHP attributes (e.g. `#[Role]`, `#[Ability]`, `#[SemanticObject]`)
+* Structure semantic metadata for all modules
+* Provide a unified view of backend capabilities
+
+#### Typical Methods
+
+```php
+$roles = $registry->roles();
+$abilities = $registry->abilities();
+$settings = $registry->settings();
+$objects = $registry->objects();
+```
+
+| Method        | Returns                               | Source              |
+|:--------------|:--------------------------------------|:--------------------|
+| `roles()`     | Declared roles across all modules     | `#[Role]`           |
+| `abilities()` | Declared abilities                    | `#[Ability]`        |
+| `settings()`  | Configurable or tenant-level settings | `#[Setting]`        |
+| `objects()`   | Semantic business objects and routes  | `#[SemanticObject]` |
+
+Example structure for `objects()`:
+
+```php
+[
+  "User" => [
+    "name" => "User",
+    "module" => "users",
+    "routes" => [
+      "display" => ["label" => "Show", "icon" => "sap-icon://display"],
+      "edit" => ["label" => "Edit", "icon" => "sap-icon://edit"]
+    ]
+  ]
+]
+```
+
+### Runtime Layer
+
+> “How do these elements work together at runtime?”
+
+This layer derives **contextual information** during runtime —
+for example, navigation intents, resource roots, or semantic relations between objects.
+
+It depends on the Lookup and Introspection data but provides runtime-ready results
+for routers, manifest generators, and UI5 frontends.
+
+#### Responsibilities
+
+* Derive semantic intents from object graph
+* Generate `resourceroots` and manifest paths
+* Connect backend and frontend semantics
+
+#### Typical Methods
+
+```php
+$roots = $registry->resolveRoots(['io.pragmatiqu.users']);
+$intents = $registry->resolveIntents('users');
+```
+
+| Method                      | Description                                       |
+|:----------------------------|:--------------------------------------------------|
+| `resolveIntents($module)`   | Returns UI5 navigation intents for a given module |
+| `resolveRoots($namespaces)` | Builds resource root map for manifest.json        |
+| `artifactToModuleSlug()`    | Maps an artifact class to its module              |
+| `namespaceToModuleSlug()`   | Maps a namespace to its owning module             |
+
+### Conceptual Overview
+
+```
+                ┌──────────────────────────────────────────┐
+                │              Runtime Layer               │
+                │  resolveIntents() • resolveRoots()       │
+                │  namespaceToModuleSlug() • artifactTo…   │
+                └──────────────────────────────────────────┘
+                                ▲
+                                │ uses data from
+                                │
+                ┌──────────────────────────────────────────┐
+                │       Reflection / Introspection Layer    │
+                │  roles() • abilities() • settings() •     │
+                │  objects() (SemanticObject)               │
+                └──────────────────────────────────────────┘
+                                ▲
+                                │ builds on
+                                │
+                ┌──────────────────────────────────────────┐
+                │           POPO / Lookup Layer             │
+                │  get() • getModule() • fromSlug() • all() │
+                │  (cached or live registry view)           │
+                └──────────────────────────────────────────┘
+```
+
+### Summary
+
+| Layer                          | Responsibility                     | Typical Consumer                 |
+|:-------------------------------|:-----------------------------------|:---------------------------------|
+| **Lookup (POPO)**              | Structural access, no reflection   | Core runtime, routing            |
+| **Introspection (Reflection)** | Semantic metadata via attributes   | SDK, Manifest generator          |
+| **Runtime (Resolution)**       | Derived navigation & resource data | Frontend, routers, UI5 manifests |
+
+**In short:**
+
+> The `Ui5Registry` is not just a lookup service — it’s a *semantic runtime system*
+> bridging your Laravel backend and OpenUI5 frontend through a unified data model.

@@ -56,10 +56,6 @@ return [
     | used (suitable for development). In production, you should consider
     | switching to the cached registry for better performance.
     |
-    | Available values:
-    | - \LaravelUi5\Core\Ui5Registry           (default, non-cached)
-    | - \LaravelUi5\Core\CachedUi5Registry     (uses compiled cache)
-    |
     | To (re)generate the artifact cache, run:
     |   php artisan ui5:cache
     |

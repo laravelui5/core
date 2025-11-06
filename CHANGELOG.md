@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [1.0.3] - 2025-11-
+- Moved CachedUi5Registry to the Sdk
+- Enhanced Ui5Registry interface
+- Included Settings reflection in Ui5Registry
+- Enhanced metadata reflection for manifest.json
+
 ## [1.0.2] - 2025-10-16
 - Always initialize baseUrl in Connection.js
 - Added Dialog to ArtifactType and a new interface for global dialogs, Ui5DialogInterface

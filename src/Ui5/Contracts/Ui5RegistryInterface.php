@@ -3,36 +3,33 @@
 namespace LaravelUi5\Core\Ui5\Contracts;
 
 /**
- * The Ui5Registry is a read-only lookup service for all registered UI5 modules
- * and artifacts within the LaravelUi5 ecosystem.
+ * The `Ui5Registry` is the central coordination and introspection service
+ * of the LaravelUi5 ecosystem. It provides a unified API to discover, inspect,
+ * and resolve all UI5-related artifacts, modules, and semantic metadata
+ * within a Laravel application.
  *
- * Its primary role is to provide fast, consistent and conflict-free resolution
- * of module and artifact classes at runtime.
+ * It provides
+ *  - Configuration based declaration of modules and artifacts
+ *  - Metadata introspection on roles, abilities, settings and objects
+ *  - Fast runtime resolution of modules and artifacts
  *
- * Responsibilities:
- * - Provide routing-safe access to modules by slug (e.g., "users")
- * - Provide rendering-safe access to artifacts by namespace (e.g., "io.pragmatiqu.users.cards.summary")
- *
- * System rules enforced:
+ * System rules enforced
  * - Every module must have a unique slug
  * - Every artifact must have a globally unique namespace
  * - Artifacts are only accessible via their registered modules or directly via namespace
  *
- * Example use cases:
+ * Example use cases
  * - Resolve the module for an incoming route like `/ui5/app/users/...`
  * - Inject a card component via `<x-ui5-element id="io.pragmatiqu.users.cards.summary" />`
  * - Generate manifest.json for a UI5 app
  * - Dispatch an API action based on a module slug and action name
- *
- * TODO Add those for more intend driven design:
- * public function getOrFail(string $namespace): Ui5ArtifactInterface;
- *
- * public function fromSlugOrFail(string $slug): Ui5ArtifactInterface;
- *
- * public function getModuleOrFail(string $slug): Ui5ModuleInterface;
  */
 interface Ui5RegistryInterface
 {
+    // -------------------------------------------------------------------------
+    //  Lookup Layer
+    // -------------------------------------------------------------------------
+
     /**
      * Returns the module with the given slug, or null if not found.
      */
@@ -67,6 +64,57 @@ interface Ui5RegistryInterface
      */
     public function all(): array;
 
+    // -------------------------------------------------------------------------
+    //  Introspection Layer
+    // -------------------------------------------------------------------------
+
+    /**
+     * Returns all roles declared across all modules via #[Role] attributes.
+     *
+     * @return array<string, array>
+     */
+    public function roles(): array;
+
+    /**
+     * Returns all abilities declared across all modules via #[Ability] attributes.
+     *
+     * @return array<string, array>
+     */
+    public function abilities(): array;
+
+    /**
+     * Returns all settings declared across all artifacts via #[Setting] attributes.
+     *
+     * @return array<string, array>
+     */
+    public function settings(): array;
+
+    /**
+     * Returns all semantic objects declared via #[SemanticObject] attributes.
+     *
+     * Each object entry describes a business entity and its
+     * available routes or actions as defined in PHP attributes.
+     *
+     * Example structure:
+     * [
+     *   "User" => [
+     *     "name" => "User",
+     *     "module" => "users",
+     *     "routes" => [
+     *       "display" => ["label" => "Show", "icon" => "sap-icon://display"],
+     *       "edit"    => ["label" => "Edit", "icon" => "sap-icon://edit"]
+     *     ]
+     *   ]
+     * ]
+     *
+     * @return array<string, array>
+     */
+    public function objects(): array;
+
+    // -------------------------------------------------------------------------
+    //  Runtime Layer
+    // -------------------------------------------------------------------------
+
     /**
      * Returns the artifact by its slug (as used in routing or URLs), or null if not found.
      */
@@ -85,13 +133,16 @@ interface Ui5RegistryInterface
     /**
      * Resolves a list of navigation intents in the semantic graph.
      *
-     * @param string $slug
-     * @return array
+     * @param string $slug The module slug
+     * @return array<string, array<string, array>>
      */
     public function resolveIntents(string $slug): array;
 
     /**
      * Resolves an array of resource roots (namespace => URL) from an array of namespaces.
+     *
+     * @param array<int,string> $namespaces
+     * @return array<string,string>
      */
     public function resolveRoots(array $namespaces): array;
 

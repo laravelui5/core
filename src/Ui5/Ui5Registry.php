@@ -6,6 +6,7 @@ use LaravelUi5\Core\Attributes\Ability;
 use LaravelUi5\Core\Attributes\Role;
 use LaravelUi5\Core\Attributes\SemanticLink;
 use LaravelUi5\Core\Attributes\SemanticObject;
+use LaravelUi5\Core\Attributes\Setting;
 use LaravelUi5\Core\Enums\AbilityType;
 use LaravelUi5\Core\Enums\ArtifactType;
 use LaravelUi5\Core\Ui5\Contracts\ReportActionInterface;
@@ -27,6 +28,7 @@ class Ui5Registry implements Ui5RegistryInterface
     protected array $slugs = [];
     protected array $roles = [];
     protected array $abilities = [];
+    protected array $settings = [];
 
     protected array $objects = [];
     protected array $links = [];
@@ -129,6 +131,7 @@ class Ui5Registry implements Ui5RegistryInterface
         }
 
         $this->discoverAbilities($artifact);
+        $this->discoverSettings($artifact);
 
         if ($artifact instanceof SluggableInterface) {
             $urlKey = ArtifactType::urlKeyFromArtifact($artifact);
@@ -294,6 +297,37 @@ class Ui5Registry implements Ui5RegistryInterface
         }
     }
 
+    /**
+     * Discover and register Setting attributes defined on Ui5 artifacts.
+     *
+     * @param Ui5ArtifactInterface $artifact
+     */
+    protected function discoverSettings(Ui5ArtifactInterface $artifact): void
+    {
+        $ref = new ReflectionClass($artifact);
+        $attributes = $ref->getAttributes(Setting::class);
+
+        if (empty($attributes)) {
+            return;
+        }
+
+        $namespace = $artifact->getModule()->getArtifactRoot()->getNamespace();
+
+        foreach ($attributes as $attr) {
+            /** @var Setting $setting */
+            $setting = $attr->newInstance();
+
+            $this->settings[$namespace][$setting->key] = [
+                'default'        => $setting->default,
+                'type'           => $setting->type->name,
+                'scope'          => $setting->scope->name,
+                'visibilityRole' => $setting->visibilityRole->name,
+            ];
+        }
+    }
+
+    /** -- Lookup ---------------------------------------------------------- */
+
     public function hasModule(string $slug): bool
     {
         return isset($this->modules[$slug]);
@@ -305,16 +339,6 @@ class Ui5Registry implements Ui5RegistryInterface
             return $this->modules[$slug];
         }
 
-        return null;
-    }
-
-    public function namespaceToModuleSlug(string $namespace): ?string
-    {
-        return $this->namespaceToModule[$namespace] ?? null;
-    }
-
-    public function artifactToModuleSlug(string $class): ?string
-    {
         return null;
     }
 
@@ -340,6 +364,45 @@ class Ui5Registry implements Ui5RegistryInterface
     public function all(): array
     {
         return $this->artifacts;
+    }
+
+    /** -- Runtime Resolution ---------------------------------------------- */
+
+    public function namespaceToModuleSlug(string $namespace): ?string
+    {
+        return $this->namespaceToModule[$namespace] ?? null;
+    }
+
+    public function artifactToModuleSlug(string $class): ?string
+    {
+        foreach ($this->artifacts as $namespace => $artifact) {
+            if ($artifact::class === $class) {
+                return $this->namespaceToModule[$namespace] ?? null;
+            }
+        }
+
+        return null;
+    }
+
+    /** -- Introspection --------------------------------------------------- */
+    public function roles(): array
+    {
+        return $this->roles;
+    }
+
+    public function abilities(): array
+    {
+        return $this->abilities;
+    }
+
+    public function settings(): array
+    {
+        return $this->settings;
+    }
+
+    public function objects(): array
+    {
+        return $this->objects;
     }
 
     /** -- Laravel routing ------------------------------------------------- */

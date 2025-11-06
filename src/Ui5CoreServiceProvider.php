@@ -16,7 +16,6 @@ use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
-use LaravelUi5\Core\Commands\CreateUi5CacheCommand;
 use LaravelUi5\Core\Commands\GenerateSelfContainedUi5AppCommand;
 use LaravelUi5\Core\Commands\GenerateUi5Action;
 use LaravelUi5\Core\Commands\GenerateUi5AppCommand;
@@ -59,7 +58,6 @@ class Ui5CoreServiceProvider extends ServiceProvider
     {
         if ($this->app->runningInConsole()) {
             $this->commands([
-                CreateUi5CacheCommand::class,
                 GenerateSelfContainedUi5AppCommand::class,
                 GenerateUi5Action::class,
                 GenerateUi5AppCommand::class,

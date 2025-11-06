@@ -45,6 +45,11 @@ final class LaravelUi5ManifestKeys
     public const META = 'meta';
 
     /**
+     * Defines available resource endpoints callable via LaravelUi5.get(...)
+     */
+    public const RESOURCES = 'resources';
+
+    /**
      * Defines ability-level access rules for components and actions.
      * The structure is usually nested and app-specific.
      *
@@ -84,6 +89,7 @@ final class LaravelUi5ManifestKeys
             self::REPORTS,
             self::ROUTES,
             self::META,
+            self::RESOURCES,
             self::ABILITIES,
             self::ROLES,
             self::SETTINGS,

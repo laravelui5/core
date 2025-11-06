@@ -56,15 +56,15 @@ class Setting
     /**
      * @param string $key Fully qualified dot key, e.g. "module.service.setting.foo.bar"
      * @param ValueType $type Type used to cast the JSON value (maps to `value_type`)
-     * @param mixed $default Default applied when no matching row exists
+     * @param mixed $default Default applied by package (developer)
      * @param SettingScope $scope Intended/default scope for this setting (maps to `scope`)
      * @param SettingVisibilityRole $visibilityRole Minimum role allowed to edit (maps to `visibility_role`)
      */
     public function __construct(
-        public SettingScope          $scope = SettingScope::Tenant,
         public string                $key,
-        public mixed                 $default = null,
         public ValueType             $type = ValueType::String,
+        public mixed                 $default = null,
+        public SettingScope          $scope = SettingScope::Tenant,
         public SettingVisibilityRole $visibilityRole = SettingVisibilityRole::TenantAdmin,
     )
     {
