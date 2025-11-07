@@ -1,17 +1,18 @@
 <?php
 
-namespace Tests\Fixture\Hello\Actions\World;
+namespace Tests\Fixture\Hello\Errors\Ability\DoubledAbility;
 
 use LaravelUi5\Core\Attributes\Ability;
 use LaravelUi5\Core\Enums\AbilityType;
 use LaravelUi5\Core\Enums\ArtifactType;
 use LaravelUi5\Core\Enums\HttpMethod;
-use LaravelUi5\Core\Ui5\Contracts\ActionHandlerInterface;
 use LaravelUi5\Core\Ui5\AbstractUi5Action;
+use LaravelUi5\Core\Ui5\Contracts\ActionHandlerInterface;
 use LaravelUi5\Core\Ui5\Contracts\Ui5ModuleInterface;
-use Tests\Fixture\Hello\Hello;
+use Tests\Fixture\Hello\Actions\World\Handler;
 
-#[Ability(Hello::ACTION_NAME, 'Admin', AbilityType::Act, note: 'Lock or unlock a record')]
+
+#[Ability('useOnBackend', 'Test', AbilityType::Act, 'Exception for this ability')]
 class Action extends AbstractUi5Action
 {
 

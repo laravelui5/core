@@ -3,11 +3,17 @@
 namespace Tests\Fixture\Hello;
 
 use Illuminate\Support\Facades\File;
+use LaravelUi5\Core\Attributes\Setting;
+use LaravelUi5\Core\Enums\SettingScope;
+use LaravelUi5\Core\Enums\SettingVisibilityRole;
+use LaravelUi5\Core\Enums\ValueType;
 use LaravelUi5\Core\Ui5\Contracts\LaravelUi5ManifestInterface;
 use LaravelUi5\Core\Ui5\Contracts\Ui5AppInterface;
 use LaravelUi5\Core\Enums\ArtifactType;
 use LaravelUi5\Core\Ui5\Contracts\Ui5ModuleInterface;
 
+#[Setting('darkMode', type: ValueType::Boolean, default: false, scope: SettingScope::User, visibilityRole: SettingVisibilityRole::Employee)]
+#[Setting('maxItems', type: ValueType::Integer, default: 10, scope: SettingScope::Installation, visibilityRole: SettingVisibilityRole::TenantAdmin)]
 class HelloApp implements Ui5AppInterface
 {
 
@@ -148,12 +154,12 @@ JSON;
 
     public function getManifestPath(): string
     {
-        // TODO: Implement getManifestPath() method.
+        return '';
     }
 
     public function getLaravelUiManifest(): LaravelUi5ManifestInterface
     {
-        // TODO: Implement getLaravelUiManifest() method.
+        return app(HelloManifest::class);
     }
 
     public function getVendor(): string

@@ -1,17 +1,22 @@
 <?php
 
-namespace Tests\Fixture\Hello\Actions\World;
+namespace Tests\Fixture\Hello\Errors\Settings;
 
 use LaravelUi5\Core\Attributes\Ability;
+use LaravelUi5\Core\Attributes\Setting;
 use LaravelUi5\Core\Enums\AbilityType;
 use LaravelUi5\Core\Enums\ArtifactType;
 use LaravelUi5\Core\Enums\HttpMethod;
+use LaravelUi5\Core\Enums\SettingScope;
+use LaravelUi5\Core\Enums\SettingVisibilityRole;
+use LaravelUi5\Core\Enums\ValueType;
 use LaravelUi5\Core\Ui5\Contracts\ActionHandlerInterface;
 use LaravelUi5\Core\Ui5\AbstractUi5Action;
 use LaravelUi5\Core\Ui5\Contracts\Ui5ModuleInterface;
+use Tests\Fixture\Hello\Actions\World\Handler;
 use Tests\Fixture\Hello\Hello;
 
-#[Ability(Hello::ACTION_NAME, 'Admin', AbilityType::Act, note: 'Lock or unlock a record')]
+#[Setting('darkMode', type: ValueType::Boolean, default: false, scope: SettingScope::User, visibilityRole: SettingVisibilityRole::Employee)]
 class Action extends AbstractUi5Action
 {
 

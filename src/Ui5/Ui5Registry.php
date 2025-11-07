@@ -2,6 +2,7 @@
 
 namespace LaravelUi5\Core\Ui5;
 
+use Illuminate\Database\Eloquent\Relations\Relation;
 use LaravelUi5\Core\Attributes\Ability;
 use LaravelUi5\Core\Attributes\Role;
 use LaravelUi5\Core\Attributes\SemanticLink;
@@ -19,6 +20,7 @@ use LaravelUi5\Core\Ui5\Contracts\Ui5ReportInterface;
 use LogicException;
 use ReflectionClass;
 use ReflectionException;
+use Throwable;
 
 class Ui5Registry implements Ui5RegistryInterface
 {
@@ -36,10 +38,28 @@ class Ui5Registry implements Ui5RegistryInterface
     /**
      * @throws ReflectionException
      */
-    public function __construct()
+    public function __construct(?array $config = null)
     {
-        $config = config('ui5');
+        if ($config) {
+            $this->loadFromArray($config);
+        } else {
+            $this->loadFromArray(config('ui5'));
+        }
+    }
 
+    /**
+     * @throws ReflectionException
+     */
+    public static function fromArray(array $config): self
+    {
+        return new self($config);
+    }
+
+    /**
+     * @throws ReflectionException
+     */
+    protected function loadFromArray(array $config): void
+    {
         $modules = $config['modules'] ?? [];
         foreach ($modules as $slug => $moduleClass) {
 
@@ -156,14 +176,8 @@ class Ui5Registry implements Ui5RegistryInterface
         $namespace = $artifact->getModule()->getArtifactRoot()->getNamespace();
         $attributes = $ref->getAttributes(Ability::class);
 
-        if (count($attributes) > 1) {
-            throw new LogicException(
-                sprintf(
-                    'Multiple Ability attributes found on [%s]. Each class may define only one Ability.',
-                    $ref->getName()
-                )
-            );
-        }
+        // PHP natively prevents multiple non-repeatable attributes.
+        // Therefore, no explicit duplicate Ability check is required.
 
         if (count($attributes) === 1) {
             /** @var Ability $ability */
@@ -179,6 +193,14 @@ class Ui5Registry implements Ui5RegistryInterface
             if ($ability->type === AbilityType::Act && !($artifact instanceof Ui5ActionInterface || $artifact instanceof ReportActionInterface)) {
                 throw new LogicException(sprintf(
                     'Ability [%s] of type [Act] must be declared on an executable artifact, found on [%s].',
+                    $ability->name,
+                    get_class($artifact)
+                ));
+            }
+
+            if (array_key_exists($ability->name, $this->abilities[$namespace] ?? [])) {
+                throw new LogicException(sprintf(
+                    'Duplicate ability [%s] found on [%s].',
                     $ability->name,
                     get_class($artifact)
                 ));
@@ -201,7 +223,7 @@ class Ui5Registry implements Ui5RegistryInterface
     /**
      * Detects and registers a module's declared SemanticObject.
      *
-     * @throws ReflectionException|LogicException
+     * @throws LogicException
      */
     protected function registerSemanticObject(Ui5ModuleInterface $module): void
     {
@@ -212,18 +234,14 @@ class Ui5Registry implements Ui5RegistryInterface
             return; // Module may not declare a semantic object
         }
 
-        if (count($attributes) > 1) {
-            throw new LogicException(sprintf(
-                'Multiple SemanticObject attributes found on module [%s]. Each module may declare only one.',
-                $ref->getName()
-            ));
-        }
+        // PHP natively prevents multiple non-repeatable attributes.
+        // Therefore, no explicit duplicate Ability check is required.
 
         /** @var SemanticObject $semantic */
         $semantic = $attributes[0]->newInstance();
 
         // Validate required fields
-        if (empty($semantic->model) || empty($semantic->name) || empty($semantic->routes)) {
+        if (empty($semantic->model) || empty($semantic->name)) {
             throw new LogicException(sprintf(
                 'Invalid SemanticObject definition in [%s]. Parameters $model, $name, and $routes are required.',
                 $ref->getName()
@@ -279,19 +297,32 @@ class Ui5Registry implements Ui5RegistryInterface
                 foreach ($method->getAttributes(SemanticLink::class) as $attribute) {
                     /** @var SemanticLink $link */
                     $link = $attribute->newInstance();
+                    $model = $link->model ?? null;
+
+                    if (!$model) {
+                        try {
+                            $instance ??= app($slug);
+                            $relation = $instance->{$method->getName()}();
+
+                            if ($relation instanceof Relation) {
+                                $model = get_class($relation->getRelated());
+                            }
+                        } catch (Throwable $e) {
+                            // ignore if method cannot be executed safely (non-ORM class etc.)
+                        }
+                    }
 
                     // Validation: target model must exist as a registered semantic object
-                    if (!isset($this->objects[$link->model])) {
+                    if (!$model || !isset($this->objects[$model])) {
                         throw new LogicException(sprintf(
-                            'SemanticLink on [%s::%s] points to unknown model [%s]. ' .
-                            'Target must be declared as a SemanticObject.',
+                            'SemanticLink on [%s::%s] points to unknown model [%s]. Target must be declared as a SemanticObject.',
                             $slug,
                             $method->getName(),
                             $link->model
                         ));
                     }
 
-                    $this->links[$slug][] = $link->model;
+                    $this->links[$slug][] = $model;
                 }
             }
         }
@@ -317,10 +348,18 @@ class Ui5Registry implements Ui5RegistryInterface
             /** @var Setting $setting */
             $setting = $attr->newInstance();
 
+            if (array_key_exists($setting->key, $this->settings[$namespace] ?? [])) {
+                throw new LogicException(sprintf(
+                    'Duplicate setting [%s] found in [%s].',
+                    $setting->key,
+                    get_class($artifact)
+                ));
+            }
+
             $this->settings[$namespace][$setting->key] = [
-                'default'        => $setting->default,
-                'type'           => $setting->type->name,
-                'scope'          => $setting->scope->name,
+                'default' => $setting->default,
+                'type' => $setting->type->name,
+                'scope' => $setting->scope->name,
                 'visibilityRole' => $setting->visibilityRole->name,
             ];
         }

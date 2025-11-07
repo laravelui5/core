@@ -1,18 +1,20 @@
 <?php
 
-namespace Tests\Fixture\Hello;
+namespace Tests\Fixture\Hello\Errors\SemanticObject;
 
-use LaravelUi5\Core\Attributes\Role;
 use LaravelUi5\Core\Attributes\SemanticObject;
 use LaravelUi5\Core\Ui5\Contracts\Ui5AppInterface;
 use LaravelUi5\Core\Ui5\Contracts\Ui5ArtifactInterface;
 use LaravelUi5\Core\Ui5\Contracts\Ui5LibraryInterface;
 use LaravelUi5\Core\Ui5\Ui5Module;
+use Tests\Fixture\Hello\Actions;
+use Tests\Fixture\Hello\Cards;
+use Tests\Fixture\Hello\HelloApp;
 use Tests\Fixture\Hello\Models\User;
+use Tests\Fixture\Hello\Resources;
 
-#[Role(Hello::ROLE, 'Administrative access to Hello module')]
 #[SemanticObject(User::class, 'User', ['detail' => ['uri' => '/detail/{id}', 'label' => 'User Details']])]
-class HelloModule extends Ui5Module
+class DuplicateModelModule extends Ui5Module
 {
     public function hasApp(): bool
     {
@@ -41,9 +43,7 @@ class HelloModule extends Ui5Module
 
     public function getCards(): array
     {
-        return [
-            new Cards\WorkHours\Card($this)
-        ];
+        return [];
     }
 
     public function getKpis(): array
@@ -58,15 +58,11 @@ class HelloModule extends Ui5Module
 
     public function getActions(): array
     {
-        return [
-            new Actions\World\Action($this),
-        ];
+        return [];
     }
 
     public function getResources(): array
     {
-        return [
-            new Resources\First\Resource($this)
-        ];
+        return [];
     }
 }

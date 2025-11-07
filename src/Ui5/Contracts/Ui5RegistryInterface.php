@@ -26,9 +26,7 @@ namespace LaravelUi5\Core\Ui5\Contracts;
  */
 interface Ui5RegistryInterface
 {
-    // -------------------------------------------------------------------------
-    //  Lookup Layer
-    // -------------------------------------------------------------------------
+    /** -- Lookup Layer ---------------------------------------------------- */
 
     /**
      * Returns the module with the given slug, or null if not found.
@@ -64,9 +62,7 @@ interface Ui5RegistryInterface
      */
     public function all(): array;
 
-    // -------------------------------------------------------------------------
-    //  Introspection Layer
-    // -------------------------------------------------------------------------
+    /** -- Introspection Layer --------------------------------------------- */
 
     /**
      * Returns all roles declared across all modules via #[Role] attributes.
@@ -111,9 +107,7 @@ interface Ui5RegistryInterface
      */
     public function objects(): array;
 
-    // -------------------------------------------------------------------------
-    //  Runtime Layer
-    // -------------------------------------------------------------------------
+    /** -- Runtime Layer --------------------------------------------------- */
 
     /**
      * Returns the artifact by its slug (as used in routing or URLs), or null if not found.

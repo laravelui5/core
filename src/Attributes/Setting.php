@@ -44,7 +44,7 @@ use LaravelUi5\Core\Enums\SettingVisibilityRole;
  *
  *  ```#[Setting(
  *      key: 'billing.settlement.validation.maxHours',
- *      type: SettingValueType::Integer,
+ *      type: ValueType::Integer,
  *      default: 8,
  *      scope: SettingScope::Tenant,
  *      visibilityRole: SettingVisibilityRole::TenantAdmin

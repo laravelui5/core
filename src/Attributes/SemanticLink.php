@@ -44,10 +44,10 @@ use Attribute;
 class SemanticLink
 {
     /**
-     * @param string $model Fully qualified model class of the target
+     * @param string|null $model Fully qualified model class of the target
      *                      SemanticObject. Must exist and be discoverable.
      */
     public function __construct(
-        public string $model,
+        public ?string $model = null,
     ) {}
 }

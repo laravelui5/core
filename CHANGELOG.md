@@ -4,7 +4,9 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-## [1.0.3] - 2025-11-
+## [1.1.0] - 2025-11-07
+- Added tests for Ui5Registry
+- Switched to PHP 8.3 language level
 - Moved CachedUi5Registry to the Sdk
 - Enhanced Ui5Registry interface
 - Included Settings reflection in Ui5Registry

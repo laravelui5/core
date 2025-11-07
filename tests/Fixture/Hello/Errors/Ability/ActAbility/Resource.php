@@ -1,18 +1,18 @@
 <?php
 
-namespace Tests\Fixture\Hello\Actions\World;
+namespace Tests\Fixture\Hello\Errors\Ability\ActAbility;
 
 use LaravelUi5\Core\Attributes\Ability;
 use LaravelUi5\Core\Enums\AbilityType;
 use LaravelUi5\Core\Enums\ArtifactType;
-use LaravelUi5\Core\Enums\HttpMethod;
-use LaravelUi5\Core\Ui5\Contracts\ActionHandlerInterface;
-use LaravelUi5\Core\Ui5\AbstractUi5Action;
+use LaravelUi5\Core\Ui5\Contracts\DataProviderInterface;
 use LaravelUi5\Core\Ui5\Contracts\Ui5ModuleInterface;
+use LaravelUi5\Core\Ui5\Contracts\Ui5ResourceInterface;
 use Tests\Fixture\Hello\Hello;
+use Tests\Fixture\Hello\Resources\First\Provider;
 
-#[Ability(Hello::ACTION_NAME, 'Admin', AbilityType::Act, note: 'Lock or unlock a record')]
-class Action extends AbstractUi5Action
+#[Ability(Hello::ACTION_NAME, 'Admin', AbilityType::Act, 'Lock or unlock a record')]
+class Resource implements Ui5ResourceInterface
 {
 
     public function __construct(protected Ui5ModuleInterface $module)
@@ -26,12 +26,12 @@ class Action extends AbstractUi5Action
 
     public function getNamespace(): string
     {
-        return 'com.laravelui5.hello.actions.world';
+        return 'com.laravelui5.hello.resources.first';
     }
 
     public function getType(): ArtifactType
     {
-        return ArtifactType::Action;
+        return ArtifactType::Resource;
     }
 
     public function getVersion(): string
@@ -41,26 +41,21 @@ class Action extends AbstractUi5Action
 
     public function getTitle(): string
     {
-        return 'World';
+        return 'First';
     }
 
     public function getDescription(): string
     {
-        return 'Action for World';
+        return 'Resource for First';
     }
 
     public function getSlug(): string
     {
-        return 'world';
+        return 'first';
     }
 
-    public function getMethod(): HttpMethod
+    public function getProvider(): DataProviderInterface
     {
-        return HttpMethod::POST;
-    }
-
-    public function getHandler(): ActionHandlerInterface
-    {
-        return new Handler();
+        return new Provider();
     }
 }
