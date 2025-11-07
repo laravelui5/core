@@ -2,234 +2,168 @@
 outline: deep
 ---
 
-# Ui5Registry
+# Ui5Registry — Central Coordination and Introspection Service
 
-The `Ui5Registry` is the central runtime lookup system for resolving all UI5 modules and artifacts within the LaravelUi5 ecosystem. It powers routing, rendering, manifest generation, and backend integration for all registered UI5 entities.
+> **Since v1.1.0**
+> The `Ui5Registry` provides full introspection support (Roles, Abilities, Settings, SemanticObjects)
+> and hybrid semantic link discovery between Eloquent models.
 
-LaravelUi5 uses a hybrid approach of *code-first registration*, *runtime caching*, and *database synchronization* to deliver fast and predictable artifact resolution across environments.
+The `Ui5Registry` is the central coordination and introspection service of the LaravelUi5 ecosystem.
+It provides a unified API to discover, inspect, and resolve all UI5-related modules, artifacts, and metadata within a Laravel application.
 
-## Purpose
+It serves as the **semantic backbone** of the system, connecting static configuration, runtime reflection, and UI5 resource resolution into a single coherent model.
 
-The `Ui5Registry` acts as a *read-only service locator* that:
+## Responsibilities
 
-* Resolves UI5 modules by slug (e.g., `users`, `offers`)
-* Resolves artifacts (e.g., cards, dashboards, actions) by their UI5 namespace
-* Supports routing, UI5 tag rendering, and metadata generation
-* Enforces system-wide constraints like uniqueness and slug mapping
+* Configuration-based declaration of UI5 modules and their artifacts
+* Metadata introspection for Roles, Abilities, Settings, and SemanticObjects
+* Semantic link discovery between models (explicit and inferred)
+* Fast runtime resolution of modules and artifacts
+* Central service for manifest generation, routing, and navigation
 
-## Artifacts & Modules
+## System Rules
 
-Each UI5-related PHP class in LaravelUi5 implements either:
+* Every module must have a **unique slug**
+* Every artifact must have a **globally unique namespace**
+* Artifacts are only accessible via their registered module or full namespace
+* Semantic links may only target models that are registered as SemanticObjects
 
-* `Ui5ModuleInterface`: Represents a reusable module
-* `Ui5ArtifactInterface`: Represents an artifact (e.g. card, tile, dashboard, report, action)
+## Layer Overview
 
-Artifacts may optionally implement `SluggableInterface` to allow addressable routing via `getSlug()`.
+The `Ui5Registry` operates in three logical layers.
 
-## Runtime Registry
-
-The default implementation (`Ui5Registry`) performs *live resolution* on each request:
-
-* Modules are loaded from `config/ui5.php` under the `modules` key
-* Dashboards are loaded from the `dashboards` key
-* Each module may provide:
-
-    * App
-    * Library
-    * Cards
-    * Tiles
-    * KPIs
-    * Actions
-    * Reports
-
-On construction, all artifacts are instantiated and registered into lookup maps by:
-
-* Namespace (e.g., `io.pragmatiqu.users.cards.summary`)
-* Slug (e.g., `users`) and URL key (e.g., `card/users/summary`)
-
-This is ideal for development, but less performant in production.
-
-## API Overview
-
-The `Ui5RegistryInterface` defines a robust contract for artifact resolution:
-
-```php
-public function getModule(string $slug): ?Ui5ModuleInterface;
-public function get(string $namespace): ?Ui5ArtifactInterface;
-public function fromSlug(string $slug): ?Ui5ArtifactInterface;
-public function slugFor(Ui5ArtifactInterface $artifact): ?string;
-public function resolve(string $namespace): ?string;
-public function resolveRoots(array $namespaces): array;
-```
-
-## System Rules Enforced
-
-* Every module must have a *unique slug*
-* Every artifact must have a *globally unique namespace*
-* All routing-safe artifacts must implement `SluggableInterface`
-
-## Best Practices
-
-* Use `Ui5Registry::get()` when rendering components by namespace
-* Use `fromSlug()` and `slugFor()` when working with routes or URLs
-* Always run `ui5:cache` before deployment
-* Use `ui5:sync` to persist artifact metadata for dashboards or admin UIs
-
-## Example Use Cases
-
-* *Resolve module from URL*: `/ui5/app/users/overview` → `users`
-* *Render dynamic tag*: `<x-ui5-element id="io.pragmatiqu.users.cards.summary" />`
-* *Dispatch backend action*: Call `Ui5Registry::get('io.pragmatiqu.users.actions.toggle-lock')`
-
----
----
-
-## Understanding the Ui5Registry Layers
-
-The **Ui5Registry** is the central lookup and introspection service  
-in the LaravelUi5 Core. It represents the *semantic heart* of the entire system —  
-bridging PHP metadata, Laravel runtime, and UI5 manifest output.
-
-To keep things maintainable and predictable, the Registry operates across **three distinct layers** that are summarized in the following sections.
+| Layer                   | Description                                                                 | Example Methods                                     |
+|:------------------------|:----------------------------------------------------------------------------|:----------------------------------------------------|
+| **Lookup Layer**        | Provides lookup and resolution of modules and artifacts                     | `getModule()`, `get()`, `all()`                     |
+| **Introspection Layer** | Reflects and collects metadata from PHP attributes                          | `roles()`, `abilities()`, `settings()`, `objects()` |
+| **Runtime Layer**       | Provides runtime path and intent resolution for UI5 and manifest generation | `slugFor()`, `resolve()`, `resolveIntents()`        |
 
 ### Lookup Layer
 
-> “What exists, and how can I find it?”
+Handles registration and retrieval of modules and artifacts at runtime.
+Modules are indexed by slug, artifacts by namespace.
 
-This layer provides **fast, structural access** to all registered modules and artifacts.  
-It doesn’t use Reflection — it simply exposes already-known objects (from cache or boot discovery).
+Example usage:
 
-#### Responsibilities
-- Fast lookup of modules and artifacts  
-- Routing-safe and rendering-safe resolution  
-- Base for all higher-level layers
-
-#### Typical Methods
 ```php
 $module = $registry->getModule('users');
-$artifact = $registry->get('io.pragmatiqu.users.cards.summary');
-$allModules = $registry->modules();
-````
-
-| Method                | Purpose                    |
-|:----------------------|:---------------------------|
-| `get()`               | Find artifact by namespace |
-| `getModule()`         | Find module by slug        |
-| `has()`               | Check if artifact exists   |
-| `fromSlug()`          | Reverse-lookup by slug     |
-| `slugFor()`           | Get full route slug        |
-| `all()` / `modules()` | List everything            |
+$artifact = $registry->get('com.laravelui5.users');
+```
 
 ### Introspection Layer
 
-> “Which metadata is defined through PHP Attributes?”
+The introspection layer discovers metadata via PHP attributes declared on modules and artifacts.
+It collects the following categories.
 
-This layer performs **deep reflection** over all LaravelUi5 modules,
-collecting metadata such as roles, abilities, semantic objects, and settings.
-It’s the **source of truth** for the SDK, manifest generation, and permission systems.
+| Category             | Attribute           | Description                                                 |
+|:---------------------|:--------------------|:------------------------------------------------------------|
+| **Roles**            | `#[Role]`           | Declares roles within a module                              |
+| **Abilities**        | `#[Ability]`        | Declares abilities on backend actions                       |
+| **Settings**         | `#[Setting]`        | Declares configurable module settings                       |
+| **Semantic Objects** | `#[SemanticObject]` | Declares the semantic model and available navigation routes |
 
-#### Responsibilities
+Since v1.1.0, Abilities and Settings are discovered dynamically for every artifact registered within a module.
+The data is cached internally for fast lookup and later used in manifest.json generation.
 
-* Parse PHP attributes (e.g. `#[Role]`, `#[Ability]`, `#[SemanticObject]`)
-* Structure semantic metadata for all modules
-* Provide a unified view of backend capabilities
+### Runtime Layer
 
-#### Typical Methods
+The runtime layer is responsible for path resolution, intent discovery, and runtime linking of UI5 resources.
+It bridges the reflection-based metadata with actual runtime routes and assets.
+
+**Responsibilities**
+
+* Resolving artifacts and resource paths by slug
+* Mapping namespaces to modules
+* Exposing semantic navigation routes for manifest.json
+* Generating UI5 resource roots for bootstrap configuration
+* Providing reverse-intent resolution between linked SemanticObjects
+
+## Semantic Links
+
+*Starting with v1.1.0*, the Registry supports **hybrid semantic link discovery**.
+Links between SemanticObjects can be declared explicitly via
+`#[SemanticLink(model: Target::class)]`
+or inferred automatically from Eloquent relations (`belongsTo`, `hasOne`).
+
+This hybrid approach keeps the system ORM-agnostic yet fully aware of semantic relationships,
+allowing cross-module navigation without database constraints.
+
+Example:
 
 ```php
-$roles = $registry->roles();
-$abilities = $registry->abilities();
-$settings = $registry->settings();
-$objects = $registry->objects();
+#[SemanticLink]
+public function user(): BelongsTo
+{
+    return $this->belongsTo(User::class);
+}
 ```
 
-| Method        | Returns                               | Source              |
-|:--------------|:--------------------------------------|:--------------------|
-| `roles()`     | Declared roles across all modules     | `#[Role]`           |
-| `abilities()` | Declared abilities                    | `#[Ability]`        |
-| `settings()`  | Configurable or tenant-level settings | `#[Setting]`        |
-| `objects()`   | Semantic business objects and routes  | `#[SemanticObject]` |
+## Semantic Intents
 
-Example structure for `objects()`:
+The `resolveIntents()` method provides navigation intents based on registered SemanticObjects
+and discovered SemanticLinks. It reverses the direction of declared links and returns
+all routes that *point to* the given module.
+
+Example:
+
+```php
+$intents = $registry->resolveIntents('users');
+```
+
+Output:
 
 ```php
 [
-  "User" => [
-    "name" => "User",
-    "module" => "users",
-    "routes" => [
-      "display" => ["label" => "Show", "icon" => "sap-icon://display"],
-      "edit" => ["label" => "Edit", "icon" => "sap-icon://edit"]
+  "Order" => [
+    "details" => [
+      "label" => "Order Details",
+      "icon"  => null
     ]
   ]
 ]
 ```
 
-### Runtime Layer
+This result indicates that **Orders** link to **Users**,
+and exposes their navigable intents (e.g., “Order Details” in the UI).
 
-> “How do these elements work together at runtime?”
+## Resource Resolution
 
-This layer derives **contextual information** during runtime —
-for example, navigation intents, resource roots, or semantic relations between objects.
-
-It depends on the Lookup and Introspection data but provides runtime-ready results
-for routers, manifest generators, and UI5 frontends.
-
-#### Responsibilities
-
-* Derive semantic intents from object graph
-* Generate `resourceroots` and manifest paths
-* Connect backend and frontend semantics
-
-#### Typical Methods
+The registry also resolves resource roots and versioned UI5 paths for module assets.
 
 ```php
-$roots = $registry->resolveRoots(['io.pragmatiqu.users']);
-$intents = $registry->resolveIntents('users');
+$path = $registry->resolve('com.laravelui5.users');
+// => /ui5/app/users/1.0.0
+
+$roots = $registry->resolveRoots(['com.laravelui5.users', 'com.laravelui5.offers']);
+/*
+[
+  "com.laravelui5.users"  => "/ui5/app/users/1.0.0",
+  "com.laravelui5.offers" => "/ui5/app/offers/1.0.0"
+]
+*/
 ```
 
-| Method                      | Description                                       |
-|:----------------------------|:--------------------------------------------------|
-| `resolveIntents($module)`   | Returns UI5 navigation intents for a given module |
-| `resolveRoots($namespaces)` | Builds resource root map for manifest.json        |
-| `artifactToModuleSlug()`    | Maps an artifact class to its module              |
-| `namespaceToModuleSlug()`   | Maps a namespace to its owning module             |
+## Introspection Summary
 
-### Conceptual Overview
+The `introspect()` method returns a snapshot of the registry’s internal state:
 
-```
-                ┌──────────────────────────────────────────┐
-                │              Runtime Layer               │
-                │  resolveIntents() • resolveRoots()       │
-                │  namespaceToModuleSlug() • artifactTo…   │
-                └──────────────────────────────────────────┘
-                                ▲
-                                │ uses data from
-                                │
-                ┌──────────────────────────────────────────┐
-                │       Reflection / Introspection Layer    │
-                │  roles() • abilities() • settings() •     │
-                │  objects() (SemanticObject)               │
-                └──────────────────────────────────────────┘
-                                ▲
-                                │ builds on
-                                │
-                ┌──────────────────────────────────────────┐
-                │           POPO / Lookup Layer             │
-                │  get() • getModule() • fromSlug() • all() │
-                │  (cached or live registry view)           │
-                └──────────────────────────────────────────┘
+```php
+$data = $registry->introspect();
 ```
 
-### Summary
+Structure:
 
-| Layer                          | Responsibility                     | Typical Consumer                 |
-|:-------------------------------|:-----------------------------------|:---------------------------------|
-| **Lookup (POPO)**              | Structural access, no reflection   | Core runtime, routing            |
-| **Introspection (Reflection)** | Semantic metadata via attributes   | SDK, Manifest generator          |
-| **Runtime (Resolution)**       | Derived navigation & resource data | Frontend, routers, UI5 manifests |
+* `modules`
+* `artifacts`
+* `namespaceToModule`
+* `slugs`
+* `roles`
+* `abilities`
+* `objects`
+* `links`
 
-**In short:**
+## Final Notes
 
-> The `Ui5Registry` is not just a lookup service — it’s a *semantic runtime system*
-> bridging your Laravel backend and OpenUI5 frontend through a unified data model.
+Since v1.1.0, the `Ui5Registry` forms the introspective backbone of the LaravelUi5 Core,
+bridging static metadata, runtime reflection, and UI5 integration
+through a unified semantic graph.
