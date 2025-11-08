@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [1.1.2] - 2025-11-
+- Added extension hook to Ui5Registry
+
 ## [1.1.1] - 2025-11-08
 - Added new `AbilityType::Access`. Introduces backend-only ability type for controlling access to entry-level artifacts (Apps, Dashboards, Reports, Tiles, KPIs, Resources, Dialogs).
 - Enhanced `Ui5Registry` accessors for abilities and settings

@@ -8,7 +8,6 @@ use LaravelUi5\Core\Attributes\Role;
 use LaravelUi5\Core\Attributes\SemanticLink;
 use LaravelUi5\Core\Attributes\SemanticObject;
 use LaravelUi5\Core\Attributes\Setting;
-use LaravelUi5\Core\Enums\AbilityType;
 use LaravelUi5\Core\Enums\ArtifactType;
 use LaravelUi5\Core\Ui5\Contracts\ReportActionInterface;
 use LaravelUi5\Core\Ui5\Contracts\SluggableInterface;
@@ -113,6 +112,13 @@ class Ui5Registry implements Ui5RegistryInterface
             $report = new $reportClass;
             $this->registerArtifact($report, null);
         }
+
+        $this->afterLoad($config);
+    }
+
+    protected function afterLoad(array $config): void
+    {
+        // extension hook (no-op by default)
     }
 
     /**
@@ -172,6 +178,7 @@ class Ui5Registry implements Ui5RegistryInterface
      * - Only one Ability per class is allowed.
      * - Type::Use and Type::See are not permitted on backend classes.
      * - Type::Act must appear only on Ui5ActionInterface or ReportActionInterface.
+     * - Type::Access must appear only on respective artifacts
      *
      * @throws ReflectionException|LogicException
      */
