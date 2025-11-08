@@ -1,5 +1,6 @@
 <?php
 
+use LaravelUi5\Core\Enums\AbilityType;
 use LaravelUi5\Core\Ui5\Ui5Registry;
 use Tests\Fixture\Hello\Hello;
 
@@ -12,8 +13,10 @@ describe('Introspection Layer — Abilities', function () {
             ->toBeArray()
             ->toHaveKey(Hello::NAMESPACE)
             ->and($abilities[Hello::NAMESPACE])
+            ->toHaveKey(AbilityType::Act->label())
+            ->and($abilities[Hello::NAMESPACE][AbilityType::Act->label()])
             ->toHaveKey(Hello::ACTION_NAME)
-            ->and($abilities[Hello::NAMESPACE][Hello::ACTION_NAME])
+            ->and($abilities[Hello::NAMESPACE][AbilityType::Act->label()][Hello::ACTION_NAME])
             ->toMatchArray([
                 'type' => 'Act',
                 'role' => 'Admin',
@@ -30,7 +33,7 @@ describe('Introspection Layer — Abilities', function () {
             'modules' => [
                 'foo' => \Tests\Fixture\Hello\Errors\Ability\UseAbility\Module::class,
             ]
-        ]))->toThrow(LogicException::class, 'reserved for UI visibility');
+        ]))->toThrow(LogicException::class, 'cannot be declared in backend artifacts');
     });
 
     it('throws when Ability type ACT declared on non-action artifact', function () {

@@ -13,10 +13,17 @@ use LaravelUi5\Core\Enums\ArtifactType;
 use LaravelUi5\Core\Ui5\Contracts\ReportActionInterface;
 use LaravelUi5\Core\Ui5\Contracts\SluggableInterface;
 use LaravelUi5\Core\Ui5\Contracts\Ui5ActionInterface;
+use LaravelUi5\Core\Ui5\Contracts\Ui5AppInterface;
 use LaravelUi5\Core\Ui5\Contracts\Ui5ArtifactInterface;
+use LaravelUi5\Core\Ui5\Contracts\Ui5CardInterface;
+use LaravelUi5\Core\Ui5\Contracts\Ui5DashboardInterface;
+use LaravelUi5\Core\Ui5\Contracts\Ui5DialogInterface;
+use LaravelUi5\Core\Ui5\Contracts\Ui5KpiInterface;
 use LaravelUi5\Core\Ui5\Contracts\Ui5ModuleInterface;
 use LaravelUi5\Core\Ui5\Contracts\Ui5RegistryInterface;
 use LaravelUi5\Core\Ui5\Contracts\Ui5ReportInterface;
+use LaravelUi5\Core\Ui5\Contracts\Ui5ResourceInterface;
+use LaravelUi5\Core\Ui5\Contracts\Ui5TileInterface;
 use LogicException;
 use ReflectionClass;
 use ReflectionException;
@@ -183,22 +190,39 @@ class Ui5Registry implements Ui5RegistryInterface
             /** @var Ability $ability */
             $ability = $attributes[0]->newInstance();
 
-            if ($ability->type === AbilityType::Use) {
+            if ($ability->type->shouldBeInManifest()) {
                 throw new LogicException(sprintf(
-                    'Invalid ability declaration: [%s] uses type [Use], which is reserved for UI visibility. Move this definition to your manifest.json file.',
-                    $ability->name
+                    'AbilityType::%s for ability %s cannot be declared in backend artifacts (%s). Move this definition to your manifest.json file.',
+                    $ability->name,
+                    $ability->type->name,
+                    get_class($artifact)
                 ));
             }
 
-            if ($ability->type === AbilityType::Act && !($artifact instanceof Ui5ActionInterface || $artifact instanceof ReportActionInterface)) {
+            if ($ability->type->isAct() && !($artifact instanceof Ui5ActionInterface || $artifact instanceof ReportActionInterface)) {
                 throw new LogicException(sprintf(
-                    'Ability [%s] of type [Act] must be declared on an executable artifact, found on [%s].',
+                    'AbilityType::Act for ability %s must be declared on an executable artifact, found on (%s).',
                     $ability->name,
                     get_class($artifact)
                 ));
             }
 
-            if (array_key_exists($ability->name, $this->abilities[$namespace] ?? [])) {
+            if ($ability->type->isAccess() && !(
+                    $artifact instanceof Ui5AppInterface
+                    || $artifact instanceof Ui5CardInterface
+                    || $artifact instanceof Ui5ReportInterface
+                    || $artifact instanceof Ui5TileInterface
+                    || $artifact instanceof Ui5KpiInterface
+                    || $artifact instanceof Ui5DashboardInterface
+                    || $artifact instanceof Ui5ResourceInterface
+                    || $artifact instanceof Ui5DialogInterface
+                )) {
+                throw new LogicException(
+                    sprintf('AbilityType::Access is only valid for entry-level artifacts (%s)', get_class($artifact))
+                );
+            }
+
+            if (array_key_exists($ability->name, $this->abilities[$namespace][$ability->type->label()] ?? [])) {
                 throw new LogicException(sprintf(
                     'Duplicate ability [%s] found on [%s].',
                     $ability->name,
@@ -206,7 +230,7 @@ class Ui5Registry implements Ui5RegistryInterface
                 ));
             }
 
-            $this->abilities[$namespace][$ability->name] = [
+            $this->abilities[$namespace][$ability->type->label()][$ability->name] = [
                 'type' => $ability->type->name,
                 'role' => $ability->role,
                 'note' => $ability->note,
@@ -429,14 +453,37 @@ class Ui5Registry implements Ui5RegistryInterface
         return $this->roles;
     }
 
-    public function abilities(): array
+    public function abilities(?string $namespace = null, ?ArtifactType $type = null): array
     {
-        return $this->abilities;
+        if ($namespace === null) {
+            if ($type === null) {
+                return $this->abilities;
+            }
+
+            $result = [];
+            foreach ($this->abilities as $ns => $types) {
+                if (isset($types[$type->label()])) {
+                    $result[$ns] = $types[$type->label()];
+                }
+            }
+
+            return $result;
+        }
+
+        if ($type === null) {
+            return $this->abilities[$namespace] ?? [];
+        }
+
+        return $this->abilities[$namespace][$type->label()] ?? [];
     }
 
-    public function settings(): array
+    public function settings(?string $namespace = null): array
     {
-        return $this->settings;
+        if (null === $namespace) {
+            return $this->settings;
+        }
+
+        return $this->settings[$namespace] ?? [];
     }
 
     public function objects(): array
