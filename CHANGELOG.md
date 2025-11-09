@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Added extension hook to Ui5Registry
 - Refined PHPDoc type annotations
 - Renamed property description to note on attribute Role
+- remove laravel/framework dependency
 
 ## [1.1.1] - 2025-11-08
 - Added new `AbilityType::Access`. Introduces backend-only ability type for controlling access to entry-level artifacts (Apps, Dashboards, Reports, Tiles, KPIs, Resources, Dialogs).

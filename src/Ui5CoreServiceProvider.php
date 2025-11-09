@@ -10,7 +10,6 @@ use Flat3\Lodata\Helper\Flysystem;
 use Flat3\Lodata\Helper\Symfony;
 use Flat3\Lodata\Interfaces\ServiceEndpointInterface;
 use Flat3\Lodata\Model;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Config;
@@ -196,7 +195,7 @@ class Ui5CoreServiceProvider extends ServiceProvider
     {
         $this->app->instance(Endpoint::class, $service);
 
-        $this->app->bind(DBAL::class, fn(Application $app, array $args) => new DBAL\DBAL4($args['connection']));
+        $this->app->bind(DBAL::class, fn($app, array $args) => new DBAL\DBAL4($args['connection']));
 
         $this->loadJsonTranslationsFrom(__DIR__.'/../lang');
 
