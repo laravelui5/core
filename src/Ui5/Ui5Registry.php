@@ -2,6 +2,7 @@
 
 namespace LaravelUi5\Core\Ui5;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use LaravelUi5\Core\Attributes\Ability;
 use LaravelUi5\Core\Attributes\Role;
@@ -30,15 +31,49 @@ use Throwable;
 
 class Ui5Registry implements Ui5RegistryInterface
 {
+    /**
+     * @var array<string, Ui5ModuleInterface>
+     */
     protected array $modules = [];
+
+    /**
+     * @var array<string, Ui5ArtifactInterface>
+     */
     protected array $artifacts = [];
+
+    /**
+     * @var array<string, string>
+     */
     protected array $namespaceToModule = [];
+
+    /**
+     * @var array<string, Ui5ArtifactInterface>
+     */
     protected array $slugs = [];
+
+    /**
+     * @var array<string, string>
+     */
     protected array $roles = [];
+
+    /**
+     * @var array<string, array<string, array<string, string[]>>>
+     */
     protected array $abilities = [];
+
+    /**
+     * @var array<string, array<string, string[]>>
+     */
     protected array $settings = [];
 
+    /**
+     * @var array<class-string<Model>, string[]>
+     */
     protected array $objects = [];
+
+    /**
+     * @var array<class-string<Model>, class-string<Model>[]>
+     */
     protected array $links = [];
 
     /**
