@@ -30,10 +30,10 @@ class Role
      * Create a new role definition.
      *
      * @param string $title The display name of the role (e.g., "Accountant").
-     * @param string $description Optional description of the role's purpose or scope.
+     * @param string $note Optional description of the role's purpose or scope.
      */
     public function __construct(
         public string $title,
-        public string $description,
+        public string $note,
     ) {}
 }

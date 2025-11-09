@@ -174,7 +174,7 @@ class Ui5Registry implements Ui5RegistryInterface
                 $namespace = $module->getArtifactRoot()->getNamespace();
                 throw new LogicException("Role '$role->title' declared in module '$namespace' already exists.");
             }
-            $this->roles[$role->title] = $role->description ?? '';
+            $this->roles[$role->title] = $role->note ?? '';
         }
     }
 
