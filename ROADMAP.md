@@ -46,3 +46,10 @@ We welcome feedback and contributions via [GitHub Issues](https://github.com/lar
 
 Feature requests outside the Core scope may be considered for the SDK or developed as community packages.
 
+## TODOs
+
+**Write Tests for negative & edge cases**
+
+- Registry loads gracefully with empty config array
+- Registry can handle module without artifacts
+- Reflection doesn’t crash on attribute-less classes

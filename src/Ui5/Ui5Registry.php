@@ -424,9 +424,9 @@ class Ui5Registry implements Ui5RegistryInterface
 
             $this->settings[$namespace][$setting->key] = [
                 'default' => $setting->default,
-                'type' => $setting->type->name,
-                'scope' => $setting->scope->name,
-                'visibilityRole' => $setting->visibilityRole->name,
+                'type' => $setting->type->value,
+                'scope' => $setting->scope->value,
+                'visibilityRole' => $setting->visibilityRole->value,
             ];
         }
     }
