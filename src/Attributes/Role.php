@@ -33,11 +33,11 @@ class Role
     /**
      * Create a new role definition.
      *
-     * @param string $title The display name of the role (e.g., "Accountant").
+     * @param string $code The code of the role (e.g., "Accountant") unique in installation.
      * @param string $note Optional description of the role's purpose or scope.
      */
     public function __construct(
-        public string $title,
+        public string $code,
         public string $note,
     ) {}
 }
