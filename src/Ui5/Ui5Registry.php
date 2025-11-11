@@ -170,11 +170,11 @@ class Ui5Registry implements Ui5RegistryInterface
         foreach ($attributes as $attribute) {
             /** @var Role $role */
             $role = $attribute->newInstance();
-            if (array_key_exists($role->code, $this->roles)) {
+            if (array_key_exists($role->role, $this->roles)) {
                 $namespace = $module->getArtifactRoot()->getNamespace();
-                throw new LogicException("Role '$role->code' declared in module '$namespace' already exists.");
+                throw new LogicException("Role '$role->role' declared in module '$namespace' already exists.");
             }
-            $this->roles[$role->code] = $role->note;
+            $this->roles[$role->role] = $role->note;
         }
     }
 
