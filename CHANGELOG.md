@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Renamed visibilityRole to role in Setting
 - Enhanced Role attribute
 - Added note property to Setting attribute
+- normalized technical identifiers in attributes
 
 ## [1.1.2] - 2025-11-09
 - Added extension hook to Ui5Registry

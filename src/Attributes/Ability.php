@@ -48,15 +48,15 @@ use LaravelUi5\Core\Enums\AbilityType;
 class Ability
 {
     /**
-     * @param string $name Technical identifier, e.g. "exportContacts".
+     * @param string $ability Technical identifier, e.g. "exportContacts".
      * @param string $role $role  semantic bag for the ability
      * @param AbilityType $type Ability classification (Use, Act, See).
      * @param string $note Description of the ability's purpose or scope.
      */
     public function __construct(
-        public string $name,
-        public string $role,
+        public string      $ability,
+        public string      $role,
         public AbilityType $type = AbilityType::Act,
-        public string $note,
+        public string      $note,
     ) {}
 }

@@ -235,7 +235,7 @@ class Ui5Registry implements Ui5RegistryInterface
             if ($ability->type->shouldBeInManifest()) {
                 throw new LogicException(sprintf(
                     'AbilityType::%s for ability %s cannot be declared in backend artifacts (%s). Move this definition to your manifest.json file.',
-                    $ability->name,
+                    $ability->ability,
                     $ability->type->name,
                     get_class($artifact)
                 ));
@@ -244,7 +244,7 @@ class Ui5Registry implements Ui5RegistryInterface
             if ($ability->type->isAct() && !($artifact instanceof Ui5ActionInterface || $artifact instanceof ReportActionInterface)) {
                 throw new LogicException(sprintf(
                     'AbilityType::Act for ability %s must be declared on an executable artifact, found on (%s).',
-                    $ability->name,
+                    $ability->ability,
                     get_class($artifact)
                 ));
             }
@@ -264,15 +264,15 @@ class Ui5Registry implements Ui5RegistryInterface
                 );
             }
 
-            if (array_key_exists($ability->name, $this->abilities[$namespace][$ability->type->label()] ?? [])) {
+            if (array_key_exists($ability->ability, $this->abilities[$namespace][$ability->type->label()] ?? [])) {
                 throw new LogicException(sprintf(
                     'Duplicate ability [%s] found on [%s].',
-                    $ability->name,
+                    $ability->ability,
                     get_class($artifact)
                 ));
             }
 
-            $this->abilities[$namespace][$ability->type->label()][$ability->name] = [
+            $this->abilities[$namespace][$ability->type->label()][$ability->ability] = [
                 'type' => $ability->type,
                 'role' => $ability->role,
                 'note' => $ability->note,
@@ -414,15 +414,15 @@ class Ui5Registry implements Ui5RegistryInterface
             /** @var Setting $setting */
             $setting = $attr->newInstance();
 
-            if (array_key_exists($setting->key, $this->settings[$namespace] ?? [])) {
+            if (array_key_exists($setting->setting, $this->settings[$namespace] ?? [])) {
                 throw new LogicException(sprintf(
                     'Duplicate setting [%s] found in [%s].',
-                    $setting->key,
+                    $setting->setting,
                     get_class($artifact)
                 ));
             }
 
-            $this->settings[$namespace][$setting->key] = [
+            $this->settings[$namespace][$setting->setting] = [
                 'default' => $setting->default,
                 'type' => $setting->type,
                 'scope' => $setting->scope,

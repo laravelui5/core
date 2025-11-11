@@ -54,7 +54,7 @@ use LaravelUi5\Core\Enums\SettingVisibilityRole;
 class Setting
 {
     /**
-     * @param string $key Fully qualified dot key, e.g. "module.service.setting.foo.bar"
+     * @param string $setting Technical identifier, e.g. "module.service.setting.foo.bar"
      * @param ValueType $type Type used to cast the JSON value (maps to `value_type`)
      * @param mixed $default Default applied by package (developer)
      * @param SettingScope $scope Intended/default scope for this setting (maps to `scope`)
@@ -62,7 +62,7 @@ class Setting
      * @param string $note Description of the setting's purpose or scope.
      */
     public function __construct(
-        public string                $key,
+        public string                $setting,
         public ValueType             $type = ValueType::String,
         public mixed                 $default = null,
         public SettingScope          $scope = SettingScope::Tenant,
