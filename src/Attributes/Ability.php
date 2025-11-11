@@ -51,7 +51,7 @@ class Ability
      * @param string $name Technical identifier, e.g. "exportContacts".
      * @param string $role $role  semantic bag for the ability
      * @param AbilityType $type Ability classification (Use, Act, See).
-     * @param string $note Optional internal comment for dev/test teams.
+     * @param string $note Description of the ability's purpose or scope.
      */
     public function __construct(
         public string $name,

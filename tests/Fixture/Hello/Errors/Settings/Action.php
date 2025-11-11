@@ -16,7 +16,7 @@ use LaravelUi5\Core\Ui5\Contracts\Ui5ModuleInterface;
 use Tests\Fixture\Hello\Actions\World\Handler;
 use Tests\Fixture\Hello\Hello;
 
-#[Setting('darkMode', type: ValueType::Boolean, default: false, scope: SettingScope::User, role: SettingVisibilityRole::Employee)]
+#[Setting('darkMode', type: ValueType::Boolean, default: false, scope: SettingScope::User, role: SettingVisibilityRole::Employee, note: 'Something')]
 class Action extends AbstractUi5Action
 {
 

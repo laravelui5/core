@@ -427,6 +427,7 @@ class Ui5Registry implements Ui5RegistryInterface
                 'type' => $setting->type,
                 'scope' => $setting->scope,
                 'role' => $setting->role,
+                'note' => $setting->note,
             ];
         }
     }

@@ -23,6 +23,7 @@ describe('Settings discovery', function () {
                 'scope' => SettingScope::User,
                 'default' => false,
                 'role' => SettingVisibilityRole::Employee,
+                'note' => 'Something'
             ]);
     });
 

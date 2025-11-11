@@ -34,7 +34,7 @@ class Role
      * Create a new role definition.
      *
      * @param string $role The unique name of the role (e.g., "Accountant") per installation.
-     * @param string $note Optional description of the role's purpose or scope.
+     * @param string $note Description of the role's purpose or scope.
      */
     public function __construct(
         public string $role,

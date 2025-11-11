@@ -59,6 +59,7 @@ class Setting
      * @param mixed $default Default applied by package (developer)
      * @param SettingScope $scope Intended/default scope for this setting (maps to `scope`)
      * @param SettingVisibilityRole $role Minimum role allowed to edit (maps to `visibility_role`)
+     * @param string $note Description of the setting's purpose or scope.
      */
     public function __construct(
         public string                $key,
@@ -66,6 +67,7 @@ class Setting
         public mixed                 $default = null,
         public SettingScope          $scope = SettingScope::Tenant,
         public SettingVisibilityRole $role = SettingVisibilityRole::TenantAdmin,
+        public string                $note,
     )
     {
     }
