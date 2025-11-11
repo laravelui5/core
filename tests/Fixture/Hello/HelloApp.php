@@ -12,8 +12,8 @@ use LaravelUi5\Core\Ui5\Contracts\Ui5AppInterface;
 use LaravelUi5\Core\Enums\ArtifactType;
 use LaravelUi5\Core\Ui5\Contracts\Ui5ModuleInterface;
 
-#[Setting('darkMode', type: ValueType::Boolean, default: false, scope: SettingScope::User, visibilityRole: SettingVisibilityRole::Employee)]
-#[Setting('maxItems', type: ValueType::Integer, default: 10, scope: SettingScope::Installation, visibilityRole: SettingVisibilityRole::TenantAdmin)]
+#[Setting('darkMode', type: ValueType::Boolean, default: false, scope: SettingScope::User, role: SettingVisibilityRole::Employee)]
+#[Setting('maxItems', type: ValueType::Integer, default: 10, scope: SettingScope::Installation, role: SettingVisibilityRole::TenantAdmin)]
 class HelloApp implements Ui5AppInterface
 {
 

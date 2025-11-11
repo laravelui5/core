@@ -1,5 +1,8 @@
 <?php
 
+use LaravelUi5\Core\Enums\SettingScope;
+use LaravelUi5\Core\Enums\SettingVisibilityRole;
+use LaravelUi5\Core\Enums\ValueType;
 use LaravelUi5\Core\Ui5\Ui5Registry;
 use Tests\Fixture\Hello\Hello;
 
@@ -16,10 +19,10 @@ describe('Settings discovery', function () {
             ->toHaveKey('maxItems')
             ->and($settings[Hello::NAMESPACE]['darkMode'])
             ->toMatchArray([
-                'type' => 'Boolean',
-                'scope' => 'User',
+                'type' => ValueType::Boolean,
+                'scope' => SettingScope::User,
                 'default' => false,
-                'visibilityRole' => 'Employee',
+                'role' => SettingVisibilityRole::Employee,
             ]);
     });
 

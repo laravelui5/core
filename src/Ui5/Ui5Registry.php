@@ -174,7 +174,7 @@ class Ui5Registry implements Ui5RegistryInterface
                 $namespace = $module->getArtifactRoot()->getNamespace();
                 throw new LogicException("Role '$role->title' declared in module '$namespace' already exists.");
             }
-            $this->roles[$role->title] = $role->note ?? '';
+            $this->roles[$role->title] = $role->note;
         }
     }
 
@@ -273,7 +273,7 @@ class Ui5Registry implements Ui5RegistryInterface
             }
 
             $this->abilities[$namespace][$ability->type->label()][$ability->name] = [
-                'type' => $ability->type->name,
+                'type' => $ability->type,
                 'role' => $ability->role,
                 'note' => $ability->note,
             ];
@@ -424,9 +424,9 @@ class Ui5Registry implements Ui5RegistryInterface
 
             $this->settings[$namespace][$setting->key] = [
                 'default' => $setting->default,
-                'type' => $setting->type->value,
-                'scope' => $setting->scope->value,
-                'visibilityRole' => $setting->visibilityRole->value,
+                'type' => $setting->type,
+                'scope' => $setting->scope,
+                'role' => $setting->role,
             ];
         }
     }

@@ -58,14 +58,14 @@ class Setting
      * @param ValueType $type Type used to cast the JSON value (maps to `value_type`)
      * @param mixed $default Default applied by package (developer)
      * @param SettingScope $scope Intended/default scope for this setting (maps to `scope`)
-     * @param SettingVisibilityRole $visibilityRole Minimum role allowed to edit (maps to `visibility_role`)
+     * @param SettingVisibilityRole $role Minimum role allowed to edit (maps to `visibility_role`)
      */
     public function __construct(
         public string                $key,
         public ValueType             $type = ValueType::String,
         public mixed                 $default = null,
         public SettingScope          $scope = SettingScope::Tenant,
-        public SettingVisibilityRole $visibilityRole = SettingVisibilityRole::TenantAdmin,
+        public SettingVisibilityRole $role = SettingVisibilityRole::TenantAdmin,
     )
     {
     }

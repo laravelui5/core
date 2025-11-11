@@ -5,7 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [1.1.3] - 2025-11-
-- Save integers for settings enums
+- Save enums as objects in registry
+- Renamed visibilityRole to role in Setting
 
 ## [1.1.2] - 2025-11-09
 - Added extension hook to Ui5Registry

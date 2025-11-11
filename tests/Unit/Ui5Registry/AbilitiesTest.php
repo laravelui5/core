@@ -18,7 +18,7 @@ describe('Introspection Layer — Abilities', function () {
             ->toHaveKey(Hello::ACTION_NAME)
             ->and($abilities[Hello::NAMESPACE][AbilityType::Act->label()][Hello::ACTION_NAME])
             ->toMatchArray([
-                'type' => 'Act',
+                'type' => AbilityType::Act,
                 'role' => 'Admin',
                 'note' => 'Lock or unlock a record',
             ]);
