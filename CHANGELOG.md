@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Enhanced Role attribute
 - Added note property to Setting attribute
 - normalized technical identifiers in attributes
+- added distinct base class for unit tests
 
 ## [1.1.2] - 2025-11-09
 - Added extension hook to Ui5Registry

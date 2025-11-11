@@ -5,6 +5,16 @@ use Tests\Fixture\Hello\Models\Order;
 use Tests\Fixture\Hello\Models\Order2;
 use Tests\Fixture\Hello\Models\User;
 
+// Developer Note:
+// Tests involving semantic objects or any logic that performs
+// model reflection (e.g. inspecting relations, attributes, casts)
+// must run inside the full Laravel application context (Orchestra Testbench).
+//
+// Those belong under `tests/Feature/` and should extend `Tests\TestCase`,
+// because Eloquent, the container, and the database manager need to be booted.
+//
+// Otherwise, reflection on Eloquent models will silently fail
+// since relation methods and Facades depend on the Laravel container.
 describe('SemanticLink discovery', function () {
     it('infers SemanticLink target from Eloquent relation when model is omitted', function () {
         $config = [
