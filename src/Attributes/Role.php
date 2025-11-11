@@ -7,9 +7,13 @@ use Attribute;
 /**
  * Declares a semantic role within the system.
  *
- * A role represents a *conceptual responsibility or capability set*,
- * not a user group or access control rule. It is used to express
- * the intended purpose or function of users or modules on a semantic level.
+ * A Role groups Abilities into a *conceptual responsibility*,
+ * such as "Accountant" or "Project Manager". Roles are global
+ * and context-free. They describe *what* a user represents,
+ * not *where* the role applies.
+ *
+ * Contextual assignments (e.g. "Anna is Project Manager in Project A")
+ * are handled at the group or policy layer, not in the role itself.
  *
  * Example:
  * ```php
