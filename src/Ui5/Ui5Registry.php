@@ -303,6 +303,7 @@ class Ui5Registry implements Ui5RegistryInterface
                 'note' => $ability->note,
             ];
             $this->roles[$ability->role]['abilities'][] = [
+                'namespace' => $namespace,
                 'ability' => $ability->ability,
                 'type' => $ability->type,
                 'note' => $ability->note,
