@@ -8,20 +8,22 @@ describe('Introspection Layer — Abilities', function () {
     it('discovers backend Ability of type Act', function () {
         $registry = Ui5Registry::fromArray(Hello::ui5Config());
         $abilities = $registry->abilities();
+        $roles = $registry->roles();
 
         expect($abilities)
-            ->toBeArray()
-            ->toHaveKey(Hello::NAMESPACE)
-            ->and($abilities[Hello::NAMESPACE])
-            ->toHaveKey(AbilityType::Act->label())
-            ->and($abilities[Hello::NAMESPACE][AbilityType::Act->label()])
-            ->toHaveKey(Hello::ACTION_NAME)
+            ->toBeArray()->toHaveKey(Hello::NAMESPACE)
+            ->and($abilities[Hello::NAMESPACE])->toHaveKey(AbilityType::Act->label())
+            ->and($abilities[Hello::NAMESPACE][AbilityType::Act->label()])->toHaveKey(Hello::ACTION_NAME)
             ->and($abilities[Hello::NAMESPACE][AbilityType::Act->label()][Hello::ACTION_NAME])
             ->toMatchArray([
                 'type' => AbilityType::Act,
-                'role' => 'Admin',
+                'role' => Hello::ROLE,
                 'note' => 'Lock or unlock a record',
-            ]);
+            ])
+            ->and($roles)->toHaveKey(Hello::ROLE)
+            ->and($roles[Hello::ROLE]['abilities'])->toHaveCount(1)
+            ->and($roles[Hello::ROLE]['abilities'][0])->toHaveKey('ability')
+            ->and($roles[Hello::ROLE]['abilities'][0]['ability'])->toBe('toggleLock');
     });
 
     it('does not allow multiple Ability attributes per class (PHP-level)', function () {
@@ -50,6 +52,14 @@ describe('Introspection Layer — Abilities', function () {
                 'foo' => \Tests\Fixture\Hello\Errors\Ability\DoubledAbility\Module::class,
             ]
         ]))->toThrow(LogicException::class, 'Duplicate ability');
+    });
+
+    it('throws when Ability with missing role found', function () {
+        expect(fn() => Ui5Registry::fromArray([
+            'modules' => [
+                'foo' => \Tests\Fixture\Hello\Errors\Ability\MissingRole\Module::class,
+            ]
+        ]))->toThrow(LogicException::class, 'referenced by ability');
     });
 });
 

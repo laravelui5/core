@@ -10,9 +10,10 @@ use LaravelUi5\Core\Ui5\AbstractUi5Action;
 use LaravelUi5\Core\Ui5\Contracts\ActionHandlerInterface;
 use LaravelUi5\Core\Ui5\Contracts\Ui5ModuleInterface;
 use Tests\Fixture\Hello\Actions\World\Handler;
+use Tests\Fixture\Hello\Hello;
 
 
-#[Ability('useOnBackend', 'Test', AbilityType::Act, 'Exception for this ability')]
+#[Ability('useOnBackend', Hello::ROLE, AbilityType::Act, 'Exception for this ability')]
 class Action extends AbstractUi5Action
 {
 

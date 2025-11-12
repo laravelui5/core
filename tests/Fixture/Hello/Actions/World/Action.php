@@ -11,7 +11,7 @@ use LaravelUi5\Core\Ui5\AbstractUi5Action;
 use LaravelUi5\Core\Ui5\Contracts\Ui5ModuleInterface;
 use Tests\Fixture\Hello\Hello;
 
-#[Ability(Hello::ACTION_NAME, 'Admin', AbilityType::Act, note: 'Lock or unlock a record')]
+#[Ability(Hello::ACTION_NAME, Hello::ROLE, AbilityType::Act, note: 'Lock or unlock a record')]
 class Action extends AbstractUi5Action
 {
 

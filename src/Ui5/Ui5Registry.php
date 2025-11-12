@@ -102,12 +102,21 @@ class Ui5Registry implements Ui5RegistryInterface
     protected function loadFromArray(array $config): void
     {
         $modules = $config['modules'] ?? [];
+
+        // Pass 1: Reflect Roles
+        foreach ($modules as $slug => $moduleClass) {
+            /** @var Ui5ModuleInterface $module */
+            $module = new $moduleClass($slug);
+
+            $this->registerRoles($module);
+        }
+
+        // Pass 2: Reflect everything else
         foreach ($modules as $slug => $moduleClass) {
 
             /** @var Ui5ModuleInterface $module */
             $module = new $moduleClass($slug);
 
-            $this->registerRoles($module);
             $this->registerSemanticObject($module);
 
             $this->modules[$slug] = $module;
@@ -134,8 +143,11 @@ class Ui5Registry implements Ui5RegistryInterface
                 $this->registerArtifact($resource, $slug);
             }
         }
+
+        // Pass 3: Register inter module dependencies
         $this->registerSemanticLinks();
 
+        // Register independent artifacts
         $dashboards = $config['dashboards'] ?? [];
         foreach ($dashboards as $dashboardClass) {
             $dashboard = new $dashboardClass;
@@ -148,6 +160,7 @@ class Ui5Registry implements Ui5RegistryInterface
             $this->registerArtifact($report, null);
         }
 
+        // Extension Hook
         $this->afterLoad($config);
     }
 
@@ -174,7 +187,10 @@ class Ui5Registry implements Ui5RegistryInterface
                 $namespace = $module->getArtifactRoot()->getNamespace();
                 throw new LogicException("Role '$role->role' declared in module '$namespace' already exists.");
             }
-            $this->roles[$role->role] = $role->note;
+            $this->roles[$role->role] = [
+                'note' => $role->note,
+                'abilities' => [],
+            ];
         }
     }
 
@@ -272,9 +288,23 @@ class Ui5Registry implements Ui5RegistryInterface
                 ));
             }
 
+            if (!array_key_exists($ability->role, $this->roles)) {
+                throw new LogicException(sprintf(
+                    'Role [%s] referenced by ability [%s] is not declared [%s].',
+                    $ability->role,
+                    $ability->ability,
+                    get_class($artifact)
+                ));
+            }
+
             $this->abilities[$namespace][$ability->type->label()][$ability->ability] = [
                 'type' => $ability->type,
                 'role' => $ability->role,
+                'note' => $ability->note,
+            ];
+            $this->roles[$ability->role]['abilities'][] = [
+                'ability' => $ability->ability,
+                'type' => $ability->type,
                 'note' => $ability->note,
             ];
 

@@ -11,7 +11,7 @@ use LaravelUi5\Core\Ui5\Contracts\Ui5ResourceInterface;
 use Tests\Fixture\Hello\Hello;
 use Tests\Fixture\Hello\Resources\First\Provider;
 
-#[Ability(Hello::ACTION_NAME, 'Admin', AbilityType::Act, 'Lock or unlock a record')]
+#[Ability(Hello::ACTION_NAME, Hello::ROLE, AbilityType::Act, 'Lock or unlock a record')]
 class Resource implements Ui5ResourceInterface
 {
 

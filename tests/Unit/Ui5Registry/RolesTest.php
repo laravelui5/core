@@ -11,7 +11,8 @@ describe('Introspection Layer — Roles', function () {
         expect($roles)
             ->toBeArray()
             ->toHaveKey(Hello::ROLE)
-            ->and($roles[Hello::ROLE])->toContain('Administrative access');
+            ->and($roles[Hello::ROLE])->toHaveKey('note')
+            ->and($roles[Hello::ROLE]['note'])->toContain('Administrative access');
     });
 
     it('throws on duplicate role declarations', function () {
