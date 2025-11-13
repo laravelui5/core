@@ -504,7 +504,7 @@ class Ui5Registry implements Ui5RegistryInterface
         return null;
     }
 
-    public function all(): array
+    public function artifacts(): array
     {
         return $this->artifacts;
     }

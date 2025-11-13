@@ -39,13 +39,14 @@ use LaravelUi5\Core\Services\ParameterResolver;
 use LaravelUi5\Core\Services\SettingResolver;
 use LaravelUi5\Core\Ui5\Contracts\Ui5ModuleInterface;
 use LaravelUi5\Core\Ui5\Contracts\Ui5RegistryInterface;
+use LaravelUi5\Core\Ui5\Contracts\Ui5RuntimeInterface;
 use LaravelUi5\Core\Ui5\Ui5Registry;
 use LaravelUi5\Core\View\Components\Ui5Element;
 use RuntimeException;
 
 class Ui5CoreServiceProvider extends ServiceProvider
 {
-    public const UI5_ROUTE_PREFIX = 'ui5';
+    public const string UI5_ROUTE_PREFIX = 'ui5';
 
     /**
      * Middleware stack for the current SYSTEM environment.
@@ -73,6 +74,11 @@ class Ui5CoreServiceProvider extends ServiceProvider
             Ui5RegistryInterface::class,
             config('ui5.registry', Ui5Registry::class)
         );
+        if (config('ui5.runtime')) {
+            $this->app->singleton(Ui5RuntimeInterface::class, config('ui5.runtime'));
+        } else {
+            $this->app->alias(Ui5RegistryInterface::class, Ui5RuntimeInterface::class);
+        }
         $this->app->singleton(ContextServiceInterface::class, ContextService::class);
         $this->app->singleton(
             TenantResolverInterface::class,

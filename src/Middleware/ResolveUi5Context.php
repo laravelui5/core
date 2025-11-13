@@ -38,13 +38,12 @@ use LaravelUi5\Core\Ui5CoreServiceProvider;
  */
 class ResolveUi5Context
 {
-    public const SESSION_KEY_PARTNER_ID = 'impersonate.partner_id';
+    public const string SESSION_KEY_PARTNER_ID = 'impersonate.partner_id';
 
     public function __construct(
         protected Ui5Registry $ui5Registry,
     )
     {
-
     }
 
     public function handle(Request $request, Closure $next)
@@ -53,10 +52,10 @@ class ResolveUi5Context
 
             /** @var TenantResolverInterface $tenantResolver */
             $tenantResolver = app(TenantResolverInterface::class);
+            $tenant = $tenantResolver->resolve($request);
 
             $authUser = Auth::user();
 
-            /** @var BusinessPartnerInterface $authPartner */
             $authPartner = $authUser instanceof HasBusinessPartnerInterface
                 ? $authUser->partner()
                 : null;
@@ -70,16 +69,16 @@ class ResolveUi5Context
                 ? $partnerResolver->resolveById($impersonatePartnerId)
                 : $authPartner;
 
-            $context = new Ui5Context(
+            $locale = $request->getLocale();
+
+            app()->instance(Ui5Context::class, new Ui5Context(
                 request: $request,
                 artifact: $artifact,
-                tenant: $tenantResolver->resolve($request),
+                tenant: $tenant,
                 partner: $partner,
                 authPartner: $authPartner,
-                locale: $request->getLocale()
-            );
-
-            app()->instance(Ui5Context::class, $context);
+                locale: $locale
+            ));
         }
 
         return $next($request);

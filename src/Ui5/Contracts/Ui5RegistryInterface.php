@@ -6,41 +6,37 @@ use LaravelUi5\Core\Enums\AbilityType;
 use LaravelUi5\Core\Enums\ArtifactType;
 
 /**
- * The `Ui5Registry` is the central coordination and introspection service
- * of the LaravelUi5 ecosystem. It provides a unified API to discover, inspect,
- * and resolve all UI5-related artifacts, modules, and semantic metadata
- * within a Laravel application.
+ * Interface Ui5RegistryInterface
  *
- * It provides
- *  - Configuration based declaration of modules and artifacts
- *  - Metadata introspection on roles, abilities, settings and objects
- *  - Fast runtime resolution of modules and artifacts
+ * Defines the build-time introspection and coordination contract of the
+ * LaravelUi5 ecosystem. The registry exposes a unified API to discover,
+ * inspect, and reflect upon all UI5-related modules, artifacts, roles,
+ * abilities, settings, and semantic objects declared in a Laravel application.
  *
- * System rules enforced
- * - Every module must have a unique slug
- * - Every artifact must have a globally unique namespace
- * - Artifacts are only accessible via their registered modules or directly via namespace
+ * The registry operates at development or build time and performs reflection
+ * across modules and PHP attributes. It is the authoritative source for
+ * generating cache files, documentation, and metadata used at runtime
+ * by the {@see Ui5RuntimeInterface}.
  *
- * Example use cases
- * - Resolve the module for an incoming route like `/ui5/app/users/...`
- * - Inject a card component via `<x-ui5-element id="io.pragmatiqu.users.cards.summary" />`
- * - Generate manifest.json for a UI5 app
- * - Dispatch an API action based on a module slug and action name
+ * Responsibilities:
+ *  - Discover modules and artifacts from configuration and attributes
+ *  - Collect and normalize metadata (roles, abilities, settings, semantic objects)
+ *  - Provide build-time data for the runtime cache generator (`ui5:cache`)
+ *
+ * System guarantees:
+ *  - Every module has a unique slug
+ *  - Every artifact has a globally unique namespace
+ *  - Artifacts are addressable either through their module or namespace
+ *
+ * Example use cases:
+ *  - Generate the runtime cache file via `php artisan ui5:cache`
+ *  - Produce manifest.json files or capability maps for modules
+ *  - Inspect declared roles, settings, or abilities for validation or documentation
+ *
+ * @package LaravelUi5\Core\Ui5\Contracts
  */
-interface Ui5RegistryInterface
+interface Ui5RegistryInterface extends Ui5RuntimeInterface
 {
-    /** -- Lookup Layer ---------------------------------------------------- */
-
-    /**
-     * Returns the module with the given slug, or null if not found.
-     */
-    public function getModule(string $slug): ?Ui5ModuleInterface;
-
-    /**
-     * Checks if a module with the given slug exists.
-     */
-    public function hasModule(string $slug): bool;
-
     /**
      * Returns all registered modules.
      *
@@ -49,23 +45,11 @@ interface Ui5RegistryInterface
     public function modules(): array;
 
     /**
-     * Returns the artifact with the given namespace, or null if not found.
-     */
-    public function get(string $namespace): ?Ui5ArtifactInterface;
-
-    /**
-     * Checks if an artifact with the given namespace is registered.
-     */
-    public function has(string $namespace): bool;
-
-    /**
-     * Returns all registered artifacts.
+     * Returns all registered artifacts across all modules.
      *
      * @return Ui5ArtifactInterface[]
      */
-    public function all(): array;
-
-    /** -- Introspection Layer --------------------------------------------- */
+    public function artifacts(): array;
 
     /**
      * Returns all roles declared across all modules via #[Role] attributes.
@@ -143,37 +127,4 @@ interface Ui5RegistryInterface
      * @return array<string, array>
      */
     public function objects(): array;
-
-    /** -- Runtime Layer --------------------------------------------------- */
-
-    /**
-     * Returns the artifact by its slug (as used in routing or URLs), or null if not found.
-     */
-    public function fromSlug(string $slug): ?Ui5ArtifactInterface;
-
-    /**
-     * Returns the full slug (e.g. "app/offers") for the given artifact.
-     */
-    public function slugFor(Ui5ArtifactInterface $artifact): ?string;
-
-    /**
-     * Resolves a full UI5 resource path (e.g. for use in resourceroots) based on namespace.
-     */
-    public function resolve(string $namespace): ?string;
-
-    /**
-     * Resolves a list of navigation intents in the semantic graph.
-     *
-     * @param string $slug The module slug
-     * @return array<string, array<string, array>>
-     */
-    public function resolveIntents(string $slug): array;
-
-    /**
-     * Resolves an array of resource roots (namespace => URL) from an array of namespaces.
-     *
-     * @param array<int,string> $namespaces
-     * @return array<string,string>
-     */
-    public function resolveRoots(array $namespaces): array;
 }

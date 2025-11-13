@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [1.1.8] - 2025-11-13
+- Split Introspection and Runtime nature of Ui5RegistryInterface
+- Added new interface Ui5RuntimeInterface
+- Renamed method `all` in `Ui5Registry` to `artifacts`
+
 ## [1.1.7] - 2025-11-13
 - Simplified slugFor in registry
 - Removed namespaceToModuleSlug and artifactToModuleSlug from registry interface

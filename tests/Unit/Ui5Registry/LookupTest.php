@@ -63,7 +63,7 @@ describe('Lookup Layer — Artifacts', function () {
     });
 
     it('returns all registered artifacts as array', function () {
-        $all = $this->registry->all();
+        $all = $this->registry->artifacts();
 
         expect($all)->toBeArray()
             ->toHaveKey(Hello::NAMESPACE)
