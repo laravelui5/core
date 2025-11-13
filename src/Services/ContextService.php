@@ -8,7 +8,7 @@ use LaravelUi5\Core\Contracts\ContextContributorInterface;
 use LaravelUi5\Core\Contracts\ContextServiceInterface;
 use LaravelUi5\Core\Contracts\TenantInterface;
 use LaravelUi5\Core\Contracts\Ui5Context;
-use LaravelUi5\Core\Ui5\Ui5Registry;
+use LaravelUi5\Core\Ui5\Contracts\Ui5RuntimeInterface;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 
@@ -85,7 +85,7 @@ class ContextService implements ContextServiceInterface
         ?string $locale = null
     ): Ui5Context
     {
-        $ui5Artifact = app(Ui5Registry::class)->get($ui5AppId);
+        $ui5Artifact = app(Ui5RuntimeInterface::class)->get($ui5AppId);
         return new Ui5Context(null, $ui5Artifact, $tenant, $partner, $authPartner, $locale);
     }
 

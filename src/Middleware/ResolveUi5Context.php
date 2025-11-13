@@ -13,7 +13,7 @@ use LaravelUi5\Core\Contracts\Ui5Context;
 use LaravelUi5\Core\Enums\ArtifactType;
 use LaravelUi5\Core\Exceptions\MissingArtifactException;
 use LaravelUi5\Core\Ui5\Contracts\Ui5ArtifactInterface;
-use LaravelUi5\Core\Ui5\Ui5Registry;
+use LaravelUi5\Core\Ui5\Contracts\Ui5RuntimeInterface;
 use LaravelUi5\Core\Ui5CoreServiceProvider;
 
 /**
@@ -41,7 +41,7 @@ class ResolveUi5Context
     public const string SESSION_KEY_PARTNER_ID = 'impersonate.partner_id';
 
     public function __construct(
-        protected Ui5Registry $ui5Registry,
+        protected Ui5RuntimeInterface $runtime,
     )
     {
     }
@@ -104,7 +104,7 @@ class ResolveUi5Context
         if (str_starts_with($path, Ui5CoreServiceProvider::UI5_ROUTE_PREFIX)) {
             $relative = trim(substr($path, strlen(Ui5CoreServiceProvider::UI5_ROUTE_PREFIX)), '/');
             $urlKey = ArtifactType::urlKeyFromPath($relative);
-            if ($artifact = $this->ui5Registry->fromSlug($urlKey)) {
+            if ($artifact = $this->runtime->fromSlug($urlKey)) {
                 return $artifact;
             }
             throw new MissingArtifactException($urlKey);

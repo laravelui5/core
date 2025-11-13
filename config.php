@@ -54,10 +54,8 @@ return [
     | This option controls which implementation of the Ui5RegistryInterface is
     | used by the LaravelUi5 system. By default, the in-memory registry is
     | used (suitable for development). In production, you should consider
-    | switching to the cached registry for better performance.
-    |
-    | To (re)generate the artifact cache, run:
-    |   php artisan ui5:cache
+    | switching to a cached registry for better performance. To do so, use
+    | the `runtime` property to type hint the Ui5RuntimeInterface instance.
     |
     */
     'registry' => \LaravelUi5\Core\Ui5\Ui5Registry::class,

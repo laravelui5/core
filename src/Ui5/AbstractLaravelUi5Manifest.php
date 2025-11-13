@@ -9,7 +9,7 @@ use LaravelUi5\Core\Exceptions\InvalidParameterSourceException;
 use LaravelUi5\Core\Ui5\Contracts\LaravelUi5ManifestInterface;
 use LaravelUi5\Core\Ui5\Contracts\LaravelUi5ManifestKeys;
 use LaravelUi5\Core\Ui5\Contracts\ParameterizableInterface;
-use LaravelUi5\Core\Ui5\Contracts\Ui5RegistryInterface;
+use LaravelUi5\Core\Ui5\Contracts\Ui5RuntimeInterface;
 use ReflectionClass;
 use RuntimeException;
 
@@ -24,7 +24,7 @@ use RuntimeException;
 abstract class AbstractLaravelUi5Manifest implements LaravelUi5ManifestInterface
 {
 
-    public function __construct(protected Ui5RegistryInterface $registry)
+    public function __construct(protected Ui5RuntimeInterface $registry)
     {
     }
 
