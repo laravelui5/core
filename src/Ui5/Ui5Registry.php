@@ -509,18 +509,6 @@ class Ui5Registry implements Ui5RegistryInterface
         return $this->artifacts;
     }
 
-    /** -- Runtime Resolution ---------------------------------------------- */
-
-    public function namespaceToModuleSlug(string $namespace): ?string
-    {
-        return $this->namespaceToModule[$namespace] ?? null;
-    }
-
-    public function artifactToModuleSlug(string $class): ?string
-    {
-        return $this->artifactToModule[$class] ?? null;
-    }
-
     /** -- Introspection --------------------------------------------------- */
     public function roles(): array
     {
@@ -574,17 +562,7 @@ class Ui5Registry implements Ui5RegistryInterface
 
     public function slugFor(Ui5ArtifactInterface $artifact): ?string
     {
-        $namespace = $artifact->getNamespace();
-
-        if (!isset($this->namespaceToModule[$namespace])) {
-            throw new \RuntimeException("No module mapping found for artifact: {$namespace}");
-        }
-
-        $module = $this->namespaceToModule[$namespace];
-
-        return $artifact instanceof SluggableInterface
-            ? ArtifactType::urlKeyFromArtifact($artifact, $module)
-            : null;
+        return ArtifactType::urlKeyFromArtifact($artifact);
     }
 
     /** -- manifest.json facing -------------------------------------------- */

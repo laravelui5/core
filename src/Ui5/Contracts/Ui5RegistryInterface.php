@@ -176,14 +176,4 @@ interface Ui5RegistryInterface
      * @return array<string,string>
      */
     public function resolveRoots(array $namespaces): array;
-
-    /**
-     * Returns the slug of the module that owns the given artifact namespace.
-     */
-    public function namespaceToModuleSlug(string $namespace): ?string;
-
-    /**
-     * Returns the slug of the module that owns the given artifact class name.
-     */
-    public function artifactToModuleSlug(string $class): ?string;
 }

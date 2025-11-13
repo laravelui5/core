@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [1.1.7] - 2025-11-13
+- Simplified slugFor in registry
+- Removed namespaceToModuleSlug and artifactToModuleSlug from registry interface
+
 ## [1.1.6] - 2025-11-13
 - Unified Core role declarations with `SettingVisibilityRole` enum for consistent hierarchy and synchronization.
 - Added artifact to module slug mapping

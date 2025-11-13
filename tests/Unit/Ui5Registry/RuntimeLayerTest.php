@@ -25,19 +25,6 @@ describe('Slug resolution', function () {
     });
 });
 
-describe('Namespace and artifact mapping', function () {
-    it('maps namespace to correct module slug', function () {
-        $registry = Ui5Registry::fromArray(Hello::ui5Config());
-        expect($registry->namespaceToModuleSlug(Hello::NAMESPACE))->toBe('hello');
-    });
-
-    it('maps artifact class to correct module slug', function () {
-        $registry = Ui5Registry::fromArray(Hello::ui5Config());
-        $artifact = $registry->get(Hello::NAMESPACE);
-        expect($registry->artifactToModuleSlug($artifact::class))->toBe('hello');
-    });
-});
-
 describe('Resource path resolution', function () {
     it('resolves resource path for namespace', function () {
         $registry = Ui5Registry::fromArray(Hello::ui5Config());
