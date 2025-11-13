@@ -47,6 +47,11 @@ class Ui5Registry implements Ui5RegistryInterface
     protected array $namespaceToModule = [];
 
     /**
+     * @var array<class-string<Ui5ArtifactInterface>, string>
+     */
+    protected array $artifactToModule = [];
+
+    /**
      * @var array<string, Ui5ArtifactInterface>
      */
     protected array $slugs = [];
@@ -67,7 +72,7 @@ class Ui5Registry implements Ui5RegistryInterface
     protected array $settings = [];
 
     /**
-     * @var array<class-string<Model>, string[]>
+     * @var array<class-string<Model>, array<string, mixed>>
      */
     protected array $objects = [];
 
@@ -212,6 +217,7 @@ class Ui5Registry implements Ui5RegistryInterface
 
         if (null !== $moduleSlug) {
             $this->namespaceToModule[$namespace] = $moduleSlug;
+            $this->artifactToModule[get_class($artifact)] = $moduleSlug;
         }
 
         $this->discoverAbilities($artifact);
@@ -512,13 +518,7 @@ class Ui5Registry implements Ui5RegistryInterface
 
     public function artifactToModuleSlug(string $class): ?string
     {
-        foreach ($this->artifacts as $namespace => $artifact) {
-            if ($artifact::class === $class) {
-                return $this->namespaceToModule[$namespace] ?? null;
-            }
-        }
-
-        return null;
+        return $this->artifactToModule[$class] ?? null;
     }
 
     /** -- Introspection --------------------------------------------------- */
@@ -645,16 +645,18 @@ class Ui5Registry implements Ui5RegistryInterface
         return collect($namespaces)->mapWithKeys(fn($ns) => [$ns => $this->resolve($ns)])->all();
     }
 
-    /** -- Client facing --------------------------------------------------- */
-    public function introspect(): array
+    /** -- Export ---------------------------------------------------------- */
+    public function exportToCache(): array
     {
         return [
             'modules' => $this->modules,
             'artifacts' => $this->artifacts,
             'namespaceToModule' => $this->namespaceToModule,
+            'artifactToModule' => $this->artifactToModule,
             'slugs' => $this->slugs,
             'roles' => $this->roles,
             'abilities' => $this->abilities,
+            'settings' => $this->settings,
             'objects' => $this->objects,
             'links' => $this->links,
         ];

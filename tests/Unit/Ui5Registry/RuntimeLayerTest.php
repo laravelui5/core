@@ -84,7 +84,7 @@ describe('Semantic intents resolution', function () {
 describe('Introspect snapshot', function () {
     it('returns all expected keys in introspection array', function () {
         $registry = Ui5Registry::fromArray(Hello::ui5Config());
-        $data = $registry->introspect();
+        $data = $registry->exportToCache();
 
         expect($data)->toHaveKeys([
             'modules', 'artifacts', 'namespaceToModule', 'slugs',

@@ -4,8 +4,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-## [1.1.5] - 2025-11-
+## [1.1.6] - 2025-11-13
 - Unified Core role declarations with `SettingVisibilityRole` enum for consistent hierarchy and synchronization.
+- Added artifact to module slug mapping
+- renamed introspect function on registry to exportToCache
 
 ## [1.1.5] - 2025-11-12
 - Include namespace when referencing abilities for roles
