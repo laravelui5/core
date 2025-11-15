@@ -194,6 +194,7 @@ class Ui5Registry implements Ui5RegistryInterface
             }
             $this->roles[$role->role] = [
                 'note' => $role->note,
+                'scope' => $role->scope,
                 'abilities' => [],
             ];
         }
