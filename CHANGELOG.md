@@ -4,8 +4,15 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-## [1.1.9] - 2025-11-
+## [1.1.9] - 2025-11-15
 - Use the runtime instead of the registry
+- Renamed AbstractLaravelUi5Manifest to AbstractManifest
+- Added InvalidModuleException and throw when module unknown in AbstractManifest
+- Implemented missing methods in AbstractManifest
+- Added route name for app route
+- Renamed getLaravelUi5Fragment to getFragment
+- Renamed TestCase to FeatureTestCase for more clarity
+- Added optional property `scope` to Role attribute
 
 ## [1.1.8] - 2025-11-13
 - Split Introspection and Runtime nature of Ui5RegistryInterface

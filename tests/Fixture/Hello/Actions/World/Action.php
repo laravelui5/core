@@ -51,7 +51,7 @@ class Action extends AbstractUi5Action
 
     public function getSlug(): string
     {
-        return 'world';
+        return Hello::ACTION_SLUG;
     }
 
     public function getMethod(): HttpMethod

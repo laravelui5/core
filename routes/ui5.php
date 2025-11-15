@@ -45,7 +45,8 @@ Route::get('report/{slug}', ReportController::class);
 /**
  * APPLICATION entrypoint (index.html)
  */
-Route::get('app/{module}/{version}/index.html', IndexController::class);
+Route::get('app/{module}/{version}/index.html', IndexController::class)
+    ->name('ui5.app');
 
 /**
  * APPLICATION manifest.json

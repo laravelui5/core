@@ -28,5 +28,5 @@ interface LaravelUi5ManifestInterface
      *
      * @return array<string, mixed>
      */
-    public function getLaravelUi5Fragment(string $module): array;
+    public function getFragment(string $module): array;
 }

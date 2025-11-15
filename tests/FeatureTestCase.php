@@ -7,7 +7,7 @@ use LaravelUi5\Core\Middleware\ResolveUi5Context;
 use LaravelUi5\Core\Ui5CoreServiceProvider;
 use Tests\Fixture\Hello\HelloModule;
 
-class TestCase extends \Orchestra\Testbench\TestCase
+class FeatureTestCase extends \Orchestra\Testbench\TestCase
 {
 
     protected function setUp(): void

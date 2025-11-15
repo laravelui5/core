@@ -18,36 +18,30 @@ namespace LaravelUi5\Core\Ui5\Contracts;
  */
 final class LaravelUi5ManifestKeys
 {
-    /**
-     * Defines available backend actions callable via LaravelUi5.call(...)
-     *
-     * @see Ui5ActionInterface
-     */
-    public const ACTIONS = 'actions';
-
-    /**
-     * Defines available report endpoints (selection + output)
-     *
-     * @see Ui5ReportInterface
-     */
-    public const REPORTS = 'reports';
-
-    /**
-     * Defines route names that can be consumed by the UI5 frontend
-     * (e.g., logout, profile, login)
-     */
-    public const ROUTES = 'routes';
 
     /**
      * Defines meta information about the current app, tenant, or environment.
      * Can include version info, license state, branding flags, etc.
      */
-    public const META = 'meta';
+    public const string META = 'meta';
+
+    /**
+     * Defines route names that can be consumed by the UI5 frontend
+     * (e.g., logout, profile, login)
+     */
+    public const string ROUTES = 'routes';
+
+    /**
+     * Defines available backend actions callable via LaravelUi5.call(...)
+     *
+     * @see Ui5ActionInterface
+     */
+    public const string ACTIONS = 'actions';
 
     /**
      * Defines available resource endpoints callable via LaravelUi5.get(...)
      */
-    public const RESOURCES = 'resources';
+    public const string RESOURCES = 'resources';
 
     /**
      * Defines ability-level access rules for components and actions.
@@ -55,24 +49,24 @@ final class LaravelUi5ManifestKeys
      *
      * @example "see", "use", "act"
      */
-    public const ABILITIES = 'abilities';
+    public const string ABILITIES = 'abilities';
 
     /**
      * Defines the list of available user roles within the app or tenant.
      * Used for UI filtering, permission mapping, and documentation.
      */
-    public const ROLES = 'roles';
+    public const string ROLES = 'roles';
 
     /**
      * Defines user- or tenant-specific settings exposed to the frontend.
      * Can include feature toggles, UI preferences, branding info, etc.
      */
-    public const SETTINGS = 'settings';
+    public const string SETTINGS = 'settings';
 
     /**
      * Defines navigation intents defined by semantic object graph.
      */
-    public const INTENTS = 'intents';
+    public const string INTENTS = 'intents';
 
     /**
      * Returns all known manifest keys in the order they are typically rendered.
@@ -86,7 +80,6 @@ final class LaravelUi5ManifestKeys
     {
         return [
             self::ACTIONS,
-            self::REPORTS,
             self::ROUTES,
             self::META,
             self::RESOURCES,

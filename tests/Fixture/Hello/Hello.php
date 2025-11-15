@@ -8,6 +8,7 @@ class Hello
     public const string NAMESPACE = 'com.laravelui5.hello';
     public const string ROLE = 'Test';
     public const string ACTION_NAME = 'toggleLock';
+    public const string ACTION_SLUG = 'world';
 
     public static function ui5Config(): array
     {
