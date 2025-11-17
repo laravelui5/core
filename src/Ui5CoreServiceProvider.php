@@ -26,12 +26,10 @@ use LaravelUi5\Core\Commands\GenerateUi5Resource;
 use LaravelUi5\Core\Commands\GenerateUi5TileCommand;
 use LaravelUi5\Core\Contracts\AuthServiceInterface;
 use LaravelUi5\Core\Contracts\BusinessPartnerResolverInterface;
-use LaravelUi5\Core\Contracts\ContextServiceInterface;
 use LaravelUi5\Core\Contracts\ParameterResolverInterface;
 use LaravelUi5\Core\Contracts\SettingResolverInterface;
 use LaravelUi5\Core\Contracts\TenantResolverInterface;
 use LaravelUi5\Core\Controllers\ODataController;
-use LaravelUi5\Core\Services\ContextService;
 use LaravelUi5\Core\Services\NullAuthService;
 use LaravelUi5\Core\Services\NullBusinessPartnerResolver;
 use LaravelUi5\Core\Services\NullTenantResolver;
@@ -79,7 +77,6 @@ class Ui5CoreServiceProvider extends ServiceProvider
         } else {
             $this->app->alias(Ui5RegistryInterface::class, Ui5RuntimeInterface::class);
         }
-        $this->app->singleton(ContextServiceInterface::class, ContextService::class);
         $this->app->singleton(
             TenantResolverInterface::class,
             config('ui5.tenant_resolver', NullTenantResolver::class)

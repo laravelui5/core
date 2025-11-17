@@ -5,7 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [1.1.10] - 2025-11-15
-- Save scope to registry
+- Save role scope to registry
+- Removed ContextServiceInterface and related interfaces and services
 
 ## [1.1.9] - 2025-11-15
 - Use the runtime instead of the registry
