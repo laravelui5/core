@@ -1,0 +1,464 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+
+	<title>Class LaravelUi5\Core\Attributes\Setting | API Documentation API</title>
+	<link rel="stylesheet" href="assets/main.css">
+	<script src="assets/main.js" defer></script>
+</head>
+
+<body class="layout">
+	<div class="layout-aside">
+	<div class="menu">
+			<div class="menu-section">
+				<h3>Namespaces</h3>
+	<ul>
+			<li class="menuGroup-item active">
+				<a href="namespace-LaravelUi5.html">LaravelUi5</a>
+	<ul>
+			<li class="menuGroup-item active">
+				<a href="namespace-LaravelUi5.Core.html">Core</a>
+	<ul>
+			<li class="menuGroup-item active">
+				<a href="namespace-LaravelUi5.Core.Attributes.html">Attributes</a>
+			</li>
+			<li class="menuGroup-item">
+				<a href="namespace-LaravelUi5.Core.Commands.html">Commands</a>
+			</li>
+			<li class="menuGroup-item">
+				<a href="namespace-LaravelUi5.Core.Contracts.html">Contracts</a>
+			</li>
+			<li class="menuGroup-item">
+				<a href="namespace-LaravelUi5.Core.Controllers.html">Controllers</a>
+			</li>
+			<li class="menuGroup-item">
+				<a href="namespace-LaravelUi5.Core.Enums.html">Enums</a>
+			</li>
+			<li class="menuGroup-item">
+				<a href="namespace-LaravelUi5.Core.Exceptions.html">Exceptions</a>
+			</li>
+			<li class="menuGroup-item">
+				<a href="namespace-LaravelUi5.Core.Middleware.html">Middleware</a>
+			</li>
+			<li class="menuGroup-item">
+				<a href="namespace-LaravelUi5.Core.Services.html">Services</a>
+			</li>
+			<li class="menuGroup-item">
+				<a href="namespace-LaravelUi5.Core.Traits.html">Traits</a>
+			</li>
+			<li class="menuGroup-item">
+				<a href="namespace-LaravelUi5.Core.Ui5.html">Ui5</a>
+			</li>
+			<li class="menuGroup-item">
+				<a href="namespace-LaravelUi5.Core.View.html">View</a>
+			</li>
+	</ul>
+			</li>
+	</ul>
+			</li>
+	</ul>
+			</div>
+
+		<div class="menu-section">
+			<h3>Classes</h3>
+			<ul>
+					<li>
+						<a href="LaravelUi5.Core.Attributes.Ability.html">
+							Ability
+						</a>
+					</li>
+					<li>
+						<a href="LaravelUi5.Core.Attributes.Parameter.html">
+							Parameter
+						</a>
+					</li>
+					<li>
+						<a href="LaravelUi5.Core.Attributes.Role.html">
+							Role
+						</a>
+					</li>
+					<li>
+						<a href="LaravelUi5.Core.Attributes.SemanticLink.html">
+							SemanticLink
+						</a>
+					</li>
+					<li>
+						<a href="LaravelUi5.Core.Attributes.SemanticObject.html">
+							SemanticObject
+						</a>
+					</li>
+					<li class="active">
+						<a href="LaravelUi5.Core.Attributes.Setting.html">
+							Setting
+						</a>
+					</li>
+			</ul>
+		</div>
+	</div>
+	</div>
+
+	<div class="layout-main">
+		<div class="layout-navbar">
+	<nav class="navbar">
+		<div class="navbar-left">
+			<ul class="navbar-links">
+				<li>
+					<a href="index.html">Overview</a>
+				</li>
+				<li>
+					
+						<a href="namespace-LaravelUi5.Core.Attributes.html">Namespace</a>
+					
+				</li>
+<li class="active"><a href="LaravelUi5.Core.Attributes.Setting.html">Class</a></li>				<li>
+					<a href="tree.html">Tree</a>
+				</li>
+			</ul>
+		</div>
+		<div class="navbar-right">
+	<div class="search" data-elements="assets/elements.js">
+		<input class="search-input" placeholder="Search class, function or namespace" autofocus>
+		<ul class="search-results"></ul>
+	</div>
+		</div>
+	</nav>
+		</div>
+
+		<div class="layout-content">
+		<h1>
+			Class <a href="namespace-LaravelUi5.html">LaravelUi5</a>\<a href="namespace-LaravelUi5.Core.html">Core</a>\<a href="namespace-LaravelUi5.Core.Attributes.html">Attributes</a>\<a href="LaravelUi5.Core.Attributes.Setting.html">Setting</a>
+		</h1>
+
+
+	<table class="classLikeSignatureTable">
+
+
+
+
+	</table>
+		<div class="classLikeDescription">
+	<div class="description"><p>Declarative setting definition for Configurable classes.</p>
+<p>Apply this attribute multiple times on a class (e.g., Action handler, Resource/Data provider,
+Report provider) to declare the settings it depends on.</p>
+<p><strong>When to Use Settings vs. Custom Database Models</strong></p>
+<p>The <em>Settings API</em> is designed for lightweight, flexible configuration values that can be expressed as simple key–value pairs (strings, numbers, booleans, arrays, dates).
+It works well when the configuration is <em>UI-driven, ephemeral, or low-risk</em>:</p>
+<ul>
+<li>UI filters and personalization (e.g., a card showing weekly hours for selected employees).
+<ul>
+<li>Display preferences (e.g., default currency, theme, date range presets).</li>
+<li>Feature toggles or thresholds that may change frequently.</li>
+<li>Lists of IDs that serve as filters, <em>as long as you accept weak references</em> (IDs stored without DB-level foreign keys).</li>
+</ul>
+</li>
+</ul>
+<p>By contrast, a <em>custom database model</em> should be used when the configuration expresses a <em>business relationship or critical domain rule</em>:</p>
+<ul>
+<li>Relationships that must be referentially intact (e.g., employees assigned to cost centers).
+<ul>
+<li>Audit-relevant or legally binding data (e.g., who is eligible for billing, regulatory roles).</li>
+<li>Data that requires strong constraints, migrations, or reporting queries (joins, aggregates).</li>
+<li>Long-lived associations where zombie IDs (deleted or reassigned objects) are unacceptable.</li>
+</ul>
+</li>
+</ul>
+<p><strong>Rule of Thumb</strong></p>
+<p>If a value is <em>ephemeral, UI-scoped, or best-effort</em> → <em>Settings</em> are pragmatic and safe.
+If a value is <em>domain-critical, audited, or relational in nature</em> → design a <em>dedicated DB model</em>.</p>
+<p><strong>Notes</strong></p>
+<p>Weak foreign keys in Settings (e.g., arrays of BusinessPartner IDs) are acceptable if you <em>sanitize them at runtime</em> (ignore IDs that no longer exist).
+Settings should always store JSON-safe primitives (string, int, float, bool, date in ISO-8601, arrays thereof).
+You trade off <em>referential integrity</em> for <em>developer speed</em>. This is intentional.</p>
+<p><strong>Example</strong></p>
+<pre><code class="language-#[Setting(">     key: 'billing.settlement.validation.maxHours',
+     type: ValueType::Integer,
+     default: 8,
+     scope: SettingScope::Tenant,
+     visibilityRole: SettingVisibilityRole::TenantAdmin
+ )]```
+</code></pre>
+</div>
+		</div>
+
+
+		<div class="classLikeSection">
+			<b>Located at</b> <a href="source-Attributes.Setting.html#53" title="Go to source code">Attributes/Setting.php</a><br>
+		</div>
+
+
+
+		<table class="table" id="methods">
+			<tr>
+				<th class="table-heading sortable" colspan="3" title="Switch between natural and alphabetical order">Methods</th>
+			</tr>
+
+	<tr class="expandable collapsed" data-order="__construct" id="___construct">
+			<td class="table-cell table-shrink">
+				<code class="nowrap">
+					
+	public
+					
+					
+				</code>
+			</td>
+
+			<td class="table-cell">
+				<code><a href="source-Attributes.Setting.html#56-73" title="Go to source code">__construct</a>(
+	<span>string <var>$setting</var></span>,
+	<span><a href="LaravelUi5.Core.Enums.ValueType.html"><span title="LaravelUi5\Core\Enums\ValueType">ValueType</span></a> <var>$type</var> = <a href="LaravelUi5.Core.Enums.ValueType.html"><span title="LaravelUi5\Core\Enums\ValueType">ValueType</span></a>::<a href="LaravelUi5.Core.Enums.ValueType.html#String">String</a></span>,
+	<span>mixed <var>$default</var> = <span class="php-kw">null</span></span>,
+	<span><a href="LaravelUi5.Core.Enums.SettingScope.html"><span title="LaravelUi5\Core\Enums\SettingScope">SettingScope</span></a> <var>$scope</var> = <a href="LaravelUi5.Core.Enums.SettingScope.html"><span title="LaravelUi5\Core\Enums\SettingScope">SettingScope</span></a>::<a href="LaravelUi5.Core.Enums.SettingScope.html#Tenant">Tenant</a></span>,
+	<span><a href="LaravelUi5.Core.Enums.SettingVisibilityRole.html"><span title="LaravelUi5\Core\Enums\SettingVisibilityRole">SettingVisibilityRole</span></a> <var>$role</var> = <a href="LaravelUi5.Core.Enums.SettingVisibilityRole.html"><span title="LaravelUi5\Core\Enums\SettingVisibilityRole">SettingVisibilityRole</span></a>::<a href="LaravelUi5.Core.Enums.SettingVisibilityRole.html#TenantAdmin">TenantAdmin</a></span>,
+	<span>string <var>$note</var></span>,
+)</code>
+
+
+
+	<div class="expandable-expandedView">
+
+							<h4>Parameters</h4>
+							<table>
+									<tr>
+										<td><var>$setting</var>&nbsp;&nbsp;</td>
+										<td><p>Technical identifier, e.g. &quot;module.service.setting.foo.bar&quot;</p>
+</td>
+									</tr>
+									<tr>
+										<td><var>$type</var>&nbsp;&nbsp;</td>
+										<td><p>Type used to cast the JSON value (maps to <code>value_type</code>)</p>
+</td>
+									</tr>
+									<tr>
+										<td><var>$default</var>&nbsp;&nbsp;</td>
+										<td><p>Default applied by package (developer)</p>
+</td>
+									</tr>
+									<tr>
+										<td><var>$scope</var>&nbsp;&nbsp;</td>
+										<td><p>Intended/default scope for this setting (maps to <code>scope</code>)</p>
+</td>
+									</tr>
+									<tr>
+										<td><var>$role</var>&nbsp;&nbsp;</td>
+										<td><p>Minimum role allowed to edit (maps to <code>visibility_role</code>)</p>
+</td>
+									</tr>
+									<tr>
+										<td><var>$note</var>&nbsp;&nbsp;</td>
+										<td><p>Description of the setting's purpose or scope.</p>
+</td>
+									</tr>
+							</table>
+
+
+
+	</div>
+			</td>
+		<td class="table-anchor">
+			<a href="#___construct">#</a>
+		</td>
+	</tr>
+		</table>
+
+
+
+
+
+
+		<table class="table" id="properties">
+			<tr>
+				<th class="table-heading sortable" colspan="4" title="Switch between natural and alphabetical order">Properties</th>
+			</tr>
+
+	<tr class="expandable collapsed" data-order="setting" id="$setting">
+			<td class="table-cell table-shrink">
+				<code class="nowrap">
+	public
+					
+					
+				</code>
+			</td>
+
+			<td class="table-cell table-shrink">
+				<code class="nowrap">string</code>
+			</td>
+
+			<td class="table-cell">
+<code><var><a href="source-Attributes.Setting.html#65" title="Go to source code">$setting</a></var></code>
+				
+	<div class="expandable-collapsedView">
+		Technical identifier, e.g. "module.service.setting.foo.bar"
+	</div>
+
+	<div class="expandable-expandedView">
+	<div class="description"><p>Technical identifier, e.g. &quot;module.service.setting.foo.bar&quot;</p>
+</div>
+	</div>
+			</td>
+		<td class="table-anchor">
+			<a href="#$setting">#</a>
+		</td>
+	</tr>
+	<tr class="expandable collapsed" data-order="type" id="$type">
+			<td class="table-cell table-shrink">
+				<code class="nowrap">
+	public
+					
+					
+				</code>
+			</td>
+
+			<td class="table-cell table-shrink">
+				<code class="nowrap"><a href="LaravelUi5.Core.Enums.ValueType.html"><span title="LaravelUi5\Core\Enums\ValueType">ValueType</span></a></code>
+			</td>
+
+			<td class="table-cell">
+<code><var><a href="source-Attributes.Setting.html#66" title="Go to source code">$type</a></var></code>
+				
+	<div class="expandable-collapsedView">
+		Type used to cast the JSON value (maps to `value_type`)
+	</div>
+
+	<div class="expandable-expandedView">
+	<div class="description"><p>Type used to cast the JSON value (maps to <code>value_type</code>)</p>
+</div>
+	</div>
+			</td>
+		<td class="table-anchor">
+			<a href="#$type">#</a>
+		</td>
+	</tr>
+	<tr class="expandable collapsed" data-order="default" id="$default">
+			<td class="table-cell table-shrink">
+				<code class="nowrap">
+	public
+					
+					
+				</code>
+			</td>
+
+			<td class="table-cell table-shrink">
+				<code class="nowrap">mixed</code>
+			</td>
+
+			<td class="table-cell">
+<code><var><a href="source-Attributes.Setting.html#67" title="Go to source code">$default</a></var></code>
+				
+	<div class="expandable-collapsedView">
+		Default applied by package (developer)
+	</div>
+
+	<div class="expandable-expandedView">
+	<div class="description"><p>Default applied by package (developer)</p>
+</div>
+	</div>
+			</td>
+		<td class="table-anchor">
+			<a href="#$default">#</a>
+		</td>
+	</tr>
+	<tr class="expandable collapsed" data-order="scope" id="$scope">
+			<td class="table-cell table-shrink">
+				<code class="nowrap">
+	public
+					
+					
+				</code>
+			</td>
+
+			<td class="table-cell table-shrink">
+				<code class="nowrap"><a href="LaravelUi5.Core.Enums.SettingScope.html"><span title="LaravelUi5\Core\Enums\SettingScope">SettingScope</span></a></code>
+			</td>
+
+			<td class="table-cell">
+<code><var><a href="source-Attributes.Setting.html#68" title="Go to source code">$scope</a></var></code>
+				
+	<div class="expandable-collapsedView">
+		Intended/default scope for this setting (maps to `scope`)
+	</div>
+
+	<div class="expandable-expandedView">
+	<div class="description"><p>Intended/default scope for this setting (maps to <code>scope</code>)</p>
+</div>
+	</div>
+			</td>
+		<td class="table-anchor">
+			<a href="#$scope">#</a>
+		</td>
+	</tr>
+	<tr class="expandable collapsed" data-order="role" id="$role">
+			<td class="table-cell table-shrink">
+				<code class="nowrap">
+	public
+					
+					
+				</code>
+			</td>
+
+			<td class="table-cell table-shrink">
+				<code class="nowrap"><a href="LaravelUi5.Core.Enums.SettingVisibilityRole.html"><span title="LaravelUi5\Core\Enums\SettingVisibilityRole">SettingVisibilityRole</span></a></code>
+			</td>
+
+			<td class="table-cell">
+<code><var><a href="source-Attributes.Setting.html#69" title="Go to source code">$role</a></var></code>
+				
+	<div class="expandable-collapsedView">
+		Minimum role allowed to edit (maps to `visibility_role`)
+	</div>
+
+	<div class="expandable-expandedView">
+	<div class="description"><p>Minimum role allowed to edit (maps to <code>visibility_role</code>)</p>
+</div>
+	</div>
+			</td>
+		<td class="table-anchor">
+			<a href="#$role">#</a>
+		</td>
+	</tr>
+	<tr class="expandable collapsed" data-order="note" id="$note">
+			<td class="table-cell table-shrink">
+				<code class="nowrap">
+	public
+					
+					
+				</code>
+			</td>
+
+			<td class="table-cell table-shrink">
+				<code class="nowrap">string</code>
+			</td>
+
+			<td class="table-cell">
+<code><var><a href="source-Attributes.Setting.html#70" title="Go to source code">$note</a></var></code>
+				
+	<div class="expandable-collapsedView">
+		Description of the setting's purpose or scope.
+	</div>
+
+	<div class="expandable-expandedView">
+	<div class="description"><p>Description of the setting's purpose or scope.</p>
+</div>
+	</div>
+			</td>
+		<td class="table-anchor">
+			<a href="#$note">#</a>
+		</td>
+	</tr>
+		</table>
+
+
+		</div>
+
+		<div class="layout-footer">
+			API Documentation API documentation generated by <a href="https://www.apigen.org">ApiGen v7.0.0-alpha.6</a>
+		</div>
+	</div>
+
+	<div class="layout-rest">
+		<div class="navbar"></div>
+	</div>
+</body>
+</html>

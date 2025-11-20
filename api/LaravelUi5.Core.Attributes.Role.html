@@ -1,0 +1,342 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+
+	<title>Class LaravelUi5\Core\Attributes\Role | API Documentation API</title>
+	<link rel="stylesheet" href="assets/main.css">
+	<script src="assets/main.js" defer></script>
+</head>
+
+<body class="layout">
+	<div class="layout-aside">
+	<div class="menu">
+			<div class="menu-section">
+				<h3>Namespaces</h3>
+	<ul>
+			<li class="menuGroup-item active">
+				<a href="namespace-LaravelUi5.html">LaravelUi5</a>
+	<ul>
+			<li class="menuGroup-item active">
+				<a href="namespace-LaravelUi5.Core.html">Core</a>
+	<ul>
+			<li class="menuGroup-item active">
+				<a href="namespace-LaravelUi5.Core.Attributes.html">Attributes</a>
+			</li>
+			<li class="menuGroup-item">
+				<a href="namespace-LaravelUi5.Core.Commands.html">Commands</a>
+			</li>
+			<li class="menuGroup-item">
+				<a href="namespace-LaravelUi5.Core.Contracts.html">Contracts</a>
+			</li>
+			<li class="menuGroup-item">
+				<a href="namespace-LaravelUi5.Core.Controllers.html">Controllers</a>
+			</li>
+			<li class="menuGroup-item">
+				<a href="namespace-LaravelUi5.Core.Enums.html">Enums</a>
+			</li>
+			<li class="menuGroup-item">
+				<a href="namespace-LaravelUi5.Core.Exceptions.html">Exceptions</a>
+			</li>
+			<li class="menuGroup-item">
+				<a href="namespace-LaravelUi5.Core.Middleware.html">Middleware</a>
+			</li>
+			<li class="menuGroup-item">
+				<a href="namespace-LaravelUi5.Core.Services.html">Services</a>
+			</li>
+			<li class="menuGroup-item">
+				<a href="namespace-LaravelUi5.Core.Traits.html">Traits</a>
+			</li>
+			<li class="menuGroup-item">
+				<a href="namespace-LaravelUi5.Core.Ui5.html">Ui5</a>
+			</li>
+			<li class="menuGroup-item">
+				<a href="namespace-LaravelUi5.Core.View.html">View</a>
+			</li>
+	</ul>
+			</li>
+	</ul>
+			</li>
+	</ul>
+			</div>
+
+		<div class="menu-section">
+			<h3>Classes</h3>
+			<ul>
+					<li>
+						<a href="LaravelUi5.Core.Attributes.Ability.html">
+							Ability
+						</a>
+					</li>
+					<li>
+						<a href="LaravelUi5.Core.Attributes.Parameter.html">
+							Parameter
+						</a>
+					</li>
+					<li class="active">
+						<a href="LaravelUi5.Core.Attributes.Role.html">
+							Role
+						</a>
+					</li>
+					<li>
+						<a href="LaravelUi5.Core.Attributes.SemanticLink.html">
+							SemanticLink
+						</a>
+					</li>
+					<li>
+						<a href="LaravelUi5.Core.Attributes.SemanticObject.html">
+							SemanticObject
+						</a>
+					</li>
+					<li>
+						<a href="LaravelUi5.Core.Attributes.Setting.html">
+							Setting
+						</a>
+					</li>
+			</ul>
+		</div>
+	</div>
+	</div>
+
+	<div class="layout-main">
+		<div class="layout-navbar">
+	<nav class="navbar">
+		<div class="navbar-left">
+			<ul class="navbar-links">
+				<li>
+					<a href="index.html">Overview</a>
+				</li>
+				<li>
+					
+						<a href="namespace-LaravelUi5.Core.Attributes.html">Namespace</a>
+					
+				</li>
+<li class="active"><a href="LaravelUi5.Core.Attributes.Role.html">Class</a></li>				<li>
+					<a href="tree.html">Tree</a>
+				</li>
+			</ul>
+		</div>
+		<div class="navbar-right">
+	<div class="search" data-elements="assets/elements.js">
+		<input class="search-input" placeholder="Search class, function or namespace" autofocus>
+		<ul class="search-results"></ul>
+	</div>
+		</div>
+	</nav>
+		</div>
+
+		<div class="layout-content">
+		<h1>
+			Class <a href="namespace-LaravelUi5.html">LaravelUi5</a>\<a href="namespace-LaravelUi5.Core.html">Core</a>\<a href="namespace-LaravelUi5.Core.Attributes.html">Attributes</a>\<a href="LaravelUi5.Core.Attributes.Role.html">Role</a>
+		</h1>
+
+
+	<table class="classLikeSignatureTable">
+
+
+
+
+	</table>
+		<div class="classLikeDescription">
+	<div class="description"><p>Declares a semantic role within the LaravelUi5 domain model.</p>
+<p>A Role groups Abilities into a <em>conceptual responsibility</em>,
+such as &quot;Accountant&quot; or &quot;Project Manager&quot;. Roles are global
+and context-independent — they describe <em>what</em> a user represents,
+not <em>where</em> the role applies.</p>
+<p>Contextual assignments (e.g. &quot;Anna is Project Manager in Project A&quot;)
+are handled at the group or policy layer, not by the role itself.</p>
+<p>Example:</p>
+<pre><code class="language-php">#[Role('Accountant', 'Responsible for financial postings and reporting.')]
+class AccountingModule {}
+</code></pre>
+<p>Roles are typically referenced by <code>Ability</code> or <code>Group</code> assignments
+but do not directly enforce access restrictions. They serve as
+descriptive metadata to organize responsibilities across modules.</p>
+</div>
+		</div>
+
+
+		<div class="classLikeSection">
+			<b>Located at</b> <a href="source-Attributes.Role.html#30" title="Go to source code">Attributes/Role.php</a><br>
+		</div>
+
+
+
+		<table class="table" id="methods">
+			<tr>
+				<th class="table-heading sortable" colspan="3" title="Switch between natural and alphabetical order">Methods</th>
+			</tr>
+
+	<tr class="expandable collapsed" data-order="__construct" id="___construct">
+			<td class="table-cell table-shrink">
+				<code class="nowrap">
+					
+	public
+					
+					
+				</code>
+			</td>
+
+			<td class="table-cell">
+				<code><a href="source-Attributes.Role.html#33-47" title="Go to source code">__construct</a>(<span>string <var>$role</var></span>, <span>string <var>$note</var></span>, <span>string|null <var>$scope</var> = <span class="php-kw">null</span></span>)</code>
+
+
+	<div class="expandable-collapsedView">
+		Create a new role definition.
+	</div>
+
+	<div class="expandable-expandedView">
+	<div class="description"><p>Create a new role definition.</p>
+</div>
+
+							<h4>Parameters</h4>
+							<table>
+									<tr>
+										<td><var>$role</var>&nbsp;&nbsp;</td>
+										<td><p>Technical identifier (e.g. &quot;Accountant&quot;), unique per installation.</p>
+</td>
+									</tr>
+									<tr>
+										<td><var>$note</var>&nbsp;&nbsp;</td>
+										<td><p>Human-readable description of the role’s purpose or scope.</p>
+</td>
+									</tr>
+									<tr>
+										<td><var>$scope</var>&nbsp;&nbsp;</td>
+										<td><p>Optional fully-qualified class name that defines
+the <em>semantic domain scope</em> of this role,
+e.g. <code>Pragmatiqu\Projects\Models\Project</code>
+for the role &quot;Project Manager&quot;.</p>
+</td>
+									</tr>
+							</table>
+
+
+
+	</div>
+			</td>
+		<td class="table-anchor">
+			<a href="#___construct">#</a>
+		</td>
+	</tr>
+		</table>
+
+
+
+
+
+
+		<table class="table" id="properties">
+			<tr>
+				<th class="table-heading sortable" colspan="4" title="Switch between natural and alphabetical order">Properties</th>
+			</tr>
+
+	<tr class="expandable collapsed" data-order="role" id="$role">
+			<td class="table-cell table-shrink">
+				<code class="nowrap">
+	public
+					
+					
+				</code>
+			</td>
+
+			<td class="table-cell table-shrink">
+				<code class="nowrap">string</code>
+			</td>
+
+			<td class="table-cell">
+<code><var><a href="source-Attributes.Role.html#44" title="Go to source code">$role</a></var></code>
+				
+	<div class="expandable-collapsedView">
+		Technical identifier (e.g. "Accountant"), unique per installation.
+	</div>
+
+	<div class="expandable-expandedView">
+	<div class="description"><p>Technical identifier (e.g. &quot;Accountant&quot;), unique per installation.</p>
+</div>
+	</div>
+			</td>
+		<td class="table-anchor">
+			<a href="#$role">#</a>
+		</td>
+	</tr>
+	<tr class="expandable collapsed" data-order="note" id="$note">
+			<td class="table-cell table-shrink">
+				<code class="nowrap">
+	public
+					
+					
+				</code>
+			</td>
+
+			<td class="table-cell table-shrink">
+				<code class="nowrap">string</code>
+			</td>
+
+			<td class="table-cell">
+<code><var><a href="source-Attributes.Role.html#45" title="Go to source code">$note</a></var></code>
+				
+	<div class="expandable-collapsedView">
+		Human-readable description of the role’s purpose or scope.
+	</div>
+
+	<div class="expandable-expandedView">
+	<div class="description"><p>Human-readable description of the role’s purpose or scope.</p>
+</div>
+	</div>
+			</td>
+		<td class="table-anchor">
+			<a href="#$note">#</a>
+		</td>
+	</tr>
+	<tr class="expandable collapsed" data-order="scope" id="$scope">
+			<td class="table-cell table-shrink">
+				<code class="nowrap">
+	public
+					
+					
+				</code>
+			</td>
+
+			<td class="table-cell table-shrink">
+				<code class="nowrap">string|null</code>
+			</td>
+
+			<td class="table-cell">
+<code><var><a href="source-Attributes.Role.html#46" title="Go to source code">$scope</a></var></code>
+				
+	<div class="expandable-collapsedView">
+		Optional fully-qualified class name that defines
+                          the *semantic domain scope* of this role,
+  …
+	</div>
+
+	<div class="expandable-expandedView">
+	<div class="description"><p>Optional fully-qualified class name that defines
+the <em>semantic domain scope</em> of this role,
+e.g. <code>Pragmatiqu\Projects\Models\Project</code>
+for the role &quot;Project Manager&quot;.</p>
+</div>
+	</div>
+			</td>
+		<td class="table-anchor">
+			<a href="#$scope">#</a>
+		</td>
+	</tr>
+		</table>
+
+
+		</div>
+
+		<div class="layout-footer">
+			API Documentation API documentation generated by <a href="https://www.apigen.org">ApiGen v7.0.0-alpha.6</a>
+		</div>
+	</div>
+
+	<div class="layout-rest">
+		<div class="navbar"></div>
+	</div>
+</body>
+</html>

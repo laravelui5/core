@@ -1,0 +1,420 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+
+	<title>Enum LaravelUi5\Core\Enums\HttpMethod | API Documentation API</title>
+	<link rel="stylesheet" href="assets/main.css">
+	<script src="assets/main.js" defer></script>
+</head>
+
+<body class="layout">
+	<div class="layout-aside">
+	<div class="menu">
+			<div class="menu-section">
+				<h3>Namespaces</h3>
+	<ul>
+			<li class="menuGroup-item active">
+				<a href="namespace-LaravelUi5.html">LaravelUi5</a>
+	<ul>
+			<li class="menuGroup-item active">
+				<a href="namespace-LaravelUi5.Core.html">Core</a>
+	<ul>
+			<li class="menuGroup-item">
+				<a href="namespace-LaravelUi5.Core.Attributes.html">Attributes</a>
+			</li>
+			<li class="menuGroup-item">
+				<a href="namespace-LaravelUi5.Core.Commands.html">Commands</a>
+			</li>
+			<li class="menuGroup-item">
+				<a href="namespace-LaravelUi5.Core.Contracts.html">Contracts</a>
+			</li>
+			<li class="menuGroup-item">
+				<a href="namespace-LaravelUi5.Core.Controllers.html">Controllers</a>
+			</li>
+			<li class="menuGroup-item active">
+				<a href="namespace-LaravelUi5.Core.Enums.html">Enums</a>
+			</li>
+			<li class="menuGroup-item">
+				<a href="namespace-LaravelUi5.Core.Exceptions.html">Exceptions</a>
+			</li>
+			<li class="menuGroup-item">
+				<a href="namespace-LaravelUi5.Core.Middleware.html">Middleware</a>
+			</li>
+			<li class="menuGroup-item">
+				<a href="namespace-LaravelUi5.Core.Services.html">Services</a>
+			</li>
+			<li class="menuGroup-item">
+				<a href="namespace-LaravelUi5.Core.Traits.html">Traits</a>
+			</li>
+			<li class="menuGroup-item">
+				<a href="namespace-LaravelUi5.Core.Ui5.html">Ui5</a>
+			</li>
+			<li class="menuGroup-item">
+				<a href="namespace-LaravelUi5.Core.View.html">View</a>
+			</li>
+	</ul>
+			</li>
+	</ul>
+			</li>
+	</ul>
+			</div>
+
+		<div class="menu-section">
+			<h3>Enums</h3>
+			<ul>
+					<li>
+						<a href="LaravelUi5.Core.Enums.AbilityType.html">
+							AbilityType
+						</a>
+					</li>
+					<li>
+						<a href="LaravelUi5.Core.Enums.AggregationLevel.html">
+							AggregationLevel
+						</a>
+					</li>
+					<li>
+						<a href="LaravelUi5.Core.Enums.ArtifactType.html">
+							ArtifactType
+						</a>
+					</li>
+					<li class="active">
+						<a href="LaravelUi5.Core.Enums.HttpMethod.html">
+							HttpMethod
+						</a>
+					</li>
+					<li>
+						<a href="LaravelUi5.Core.Enums.ParameterSource.html">
+							ParameterSource
+						</a>
+					</li>
+					<li>
+						<a href="LaravelUi5.Core.Enums.SettingScope.html">
+							SettingScope
+						</a>
+					</li>
+					<li>
+						<a href="LaravelUi5.Core.Enums.SettingVisibilityRole.html">
+							SettingVisibilityRole
+						</a>
+					</li>
+					<li>
+						<a href="LaravelUi5.Core.Enums.ValueType.html">
+							ValueType
+						</a>
+					</li>
+			</ul>
+		</div>
+	</div>
+	</div>
+
+	<div class="layout-main">
+		<div class="layout-navbar">
+	<nav class="navbar">
+		<div class="navbar-left">
+			<ul class="navbar-links">
+				<li>
+					<a href="index.html">Overview</a>
+				</li>
+				<li>
+					
+						<a href="namespace-LaravelUi5.Core.Enums.html">Namespace</a>
+					
+				</li>
+<li class="active"><a href="LaravelUi5.Core.Enums.HttpMethod.html">Enum</a></li>				<li>
+					<a href="tree.html">Tree</a>
+				</li>
+			</ul>
+		</div>
+		<div class="navbar-right">
+	<div class="search" data-elements="assets/elements.js">
+		<input class="search-input" placeholder="Search class, function or namespace" autofocus>
+		<ul class="search-results"></ul>
+	</div>
+		</div>
+	</nav>
+		</div>
+
+		<div class="layout-content">
+		<h1>
+			Enum <a href="namespace-LaravelUi5.html">LaravelUi5</a>\<a href="namespace-LaravelUi5.Core.html">Core</a>\<a href="namespace-LaravelUi5.Core.Enums.html">Enums</a>\<a href="LaravelUi5.Core.Enums.HttpMethod.html">HttpMethod</a>
+		</h1>
+
+
+	<table class="classLikeSignatureTable">
+		<tr>
+			<th><code>implements</code></th>
+			<td>
+<code><a href="BackedEnum.html"><span title="BackedEnum">BackedEnum</span></a></code>			</td>
+		</tr>
+	</table>
+		<div class="classLikeDescription">
+	<div class="description"><p>Enum representing supported HTTP methods.</p>
+<p>This enum is used across the LaravelUi5 core to reason about
+request semantics, especially in the context of Ui5Actions.</p>
+<ul>
+<li>GET/HEAD/OPTIONS are considered safe/read-only methods.</li>
+<li>POST/PUT/PATCH/DELETE are considered write/unsafe methods.</li>
+</ul>
+<p>Note on Ui5Actions:
+Ui5Actions intentionally support only POST, PATCH and DELETE.
+PUT is included in the enum for completeness, but is excluded
+from Ui5Actions because full-resource replacement semantics
+are not practical in typical SAP/OpenUI5 scenarios.</p>
+</div>
+		</div>
+
+
+		<div class="classLikeSection">
+			<b>Located at</b> <a href="source-Enums.HttpMethod.html#20" title="Go to source code">Enums/HttpMethod.php</a><br>
+		</div>
+
+
+		<table class="table" id="cases">
+			<tr>
+				<th class="table-heading sortable" colspan="2" title="Switch between natural and alphabetical order">Cases</th>
+			</tr>
+
+	<tr class="expandable collapsed" data-order="GET" id="GET">
+			<td class="table-cell">
+<code><a href="source-Enums.HttpMethod.html#22" title="Go to source code">GET</a> = <span class="php-num">1</span></code>
+
+
+	<div class="expandable-expandedView">
+	</div>
+			</td>
+		<td class="table-anchor">
+			<a href="#GET">#</a>
+		</td>
+	</tr>
+	<tr class="expandable collapsed" data-order="POST" id="POST">
+			<td class="table-cell">
+<code><a href="source-Enums.HttpMethod.html#23" title="Go to source code">POST</a> = <span class="php-num">2</span></code>
+
+
+	<div class="expandable-expandedView">
+	</div>
+			</td>
+		<td class="table-anchor">
+			<a href="#POST">#</a>
+		</td>
+	</tr>
+	<tr class="expandable collapsed" data-order="PUT" id="PUT">
+			<td class="table-cell">
+<code><a href="source-Enums.HttpMethod.html#24" title="Go to source code">PUT</a> = <span class="php-num">3</span></code>
+
+
+	<div class="expandable-expandedView">
+	</div>
+			</td>
+		<td class="table-anchor">
+			<a href="#PUT">#</a>
+		</td>
+	</tr>
+	<tr class="expandable collapsed" data-order="PATCH" id="PATCH">
+			<td class="table-cell">
+<code><a href="source-Enums.HttpMethod.html#25" title="Go to source code">PATCH</a> = <span class="php-num">4</span></code>
+
+
+	<div class="expandable-expandedView">
+	</div>
+			</td>
+		<td class="table-anchor">
+			<a href="#PATCH">#</a>
+		</td>
+	</tr>
+	<tr class="expandable collapsed" data-order="DELETE" id="DELETE">
+			<td class="table-cell">
+<code><a href="source-Enums.HttpMethod.html#26" title="Go to source code">DELETE</a> = <span class="php-num">5</span></code>
+
+
+	<div class="expandable-expandedView">
+	</div>
+			</td>
+		<td class="table-anchor">
+			<a href="#DELETE">#</a>
+		</td>
+	</tr>
+	<tr class="expandable collapsed" data-order="OPTIONS" id="OPTIONS">
+			<td class="table-cell">
+<code><a href="source-Enums.HttpMethod.html#27" title="Go to source code">OPTIONS</a> = <span class="php-num">6</span></code>
+
+
+	<div class="expandable-expandedView">
+	</div>
+			</td>
+		<td class="table-anchor">
+			<a href="#OPTIONS">#</a>
+		</td>
+	</tr>
+	<tr class="expandable collapsed" data-order="HEAD" id="HEAD">
+			<td class="table-cell">
+<code><a href="source-Enums.HttpMethod.html#28" title="Go to source code">HEAD</a> = <span class="php-num">7</span></code>
+
+
+	<div class="expandable-expandedView">
+	</div>
+			</td>
+		<td class="table-anchor">
+			<a href="#HEAD">#</a>
+		</td>
+	</tr>
+		</table>
+
+		<table class="table" id="methods">
+			<tr>
+				<th class="table-heading sortable" colspan="3" title="Switch between natural and alphabetical order">Methods</th>
+			</tr>
+
+	<tr class="expandable collapsed" data-order="label" id="_label">
+			<td class="table-cell table-shrink">
+				<code class="nowrap">
+					
+	public
+					
+					
+				</code>
+			</td>
+
+			<td class="table-cell">
+				<code><a href="source-Enums.HttpMethod.html#30-46" title="Go to source code">label</a>(): string</code>
+
+
+	<div class="expandable-collapsedView">
+		Returns the canonical string label for the HTTP method.
+	</div>
+
+	<div class="expandable-expandedView">
+	<div class="description"><p>Returns the canonical string label for the HTTP method.</p>
+</div>
+
+
+
+
+	</div>
+			</td>
+		<td class="table-anchor">
+			<a href="#_label">#</a>
+		</td>
+	</tr>
+	<tr class="expandable collapsed" data-order="isRead" id="_isRead">
+			<td class="table-cell table-shrink">
+				<code class="nowrap">
+					
+	public
+					
+					
+				</code>
+			</td>
+
+			<td class="table-cell">
+				<code><a href="source-Enums.HttpMethod.html#48-59" title="Go to source code">isRead</a>(): boolean</code>
+
+
+	<div class="expandable-collapsedView">
+		Whether this method is considered read-only and safe.
+	</div>
+
+	<div class="expandable-expandedView">
+	<div class="description"><p>Whether this method is considered read-only and safe.</p>
+<p>GET, HEAD and OPTIONS are classified as read operations
+according to HTTP/1.1 semantics (RFC 7231).</p>
+</div>
+
+
+
+
+	</div>
+			</td>
+		<td class="table-anchor">
+			<a href="#_isRead">#</a>
+		</td>
+	</tr>
+	<tr class="expandable collapsed" data-order="isWrite" id="_isWrite">
+			<td class="table-cell table-shrink">
+				<code class="nowrap">
+					
+	public
+					
+					
+				</code>
+			</td>
+
+			<td class="table-cell">
+				<code><a href="source-Enums.HttpMethod.html#61-71" title="Go to source code">isWrite</a>(): boolean</code>
+
+
+	<div class="expandable-collapsedView">
+		Whether this method is considered write/unsafe.
+	</div>
+
+	<div class="expandable-expandedView">
+	<div class="description"><p>Whether this method is considered write/unsafe.</p>
+<p>POST, PUT, PATCH and DELETE are classified as write operations.</p>
+</div>
+
+
+
+
+	</div>
+			</td>
+		<td class="table-anchor">
+			<a href="#_isWrite">#</a>
+		</td>
+	</tr>
+	<tr class="expandable collapsed" data-order="isValidUi5ActionMethod" id="_isValidUi5ActionMethod">
+			<td class="table-cell table-shrink">
+				<code class="nowrap">
+					
+	public
+					
+					
+				</code>
+			</td>
+
+			<td class="table-cell">
+				<code><a href="source-Enums.HttpMethod.html#73-89" title="Go to source code">isValidUi5ActionMethod</a>(): boolean</code>
+
+
+	<div class="expandable-collapsedView">
+		Whether this method is valid for Ui5Actions.
+	</div>
+
+	<div class="expandable-expandedView">
+	<div class="description"><p>Whether this method is valid for Ui5Actions.</p>
+<p>Ui5Actions explicitly allow only POST, PATCH and DELETE:</p>
+<ul>
+<li>POST: execute a business action or create resource(s)</li>
+<li>PATCH: apply (partial) updates</li>
+<li>DELETE: remove a resource</li>
+</ul>
+<p>PUT is intentionally excluded because full-resource
+replacement semantics are not useful in Ui5 contexts.</p>
+</div>
+
+
+
+
+	</div>
+			</td>
+		<td class="table-anchor">
+			<a href="#_isValidUi5ActionMethod">#</a>
+		</td>
+	</tr>
+		</table>
+
+
+		</div>
+
+		<div class="layout-footer">
+			API Documentation API documentation generated by <a href="https://www.apigen.org">ApiGen v7.0.0-alpha.6</a>
+		</div>
+	</div>
+
+	<div class="layout-rest">
+		<div class="navbar"></div>
+	</div>
+</body>
+</html>

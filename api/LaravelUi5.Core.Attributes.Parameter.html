@@ -1,0 +1,552 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+
+	<title>Class LaravelUi5\Core\Attributes\Parameter | API Documentation API</title>
+	<link rel="stylesheet" href="assets/main.css">
+	<script src="assets/main.js" defer></script>
+</head>
+
+<body class="layout">
+	<div class="layout-aside">
+	<div class="menu">
+			<div class="menu-section">
+				<h3>Namespaces</h3>
+	<ul>
+			<li class="menuGroup-item active">
+				<a href="namespace-LaravelUi5.html">LaravelUi5</a>
+	<ul>
+			<li class="menuGroup-item active">
+				<a href="namespace-LaravelUi5.Core.html">Core</a>
+	<ul>
+			<li class="menuGroup-item active">
+				<a href="namespace-LaravelUi5.Core.Attributes.html">Attributes</a>
+			</li>
+			<li class="menuGroup-item">
+				<a href="namespace-LaravelUi5.Core.Commands.html">Commands</a>
+			</li>
+			<li class="menuGroup-item">
+				<a href="namespace-LaravelUi5.Core.Contracts.html">Contracts</a>
+			</li>
+			<li class="menuGroup-item">
+				<a href="namespace-LaravelUi5.Core.Controllers.html">Controllers</a>
+			</li>
+			<li class="menuGroup-item">
+				<a href="namespace-LaravelUi5.Core.Enums.html">Enums</a>
+			</li>
+			<li class="menuGroup-item">
+				<a href="namespace-LaravelUi5.Core.Exceptions.html">Exceptions</a>
+			</li>
+			<li class="menuGroup-item">
+				<a href="namespace-LaravelUi5.Core.Middleware.html">Middleware</a>
+			</li>
+			<li class="menuGroup-item">
+				<a href="namespace-LaravelUi5.Core.Services.html">Services</a>
+			</li>
+			<li class="menuGroup-item">
+				<a href="namespace-LaravelUi5.Core.Traits.html">Traits</a>
+			</li>
+			<li class="menuGroup-item">
+				<a href="namespace-LaravelUi5.Core.Ui5.html">Ui5</a>
+			</li>
+			<li class="menuGroup-item">
+				<a href="namespace-LaravelUi5.Core.View.html">View</a>
+			</li>
+	</ul>
+			</li>
+	</ul>
+			</li>
+	</ul>
+			</div>
+
+		<div class="menu-section">
+			<h3>Classes</h3>
+			<ul>
+					<li>
+						<a href="LaravelUi5.Core.Attributes.Ability.html">
+							Ability
+						</a>
+					</li>
+					<li class="active">
+						<a href="LaravelUi5.Core.Attributes.Parameter.html">
+							Parameter
+						</a>
+					</li>
+					<li>
+						<a href="LaravelUi5.Core.Attributes.Role.html">
+							Role
+						</a>
+					</li>
+					<li>
+						<a href="LaravelUi5.Core.Attributes.SemanticLink.html">
+							SemanticLink
+						</a>
+					</li>
+					<li>
+						<a href="LaravelUi5.Core.Attributes.SemanticObject.html">
+							SemanticObject
+						</a>
+					</li>
+					<li>
+						<a href="LaravelUi5.Core.Attributes.Setting.html">
+							Setting
+						</a>
+					</li>
+			</ul>
+		</div>
+	</div>
+	</div>
+
+	<div class="layout-main">
+		<div class="layout-navbar">
+	<nav class="navbar">
+		<div class="navbar-left">
+			<ul class="navbar-links">
+				<li>
+					<a href="index.html">Overview</a>
+				</li>
+				<li>
+					
+						<a href="namespace-LaravelUi5.Core.Attributes.html">Namespace</a>
+					
+				</li>
+<li class="active"><a href="LaravelUi5.Core.Attributes.Parameter.html">Class</a></li>				<li>
+					<a href="tree.html">Tree</a>
+				</li>
+			</ul>
+		</div>
+		<div class="navbar-right">
+	<div class="search" data-elements="assets/elements.js">
+		<input class="search-input" placeholder="Search class, function or namespace" autofocus>
+		<ul class="search-results"></ul>
+	</div>
+		</div>
+	</nav>
+		</div>
+
+		<div class="layout-content">
+		<h1>
+			Class <a href="namespace-LaravelUi5.html">LaravelUi5</a>\<a href="namespace-LaravelUi5.Core.html">Core</a>\<a href="namespace-LaravelUi5.Core.Attributes.html">Attributes</a>\<a href="LaravelUi5.Core.Attributes.Parameter.html">Parameter</a>
+		</h1>
+
+
+	<table class="classLikeSignatureTable">
+
+
+
+
+	</table>
+		<div class="classLikeDescription">
+	<div class="description"><p>Declarative runtime parameter definition for Parameterizable classes.</p>
+<p>Apply this attribute multiple times on a class (Ui5Action, Resource/Data provider,
+Report provider) to describe each expected request parameter. A central
+ParameterResolver will:</p>
+<ul>
+<li>read all #[Parameter(...)] attributes,</li>
+<li>extract raw values from the request (path/query/body),</li>
+<li>cast them according to ParameterType,</li>
+<li>resolve Eloquent models when type=Model,</li>
+<li>enforce required/nullable/default semantics,</li>
+<li>and return an immutable, normalized argument bag.</li>
+</ul>
+<p><strong>Key distinction</strong>: <code>name</code> vs. <code>uriKey</code></p>
+<ul>
+<li>
+<p><code>name</code>   = <em>logical backend name</em>
+Used as array key in the resolved argument bag and as identifier in the
+application code (controller, handler, service).</p>
+</li>
+<li>
+<p><code>uriKey</code> = <em>external transport key</em>
+The concrete identifier used on the communication layer (path segment or
+query string key). This is what the client sends, and what is reflected
+into the manifest.</p>
+</li>
+</ul>
+<p>This separation allows:</p>
+<ul>
+<li>Stable API contracts even if backend internals are refactored.</li>
+<li>Aliasing: <code>uriKey</code> may differ from <code>name</code> (e.g. legacy URL key mapped to
+a cleaner internal parameter name).</li>
+<li>Explicit, enterprise-grade clarity in manifests and generated clients.</li>
+</ul>
+<p><strong>Path resolution</strong></p>
+<ul>
+<li>If you use a catch-all {uri} route, <code>uriKey</code> specifies the segment name.</li>
+<li>The order of #[Parameter(...)] attributes in the source code defines the
+positional order of path parameters.</li>
+</ul>
+<p><strong>Example</strong>
+<code>
+#[Parameter(
+name: 'projectModel',
+uriKey: 'project',
+type: ValueType::Model,
+source: ParameterSource::Path,
+model: Project::class
+),
+Parameter(
+name: 'withPositions',
+uriKey: 'withPositions',
+type: ValueType::Bool,
+source: ParameterSource::Query,
+required: false,
+default: false
+)
+]
+</code></p>
+</div>
+		</div>
+
+
+		<div class="classLikeSection">
+			<b>Located at</b> <a href="source-Attributes.Parameter.html#63" title="Go to source code">Attributes/Parameter.php</a><br>
+		</div>
+
+
+
+		<table class="table" id="methods">
+			<tr>
+				<th class="table-heading sortable" colspan="3" title="Switch between natural and alphabetical order">Methods</th>
+			</tr>
+
+	<tr class="expandable collapsed" data-order="__construct" id="___construct">
+			<td class="table-cell table-shrink">
+				<code class="nowrap">
+					
+	public
+					
+					
+				</code>
+			</td>
+
+			<td class="table-cell">
+				<code><a href="source-Attributes.Parameter.html#66-85" title="Go to source code">__construct</a>(
+	<span>string <var>$name</var></span>,
+	<span>string <var>$uriKey</var></span>,
+	<span><a href="LaravelUi5.Core.Enums.ValueType.html"><span title="LaravelUi5\Core\Enums\ValueType">ValueType</span></a> <var>$type</var></span>,
+	<span><a href="LaravelUi5.Core.Enums.ParameterSource.html"><span title="LaravelUi5\Core\Enums\ParameterSource">ParameterSource</span></a> <var>$source</var> = <a href="LaravelUi5.Core.Enums.ParameterSource.html"><span title="LaravelUi5\Core\Enums\ParameterSource">ParameterSource</span></a>::<a href="LaravelUi5.Core.Enums.ParameterSource.html#Path">Path</a></span>,
+	<span>bool <var>$required</var> = <span class="php-kw">true</span></span>,
+	<span>bool <var>$nullable</var> = <span class="php-kw">false</span></span>,
+	<span>mixed <var>$default</var> = <span class="php-kw">null</span></span>,
+	<span>class-string|null <var>$model</var> = <span class="php-kw">null</span></span>,
+)</code>
+
+
+
+	<div class="expandable-expandedView">
+
+							<h4>Parameters</h4>
+							<table>
+									<tr>
+										<td><var>$name</var>&nbsp;&nbsp;</td>
+										<td><p>Logical parameter name (used as array key in the resolved args)</p>
+</td>
+									</tr>
+									<tr>
+										<td><var>$uriKey</var>&nbsp;&nbsp;</td>
+										<td><p>External transport key (path segment or query key, as seen by the client)</p>
+</td>
+									</tr>
+									<tr>
+										<td><var>$type</var>&nbsp;&nbsp;</td>
+										<td><p>Declared runtime type (drives casting/model binding)</p>
+</td>
+									</tr>
+									<tr>
+										<td><var>$source</var>&nbsp;&nbsp;</td>
+										<td><p>Where to read from: Path, Query, Body</p>
+</td>
+									</tr>
+									<tr>
+										<td><var>$required</var>&nbsp;&nbsp;</td>
+										<td><p>If true and no value is provided (after source lookup), the resolver fails (400)</p>
+</td>
+									</tr>
+									<tr>
+										<td><var>$nullable</var>&nbsp;&nbsp;</td>
+										<td><p>Allow explicit null (distinct from “missing”); if true and null provided, no cast is applied</p>
+</td>
+									</tr>
+									<tr>
+										<td><var>$default</var>&nbsp;&nbsp;</td>
+										<td><p>Default used when value is missing and not required</p>
+</td>
+									</tr>
+									<tr>
+										<td><var>$model</var>&nbsp;&nbsp;</td>
+										<td><p>Eloquent model FQCN; required when $type = ValueType::Model</p>
+</td>
+									</tr>
+							</table>
+
+
+
+	</div>
+			</td>
+		<td class="table-anchor">
+			<a href="#___construct">#</a>
+		</td>
+	</tr>
+		</table>
+
+
+
+
+
+
+		<table class="table" id="properties">
+			<tr>
+				<th class="table-heading sortable" colspan="4" title="Switch between natural and alphabetical order">Properties</th>
+			</tr>
+
+	<tr class="expandable collapsed" data-order="name" id="$name">
+			<td class="table-cell table-shrink">
+				<code class="nowrap">
+	public
+					
+					
+				</code>
+			</td>
+
+			<td class="table-cell table-shrink">
+				<code class="nowrap">string</code>
+			</td>
+
+			<td class="table-cell">
+<code><var><a href="source-Attributes.Parameter.html#77" title="Go to source code">$name</a></var></code>
+				
+	<div class="expandable-collapsedView">
+		Logical parameter name (used as array key in the resolved args)
+	</div>
+
+	<div class="expandable-expandedView">
+	<div class="description"><p>Logical parameter name (used as array key in the resolved args)</p>
+</div>
+	</div>
+			</td>
+		<td class="table-anchor">
+			<a href="#$name">#</a>
+		</td>
+	</tr>
+	<tr class="expandable collapsed" data-order="uriKey" id="$uriKey">
+			<td class="table-cell table-shrink">
+				<code class="nowrap">
+	public
+					
+					
+				</code>
+			</td>
+
+			<td class="table-cell table-shrink">
+				<code class="nowrap">string</code>
+			</td>
+
+			<td class="table-cell">
+<code><var><a href="source-Attributes.Parameter.html#78" title="Go to source code">$uriKey</a></var></code>
+				
+	<div class="expandable-collapsedView">
+		External transport key (path segment or query key, as seen by the client)
+	</div>
+
+	<div class="expandable-expandedView">
+	<div class="description"><p>External transport key (path segment or query key, as seen by the client)</p>
+</div>
+	</div>
+			</td>
+		<td class="table-anchor">
+			<a href="#$uriKey">#</a>
+		</td>
+	</tr>
+	<tr class="expandable collapsed" data-order="type" id="$type">
+			<td class="table-cell table-shrink">
+				<code class="nowrap">
+	public
+					
+					
+				</code>
+			</td>
+
+			<td class="table-cell table-shrink">
+				<code class="nowrap"><a href="LaravelUi5.Core.Enums.ValueType.html"><span title="LaravelUi5\Core\Enums\ValueType">ValueType</span></a></code>
+			</td>
+
+			<td class="table-cell">
+<code><var><a href="source-Attributes.Parameter.html#79" title="Go to source code">$type</a></var></code>
+				
+	<div class="expandable-collapsedView">
+		Declared runtime type (drives casting/model binding)
+	</div>
+
+	<div class="expandable-expandedView">
+	<div class="description"><p>Declared runtime type (drives casting/model binding)</p>
+</div>
+	</div>
+			</td>
+		<td class="table-anchor">
+			<a href="#$type">#</a>
+		</td>
+	</tr>
+	<tr class="expandable collapsed" data-order="source" id="$source">
+			<td class="table-cell table-shrink">
+				<code class="nowrap">
+	public
+					
+					
+				</code>
+			</td>
+
+			<td class="table-cell table-shrink">
+				<code class="nowrap"><a href="LaravelUi5.Core.Enums.ParameterSource.html"><span title="LaravelUi5\Core\Enums\ParameterSource">ParameterSource</span></a></code>
+			</td>
+
+			<td class="table-cell">
+<code><var><a href="source-Attributes.Parameter.html#80" title="Go to source code">$source</a></var></code>
+				
+	<div class="expandable-collapsedView">
+		Where to read from: Path, Query, Body
+	</div>
+
+	<div class="expandable-expandedView">
+	<div class="description"><p>Where to read from: Path, Query, Body</p>
+</div>
+	</div>
+			</td>
+		<td class="table-anchor">
+			<a href="#$source">#</a>
+		</td>
+	</tr>
+	<tr class="expandable collapsed" data-order="required" id="$required">
+			<td class="table-cell table-shrink">
+				<code class="nowrap">
+	public
+					
+					
+				</code>
+			</td>
+
+			<td class="table-cell table-shrink">
+				<code class="nowrap">bool</code>
+			</td>
+
+			<td class="table-cell">
+<code><var><a href="source-Attributes.Parameter.html#81" title="Go to source code">$required</a></var></code>
+				
+	<div class="expandable-collapsedView">
+		If true and no value is provided (after source lookup), the resolver fails (400)
+	</div>
+
+	<div class="expandable-expandedView">
+	<div class="description"><p>If true and no value is provided (after source lookup), the resolver fails (400)</p>
+</div>
+	</div>
+			</td>
+		<td class="table-anchor">
+			<a href="#$required">#</a>
+		</td>
+	</tr>
+	<tr class="expandable collapsed" data-order="nullable" id="$nullable">
+			<td class="table-cell table-shrink">
+				<code class="nowrap">
+	public
+					
+					
+				</code>
+			</td>
+
+			<td class="table-cell table-shrink">
+				<code class="nowrap">bool</code>
+			</td>
+
+			<td class="table-cell">
+<code><var><a href="source-Attributes.Parameter.html#82" title="Go to source code">$nullable</a></var></code>
+				
+	<div class="expandable-collapsedView">
+		Allow explicit null (distinct from “missing”); if true and null provided, no cast is applied
+	</div>
+
+	<div class="expandable-expandedView">
+	<div class="description"><p>Allow explicit null (distinct from “missing”); if true and null provided, no cast is applied</p>
+</div>
+	</div>
+			</td>
+		<td class="table-anchor">
+			<a href="#$nullable">#</a>
+		</td>
+	</tr>
+	<tr class="expandable collapsed" data-order="default" id="$default">
+			<td class="table-cell table-shrink">
+				<code class="nowrap">
+	public
+					
+					
+				</code>
+			</td>
+
+			<td class="table-cell table-shrink">
+				<code class="nowrap">mixed</code>
+			</td>
+
+			<td class="table-cell">
+<code><var><a href="source-Attributes.Parameter.html#83" title="Go to source code">$default</a></var></code>
+				
+	<div class="expandable-collapsedView">
+		Default used when value is missing and not required
+	</div>
+
+	<div class="expandable-expandedView">
+	<div class="description"><p>Default used when value is missing and not required</p>
+</div>
+	</div>
+			</td>
+		<td class="table-anchor">
+			<a href="#$default">#</a>
+		</td>
+	</tr>
+	<tr class="expandable collapsed" data-order="model" id="$model">
+			<td class="table-cell table-shrink">
+				<code class="nowrap">
+	public
+					
+					
+				</code>
+			</td>
+
+			<td class="table-cell table-shrink">
+				<code class="nowrap">class-string|null</code>
+			</td>
+
+			<td class="table-cell">
+<code><var><a href="source-Attributes.Parameter.html#84" title="Go to source code">$model</a></var></code>
+				
+	<div class="expandable-collapsedView">
+		Eloquent model FQCN; required when $type = ValueType::Model
+	</div>
+
+	<div class="expandable-expandedView">
+	<div class="description"><p>Eloquent model FQCN; required when $type = ValueType::Model</p>
+</div>
+	</div>
+			</td>
+		<td class="table-anchor">
+			<a href="#$model">#</a>
+		</td>
+	</tr>
+		</table>
+
+
+		</div>
+
+		<div class="layout-footer">
+			API Documentation API documentation generated by <a href="https://www.apigen.org">ApiGen v7.0.0-alpha.6</a>
+		</div>
+	</div>
+
+	<div class="layout-rest">
+		<div class="navbar"></div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,384 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+
+	<title>Class LaravelUi5\Core\Attributes\SemanticObject | API Documentation API</title>
+	<link rel="stylesheet" href="assets/main.css">
+	<script src="assets/main.js" defer></script>
+</head>
+
+<body class="layout">
+	<div class="layout-aside">
+	<div class="menu">
+			<div class="menu-section">
+				<h3>Namespaces</h3>
+	<ul>
+			<li class="menuGroup-item active">
+				<a href="namespace-LaravelUi5.html">LaravelUi5</a>
+	<ul>
+			<li class="menuGroup-item active">
+				<a href="namespace-LaravelUi5.Core.html">Core</a>
+	<ul>
+			<li class="menuGroup-item active">
+				<a href="namespace-LaravelUi5.Core.Attributes.html">Attributes</a>
+			</li>
+			<li class="menuGroup-item">
+				<a href="namespace-LaravelUi5.Core.Commands.html">Commands</a>
+			</li>
+			<li class="menuGroup-item">
+				<a href="namespace-LaravelUi5.Core.Contracts.html">Contracts</a>
+			</li>
+			<li class="menuGroup-item">
+				<a href="namespace-LaravelUi5.Core.Controllers.html">Controllers</a>
+			</li>
+			<li class="menuGroup-item">
+				<a href="namespace-LaravelUi5.Core.Enums.html">Enums</a>
+			</li>
+			<li class="menuGroup-item">
+				<a href="namespace-LaravelUi5.Core.Exceptions.html">Exceptions</a>
+			</li>
+			<li class="menuGroup-item">
+				<a href="namespace-LaravelUi5.Core.Middleware.html">Middleware</a>
+			</li>
+			<li class="menuGroup-item">
+				<a href="namespace-LaravelUi5.Core.Services.html">Services</a>
+			</li>
+			<li class="menuGroup-item">
+				<a href="namespace-LaravelUi5.Core.Traits.html">Traits</a>
+			</li>
+			<li class="menuGroup-item">
+				<a href="namespace-LaravelUi5.Core.Ui5.html">Ui5</a>
+			</li>
+			<li class="menuGroup-item">
+				<a href="namespace-LaravelUi5.Core.View.html">View</a>
+			</li>
+	</ul>
+			</li>
+	</ul>
+			</li>
+	</ul>
+			</div>
+
+		<div class="menu-section">
+			<h3>Classes</h3>
+			<ul>
+					<li>
+						<a href="LaravelUi5.Core.Attributes.Ability.html">
+							Ability
+						</a>
+					</li>
+					<li>
+						<a href="LaravelUi5.Core.Attributes.Parameter.html">
+							Parameter
+						</a>
+					</li>
+					<li>
+						<a href="LaravelUi5.Core.Attributes.Role.html">
+							Role
+						</a>
+					</li>
+					<li>
+						<a href="LaravelUi5.Core.Attributes.SemanticLink.html">
+							SemanticLink
+						</a>
+					</li>
+					<li class="active">
+						<a href="LaravelUi5.Core.Attributes.SemanticObject.html">
+							SemanticObject
+						</a>
+					</li>
+					<li>
+						<a href="LaravelUi5.Core.Attributes.Setting.html">
+							Setting
+						</a>
+					</li>
+			</ul>
+		</div>
+	</div>
+	</div>
+
+	<div class="layout-main">
+		<div class="layout-navbar">
+	<nav class="navbar">
+		<div class="navbar-left">
+			<ul class="navbar-links">
+				<li>
+					<a href="index.html">Overview</a>
+				</li>
+				<li>
+					
+						<a href="namespace-LaravelUi5.Core.Attributes.html">Namespace</a>
+					
+				</li>
+<li class="active"><a href="LaravelUi5.Core.Attributes.SemanticObject.html">Class</a></li>				<li>
+					<a href="tree.html">Tree</a>
+				</li>
+			</ul>
+		</div>
+		<div class="navbar-right">
+	<div class="search" data-elements="assets/elements.js">
+		<input class="search-input" placeholder="Search class, function or namespace" autofocus>
+		<ul class="search-results"></ul>
+	</div>
+		</div>
+	</nav>
+		</div>
+
+		<div class="layout-content">
+		<h1>
+			Class <a href="namespace-LaravelUi5.html">LaravelUi5</a>\<a href="namespace-LaravelUi5.Core.html">Core</a>\<a href="namespace-LaravelUi5.Core.Attributes.html">Attributes</a>\<a href="LaravelUi5.Core.Attributes.SemanticObject.html">SemanticObject</a>
+		</h1>
+
+
+	<table class="classLikeSignatureTable">
+
+
+
+
+	</table>
+		<div class="classLikeDescription">
+	<div class="description"><p>Declares the primary <em>semantic object</em> represented by a Ui5Module.</p>
+<p>A semantic object is the logical entry point of a module — describing which
+business entity this module &quot;owns&quot; (e.g. BusinessPartner, Project, Invoice)
+and how other modules or the UI can reach it via named navigation intents.</p>
+<p>Each Ui5Module must declare <strong>exactly one</strong> SemanticObject.</p>
+<h3>Purpose</h3>
+<p>This attribute enables:</p>
+<ul>
+<li>automatic cross-module linking via {@see SemanticLink}</li>
+<li>semantic intent navigation in the UI</li>
+<li>backend reflection and registry consistency</li>
+</ul>
+<h3>Example</h3>
+<pre><code class="language-php">use LaravelUi5\Core\Attributes\SemanticObject;
+
+#[SemanticObject(
+    model: \Pragmatiqu\Partners\Models\Partner::class,
+    name:  'BusinessPartner',
+    routes: [
+        'detail' =&gt; [
+            'uri'   =&gt; '/Detail/{id}',
+            'label' =&gt; 'Partner Details',
+            'icon'  =&gt; 'sap-icon://person-placeholder',
+        ],
+        'roles' =&gt; [
+            'uri'   =&gt; '/Roles?partner_id={id}',
+            'label' =&gt; 'Assigned Roles',
+            'icon'  =&gt; 'sap-icon://role',
+        ],
+    ],
+    icon: 'sap-icon://group'
+)]
+class PartnersModule extends Ui5Module {}
+</code></pre>
+<h3>Parameters</h3>
+</div>
+		</div>
+
+
+		<div class="classLikeSection">
+			<b>Located at</b> <a href="source-Attributes.SemanticObject.html#63" title="Go to source code">Attributes/SemanticObject.php</a><br>
+		</div>
+
+
+
+		<table class="table" id="methods">
+			<tr>
+				<th class="table-heading sortable" colspan="3" title="Switch between natural and alphabetical order">Methods</th>
+			</tr>
+
+	<tr class="expandable collapsed" data-order="__construct" id="___construct">
+			<td class="table-cell table-shrink">
+				<code class="nowrap">
+					
+	public
+					
+					
+				</code>
+			</td>
+
+			<td class="table-cell">
+				<code><a href="source-Attributes.SemanticObject.html#66-79" title="Go to source code">__construct</a>(<span>class-string&lt;<span title="Illuminate\Database\Eloquent\Model">Model</span>&gt; <var>$model</var></span>, <span>string <var>$name</var></span>, <span>array <var>$routes</var></span>, <span>string|null <var>$icon</var> = <span class="php-kw">null</span></span>)</code>
+
+
+
+	<div class="expandable-expandedView">
+
+							<h4>Parameters</h4>
+							<table>
+									<tr>
+										<td><var>$model</var>&nbsp;&nbsp;</td>
+										<td><p>Fully qualified model class (system key).</p>
+</td>
+									</tr>
+									<tr>
+										<td><var>$name</var>&nbsp;&nbsp;</td>
+										<td><p>Human-readable system name (English only).</p>
+</td>
+									</tr>
+									<tr>
+										<td><var>$routes</var>&nbsp;&nbsp;</td>
+										<td><p>Named route intents (must contain at least one).</p>
+</td>
+									</tr>
+									<tr>
+										<td><var>$icon</var>&nbsp;&nbsp;</td>
+										<td><p>Optional UI5 icon for UI representation.</p>
+</td>
+									</tr>
+							</table>
+
+
+
+	</div>
+			</td>
+		<td class="table-anchor">
+			<a href="#___construct">#</a>
+		</td>
+	</tr>
+		</table>
+
+
+
+
+
+
+		<table class="table" id="properties">
+			<tr>
+				<th class="table-heading sortable" colspan="4" title="Switch between natural and alphabetical order">Properties</th>
+			</tr>
+
+	<tr class="expandable collapsed" data-order="model" id="$model">
+			<td class="table-cell table-shrink">
+				<code class="nowrap">
+	public
+					
+					
+				</code>
+			</td>
+
+			<td class="table-cell table-shrink">
+				<code class="nowrap">class-string&lt;<span title="Illuminate\Database\Eloquent\Model">Model</span>&gt;</code>
+			</td>
+
+			<td class="table-cell">
+<code><var><a href="source-Attributes.SemanticObject.html#73" title="Go to source code">$model</a></var></code>
+				
+	<div class="expandable-collapsedView">
+		Fully qualified model class (system key).
+	</div>
+
+	<div class="expandable-expandedView">
+	<div class="description"><p>Fully qualified model class (system key).</p>
+</div>
+	</div>
+			</td>
+		<td class="table-anchor">
+			<a href="#$model">#</a>
+		</td>
+	</tr>
+	<tr class="expandable collapsed" data-order="name" id="$name">
+			<td class="table-cell table-shrink">
+				<code class="nowrap">
+	public
+					
+					
+				</code>
+			</td>
+
+			<td class="table-cell table-shrink">
+				<code class="nowrap">string</code>
+			</td>
+
+			<td class="table-cell">
+<code><var><a href="source-Attributes.SemanticObject.html#74" title="Go to source code">$name</a></var></code>
+				
+	<div class="expandable-collapsedView">
+		Human-readable system name (English only).
+	</div>
+
+	<div class="expandable-expandedView">
+	<div class="description"><p>Human-readable system name (English only).</p>
+</div>
+	</div>
+			</td>
+		<td class="table-anchor">
+			<a href="#$name">#</a>
+		</td>
+	</tr>
+	<tr class="expandable collapsed" data-order="routes" id="$routes">
+			<td class="table-cell table-shrink">
+				<code class="nowrap">
+	public
+					
+					
+				</code>
+			</td>
+
+			<td class="table-cell table-shrink">
+				<code class="nowrap">array</code>
+			</td>
+
+			<td class="table-cell">
+<code><var><a href="source-Attributes.SemanticObject.html#75" title="Go to source code">$routes</a></var></code>
+				
+	<div class="expandable-collapsedView">
+		Named route intents (must contain at least one).
+	</div>
+
+	<div class="expandable-expandedView">
+	<div class="description"><p>Named route intents (must contain at least one).</p>
+</div>
+	</div>
+			</td>
+		<td class="table-anchor">
+			<a href="#$routes">#</a>
+		</td>
+	</tr>
+	<tr class="expandable collapsed" data-order="icon" id="$icon">
+			<td class="table-cell table-shrink">
+				<code class="nowrap">
+	public
+					
+					
+				</code>
+			</td>
+
+			<td class="table-cell table-shrink">
+				<code class="nowrap">string|null</code>
+			</td>
+
+			<td class="table-cell">
+<code><var><a href="source-Attributes.SemanticObject.html#76" title="Go to source code">$icon</a></var></code>
+				
+	<div class="expandable-collapsedView">
+		Optional UI5 icon for UI representation.
+	</div>
+
+	<div class="expandable-expandedView">
+	<div class="description"><p>Optional UI5 icon for UI representation.</p>
+</div>
+	</div>
+			</td>
+		<td class="table-anchor">
+			<a href="#$icon">#</a>
+		</td>
+	</tr>
+		</table>
+
+
+		</div>
+
+		<div class="layout-footer">
+			API Documentation API documentation generated by <a href="https://www.apigen.org">ApiGen v7.0.0-alpha.6</a>
+		</div>
+	</div>
+
+	<div class="layout-rest">
+		<div class="navbar"></div>
+	</div>
+</body>
+</html>

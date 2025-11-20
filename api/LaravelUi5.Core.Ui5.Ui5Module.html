@@ -1,0 +1,338 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+
+	<title>Class LaravelUi5\Core\Ui5\Ui5Module | API Documentation API</title>
+	<link rel="stylesheet" href="assets/main.css">
+	<script src="assets/main.js" defer></script>
+</head>
+
+<body class="layout">
+	<div class="layout-aside">
+	<div class="menu">
+			<div class="menu-section">
+				<h3>Namespaces</h3>
+	<ul>
+			<li class="menuGroup-item active">
+				<a href="namespace-LaravelUi5.html">LaravelUi5</a>
+	<ul>
+			<li class="menuGroup-item active">
+				<a href="namespace-LaravelUi5.Core.html">Core</a>
+	<ul>
+			<li class="menuGroup-item">
+				<a href="namespace-LaravelUi5.Core.Attributes.html">Attributes</a>
+			</li>
+			<li class="menuGroup-item">
+				<a href="namespace-LaravelUi5.Core.Commands.html">Commands</a>
+			</li>
+			<li class="menuGroup-item">
+				<a href="namespace-LaravelUi5.Core.Contracts.html">Contracts</a>
+			</li>
+			<li class="menuGroup-item">
+				<a href="namespace-LaravelUi5.Core.Controllers.html">Controllers</a>
+			</li>
+			<li class="menuGroup-item">
+				<a href="namespace-LaravelUi5.Core.Enums.html">Enums</a>
+			</li>
+			<li class="menuGroup-item">
+				<a href="namespace-LaravelUi5.Core.Exceptions.html">Exceptions</a>
+			</li>
+			<li class="menuGroup-item">
+				<a href="namespace-LaravelUi5.Core.Middleware.html">Middleware</a>
+			</li>
+			<li class="menuGroup-item">
+				<a href="namespace-LaravelUi5.Core.Services.html">Services</a>
+			</li>
+			<li class="menuGroup-item">
+				<a href="namespace-LaravelUi5.Core.Traits.html">Traits</a>
+			</li>
+			<li class="menuGroup-item active">
+				<a href="namespace-LaravelUi5.Core.Ui5.html">Ui5</a>
+	<ul>
+			<li class="menuGroup-item">
+				<a href="namespace-LaravelUi5.Core.Ui5.Contracts.html">Contracts</a>
+			</li>
+			<li class="menuGroup-item">
+				<a href="namespace-LaravelUi5.Core.Ui5.Data.html">Data</a>
+			</li>
+			<li class="menuGroup-item">
+				<a href="namespace-LaravelUi5.Core.Ui5.Enums.html">Enums</a>
+			</li>
+	</ul>
+			</li>
+			<li class="menuGroup-item">
+				<a href="namespace-LaravelUi5.Core.View.html">View</a>
+			</li>
+	</ul>
+			</li>
+	</ul>
+			</li>
+	</ul>
+			</div>
+
+		<div class="menu-section">
+			<h3>Classes</h3>
+			<ul>
+					<li>
+						<a href="LaravelUi5.Core.Ui5.AbstractActionHandler.html">
+							AbstractActionHandler
+						</a>
+					</li>
+					<li>
+						<a href="LaravelUi5.Core.Ui5.AbstractDataProvider.html">
+							AbstractDataProvider
+						</a>
+					</li>
+					<li>
+						<a href="LaravelUi5.Core.Ui5.AbstractManifest.html">
+							AbstractManifest
+						</a>
+					</li>
+					<li>
+						<a href="LaravelUi5.Core.Ui5.AbstractUi5Action.html">
+							AbstractUi5Action
+						</a>
+					</li>
+					<li class="active">
+						<a href="LaravelUi5.Core.Ui5.Ui5Module.html">
+							Ui5Module
+						</a>
+					</li>
+					<li>
+						<a href="LaravelUi5.Core.Ui5.Ui5Registry.html">
+							Ui5Registry
+						</a>
+					</li>
+			</ul>
+		</div>
+	</div>
+	</div>
+
+	<div class="layout-main">
+		<div class="layout-navbar">
+	<nav class="navbar">
+		<div class="navbar-left">
+			<ul class="navbar-links">
+				<li>
+					<a href="index.html">Overview</a>
+				</li>
+				<li>
+					
+						<a href="namespace-LaravelUi5.Core.Ui5.html">Namespace</a>
+					
+				</li>
+<li class="active"><a href="LaravelUi5.Core.Ui5.Ui5Module.html">Class</a></li>				<li>
+					<a href="tree.html">Tree</a>
+				</li>
+			</ul>
+		</div>
+		<div class="navbar-right">
+	<div class="search" data-elements="assets/elements.js">
+		<input class="search-input" placeholder="Search class, function or namespace" autofocus>
+		<ul class="search-results"></ul>
+	</div>
+		</div>
+	</nav>
+		</div>
+
+		<div class="layout-content">
+		<h1>
+			Class <a href="namespace-LaravelUi5.html">LaravelUi5</a>\<a href="namespace-LaravelUi5.Core.html">Core</a>\<a href="namespace-LaravelUi5.Core.Ui5.html">Ui5</a>\<a href="LaravelUi5.Core.Ui5.Ui5Module.html">Ui5Module</a>
+		</h1>
+
+
+	<table class="classLikeSignatureTable">
+			<tr><th><code>abstract</code></th></tr>
+
+
+		<tr>
+			<th><code>implements</code></th>
+			<td>
+<code><a href="LaravelUi5.Core.Ui5.Contracts.Ui5ModuleInterface.html"><span title="LaravelUi5\Core\Ui5\Contracts\Ui5ModuleInterface">Ui5ModuleInterface</span></a></code>			</td>
+		</tr>
+
+	</table>
+		<div class="classLikeDescription">
+	<div class="description"><p>Abstract base class for a UI5 module definition.</p>
+<p>A module represents a self-contained unit of business logic and artifacts,
+and is registered via config/ui5.php under the 'modules' key.
+Each module is assigned a unique route-level slug used in all URL constructions.</p>
+<p>It may provide one App or one Library (not both), and related sub-artifacts
+such as Cards, Reports, Tiles, and Actions. All artifact instances are expected
+to be fully constructed and ready to register at boot time.</p>
+</div>
+		</div>
+
+			<div class="classLikeSection">
+	<ul class="classTree">
+	<li>
+<b><span class="active">LaravelUi5\Core\Ui5\Ui5Module</span></b>
+
+		implements
+			<a href="LaravelUi5.Core.Ui5.Contracts.Ui5ModuleInterface.html"><span title="LaravelUi5\Core\Ui5\Contracts\Ui5ModuleInterface">Ui5ModuleInterface</span></a>
+
+	<ul class="classTree">
+	<li>
+<a href="LaravelUi5.Core.DashboardModule.html"><span>LaravelUi5\Core\DashboardModule</span></a>
+
+
+	</li>
+	<li>
+<a href="LaravelUi5.Core.CoreModule.html"><span>LaravelUi5\Core\CoreModule</span></a>
+
+
+	</li>
+	<li>
+<a href="LaravelUi5.Core.ReportModule.html"><span>LaravelUi5\Core\ReportModule</span></a>
+
+
+	</li>
+	</ul>
+	</li>
+	</ul>
+			</div>
+
+		<div class="classLikeSection">
+			<b>Located at</b> <a href="source-Ui5.Ui5Module.html#19" title="Go to source code">Ui5/Ui5Module.php</a><br>
+		</div>
+
+
+
+		<table class="table" id="methods">
+			<tr>
+				<th class="table-heading sortable" colspan="3" title="Switch between natural and alphabetical order">Methods</th>
+			</tr>
+
+	<tr class="expandable collapsed" data-order="__construct" id="___construct">
+			<td class="table-cell table-shrink">
+				<code class="nowrap">
+					
+	public
+					
+					
+				</code>
+			</td>
+
+			<td class="table-cell">
+				<code><a href="source-Ui5.Ui5Module.html#26-34" title="Go to source code">__construct</a>(<span>string <var>$slug</var></span>)</code>
+
+
+	<div class="expandable-collapsedView">
+		Create a new UI5 module instance.
+	</div>
+
+	<div class="expandable-expandedView">
+	<div class="description"><p>Create a new UI5 module instance.</p>
+</div>
+
+							<h4>Parameters</h4>
+							<table>
+									<tr>
+										<td><var>$slug</var>&nbsp;&nbsp;</td>
+										<td><p>Route-level slug as configured in config/ui5.php</p>
+</td>
+									</tr>
+							</table>
+
+
+
+	</div>
+			</td>
+		<td class="table-anchor">
+			<a href="#___construct">#</a>
+		</td>
+	</tr>
+	<tr class="expandable collapsed" data-order="getType" id="_getType">
+			<td class="table-cell table-shrink">
+				<code class="nowrap">
+					
+	public
+					
+					
+				</code>
+			</td>
+
+			<td class="table-cell">
+				<code><a href="source-Ui5.Ui5Module.html#36-39" title="Go to source code">getType</a>(): <a href="LaravelUi5.Core.Enums.ArtifactType.html"><span title="LaravelUi5\Core\Enums\ArtifactType">ArtifactType</span></a></code>
+
+
+
+	<div class="expandable-expandedView">
+
+
+
+
+	</div>
+			</td>
+		<td class="table-anchor">
+			<a href="#_getType">#</a>
+		</td>
+	</tr>
+	<tr class="expandable collapsed" data-order="getSlug" id="_getSlug">
+			<td class="table-cell table-shrink">
+				<code class="nowrap">
+					
+	public
+					
+					
+				</code>
+			</td>
+
+			<td class="table-cell">
+				<code><a href="source-Ui5.Ui5Module.html#41-44" title="Go to source code">getSlug</a>(): string</code>
+
+
+	<div class="expandable-collapsedView">
+		Returns the slug that identifies this artifact/module/action within its context.
+	</div>
+
+	<div class="expandable-expandedView">
+	<div class="description"><p>Returns the slug that identifies this artifact/module/action within its context.</p>
+<p>This value is used to generate the <code>url_key</code>, which serves as a unified
+identifier across the client (routing), server (controllers), registry,
+and admin/database layers.</p>
+</div>
+
+
+							<h4>Returns</h4>
+							<div><p>A stable, kebab-case string (e.g. &quot;toggle-lock&quot;, &quot;budget-report&quot;)</p>
+</div>
+
+
+		<h4>Implements</h4>
+		<ul>
+				<li>
+<a href="LaravelUi5.Core.Ui5.Contracts.SluggableInterface.html#_getSlug">						<code>LaravelUi5\Core\Ui5\Contracts\SluggableInterface::getSlug()</code></a>				</li>
+		</ul>
+	</div>
+			</td>
+		<td class="table-anchor">
+			<a href="#_getSlug">#</a>
+		</td>
+	</tr>
+		</table>
+
+
+
+
+
+
+
+
+
+
+		</div>
+
+		<div class="layout-footer">
+			API Documentation API documentation generated by <a href="https://www.apigen.org">ApiGen v7.0.0-alpha.6</a>
+		</div>
+	</div>
+
+	<div class="layout-rest">
+		<div class="navbar"></div>
+	</div>
+</body>
+</html>
