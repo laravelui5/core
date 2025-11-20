@@ -3,5 +3,6 @@
 /vendor
 /.vscode
 /.zed
+/tools
 .phpunit.result.cache
 .DS_Store

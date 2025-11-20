@@ -13,7 +13,7 @@ export default defineConfig({
         nav: [
             {text: 'Home', link: '/'},
             {text: 'Guide', link: '/guide/'},
-            //{text: 'Reference', link: '/docs/'},
+            //{text: 'Blog', link: '/blog/'},
             {text: 'Course', link: '/course/'}
         ],
 
@@ -78,7 +78,8 @@ export default defineConfig({
                 //]
                 //},
                 {text: 'Resources', link: '/guide/resources'},
-                {text: 'Community', link: '/guide/community'}
+                {text: 'Community', link: '/guide/community'},
+                {text: 'API Reference', link: '/api/index.html', target: '_blank'}
             ],
             '/course/': [
                 {

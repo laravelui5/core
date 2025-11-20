@@ -23,6 +23,16 @@ jobs:
         run: npm ci
         working-directory: docs
 
+      - name: Install ApiGen (PHAR)
+        run: |
+          mkdir -p tools
+          curl -L https://github.com/ApiGen/ApiGen/releases/latest/download/apigen.phar -o tools/apigen
+          chmod +x tools/apigen
+
+      - name: Generate API Documentation
+        run: |
+          tools/apigen -c apigen.neon
+
       - name: Build VitePress site
         run: npm run build
         working-directory: docs
