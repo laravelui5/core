@@ -6,7 +6,7 @@ A production-ready integration layer to run SAP OpenUI5 frontends seamlessly on 
 
 Built to bridge the worlds of enterprise-grade UI5 frontends and modern Laravel application backends. With simplicity, security, and full SAP compatibility in mind.
 
-For comprehensive documentation and usage examples, please visit [https://laravelui5.com](https://laravelui5.com).
+For comprehensive documentation and usage examples, please visit [laravelui5.com](https://laravelui5.com).
 
 ## Features
 
@@ -19,41 +19,16 @@ For comprehensive documentation and usage examples, please visit [https://larave
 - Supports annotations and typed schemas, enabling real business app scenarios
 - Focus on modular, context-driven frontends
 
-## Core vs. SDK
-
-This repository (`laravelui5/core`) provides the **foundation layer**.
-
-- UI5 registry for apps, libraries, actions, resources, tiles, KPIs, and reports
-- Multi-endpoint OData integration
-- Artifact system and service provider model
-- Security infrastructure (proxy, CSRF handling)
-- Deployment and versioning model
-- Developer tooling through `ui5:*` Artisan commands
-
-The upcoming [`laravelui5/sdk`](https://pragmatiqu.io/laravelui5/sdk) will provide the **developer experience layer**, including
-
-- Business Partner–centric architecture (no direct rights on users, but on strong semantic objects)
-- Clear separation of roles (fixed, declarative) and groups (maintainable, context-aware)
-- Ui5App awareness with manifest-driven abilities integrated into the Laravel ecosystem
-- Flexible context model supporting both global and context-specific assignments
-- Consistent interfaces and registries, open for package extensions
-- Database layer for the complete artifact system
-- Pre-built mini-apps (e.g. Business Partner management with employees, freelancers, clients, etc.)
-- Global navigation bar with user avatar, notifications, and a CmdK-like global search
-- Pluggable search interface
-- Best practices and prebuilt patterns (master/detail floorplan, filter bars, global dialogs, search helpers)
-- Clear documentation and testable, maintainable building blocks
-
-Think of **Core** as the runtime engine, and the **SDK** as the developer cockpit.
+> For teams who want a complete developer experience with additional productivity features, UI patterns, and prebuilt business modules, a separate commercial Sdk will be available at [pragmatiqu.io](https://pragmatiqu.io/laravelui5/sdk).
 
 ## Roadmap
 
-See the [Roadmap](./ROADMAP.md) for details on Core status, maintenance, and upcoming SDK features.
+See the [Roadmap](./ROADMAP.md) for details on Core status, maintenance, and upcoming features.
 
 ## Security
 
-If you discover a security vulnerability, please send an encrypted mail to [security@pragmatiqu.io](mailto:security@pragmatiqu.io).  
-A public key will be provided on request until we publish it at laravelui5.com/security.
+If you discover a security vulnerability, please send an encrypted mail to *security@pragmatiqu.io*.  
+A public key will be provided on request until we publish it at https://laravelui5.com/security.
 
 ## Contributing
 
