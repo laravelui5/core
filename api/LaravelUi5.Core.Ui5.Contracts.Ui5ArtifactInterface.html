@@ -295,14 +295,6 @@ and reliable resource resolution.</p>
 
 	</li>
 	<li>
-<a href="LaravelUi5.Core.Ui5.Contracts.Ui5ResourceInterface.html"><span>LaravelUi5\Core\Ui5\Contracts\Ui5ResourceInterface</span></a>
-		extends
-			<b><span class="active" title="LaravelUi5\Core\Ui5\Contracts\Ui5ArtifactInterface">Ui5ArtifactInterface</span></b>, 
-			<a href="LaravelUi5.Core.Ui5.Contracts.SluggableInterface.html"><span title="LaravelUi5\Core\Ui5\Contracts\SluggableInterface">SluggableInterface</span></a>
-
-
-	</li>
-	<li>
 <a href="LaravelUi5.Core.Ui5.Contracts.Ui5AppInterface.html"><span>LaravelUi5\Core\Ui5\Contracts\Ui5AppInterface</span></a>
 		extends
 			<b><span class="active" title="LaravelUi5\Core\Ui5\Contracts\Ui5ArtifactInterface">Ui5ArtifactInterface</span></b>, 
@@ -313,14 +305,14 @@ and reliable resource resolution.</p>
 
 	<ul class="classTree">
 	<li>
-<a href="LaravelUi5.Core.ReportApp.html"><span>LaravelUi5\Core\ReportApp</span></a>
+<a href="LaravelUi5.Core.DashboardApp.html"><span>LaravelUi5\Core\DashboardApp</span></a>
 
 		implements
 			<a href="LaravelUi5.Core.Ui5.Contracts.Ui5AppInterface.html"><span title="LaravelUi5\Core\Ui5\Contracts\Ui5AppInterface">Ui5AppInterface</span></a>
 
 	</li>
 	<li>
-<a href="LaravelUi5.Core.DashboardApp.html"><span>LaravelUi5\Core\DashboardApp</span></a>
+<a href="LaravelUi5.Core.ReportApp.html"><span>LaravelUi5\Core\ReportApp</span></a>
 
 		implements
 			<a href="LaravelUi5.Core.Ui5.Contracts.Ui5AppInterface.html"><span title="LaravelUi5\Core\Ui5\Contracts\Ui5AppInterface">Ui5AppInterface</span></a>
@@ -353,6 +345,14 @@ and reliable resource resolution.</p>
 
 	</li>
 	<li>
+<a href="LaravelUi5.Core.Ui5.Contracts.Ui5ResourceInterface.html"><span>LaravelUi5\Core\Ui5\Contracts\Ui5ResourceInterface</span></a>
+		extends
+			<b><span class="active" title="LaravelUi5\Core\Ui5\Contracts\Ui5ArtifactInterface">Ui5ArtifactInterface</span></b>, 
+			<a href="LaravelUi5.Core.Ui5.Contracts.SluggableInterface.html"><span title="LaravelUi5\Core\Ui5\Contracts\SluggableInterface">SluggableInterface</span></a>
+
+
+	</li>
+	<li>
 <a href="LaravelUi5.Core.Ui5.Contracts.Ui5ActionInterface.html"><span>LaravelUi5\Core\Ui5\Contracts\Ui5ActionInterface</span></a>
 		extends
 			<b><span class="active" title="LaravelUi5\Core\Ui5\Contracts\Ui5ArtifactInterface">Ui5ArtifactInterface</span></b>, 
@@ -369,6 +369,14 @@ and reliable resource resolution.</p>
 
 	</li>
 	</ul>
+	</li>
+	<li>
+<a href="LaravelUi5.Core.Ui5.Contracts.Ui5CardInterface.html"><span>LaravelUi5\Core\Ui5\Contracts\Ui5CardInterface</span></a>
+		extends
+			<b><span class="active" title="LaravelUi5\Core\Ui5\Contracts\Ui5ArtifactInterface">Ui5ArtifactInterface</span></b>, 
+			<a href="LaravelUi5.Core.Ui5.Contracts.SluggableInterface.html"><span title="LaravelUi5\Core\Ui5\Contracts\SluggableInterface">SluggableInterface</span></a>
+
+
 	</li>
 	<li>
 <a href="LaravelUi5.Core.Ui5.Contracts.Ui5LibraryInterface.html"><span>LaravelUi5\Core\Ui5\Contracts\Ui5LibraryInterface</span></a>
@@ -390,14 +398,6 @@ and reliable resource resolution.</p>
 			<a href="LaravelUi5.Core.Traits.HasAssetsTrait.html"><span title="LaravelUi5\Core\Traits\HasAssetsTrait">HasAssetsTrait</span></a>
 	</li>
 	</ul>
-	</li>
-	<li>
-<a href="LaravelUi5.Core.Ui5.Contracts.Ui5CardInterface.html"><span>LaravelUi5\Core\Ui5\Contracts\Ui5CardInterface</span></a>
-		extends
-			<b><span class="active" title="LaravelUi5\Core\Ui5\Contracts\Ui5ArtifactInterface">Ui5ArtifactInterface</span></b>, 
-			<a href="LaravelUi5.Core.Ui5.Contracts.SluggableInterface.html"><span title="LaravelUi5\Core\Ui5\Contracts\SluggableInterface">SluggableInterface</span></a>
-
-
 	</li>
 	</ul>
 	</li>
@@ -448,11 +448,11 @@ this returns the Ui5ModuleInterface instance that owns the artifact.</li>
 		<h4>Implemented by</h4>
 		<ul>
 				<li>
-<a href="LaravelUi5.Core.CoreLibrary.html#_getModule">						<code>LaravelUi5\Core\CoreLibrary::getModule()</code></a>				</li>
+<a href="LaravelUi5.Core.DashboardApp.html#_getModule">						<code>LaravelUi5\Core\DashboardApp::getModule()</code></a>				</li>
 				<li>
 <a href="LaravelUi5.Core.ReportApp.html#_getModule">						<code>LaravelUi5\Core\ReportApp::getModule()</code></a>				</li>
 				<li>
-<a href="LaravelUi5.Core.DashboardApp.html#_getModule">						<code>LaravelUi5\Core\DashboardApp::getModule()</code></a>				</li>
+<a href="LaravelUi5.Core.CoreLibrary.html#_getModule">						<code>LaravelUi5\Core\CoreLibrary::getModule()</code></a>				</li>
 		</ul>
 	</div>
 			</td>
@@ -491,11 +491,11 @@ root mapping (e.g. &quot;io.pragmatiqu.tools&quot;).</p>
 		<h4>Implemented by</h4>
 		<ul>
 				<li>
-<a href="LaravelUi5.Core.CoreLibrary.html#_getNamespace">						<code>LaravelUi5\Core\CoreLibrary::getNamespace()</code></a>				</li>
+<a href="LaravelUi5.Core.DashboardApp.html#_getNamespace">						<code>LaravelUi5\Core\DashboardApp::getNamespace()</code></a>				</li>
 				<li>
 <a href="LaravelUi5.Core.ReportApp.html#_getNamespace">						<code>LaravelUi5\Core\ReportApp::getNamespace()</code></a>				</li>
 				<li>
-<a href="LaravelUi5.Core.DashboardApp.html#_getNamespace">						<code>LaravelUi5\Core\DashboardApp::getNamespace()</code></a>				</li>
+<a href="LaravelUi5.Core.CoreLibrary.html#_getNamespace">						<code>LaravelUi5\Core\CoreLibrary::getNamespace()</code></a>				</li>
 		</ul>
 	</div>
 			</td>
@@ -531,11 +531,11 @@ root mapping (e.g. &quot;io.pragmatiqu.tools&quot;).</p>
 		<h4>Implemented by</h4>
 		<ul>
 				<li>
-<a href="LaravelUi5.Core.CoreLibrary.html#_getType">						<code>LaravelUi5\Core\CoreLibrary::getType()</code></a>				</li>
+<a href="LaravelUi5.Core.DashboardApp.html#_getType">						<code>LaravelUi5\Core\DashboardApp::getType()</code></a>				</li>
 				<li>
 <a href="LaravelUi5.Core.ReportApp.html#_getType">						<code>LaravelUi5\Core\ReportApp::getType()</code></a>				</li>
 				<li>
-<a href="LaravelUi5.Core.DashboardApp.html#_getType">						<code>LaravelUi5\Core\DashboardApp::getType()</code></a>				</li>
+<a href="LaravelUi5.Core.CoreLibrary.html#_getType">						<code>LaravelUi5\Core\CoreLibrary::getType()</code></a>				</li>
 		</ul>
 	</div>
 			</td>
@@ -573,11 +573,11 @@ client-side caching (e.g. &quot;1.0.0&quot;).</p>
 		<h4>Implemented by</h4>
 		<ul>
 				<li>
-<a href="LaravelUi5.Core.CoreLibrary.html#_getVersion">						<code>LaravelUi5\Core\CoreLibrary::getVersion()</code></a>				</li>
+<a href="LaravelUi5.Core.DashboardApp.html#_getVersion">						<code>LaravelUi5\Core\DashboardApp::getVersion()</code></a>				</li>
 				<li>
 <a href="LaravelUi5.Core.ReportApp.html#_getVersion">						<code>LaravelUi5\Core\ReportApp::getVersion()</code></a>				</li>
 				<li>
-<a href="LaravelUi5.Core.DashboardApp.html#_getVersion">						<code>LaravelUi5\Core\DashboardApp::getVersion()</code></a>				</li>
+<a href="LaravelUi5.Core.CoreLibrary.html#_getVersion">						<code>LaravelUi5\Core\CoreLibrary::getVersion()</code></a>				</li>
 		</ul>
 	</div>
 			</td>
@@ -613,11 +613,11 @@ client-side caching (e.g. &quot;1.0.0&quot;).</p>
 		<h4>Implemented by</h4>
 		<ul>
 				<li>
-<a href="LaravelUi5.Core.CoreLibrary.html#_getTitle">						<code>LaravelUi5\Core\CoreLibrary::getTitle()</code></a>				</li>
+<a href="LaravelUi5.Core.DashboardApp.html#_getTitle">						<code>LaravelUi5\Core\DashboardApp::getTitle()</code></a>				</li>
 				<li>
 <a href="LaravelUi5.Core.ReportApp.html#_getTitle">						<code>LaravelUi5\Core\ReportApp::getTitle()</code></a>				</li>
 				<li>
-<a href="LaravelUi5.Core.DashboardApp.html#_getTitle">						<code>LaravelUi5\Core\DashboardApp::getTitle()</code></a>				</li>
+<a href="LaravelUi5.Core.CoreLibrary.html#_getTitle">						<code>LaravelUi5\Core\CoreLibrary::getTitle()</code></a>				</li>
 		</ul>
 	</div>
 			</td>
@@ -653,11 +653,11 @@ client-side caching (e.g. &quot;1.0.0&quot;).</p>
 		<h4>Implemented by</h4>
 		<ul>
 				<li>
-<a href="LaravelUi5.Core.CoreLibrary.html#_getDescription">						<code>LaravelUi5\Core\CoreLibrary::getDescription()</code></a>				</li>
+<a href="LaravelUi5.Core.DashboardApp.html#_getDescription">						<code>LaravelUi5\Core\DashboardApp::getDescription()</code></a>				</li>
 				<li>
 <a href="LaravelUi5.Core.ReportApp.html#_getDescription">						<code>LaravelUi5\Core\ReportApp::getDescription()</code></a>				</li>
 				<li>
-<a href="LaravelUi5.Core.DashboardApp.html#_getDescription">						<code>LaravelUi5\Core\DashboardApp::getDescription()</code></a>				</li>
+<a href="LaravelUi5.Core.CoreLibrary.html#_getDescription">						<code>LaravelUi5\Core\CoreLibrary::getDescription()</code></a>				</li>
 		</ul>
 	</div>
 			</td>
