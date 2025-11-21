@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Focused README and ROADMAP on Core
 - Added article *LaravelUi5 Explained*
 - Added docs on configuration
+- Added canonical URL to head
 
 ## [1.1.10] - 2025-11-15
 - Save role scope to registry

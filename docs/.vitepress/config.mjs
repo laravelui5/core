@@ -128,6 +128,18 @@ export default defineConfig({
         ]
     },
 
+    transformPageData(pageData) {
+        const canonicalUrl = `https://laravelui5.com/${pageData.relativePath}`
+            .replace(/index\.md$/, '')
+            .replace(/\.md$/, '.html')
+
+        pageData.frontmatter.head ??= []
+        pageData.frontmatter.head.push([
+            'link',
+            { rel: 'canonical', href: canonicalUrl }
+        ])
+    },
+
     vite: {
         plugins: [tailwindcss()],
     }
