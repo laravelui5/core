@@ -16,7 +16,7 @@ return [
     | Use a valid version tag (e.g., "1.120.5") from the official UI5 CDN.
     |
     */
-    'version' => '1.136.1',
+    'version' => '1.136.8',
 
     /*
     |--------------------------------------------------------------------------
@@ -28,7 +28,7 @@ return [
     | authentication and navigation purposes.
     |
     | The specified entries will be automatically resolved and injected into
-    | the "sap.ui5.config" section of the generated manifest.json.
+    | the "laravel.ui5.routes" section of the generated manifest.json.
     |
     | Example (if desired):
     |

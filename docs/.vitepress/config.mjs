@@ -13,7 +13,7 @@ export default defineConfig({
         nav: [
             {text: 'Home', link: '/'},
             {text: 'Guide', link: '/guide/'},
-            //{text: 'Blog', link: '/blog/'},
+            {text: 'Blog', link: '/blog/'},
             {text: 'Course', link: '/course/'}
         ],
 
@@ -56,6 +56,7 @@ export default defineConfig({
                     text: 'Backend Anatomy',
                     items: [
                         {text: 'Overview', link: '/guide/backend/index'},
+                        {text: 'Configuration', link: '/guide/backend/configuration'},
                         {text: 'Ui5Module', link: '/guide/backend/module'},
                         {text: 'Ui5Library', link: '/guide/backend/library'},
                         {text: 'Ui5App', link: '/guide/backend/app'},

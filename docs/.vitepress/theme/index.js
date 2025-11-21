@@ -7,6 +7,7 @@ import Spacer from './components/Spacer.vue'
 import OptInLink from './components/OptInLink.vue'
 import Youtube from './components/Youtube.vue'
 import AudioPlayer from './components/AudioPlayer.vue'
+import BlogArchive from "./components/BlogArchive.vue";
 import './style.css'
 
 /** @type {import('vitepress').Theme} */
@@ -24,6 +25,7 @@ export default {
         app.component('Spacer', Spacer)
         app.component('Youtube', Youtube)
         app.component('AudioPlayer', AudioPlayer)
+        app.component('BlogArchive', BlogArchive)
         if (typeof window !== 'undefined') {
             const script = document.createElement('script')
             script.src = 'https://f.convertkit.com/ckjs/ck.5.js'
