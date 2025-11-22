@@ -2,9 +2,9 @@
 
 namespace {{ phpNamespace }};
 
-use LaravelUi5\Core\Ui5\AbstractLaravelUi5Manifest;
+use LaravelUi5\Core\Ui5\AbstractManifest;
 
-class {{ class }}Manifest extends AbstractLaravelUi5Manifest
+class {{ class }}Manifest extends AbstractManifest
 {
     protected function enhanceFragment(string $module): array
     {

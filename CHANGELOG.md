@@ -4,13 +4,14 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-## [1.1.11] - 2025-11-
+## [1.1.11] - 2025-11-22
 - Added blog to documentation
 - Added API docs to documentation
 - Focused README and ROADMAP on Core
 - Added article *LaravelUi5 Explained*
 - Added docs on configuration
 - Added canonical URL to head
+- Fixed Ui5Manifest.stub
 
 ## [1.1.10] - 2025-11-15
 - Save role scope to registry
