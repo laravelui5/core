@@ -2,9 +2,6 @@
 
 namespace LaravelUi5\Core\Ui5\Contracts;
 
-use LaravelUi5\Core\Enums\AbilityType;
-use LaravelUi5\Core\Enums\ArtifactType;
-
 /**
  * Interface Ui5RegistryInterface
  *
@@ -50,61 +47,6 @@ interface Ui5RegistryInterface extends Ui5RuntimeInterface
      * @return Ui5ArtifactInterface[]
      */
     public function artifacts(): array;
-
-    /**
-     * Returns all roles declared across all modules via #[Role] attributes.
-     *
-     * @return array<string, array>
-     */
-    public function roles(): array;
-
-    /**
-     * Returns all registered abilities, grouped by namespace and ability type.
-     *
-     * The result reflects the normalized internal structure:
-     * `$abilities[$namespace][$type->label()][$abilityName] = Ability`.
-     *
-     * - When `$namespace` is provided, abilities are limited to that artifact
-     *   namespace (e.g. "io.pragmatiqu.offers").
-     * - When `$type` is provided, only abilities of that `AbilityType`
-     *   (e.g. `AbilityType::Act`) are returned.
-     * - When both are null, all abilities across all namespaces and types
-     *   are returned.
-     *
-     * Example:
-     * ```php
-     * $registry->abilities('io.pragmatiqu.reports', AbilityType::Act);
-     * // → [ 'toggleLock' => Ability, 'exportPdf' => Ability, ... ]
-     * ```
-     *
-     * @param string|null $namespace Optional artifact namespace to filter by.
-     * @param ArtifactType|null $type Optional ability type to filter by.
-     * @return array
-     */
-    public function abilities(?string $namespace = null, ?ArtifactType $type = null): array;
-
-    /**
-     * Returns all settings declared via #[Setting] attributes,
-     * grouped by artifact namespace.
-     *
-     * - When `$namespace` is provided, only settings belonging to
-     *   that namespace are returned.
-     * - When `$namespace` is null, all settings across all registered
-     *   artifacts are returned.
-     *
-     * The result reflects the normalized internal structure:
-     * `$settings[$namespace][$settingName] = Setting`.
-     *
-     * Example:
-     * ```php
-     * $registry->settings('io.pragmatiqu.dashboard');
-     * // → [ 'refreshInterval' => Setting, 'theme' => Setting, ... ]
-     * ```
-     *
-     * @param string|null $namespace  Optional artifact namespace to filter by.
-     * @return array
-     */
-    public function settings(?string $namespace = null): array;
 
     /**
      * Returns all semantic objects declared via #[SemanticObject] attributes.
