@@ -115,6 +115,7 @@
 			<url><loc>LaravelUi5.Core.Ui5.AbstractDataProvider.html</loc></url>
 			<url><loc>LaravelUi5.Core.Ui5.AbstractManifest.html</loc></url>
 			<url><loc>LaravelUi5.Core.Ui5.AbstractUi5Action.html</loc></url>
+			<url><loc>LaravelUi5.Core.Ui5.AbstractUi5Module.html</loc></url>
 			<url><loc>LaravelUi5.Core.Ui5.Contracts.ActionHandlerInterface.html</loc></url>
 			<url><loc>LaravelUi5.Core.Ui5.Contracts.ConfigurableInterface.html</loc></url>
 			<url><loc>LaravelUi5.Core.Ui5.Contracts.DataProviderInterface.html</loc></url>
@@ -155,7 +156,6 @@
 			<url><loc>LaravelUi5.Core.Ui5.Enums.TileSizeBehavior.html</loc></url>
 			<url><loc>LaravelUi5.Core.Ui5.Enums.ValueColor.html</loc></url>
 			<url><loc>LaravelUi5.Core.Ui5.Enums.WrappingType.html</loc></url>
-			<url><loc>LaravelUi5.Core.Ui5.Ui5Module.html</loc></url>
 			<url><loc>LaravelUi5.Core.Ui5.Ui5Registry.html</loc></url>
 			<url><loc>LaravelUi5.Core.View.Components.Ui5Element.html</loc></url>
 
@@ -253,6 +253,7 @@
 			<url><loc>source-Ui5.AbstractDataProvider.html</loc></url>
 			<url><loc>source-Ui5.AbstractManifest.html</loc></url>
 			<url><loc>source-Ui5.AbstractUi5Action.html</loc></url>
+			<url><loc>source-Ui5.AbstractUi5Module.html</loc></url>
 			<url><loc>source-Ui5.Contracts.ActionHandlerInterface.html</loc></url>
 			<url><loc>source-Ui5.Contracts.ConfigurableInterface.html</loc></url>
 			<url><loc>source-Ui5.Contracts.DataProviderInterface.html</loc></url>
@@ -293,7 +294,6 @@
 			<url><loc>source-Ui5.Enums.TileSizeBehavior.html</loc></url>
 			<url><loc>source-Ui5.Enums.ValueColor.html</loc></url>
 			<url><loc>source-Ui5.Enums.WrappingType.html</loc></url>
-			<url><loc>source-Ui5.Ui5Module.html</loc></url>
 			<url><loc>source-Ui5.Ui5Registry.html</loc></url>
 			<url><loc>source-View.Components.Ui5Element.html</loc></url>
 </urlset>
