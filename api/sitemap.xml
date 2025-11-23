@@ -57,7 +57,7 @@
 			<url><loc>LaravelUi5.Core.Controllers.IndexController.html</loc></url>
 			<url><loc>LaravelUi5.Core.Controllers.ManifestController.html</loc></url>
 			<url><loc>LaravelUi5.Core.Controllers.ODataController.html</loc></url>
-			<url><loc>LaravelUi5.Core.Controllers.ReportActionDispatcher.html</loc></url>
+			<url><loc>LaravelUi5.Core.Controllers.ReportActionDispatchController.html</loc></url>
 			<url><loc>LaravelUi5.Core.Controllers.ReportController.html</loc></url>
 			<url><loc>LaravelUi5.Core.Controllers.ReportResourceController.html</loc></url>
 			<url><loc>LaravelUi5.Core.Controllers.ResourceController.html</loc></url>
@@ -193,7 +193,7 @@
 			<url><loc>source-Controllers.IndexController.html</loc></url>
 			<url><loc>source-Controllers.ManifestController.html</loc></url>
 			<url><loc>source-Controllers.ODataController.html</loc></url>
-			<url><loc>source-Controllers.ReportActionDispatcher.html</loc></url>
+			<url><loc>source-Controllers.ReportActionDispatchController.html</loc></url>
 			<url><loc>source-Controllers.ReportController.html</loc></url>
 			<url><loc>source-Controllers.ReportResourceController.html</loc></url>
 			<url><loc>source-Controllers.ResourceController.html</loc></url>
