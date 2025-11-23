@@ -310,7 +310,7 @@ request routing, resource resolution, and intent navigation.</p>
 			</div>
 
 		<div class="classLikeSection">
-			<b>Located at</b> <a href="source-Ui5.Contracts.Ui5RuntimeInterface.html#28" title="Go to source code">Ui5/Contracts/Ui5RuntimeInterface.php</a><br>
+			<b>Located at</b> <a href="source-Ui5.Contracts.Ui5RuntimeInterface.html#25" title="Go to source code">Ui5/Contracts/Ui5RuntimeInterface.php</a><br>
 		</div>
 
 
@@ -331,7 +331,7 @@ request routing, resource resolution, and intent navigation.</p>
 			</td>
 
 			<td class="table-cell">
-				<code><a href="source-Ui5.Contracts.Ui5RuntimeInterface.html#30-36" title="Go to source code">hasModule</a>(<span>string <var>$slug</var></span>): bool</code>
+				<code><a href="source-Ui5.Contracts.Ui5RuntimeInterface.html#27-33" title="Go to source code">hasModule</a>(<span>string <var>$slug</var></span>): bool</code>
 
 
 	<div class="expandable-collapsedView">
@@ -378,7 +378,7 @@ request routing, resource resolution, and intent navigation.</p>
 			</td>
 
 			<td class="table-cell">
-				<code><a href="source-Ui5.Contracts.Ui5RuntimeInterface.html#38-44" title="Go to source code">getModule</a>(<span>string <var>$slug</var></span>): <a href="LaravelUi5.Core.Ui5.Contracts.Ui5ModuleInterface.html"><span title="LaravelUi5\Core\Ui5\Contracts\Ui5ModuleInterface">Ui5ModuleInterface</span></a>|null</code>
+				<code><a href="source-Ui5.Contracts.Ui5RuntimeInterface.html#35-41" title="Go to source code">getModule</a>(<span>string <var>$slug</var></span>): <a href="LaravelUi5.Core.Ui5.Contracts.Ui5ModuleInterface.html"><span title="LaravelUi5\Core\Ui5\Contracts\Ui5ModuleInterface">Ui5ModuleInterface</span></a>|null</code>
 
 
 	<div class="expandable-collapsedView">
@@ -425,7 +425,7 @@ request routing, resource resolution, and intent navigation.</p>
 			</td>
 
 			<td class="table-cell">
-				<code><a href="source-Ui5.Contracts.Ui5RuntimeInterface.html#46-52" title="Go to source code">has</a>(<span>string <var>$namespace</var></span>): bool</code>
+				<code><a href="source-Ui5.Contracts.Ui5RuntimeInterface.html#43-49" title="Go to source code">has</a>(<span>string <var>$namespace</var></span>): bool</code>
 
 
 	<div class="expandable-collapsedView">
@@ -472,7 +472,7 @@ request routing, resource resolution, and intent navigation.</p>
 			</td>
 
 			<td class="table-cell">
-				<code><a href="source-Ui5.Contracts.Ui5RuntimeInterface.html#54-60" title="Go to source code">get</a>(<span>string <var>$namespace</var></span>): <a href="LaravelUi5.Core.Ui5.Contracts.Ui5ArtifactInterface.html"><span title="LaravelUi5\Core\Ui5\Contracts\Ui5ArtifactInterface">Ui5ArtifactInterface</span></a>|null</code>
+				<code><a href="source-Ui5.Contracts.Ui5RuntimeInterface.html#51-57" title="Go to source code">get</a>(<span>string <var>$namespace</var></span>): <a href="LaravelUi5.Core.Ui5.Contracts.Ui5ArtifactInterface.html"><span title="LaravelUi5\Core\Ui5\Contracts\Ui5ArtifactInterface">Ui5ArtifactInterface</span></a>|null</code>
 
 
 	<div class="expandable-collapsedView">
@@ -519,7 +519,7 @@ request routing, resource resolution, and intent navigation.</p>
 			</td>
 
 			<td class="table-cell">
-				<code><a href="source-Ui5.Contracts.Ui5RuntimeInterface.html#62-69" title="Go to source code">fromSlug</a>(<span>string <var>$slug</var></span>): <a href="LaravelUi5.Core.Ui5.Contracts.Ui5ArtifactInterface.html"><span title="LaravelUi5\Core\Ui5\Contracts\Ui5ArtifactInterface">Ui5ArtifactInterface</span></a>|null</code>
+				<code><a href="source-Ui5.Contracts.Ui5RuntimeInterface.html#59-66" title="Go to source code">fromSlug</a>(<span>string <var>$slug</var></span>): <a href="LaravelUi5.Core.Ui5.Contracts.Ui5ArtifactInterface.html"><span title="LaravelUi5\Core\Ui5\Contracts\Ui5ArtifactInterface">Ui5ArtifactInterface</span></a>|null</code>
 
 
 	<div class="expandable-collapsedView">
@@ -568,7 +568,7 @@ or null if not found.</p>
 			</td>
 
 			<td class="table-cell">
-				<code><a href="source-Ui5.Contracts.Ui5RuntimeInterface.html#71-77" title="Go to source code">slugFor</a>(<span><a href="LaravelUi5.Core.Ui5.Contracts.Ui5ArtifactInterface.html"><span title="LaravelUi5\Core\Ui5\Contracts\Ui5ArtifactInterface">Ui5ArtifactInterface</span></a> <var>$artifact</var></span>): string|null</code>
+				<code><a href="source-Ui5.Contracts.Ui5RuntimeInterface.html#68-74" title="Go to source code">slugFor</a>(<span><a href="LaravelUi5.Core.Ui5.Contracts.Ui5ArtifactInterface.html"><span title="LaravelUi5\Core\Ui5\Contracts\Ui5ArtifactInterface">Ui5ArtifactInterface</span></a> <var>$artifact</var></span>): string|null</code>
 
 
 	<div class="expandable-collapsedView">
@@ -593,163 +593,6 @@ or null if not found.</p>
 			<a href="#_slugFor">#</a>
 		</td>
 	</tr>
-	<tr class="expandable collapsed" data-order="roles" id="_roles">
-			<td class="table-cell table-shrink">
-				<code class="nowrap">
-					
-	public
-					
-					
-				</code>
-			</td>
-
-			<td class="table-cell">
-				<code><a href="source-Ui5.Contracts.Ui5RuntimeInterface.html#79-84" title="Go to source code">roles</a>(): array&lt;string, array&gt;</code>
-
-
-	<div class="expandable-collapsedView">
-		Returns all roles declared across all modules via #[Role] attributes.
-	</div>
-
-	<div class="expandable-expandedView">
-	<div class="description"><p>Returns all roles declared across all modules via #[Role] attributes.</p>
-</div>
-
-
-
-
-		<h4>Implemented by</h4>
-		<ul>
-				<li>
-<a href="LaravelUi5.Core.Ui5.Ui5Registry.html#_roles">						<code>LaravelUi5\Core\Ui5\Ui5Registry::roles()</code></a>				</li>
-		</ul>
-	</div>
-			</td>
-		<td class="table-anchor">
-			<a href="#_roles">#</a>
-		</td>
-	</tr>
-	<tr class="expandable collapsed" data-order="abilities" id="_abilities">
-			<td class="table-cell table-shrink">
-				<code class="nowrap">
-					
-	public
-					
-					
-				</code>
-			</td>
-
-			<td class="table-cell">
-				<code><a href="source-Ui5.Contracts.Ui5RuntimeInterface.html#86-109" title="Go to source code">abilities</a>(<span>string|null <var>$namespace</var> = <span class="php-kw">null</span></span>, <span><a href="LaravelUi5.Core.Enums.ArtifactType.html"><span title="LaravelUi5\Core\Enums\ArtifactType">ArtifactType</span></a>|null <var>$type</var> = <span class="php-kw">null</span></span>): array</code>
-
-
-	<div class="expandable-collapsedView">
-		Returns all registered abilities, grouped by namespace and ability type.
-	</div>
-
-	<div class="expandable-expandedView">
-	<div class="description"><p>Returns all registered abilities, grouped by namespace and ability type.</p>
-<p>The result reflects the normalized internal structure:
-<code>$abilities[$namespace][$type-&gt;label()][$abilityName] = Ability</code>.</p>
-<ul>
-<li>When <code>$namespace</code> is provided, abilities are limited to that artifact
-namespace (e.g. &quot;io.pragmatiqu.offers&quot;).</li>
-<li>When <code>$type</code> is provided, only abilities of that <code>AbilityType</code>
-(e.g. <code>AbilityType::Act</code>) are returned.</li>
-<li>When both are null, all abilities across all namespaces and types
-are returned.</li>
-</ul>
-<p>Example:</p>
-<pre><code class="language-php">$registry-&gt;abilities('io.pragmatiqu.reports', AbilityType::Act);
-// → [ 'toggleLock' =&gt; Ability, 'exportPdf' =&gt; Ability, ... ]
-</code></pre>
-</div>
-
-							<h4>Parameters</h4>
-							<table>
-									<tr>
-										<td><var>$namespace</var>&nbsp;&nbsp;</td>
-										<td><p>Optional artifact namespace to filter by.</p>
-</td>
-									</tr>
-									<tr>
-										<td><var>$type</var>&nbsp;&nbsp;</td>
-										<td><p>Optional ability type to filter by.</p>
-</td>
-									</tr>
-							</table>
-
-
-
-		<h4>Implemented by</h4>
-		<ul>
-				<li>
-<a href="LaravelUi5.Core.Ui5.Ui5Registry.html#_abilities">						<code>LaravelUi5\Core\Ui5\Ui5Registry::abilities()</code></a>				</li>
-		</ul>
-	</div>
-			</td>
-		<td class="table-anchor">
-			<a href="#_abilities">#</a>
-		</td>
-	</tr>
-	<tr class="expandable collapsed" data-order="settings" id="_settings">
-			<td class="table-cell table-shrink">
-				<code class="nowrap">
-					
-	public
-					
-					
-				</code>
-			</td>
-
-			<td class="table-cell">
-				<code><a href="source-Ui5.Contracts.Ui5RuntimeInterface.html#111-132" title="Go to source code">settings</a>(<span>string|null <var>$namespace</var> = <span class="php-kw">null</span></span>): array</code>
-
-
-	<div class="expandable-collapsedView">
-		Returns all settings declared via #[Setting] attributes,
-grouped by artifact namespace.
-	</div>
-
-	<div class="expandable-expandedView">
-	<div class="description"><p>Returns all settings declared via #[Setting] attributes,
-grouped by artifact namespace.</p>
-<ul>
-<li>When <code>$namespace</code> is provided, only settings belonging to
-that namespace are returned.</li>
-<li>When <code>$namespace</code> is null, all settings across all registered
-artifacts are returned.</li>
-</ul>
-<p>The result reflects the normalized internal structure:
-<code>$settings[$namespace][$settingName] = Setting</code>.</p>
-<p>Example:</p>
-<pre><code class="language-php">$registry-&gt;settings('io.pragmatiqu.dashboard');
-// → [ 'refreshInterval' =&gt; Setting, 'theme' =&gt; Setting, ... ]
-</code></pre>
-</div>
-
-							<h4>Parameters</h4>
-							<table>
-									<tr>
-										<td><var>$namespace</var>&nbsp;&nbsp;</td>
-										<td><p>Optional artifact namespace to filter by.</p>
-</td>
-									</tr>
-							</table>
-
-
-
-		<h4>Implemented by</h4>
-		<ul>
-				<li>
-<a href="LaravelUi5.Core.Ui5.Ui5Registry.html#_settings">						<code>LaravelUi5\Core\Ui5\Ui5Registry::settings()</code></a>				</li>
-		</ul>
-	</div>
-			</td>
-		<td class="table-anchor">
-			<a href="#_settings">#</a>
-		</td>
-	</tr>
 	<tr class="expandable collapsed" data-order="resolve" id="_resolve">
 			<td class="table-cell table-shrink">
 				<code class="nowrap">
@@ -761,7 +604,7 @@ artifacts are returned.</li>
 			</td>
 
 			<td class="table-cell">
-				<code><a href="source-Ui5.Contracts.Ui5RuntimeInterface.html#134-141" title="Go to source code">resolve</a>(<span>string <var>$namespace</var></span>): string|null</code>
+				<code><a href="source-Ui5.Contracts.Ui5RuntimeInterface.html#76-83" title="Go to source code">resolve</a>(<span>string <var>$namespace</var></span>): string|null</code>
 
 
 	<div class="expandable-collapsedView">
@@ -810,7 +653,7 @@ artifacts are returned.</li>
 			</td>
 
 			<td class="table-cell">
-				<code><a href="source-Ui5.Contracts.Ui5RuntimeInterface.html#143-149" title="Go to source code">resolveIntents</a>(<span>string <var>$slug</var></span>): array&lt;string, array&lt;string, array&gt;&gt;</code>
+				<code><a href="source-Ui5.Contracts.Ui5RuntimeInterface.html#85-91" title="Go to source code">resolveIntents</a>(<span>string <var>$slug</var></span>): array&lt;string, array&lt;string, array&gt;&gt;</code>
 
 
 	<div class="expandable-collapsedView">
@@ -854,7 +697,7 @@ artifacts are returned.</li>
 			</td>
 
 			<td class="table-cell">
-				<code><a href="source-Ui5.Contracts.Ui5RuntimeInterface.html#151-157" title="Go to source code">resolveRoots</a>(<span>array&lt;int, string&gt; <var>$namespaces</var></span>): array&lt;string, string&gt;</code>
+				<code><a href="source-Ui5.Contracts.Ui5RuntimeInterface.html#93-99" title="Go to source code">resolveRoots</a>(<span>array&lt;int, string&gt; <var>$namespaces</var></span>): array&lt;string, string&gt;</code>
 
 
 	<div class="expandable-collapsedView">
