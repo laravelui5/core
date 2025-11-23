@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Removed unnecessary tests
 - Renamed GenerateUi5Resource to GenerateUi5ResourceCommand
 - Removed AppContextInterface and implementation
+- Renamed ReportActionDispatcher to ReportActionDispatchController
 
 ## [1.1.13] - 2025-11-23
 - Undo changes from 1.1.12

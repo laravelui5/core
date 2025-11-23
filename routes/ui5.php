@@ -7,7 +7,7 @@ use LaravelUi5\Core\Controllers\DashboardController;
 use LaravelUi5\Core\Controllers\IndexController;
 use LaravelUi5\Core\Controllers\ManifestController;
 use LaravelUi5\Core\Controllers\ActionDispatchController;
-use LaravelUi5\Core\Controllers\ReportActionDispatcher;
+use LaravelUi5\Core\Controllers\ReportActionDispatchController;
 use LaravelUi5\Core\Controllers\ReportController;
 use LaravelUi5\Core\Controllers\ReportResourceController;
 use LaravelUi5\Core\Controllers\ResourceController;
@@ -35,7 +35,7 @@ Route::get('app/report/{slug}/view/Report.view.{extension}', ReportResourceContr
 /**
  * REPORTACTION entrypoint (HTML|PDF|XSLX)
  */
-Route::get('report/{slug}/{action}', ReportActionDispatcher::class);
+Route::get('report/{slug}/{action}', ReportActionDispatchController::class);
 
 /**
  * REPORT entrypoint (HTML|PDF|XSLX)

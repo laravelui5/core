@@ -13,7 +13,7 @@ use LaravelUi5\Core\Services\ExecutableHandler;
 use LaravelUi5\Core\Ui5\Contracts\ReportActionInterface;
 use LaravelUi5\Core\Ui5\Contracts\Ui5ReportInterface;
 
-class ReportActionDispatcher
+class ReportActionDispatchController
 {
     /**
      * @throws CircularDependencyException
