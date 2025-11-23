@@ -3,7 +3,6 @@
 namespace LaravelUi5\Core\Ui5;
 
 use LaravelUi5\Core\Attributes\Parameter;
-use LaravelUi5\Core\Enums\AbilityType;
 use LaravelUi5\Core\Enums\ParameterSource;
 use LaravelUi5\Core\Exceptions\InvalidHttpMethodActionException;
 use LaravelUi5\Core\Exceptions\InvalidModuleException;
@@ -55,9 +54,6 @@ abstract class AbstractManifest implements LaravelUi5ManifestInterface
             LaravelUi5ManifestKeys::ROUTES => $this->buildRoutes(),
             LaravelUi5ManifestKeys::ACTIONS => $this->buildActions($resolved),
             LaravelUi5ManifestKeys::RESOURCES => $this->buildResources($resolved),
-            LaravelUi5ManifestKeys::ABILITIES => $this->buildAbilities($namespace),
-            LaravelUi5ManifestKeys::ROLES => $this->buildRoles(),
-            LaravelUi5ManifestKeys::SETTINGS => $this->buildSettings($namespace),
             LaravelUi5ManifestKeys::INTENTS => $this->buildIntents($module),
         ];
 
@@ -149,46 +145,6 @@ abstract class AbstractManifest implements LaravelUi5ManifestInterface
         }
 
         return $resources;
-    }
-
-    private function buildAbilities(string $namespace): array
-    {
-        $all = $this->registry->abilities($namespace);
-
-        $flag = 'DEV' === strtoupper(config('ui5.active', 'PRO'));
-
-        $abilities = [];
-        foreach ($all as $type => $group) {
-            if (AbilityType::Access->label() !== $type) {
-                foreach ($group as $key => $value) {
-                    if (is_array($value) && isset($value['type'])) {
-                        $abilities[$type][$key] = $flag;
-                    } else {
-                        $abilities[$type][$key] = collect($value)
-                            ->map(fn() => $flag)
-                            ->toArray();
-                    }
-                }
-            }
-        }
-
-        return $abilities;
-    }
-
-    private function buildRoles(): array
-    {
-        $roles = $this->registry->roles();
-
-        return collect($roles)
-            ->mapWithKeys(fn($data, $key) => [$key => $data['note'] ?? ''])
-            ->all();
-    }
-
-    private function buildSettings(string $namespace): array
-    {
-        return collect($this->registry->settings($namespace))
-            ->map(fn($setting) => $setting['default'])
-            ->all();
     }
 
     private function buildIntents(string $module): array

@@ -44,26 +44,6 @@ final class LaravelUi5ManifestKeys
     public const string RESOURCES = 'resources';
 
     /**
-     * Defines ability-level access rules for components and actions.
-     * The structure is usually nested and app-specific.
-     *
-     * @example "see", "use", "act"
-     */
-    public const string ABILITIES = 'abilities';
-
-    /**
-     * Defines the list of available user roles within the app or tenant.
-     * Used for UI filtering, permission mapping, and documentation.
-     */
-    public const string ROLES = 'roles';
-
-    /**
-     * Defines user- or tenant-specific settings exposed to the frontend.
-     * Can include feature toggles, UI preferences, branding info, etc.
-     */
-    public const string SETTINGS = 'settings';
-
-    /**
      * Defines navigation intents defined by semantic object graph.
      */
     public const string INTENTS = 'intents';
@@ -83,9 +63,6 @@ final class LaravelUi5ManifestKeys
             self::ROUTES,
             self::META,
             self::RESOURCES,
-            self::ABILITIES,
-            self::ROLES,
-            self::SETTINGS,
             self::INTENTS,
         ];
     }
