@@ -16,7 +16,7 @@ use LaravelUi5\Core\Ui5\Contracts\Ui5ModuleInterface;
  * such as Cards, Reports, Tiles, and Actions. All artifact instances are expected
  * to be fully constructed and ready to register at boot time.
  */
-abstract class Ui5Module implements Ui5ModuleInterface
+abstract class AbstractUi5Module implements Ui5ModuleInterface
 {
     /**
      * @var string

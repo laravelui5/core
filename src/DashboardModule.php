@@ -5,9 +5,9 @@ namespace LaravelUi5\Core;
 use LaravelUi5\Core\Ui5\Contracts\Ui5AppInterface;
 use LaravelUi5\Core\Ui5\Contracts\Ui5ArtifactInterface;
 use LaravelUi5\Core\Ui5\Contracts\Ui5LibraryInterface;
-use LaravelUi5\Core\Ui5\Ui5Module;
+use LaravelUi5\Core\Ui5\AbstractUi5Module;
 
-class DashboardModule extends Ui5Module
+class DashboardModule extends AbstractUi5Module
 {
     public function hasApp(): bool
     {

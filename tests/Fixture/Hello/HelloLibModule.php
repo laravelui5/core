@@ -5,9 +5,9 @@ namespace Tests\Fixture\Hello;
 use LaravelUi5\Core\Ui5\Contracts\Ui5AppInterface;
 use LaravelUi5\Core\Ui5\Contracts\Ui5ArtifactInterface;
 use LaravelUi5\Core\Ui5\Contracts\Ui5LibraryInterface;
-use LaravelUi5\Core\Ui5\Ui5Module;
+use LaravelUi5\Core\Ui5\AbstractUi5Module;
 
-class HelloLibModule extends Ui5Module
+class HelloLibModule extends AbstractUi5Module
 {
     public function hasApp(): bool
     {
