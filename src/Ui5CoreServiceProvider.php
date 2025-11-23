@@ -22,7 +22,7 @@ use LaravelUi5\Core\Commands\GenerateUi5CardCommand;
 use LaravelUi5\Core\Commands\GenerateUi5Dashboard;
 use LaravelUi5\Core\Commands\GenerateUi5LibraryCommand;
 use LaravelUi5\Core\Commands\GenerateUi5ReportCommand;
-use LaravelUi5\Core\Commands\GenerateUi5Resource;
+use LaravelUi5\Core\Commands\GenerateUi5ResourceCommand;
 use LaravelUi5\Core\Commands\GenerateUi5TileCommand;
 use LaravelUi5\Core\Contracts\AuthServiceInterface;
 use LaravelUi5\Core\Contracts\BusinessPartnerResolverInterface;
@@ -64,7 +64,7 @@ class Ui5CoreServiceProvider extends ServiceProvider
                 GenerateUi5LibraryCommand::class,
                 GenerateUi5ReportCommand::class,
                 GenerateUi5TileCommand::class,
-                GenerateUi5Resource::class
+                GenerateUi5ResourceCommand::class
             ]);
         }
 

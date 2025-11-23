@@ -6,7 +6,7 @@ use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 
-class GenerateUi5Resource extends BaseGenerator
+class GenerateUi5ResourceCommand extends BaseGenerator
 {
     protected $signature = 'ui5:resource
         {name : Resource name in App/Resource format (e.g. Offers/Header)}
