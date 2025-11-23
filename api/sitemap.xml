@@ -37,7 +37,7 @@
 			<url><loc>LaravelUi5.Core.Commands.GenerateUi5Dashboard.html</loc></url>
 			<url><loc>LaravelUi5.Core.Commands.GenerateUi5LibraryCommand.html</loc></url>
 			<url><loc>LaravelUi5.Core.Commands.GenerateUi5ReportCommand.html</loc></url>
-			<url><loc>LaravelUi5.Core.Commands.GenerateUi5Resource.html</loc></url>
+			<url><loc>LaravelUi5.Core.Commands.GenerateUi5ResourceCommand.html</loc></url>
 			<url><loc>LaravelUi5.Core.Commands.GenerateUi5TileCommand.html</loc></url>
 			<url><loc>LaravelUi5.Core.Contracts.AppContextInterface.html</loc></url>
 			<url><loc>LaravelUi5.Core.Contracts.AuthServiceInterface.html</loc></url>
@@ -175,7 +175,7 @@
 			<url><loc>source-Commands.GenerateUi5Dashboard.html</loc></url>
 			<url><loc>source-Commands.GenerateUi5LibraryCommand.html</loc></url>
 			<url><loc>source-Commands.GenerateUi5ReportCommand.html</loc></url>
-			<url><loc>source-Commands.GenerateUi5Resource.html</loc></url>
+			<url><loc>source-Commands.GenerateUi5ResourceCommand.html</loc></url>
 			<url><loc>source-Commands.GenerateUi5TileCommand.html</loc></url>
 			<url><loc>source-Contracts.AppContextInterface.html</loc></url>
 			<url><loc>source-Contracts.AuthServiceInterface.html</loc></url>
