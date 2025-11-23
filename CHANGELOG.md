@@ -6,6 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [1.1.13] - 2025-11-
 - Renamed Ui5Module to AbstractUi5Module
+- Removed unnecessary tests
 
 ## [1.1.13] - 2025-11-23
 - Undo changes from 1.1.12
