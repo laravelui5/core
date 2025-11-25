@@ -57,6 +57,29 @@ interface Ui5RuntimeInterface
     public function get(string $namespace): ?Ui5ArtifactInterface;
 
     /**
+     * Returns all settings declared via #[Setting] attributes,
+     * grouped by artifact namespace.
+     *
+     * - When `$namespace` is provided, only settings belonging to
+     *   that namespace are returned.
+     * - When `$namespace` is null, all settings across all registered
+     *   artifacts are returned.
+     *
+     * The result reflects the normalized internal structure:
+     * `$settings[$namespace][$settingName] = Setting`.
+     *
+     * Example:
+     * ```php
+     * $registry->settings('io.pragmatiqu.dashboard');
+     * // → [ 'refreshInterval' => Setting, 'theme' => Setting, ... ]
+     * ```
+     *
+     * @param string|null $namespace  Optional artifact namespace to filter by.
+     * @return array
+     */
+    public function settings(?string $namespace = null): array;
+
+    /**
      * Returns the artifact instance for the given slug (as used in routing or URLs),
      * or null if not found.
      *

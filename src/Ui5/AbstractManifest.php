@@ -12,6 +12,7 @@ use LaravelUi5\Core\Ui5\Contracts\LaravelUi5ManifestKeys;
 use LaravelUi5\Core\Ui5\Contracts\ParameterizableInterface;
 use LaravelUi5\Core\Ui5\Contracts\Ui5ModuleInterface;
 use LaravelUi5\Core\Ui5\Contracts\Ui5RuntimeInterface;
+use LaravelUi5\Core\Ui5\Contracts\Ui5ShellFragmentInterface;
 use ReflectionClass;
 use RuntimeException;
 
@@ -55,6 +56,8 @@ abstract class AbstractManifest implements LaravelUi5ManifestInterface
             LaravelUi5ManifestKeys::ACTIONS => $this->buildActions($resolved),
             LaravelUi5ManifestKeys::RESOURCES => $this->buildResources($resolved),
             LaravelUi5ManifestKeys::INTENTS => $this->buildIntents($module),
+            LaravelUi5ManifestKeys::SETTINGS => $this->buildSettings($namespace),
+            LaravelUi5ManifestKeys::SHELL => $this->buildShell(),
         ];
 
         $fragment = array_merge($core, $this->enhanceFragment($module));
@@ -145,6 +148,23 @@ abstract class AbstractManifest implements LaravelUi5ManifestInterface
         }
 
         return $resources;
+    }
+
+    private function buildSettings(string $namespace): array
+    {
+        return collect($this->registry->settings($namespace))
+            ->map(fn($setting) => $setting['default'])
+            ->all();
+    }
+
+    private function buildShell(): array
+    {
+
+        if ($this instanceof Ui5ShellFragmentInterface) {
+            return $this->buildShellFragment();
+        }
+
+        return [];
     }
 
     private function buildIntents(string $module): array

@@ -49,6 +49,50 @@ final class LaravelUi5ManifestKeys
     public const string INTENTS = 'intents';
 
     /**
+     * Defines settings exposed to the frontend.
+     * Can include feature toggles, UI preferences, branding info, etc.
+     */
+    public const string SETTINGS = 'settings';
+
+    /**
+     * Defines a dedicated extension namespace for vendor-specific metadata.
+     *
+     * This key serves as a sandbox for SDKs, commercial add-ons, partner modules,
+     * or other vendor packages that need to expose additional manifest information
+     * without affecting the core manifest structure.
+     *
+     * The Core does not prescribe any internal schema for this section. All data
+     * placed under this key must be considered vendor-owned and optional.
+     *
+     * Typical use cases include:
+     * - custom feature descriptors
+     * - vendor-specific configuration blocks
+     * - commercial edition metadata
+     * - integration markers for partner ecosystems
+     */
+    public const string SDK = 'sdk';
+
+    /**
+     * Defines configuration for the global LaravelUi5 Shell layer.
+     *
+     * This section configures the UI elements that wrap the active app, such as
+     * navigation overlays, help panels, search interfaces, or other global
+     * controls. The Shell is rendered independently of any specific UI5 app and
+     * therefore requires its own top-level manifest structure.
+     *
+     * Only modules implementing Ui5ShellFragmentInterface may contribute to this
+     * section. Its structure is strictly defined by the Core to ensure predictable
+     * behavior across the entire runtime environment.
+     *
+     * Typical contents include:
+     * - navigation overlay configuration
+     * - help or guidance overlays
+     * - global search and command interfaces
+     * - keyboard shortcut mappings
+     */
+    public const string SHELL = 'shell';
+
+    /**
      * Returns all known manifest keys in the order they are typically rendered.
      *
      * This list can be used to validate manifest fragments or for documentation
@@ -64,6 +108,8 @@ final class LaravelUi5ManifestKeys
             self::META,
             self::RESOURCES,
             self::INTENTS,
+            self::SETTINGS,
+            self::SDK,
         ];
     }
 }
