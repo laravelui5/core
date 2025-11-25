@@ -5,7 +5,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
 
-	<title>Interface LaravelUi5\Core\Ui5\Contracts\DataProviderInterface | API Documentation API</title>
+	<title>Interface LaravelUi5\Core\Ui5\Contracts\Ui5ShellFragmentInterface | API Documentation API</title>
 	<link rel="stylesheet" href="assets/main.css">
 	<script src="assets/main.js" defer></script>
 </head>
@@ -86,7 +86,7 @@
 							ConfigurableInterface
 						</a>
 					</li>
-					<li class="active">
+					<li>
 						<a href="LaravelUi5.Core.Ui5.Contracts.DataProviderInterface.html">
 							DataProviderInterface
 						</a>
@@ -211,7 +211,7 @@
 							Ui5RuntimeInterface
 						</a>
 					</li>
-					<li>
+					<li class="active">
 						<a href="LaravelUi5.Core.Ui5.Contracts.Ui5ShellFragmentInterface.html">
 							Ui5ShellFragmentInterface
 						</a>
@@ -244,7 +244,7 @@
 						<a href="namespace-LaravelUi5.Core.Ui5.Contracts.html">Namespace</a>
 					
 				</li>
-<li class="active"><a href="LaravelUi5.Core.Ui5.Contracts.DataProviderInterface.html">Interface</a></li>				<li>
+<li class="active"><a href="LaravelUi5.Core.Ui5.Contracts.Ui5ShellFragmentInterface.html">Interface</a></li>				<li>
 					<a href="tree.html">Tree</a>
 				</li>
 			</ul>
@@ -260,86 +260,92 @@
 
 		<div class="layout-content">
 		<h1>
-			Interface <a href="namespace-LaravelUi5.html">LaravelUi5</a>\<a href="namespace-LaravelUi5.Core.html">Core</a>\<a href="namespace-LaravelUi5.Core.Ui5.html">Ui5</a>\<a href="namespace-LaravelUi5.Core.Ui5.Contracts.html">Contracts</a>\<a href="LaravelUi5.Core.Ui5.Contracts.DataProviderInterface.html">DataProviderInterface</a>
+			Interface <a href="namespace-LaravelUi5.html">LaravelUi5</a>\<a href="namespace-LaravelUi5.Core.html">Core</a>\<a href="namespace-LaravelUi5.Core.Ui5.html">Ui5</a>\<a href="namespace-LaravelUi5.Core.Ui5.Contracts.html">Contracts</a>\<a href="LaravelUi5.Core.Ui5.Contracts.Ui5ShellFragmentInterface.html">Ui5ShellFragmentInterface</a>
 		</h1>
 
 
 	<table class="classLikeSignatureTable">
-		<tr>
-			<th><code>extends</code></th>
-			<td>
-<code><a href="LaravelUi5.Core.Ui5.Contracts.ExecutableInterface.html"><span title="LaravelUi5\Core\Ui5\Contracts\ExecutableInterface">ExecutableInterface</span></a></code>			</td>
-		</tr>
 
 	</table>
 		<div class="classLikeDescription">
-	<div class="description"><p>Contract for UI5 Data Providers.</p>
-<p>A DataProvider encapsulates read-only, idempotent logic for delivering
-structured data to UI5 artifacts such as Cards, Resources, or Reports.</p>
-<p>Responsibilities:</p>
+	<div class="description"><p>Allows a module or application to contribute configuration data
+to the global LaravelUi5 Shell layer.</p>
+<p>The Shell represents the UI container that wraps all UI5 apps.
+It provides global interactions such as navigation overlays,
+help panels, search interfaces, command palettes, and keyboard
+shortcuts. Unlike app-local UI elements, Shell components are
+rendered independently from the active UI5 component and are
+therefore defined at the platform level.</p>
+<p>Manifest fragments contributed through this interface are placed
+under the top-level key LaravelUi5ManifestKeys::SHELL.</p>
+<p>Only modules implementing this interface can influence Shell
+configuration. The Core does not impose a schema beyond the
+requirement that the returned data must be serializable to JSON.</p>
+<p>Typical use cases include:</p>
 <ul>
-<li>Assemble domain-specific data in a backend-driven way.</li>
-<li>Return results in a structured array suitable for JSON serialization.</li>
-<li>Optionally implement {@see ParameterizableInterface} to receive
-validated request parameters.</li>
-<li>Optionally implement {@see ConfigurableInterface} to receive resolved
-tenant- or artifact-specific settings.</li>
+<li>defining keyboard triggers for Navigation, Search, Help</li>
+<li>enabling or configuring overlays rendered outside the app root</li>
+<li>contributing global command-palette entries</li>
+<li>registering static Shell UI elements (e.g. minimal visual cues)</li>
+<li>platform-wide availability metadata (enable/disable per module)</li>
 </ul>
-<p>Notes:</p>
-<ul>
-<li>DataProviders must not perform state-changing operations.</li>
-<li>Dependencies (services, repositories) should be injected via constructor DI.</li>
-<li>The return array should be normalized (arrays, scalars, nested objects),
-not raw models or resources.</li>
-</ul>
+<p>The returned array must follow the structure expected by the
+corresponding Shell implementation on the frontend.</p>
 </div>
 		</div>
 
-			<div class="classLikeSection">
-	<ul class="classTree">
-	<li>
-<b><span class="active">LaravelUi5\Core\Ui5\Contracts\DataProviderInterface</span></b>
-		extends
-			<a href="LaravelUi5.Core.Ui5.Contracts.ExecutableInterface.html"><span title="LaravelUi5\Core\Ui5\Contracts\ExecutableInterface">ExecutableInterface</span></a>
-
-
-	<ul class="classTree">
-	<li>
-<a href="LaravelUi5.Core.Ui5.AbstractDataProvider.html"><span>LaravelUi5\Core\Ui5\AbstractDataProvider</span></a>
-
-		implements
-			<b><span class="active" title="LaravelUi5\Core\Ui5\Contracts\DataProviderInterface">DataProviderInterface</span></b>, 
-			<a href="LaravelUi5.Core.Ui5.Contracts.ConfigurableInterface.html"><span title="LaravelUi5\Core\Ui5\Contracts\ConfigurableInterface">ConfigurableInterface</span></a>, 
-			<a href="LaravelUi5.Core.Ui5.Contracts.ParameterizableInterface.html"><span title="LaravelUi5\Core\Ui5\Contracts\ParameterizableInterface">ParameterizableInterface</span></a>
-
-	</li>
-	</ul>
-	</li>
-	</ul>
-			</div>
 
 		<div class="classLikeSection">
-			<b>Located at</b> <a href="source-Ui5.Contracts.DataProviderInterface.html#25" title="Go to source code">Ui5/Contracts/DataProviderInterface.php</a><br>
+			<b>Located at</b> <a href="source-Ui5.Contracts.Ui5ShellFragmentInterface.html#33" title="Go to source code">Ui5/Contracts/Ui5ShellFragmentInterface.php</a><br>
 		</div>
 
 
 
-		<table class="table">
+		<table class="table" id="methods">
 			<tr>
-				<th class="table-heading">Methods inherited from <a href="LaravelUi5.Core.Ui5.Contracts.ExecutableInterface.html"><span>LaravelUi5\Core\Ui5\Contracts\ExecutableInterface</span></a></th>
+				<th class="table-heading sortable" colspan="3" title="Switch between natural and alphabetical order">Methods</th>
 			</tr>
-			<tr>
-				<td class="table-cell">
-<code><a href="LaravelUi5.Core.Ui5.Contracts.ExecutableInterface.html#_execute">execute()</a></code>				</td>
-			</tr>
+
+	<tr class="expandable collapsed" data-order="buildShellFragment" id="_buildShellFragment">
+			<td class="table-cell table-shrink">
+				<code class="nowrap">
+					
+	public
+					
+					
+				</code>
+			</td>
+
+			<td class="table-cell">
+				<code><a href="source-Ui5.Contracts.Ui5ShellFragmentInterface.html#35-46" title="Go to source code">buildShellFragment</a>(): array&lt;string, mixed&gt;</code>
+
+
+	<div class="expandable-collapsedView">
+		Builds and returns the Shell fragment for this module.
+	</div>
+
+	<div class="expandable-expandedView">
+	<div class="description"><p>Builds and returns the Shell fragment for this module.</p>
+<p>The returned array is inserted under the &quot;shell&quot; manifest key
+and merged with the standard LaravelUi5 manifest structure.
+Implementations must ensure that the fragment is compatible
+with the Shell's configuration schema and does not contain any
+unknown top-level keys outside the &quot;shell&quot; namespace.</p>
+</div>
+
+
+							<h4>Returns</h4>
+							<div><p>The Shell fragment to be added to the manifest.</p>
+</div>
+
+
+	</div>
+			</td>
+		<td class="table-anchor">
+			<a href="#_buildShellFragment">#</a>
+		</td>
+	</tr>
 		</table>
-
-
-
-
-
-
-
 
 
 

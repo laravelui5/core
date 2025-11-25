@@ -212,6 +212,11 @@
 						</a>
 					</li>
 					<li>
+						<a href="LaravelUi5.Core.Ui5.Contracts.Ui5ShellFragmentInterface.html">
+							Ui5ShellFragmentInterface
+						</a>
+					</li>
+					<li>
 						<a href="LaravelUi5.Core.Ui5.Contracts.Ui5TileInterface.html">
 							Ui5TileInterface
 						</a>
@@ -502,64 +507,6 @@ are returned.</li>
 			<a href="#_abilities">#</a>
 		</td>
 	</tr>
-	<tr class="expandable collapsed" data-order="settings" id="_settings">
-			<td class="table-cell table-shrink">
-				<code class="nowrap">
-					
-	public
-					
-					
-				</code>
-			</td>
-
-			<td class="table-cell">
-				<code><a href="source-Ui5.Contracts.Ui5RegistryInterface.html#85-106" title="Go to source code">settings</a>(<span>string|null <var>$namespace</var> = <span class="php-kw">null</span></span>): array</code>
-
-
-	<div class="expandable-collapsedView">
-		Returns all settings declared via #[Setting] attributes,
-grouped by artifact namespace.
-	</div>
-
-	<div class="expandable-expandedView">
-	<div class="description"><p>Returns all settings declared via #[Setting] attributes,
-grouped by artifact namespace.</p>
-<ul>
-<li>When <code>$namespace</code> is provided, only settings belonging to
-that namespace are returned.</li>
-<li>When <code>$namespace</code> is null, all settings across all registered
-artifacts are returned.</li>
-</ul>
-<p>The result reflects the normalized internal structure:
-<code>$settings[$namespace][$settingName] = Setting</code>.</p>
-<p>Example:</p>
-<pre><code class="language-php">$registry-&gt;settings('io.pragmatiqu.dashboard');
-// → [ 'refreshInterval' =&gt; Setting, 'theme' =&gt; Setting, ... ]
-</code></pre>
-</div>
-
-							<h4>Parameters</h4>
-							<table>
-									<tr>
-										<td><var>$namespace</var>&nbsp;&nbsp;</td>
-										<td><p>Optional artifact namespace to filter by.</p>
-</td>
-									</tr>
-							</table>
-
-
-
-		<h4>Implemented by</h4>
-		<ul>
-				<li>
-<a href="LaravelUi5.Core.Ui5.Ui5Registry.html#_settings">						<code>LaravelUi5\Core\Ui5\Ui5Registry::settings()</code></a>				</li>
-		</ul>
-	</div>
-			</td>
-		<td class="table-anchor">
-			<a href="#_settings">#</a>
-		</td>
-	</tr>
 	<tr class="expandable collapsed" data-order="objects" id="_objects">
 			<td class="table-cell table-shrink">
 				<code class="nowrap">
@@ -571,7 +518,7 @@ artifacts are returned.</li>
 			</td>
 
 			<td class="table-cell">
-				<code><a href="source-Ui5.Contracts.Ui5RegistryInterface.html#108-128" title="Go to source code">objects</a>(): array&lt;string, array&gt;</code>
+				<code><a href="source-Ui5.Contracts.Ui5RegistryInterface.html#85-105" title="Go to source code">objects</a>(): array&lt;string, array&gt;</code>
 
 
 	<div class="expandable-collapsedView">
@@ -616,7 +563,7 @@ available routes or actions as defined in PHP attributes.</p>
 			</tr>
 			<tr>
 				<td class="table-cell">
-<code><a href="LaravelUi5.Core.Ui5.Contracts.Ui5RuntimeInterface.html#_hasModule">hasModule()</a>, <a href="LaravelUi5.Core.Ui5.Contracts.Ui5RuntimeInterface.html#_getModule">getModule()</a>, <a href="LaravelUi5.Core.Ui5.Contracts.Ui5RuntimeInterface.html#_has">has()</a>, <a href="LaravelUi5.Core.Ui5.Contracts.Ui5RuntimeInterface.html#_get">get()</a>, <a href="LaravelUi5.Core.Ui5.Contracts.Ui5RuntimeInterface.html#_fromSlug">fromSlug()</a>, <a href="LaravelUi5.Core.Ui5.Contracts.Ui5RuntimeInterface.html#_slugFor">slugFor()</a>, <a href="LaravelUi5.Core.Ui5.Contracts.Ui5RuntimeInterface.html#_resolve">resolve()</a>, <a href="LaravelUi5.Core.Ui5.Contracts.Ui5RuntimeInterface.html#_resolveIntents">resolveIntents()</a>, <a href="LaravelUi5.Core.Ui5.Contracts.Ui5RuntimeInterface.html#_resolveRoots">resolveRoots()</a></code>				</td>
+<code><a href="LaravelUi5.Core.Ui5.Contracts.Ui5RuntimeInterface.html#_hasModule">hasModule()</a>, <a href="LaravelUi5.Core.Ui5.Contracts.Ui5RuntimeInterface.html#_getModule">getModule()</a>, <a href="LaravelUi5.Core.Ui5.Contracts.Ui5RuntimeInterface.html#_has">has()</a>, <a href="LaravelUi5.Core.Ui5.Contracts.Ui5RuntimeInterface.html#_get">get()</a>, <a href="LaravelUi5.Core.Ui5.Contracts.Ui5RuntimeInterface.html#_settings">settings()</a>, <a href="LaravelUi5.Core.Ui5.Contracts.Ui5RuntimeInterface.html#_fromSlug">fromSlug()</a>, <a href="LaravelUi5.Core.Ui5.Contracts.Ui5RuntimeInterface.html#_slugFor">slugFor()</a>, <a href="LaravelUi5.Core.Ui5.Contracts.Ui5RuntimeInterface.html#_resolve">resolve()</a>, <a href="LaravelUi5.Core.Ui5.Contracts.Ui5RuntimeInterface.html#_resolveIntents">resolveIntents()</a>, <a href="LaravelUi5.Core.Ui5.Contracts.Ui5RuntimeInterface.html#_resolveRoots">resolveRoots()</a></code>				</td>
 			</tr>
 		</table>
 

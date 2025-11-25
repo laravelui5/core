@@ -141,6 +141,7 @@
 			<url><loc>LaravelUi5.Core.Ui5.Contracts.Ui5ReportInterface.html</loc></url>
 			<url><loc>LaravelUi5.Core.Ui5.Contracts.Ui5ResourceInterface.html</loc></url>
 			<url><loc>LaravelUi5.Core.Ui5.Contracts.Ui5RuntimeInterface.html</loc></url>
+			<url><loc>LaravelUi5.Core.Ui5.Contracts.Ui5ShellFragmentInterface.html</loc></url>
 			<url><loc>LaravelUi5.Core.Ui5.Contracts.Ui5TileInterface.html</loc></url>
 			<url><loc>LaravelUi5.Core.Ui5.Contracts.VendorTaggedInterface.html</loc></url>
 			<url><loc>LaravelUi5.Core.Ui5.Data.NumericContentData.html</loc></url>
@@ -277,6 +278,7 @@
 			<url><loc>source-Ui5.Contracts.Ui5ReportInterface.html</loc></url>
 			<url><loc>source-Ui5.Contracts.Ui5ResourceInterface.html</loc></url>
 			<url><loc>source-Ui5.Contracts.Ui5RuntimeInterface.html</loc></url>
+			<url><loc>source-Ui5.Contracts.Ui5ShellFragmentInterface.html</loc></url>
 			<url><loc>source-Ui5.Contracts.Ui5TileInterface.html</loc></url>
 			<url><loc>source-Ui5.Contracts.VendorTaggedInterface.html</loc></url>
 			<url><loc>source-Ui5.Data.NumericContentData.html</loc></url>
