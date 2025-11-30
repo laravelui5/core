@@ -5,6 +5,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [1.1.16] - 2025-1
+- Renamed `sdk` namespace in manifest to `vendor`
+- `enhanceFragment` now directly plugs into `vendor` namespace
+- 
 
 ## [1.1.15] - 2025-11-25
 - Added settings with default values to manifest

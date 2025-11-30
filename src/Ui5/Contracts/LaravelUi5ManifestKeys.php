@@ -70,7 +70,7 @@ final class LaravelUi5ManifestKeys
      * - commercial edition metadata
      * - integration markers for partner ecosystems
      */
-    public const string SDK = 'sdk';
+    public const string VENDOR = 'vendor';
 
     /**
      * Defines configuration for the global LaravelUi5 Shell layer.
@@ -103,13 +103,14 @@ final class LaravelUi5ManifestKeys
     public static function all(): array
     {
         return [
-            self::ACTIONS,
-            self::ROUTES,
             self::META,
+            self::ROUTES,
+            self::ACTIONS,
             self::RESOURCES,
             self::INTENTS,
             self::SETTINGS,
-            self::SDK,
+            self::VENDOR,
+            self::SHELL,
         ];
     }
 }

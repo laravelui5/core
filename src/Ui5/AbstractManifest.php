@@ -14,7 +14,6 @@ use LaravelUi5\Core\Ui5\Contracts\Ui5ModuleInterface;
 use LaravelUi5\Core\Ui5\Contracts\Ui5RuntimeInterface;
 use LaravelUi5\Core\Ui5\Contracts\Ui5ShellFragmentInterface;
 use ReflectionClass;
-use RuntimeException;
 
 /**
  * Base class for building a `laravel.ui5` manifest fragment.
@@ -57,23 +56,15 @@ abstract class AbstractManifest implements LaravelUi5ManifestInterface
             LaravelUi5ManifestKeys::RESOURCES => $this->buildResources($resolved),
             LaravelUi5ManifestKeys::INTENTS => $this->buildIntents($module),
             LaravelUi5ManifestKeys::SETTINGS => $this->buildSettings($namespace),
+            LaravelUi5ManifestKeys::VENDOR => $this->enhanceFragment($module),
             LaravelUi5ManifestKeys::SHELL => $this->buildShell(),
         ];
 
-        $fragment = array_merge($core, $this->enhanceFragment($module));
-
-        $unknownKeys = array_diff(array_keys($fragment), LaravelUi5ManifestKeys::all());
-        if (!empty($unknownKeys)) {
-            throw new RuntimeException(
-                'Unknown manifest key(s) in laravel.ui5 fragment: ' . implode(', ', $unknownKeys)
-            );
-        }
-
-        return array_filter($fragment, fn($value) => !empty($value));
+        return array_filter($core, fn($value) => !empty($value));
     }
 
     /**
-     * Optional hook to extend the manifest with abilities, roles, settings, etc.
+     * Optional hook to extend the manifest with vendor specific data.
      *
      * Override this in your subclass to provide domain-specific config.
      *
