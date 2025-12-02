@@ -69,4 +69,24 @@ class HelloModule extends AbstractUi5Module
             new Resources\First\Resource($this)
         ];
     }
+
+    public function getName(): string
+    {
+        return 'Hello';
+    }
+
+    public function getDashboards(): array
+    {
+        return [];
+    }
+
+    public function getReports(): array
+    {
+        return [];
+    }
+
+    public function getDialogs(): array
+    {
+        return [];
+    }
 }

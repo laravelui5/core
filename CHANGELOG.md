@@ -4,11 +4,14 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-## [1.1.16] - 2025-1
+## [1.2.0] - 2025-12-02
 - Renamed `sdk` namespace in manifest to `vendor`
 - `enhanceFragment` now directly plugs into `vendor` namespace
 - corrected PHP doc in `Ui5RegistryInterface` for `modules()` and `artifacts()`
 - removed method target
+- Introduced `Ui5ModuleInterface::getName()` to provide a canonical, stable module identifier.
+- Added `Ui5ModuleInterface::getAllArtifacts()` to return a complete, flat list of all artifacts belonging to a module.
+- Added first-class support for module-level artifacts: `getReports()`, `getDashboards()`, `getDialogs()`
 
 ## [1.1.15] - 2025-11-25
 - Added settings with default values to manifest

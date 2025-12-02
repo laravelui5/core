@@ -23,6 +23,25 @@ namespace LaravelUi5\Core\Ui5\Contracts;
 interface Ui5ModuleInterface extends SluggableInterface
 {
     /**
+     * Returns the canonical name of the module.
+     *
+     * The module name is a human-readable identifier derived from the module’s
+     * directory structure (e.g. `Timesheet`, `Partners`, `Finance`) and is used
+     * for:
+     *  - module introspection,
+     *  - help/documentation resolution,
+     *  - manifest generation,
+     *  - CLI tooling,
+     *  - and internal module mapping.
+     *
+     * The name must represent the top-level directory under `/ui5/<Module>/`,
+     * and is therefore expected to be unique within the installation.
+     *
+     * @return string The canonical module name.
+     */
+    public function getName(): string;
+
+    /**
      * Returns true if this module provides a UI5 application.
      *
      * @return bool
@@ -96,4 +115,45 @@ interface Ui5ModuleInterface extends SluggableInterface
      * @return Ui5ResourceInterface[]
      */
     public function getResources(): array;
+
+    /**
+     * Returns an array of all dashboards (API) provided by this module.
+     *
+     * This artifact type is not discovered automatically. It must be declared
+     * under the dedicated configuration key `dashboards` inside your module’s
+     * `config/ui5.php`.
+     *
+     * @return Ui5DashboardInterface[]
+     */
+    public function getDashboards(): array;
+
+    /**
+     * Returns an array of all resports (API) provided by this module.
+     *
+     * This artifact type is not discovered automatically. It must be declared
+     * under the dedicated configuration key `reports` inside your module’s
+     * `config/ui5.php`.
+     *
+     * @return Ui5ReportInterface[]
+     */
+    public function getReports(): array;
+
+    /**
+     * Returns an array of all dialogs (API) provided by this module.
+     *
+     * This artifact type is not discovered automatically. It must be declared
+     * under the dedicated configuration key `dialogs` inside your module’s
+     * `config/ui5.php`.
+     *
+     * @return Ui5DialogInterface[]
+     */
+    public function getDialogs(): array;
+
+    /**
+     * Returns all artifacts belonging to this module (app, library, tiles, cards,
+     * kpis, actions, resources, dashboards, reports, dialogs, etc.)
+     *
+     * @return Ui5ArtifactInterface[]
+     */
+    public function getAllArtifacts(): array;
 }

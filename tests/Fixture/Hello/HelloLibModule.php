@@ -58,4 +58,24 @@ class HelloLibModule extends AbstractUi5Module
     {
         return [];
     }
+
+    public function getDashboards(): array
+    {
+        return [];
+    }
+
+    public function getReports(): array
+    {
+        return [];
+    }
+
+    public function getDialogs(): array
+    {
+        return [];
+    }
+
+    public function getName(): string
+    {
+        return 'HelloLib';
+    }
 }

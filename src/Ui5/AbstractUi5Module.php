@@ -42,4 +42,19 @@ abstract class AbstractUi5Module implements Ui5ModuleInterface
     {
         return $this->slug;
     }
+
+    public function getAllArtifacts(): array
+    {
+        return [
+            $this->getArtifactRoot(),
+            ...$this->getCards(),
+            ...$this->getKpis(),
+            ...$this->getTiles(),
+            ...$this->getActions(),
+            ...$this->getResources(),
+            ...$this->getReports(),
+            ...$this->getDashboards(),
+            ...$this->getDialogs(),
+        ];
+    }
 }

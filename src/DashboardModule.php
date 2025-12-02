@@ -9,6 +9,12 @@ use LaravelUi5\Core\Ui5\AbstractUi5Module;
 
 class DashboardModule extends AbstractUi5Module
 {
+
+    public function getName(): string
+    {
+        return 'Dashboard';
+    }
+
     public function hasApp(): bool
     {
         return true;
@@ -55,6 +61,21 @@ class DashboardModule extends AbstractUi5Module
     }
 
     public function getResources(): array
+    {
+        return [];
+    }
+
+    public function getDashboards(): array
+    {
+        return [];
+    }
+
+    public function getReports(): array
+    {
+        return [];
+    }
+
+    public function getDialogs(): array
     {
         return [];
     }

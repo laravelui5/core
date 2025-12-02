@@ -19,6 +19,12 @@ use LaravelUi5\Core\Ui5\AbstractUi5Module;
 ]
 class CoreModule extends AbstractUi5Module
 {
+
+    public function getName(): string
+    {
+        return 'Core';
+    }
+
     public function hasApp(): bool
     {
         return false;
@@ -65,6 +71,21 @@ class CoreModule extends AbstractUi5Module
     }
 
     public function getResources(): array
+    {
+        return [];
+    }
+
+    public function getDashboards(): array
+    {
+        return [];
+    }
+
+    public function getReports(): array
+    {
+        return [];
+    }
+
+    public function getDialogs(): array
     {
         return [];
     }
