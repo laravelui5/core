@@ -342,6 +342,61 @@ reports, KPIs, and tiles.</p>
 				<th class="table-heading sortable" colspan="3" title="Switch between natural and alphabetical order">Methods</th>
 			</tr>
 
+	<tr class="expandable collapsed" data-order="getName" id="_getName">
+			<td class="table-cell table-shrink">
+				<code class="nowrap">
+					
+	public
+					
+					
+				</code>
+			</td>
+
+			<td class="table-cell">
+				<code><a href="source-Ui5.Contracts.Ui5ModuleInterface.html#25-42" title="Go to source code">getName</a>(): string</code>
+
+
+	<div class="expandable-collapsedView">
+		Returns the canonical name of the module.
+	</div>
+
+	<div class="expandable-expandedView">
+	<div class="description"><p>Returns the canonical name of the module.</p>
+<p>The module name is a human-readable identifier derived from the module’s
+directory structure (e.g. <code>Timesheet</code>, <code>Partners</code>, <code>Finance</code>) and is used
+for:</p>
+<ul>
+<li>module introspection,</li>
+<li>help/documentation resolution,</li>
+<li>manifest generation,</li>
+<li>CLI tooling,</li>
+<li>and internal module mapping.</li>
+</ul>
+<p>The name must represent the top-level directory under <code>/ui5/&lt;Module&gt;/</code>,
+and is therefore expected to be unique within the installation.</p>
+</div>
+
+
+							<h4>Returns</h4>
+							<div><p>The canonical module name.</p>
+</div>
+
+
+		<h4>Implemented by</h4>
+		<ul>
+				<li>
+<a href="LaravelUi5.Core.DashboardModule.html#_getName">						<code>LaravelUi5\Core\DashboardModule::getName()</code></a>				</li>
+				<li>
+<a href="LaravelUi5.Core.ReportModule.html#_getName">						<code>LaravelUi5\Core\ReportModule::getName()</code></a>				</li>
+				<li>
+<a href="LaravelUi5.Core.CoreModule.html#_getName">						<code>LaravelUi5\Core\CoreModule::getName()</code></a>				</li>
+		</ul>
+	</div>
+			</td>
+		<td class="table-anchor">
+			<a href="#_getName">#</a>
+		</td>
+	</tr>
 	<tr class="expandable collapsed" data-order="hasApp" id="_hasApp">
 			<td class="table-cell table-shrink">
 				<code class="nowrap">
@@ -353,7 +408,7 @@ reports, KPIs, and tiles.</p>
 			</td>
 
 			<td class="table-cell">
-				<code><a href="source-Ui5.Contracts.Ui5ModuleInterface.html#25-30" title="Go to source code">hasApp</a>(): bool</code>
+				<code><a href="source-Ui5.Contracts.Ui5ModuleInterface.html#44-49" title="Go to source code">hasApp</a>(): bool</code>
 
 
 	<div class="expandable-collapsedView">
@@ -393,7 +448,7 @@ reports, KPIs, and tiles.</p>
 			</td>
 
 			<td class="table-cell">
-				<code><a href="source-Ui5.Contracts.Ui5ModuleInterface.html#32-37" title="Go to source code">getApp</a>(): <a href="LaravelUi5.Core.Ui5.Contracts.Ui5AppInterface.html"><span title="LaravelUi5\Core\Ui5\Contracts\Ui5AppInterface">Ui5AppInterface</span></a>|null</code>
+				<code><a href="source-Ui5.Contracts.Ui5ModuleInterface.html#51-56" title="Go to source code">getApp</a>(): <a href="LaravelUi5.Core.Ui5.Contracts.Ui5AppInterface.html"><span title="LaravelUi5\Core\Ui5\Contracts\Ui5AppInterface">Ui5AppInterface</span></a>|null</code>
 
 
 	<div class="expandable-collapsedView">
@@ -433,7 +488,7 @@ reports, KPIs, and tiles.</p>
 			</td>
 
 			<td class="table-cell">
-				<code><a href="source-Ui5.Contracts.Ui5ModuleInterface.html#39-44" title="Go to source code">hasLibrary</a>(): bool</code>
+				<code><a href="source-Ui5.Contracts.Ui5ModuleInterface.html#58-63" title="Go to source code">hasLibrary</a>(): bool</code>
 
 
 	<div class="expandable-collapsedView">
@@ -473,7 +528,7 @@ reports, KPIs, and tiles.</p>
 			</td>
 
 			<td class="table-cell">
-				<code><a href="source-Ui5.Contracts.Ui5ModuleInterface.html#46-51" title="Go to source code">getLibrary</a>(): <a href="LaravelUi5.Core.Ui5.Contracts.Ui5LibraryInterface.html"><span title="LaravelUi5\Core\Ui5\Contracts\Ui5LibraryInterface">Ui5LibraryInterface</span></a>|null</code>
+				<code><a href="source-Ui5.Contracts.Ui5ModuleInterface.html#65-70" title="Go to source code">getLibrary</a>(): <a href="LaravelUi5.Core.Ui5.Contracts.Ui5LibraryInterface.html"><span title="LaravelUi5\Core\Ui5\Contracts\Ui5LibraryInterface">Ui5LibraryInterface</span></a>|null</code>
 
 
 	<div class="expandable-collapsedView">
@@ -513,7 +568,7 @@ reports, KPIs, and tiles.</p>
 			</td>
 
 			<td class="table-cell">
-				<code><a href="source-Ui5.Contracts.Ui5ModuleInterface.html#53-62" title="Go to source code">getArtifactRoot</a>(): <a href="LaravelUi5.Core.Ui5.Contracts.Ui5ArtifactInterface.html"><span title="LaravelUi5\Core\Ui5\Contracts\Ui5ArtifactInterface">Ui5ArtifactInterface</span></a></code>
+				<code><a href="source-Ui5.Contracts.Ui5ModuleInterface.html#72-81" title="Go to source code">getArtifactRoot</a>(): <a href="LaravelUi5.Core.Ui5.Contracts.Ui5ArtifactInterface.html"><span title="LaravelUi5\Core\Ui5\Contracts\Ui5ArtifactInterface">Ui5ArtifactInterface</span></a></code>
 
 
 	<div class="expandable-collapsedView">
@@ -560,7 +615,7 @@ without checking whether the module is app- or library-based.</p>
 			</td>
 
 			<td class="table-cell">
-				<code><a href="source-Ui5.Contracts.Ui5ModuleInterface.html#64-70" title="Go to source code">getCards</a>(): <a href="LaravelUi5.Core.Ui5.Contracts.Ui5CardInterface.html"><span title="LaravelUi5\Core\Ui5\Contracts\Ui5CardInterface">Ui5CardInterface</span></a>[]</code>
+				<code><a href="source-Ui5.Contracts.Ui5ModuleInterface.html#83-89" title="Go to source code">getCards</a>(): <a href="LaravelUi5.Core.Ui5.Contracts.Ui5CardInterface.html"><span title="LaravelUi5\Core\Ui5\Contracts\Ui5CardInterface">Ui5CardInterface</span></a>[]</code>
 
 
 	<div class="expandable-collapsedView">
@@ -602,7 +657,7 @@ Only available if this module provides an app.</p>
 			</td>
 
 			<td class="table-cell">
-				<code><a href="source-Ui5.Contracts.Ui5ModuleInterface.html#72-77" title="Go to source code">getKpis</a>(): <a href="LaravelUi5.Core.Ui5.Contracts.Ui5KpiInterface.html"><span title="LaravelUi5\Core\Ui5\Contracts\Ui5KpiInterface">Ui5KpiInterface</span></a>[]</code>
+				<code><a href="source-Ui5.Contracts.Ui5ModuleInterface.html#91-96" title="Go to source code">getKpis</a>(): <a href="LaravelUi5.Core.Ui5.Contracts.Ui5KpiInterface.html"><span title="LaravelUi5\Core\Ui5\Contracts\Ui5KpiInterface">Ui5KpiInterface</span></a>[]</code>
 
 
 	<div class="expandable-collapsedView">
@@ -642,7 +697,7 @@ Only available if this module provides an app.</p>
 			</td>
 
 			<td class="table-cell">
-				<code><a href="source-Ui5.Contracts.Ui5ModuleInterface.html#79-84" title="Go to source code">getTiles</a>(): <a href="LaravelUi5.Core.Ui5.Contracts.Ui5TileInterface.html"><span title="LaravelUi5\Core\Ui5\Contracts\Ui5TileInterface">Ui5TileInterface</span></a>[]</code>
+				<code><a href="source-Ui5.Contracts.Ui5ModuleInterface.html#98-103" title="Go to source code">getTiles</a>(): <a href="LaravelUi5.Core.Ui5.Contracts.Ui5TileInterface.html"><span title="LaravelUi5\Core\Ui5\Contracts\Ui5TileInterface">Ui5TileInterface</span></a>[]</code>
 
 
 	<div class="expandable-collapsedView">
@@ -682,7 +737,7 @@ Only available if this module provides an app.</p>
 			</td>
 
 			<td class="table-cell">
-				<code><a href="source-Ui5.Contracts.Ui5ModuleInterface.html#86-91" title="Go to source code">getActions</a>(): <a href="LaravelUi5.Core.Ui5.Contracts.Ui5ActionInterface.html"><span title="LaravelUi5\Core\Ui5\Contracts\Ui5ActionInterface">Ui5ActionInterface</span></a>[]</code>
+				<code><a href="source-Ui5.Contracts.Ui5ModuleInterface.html#105-110" title="Go to source code">getActions</a>(): <a href="LaravelUi5.Core.Ui5.Contracts.Ui5ActionInterface.html"><span title="LaravelUi5\Core\Ui5\Contracts\Ui5ActionInterface">Ui5ActionInterface</span></a>[]</code>
 
 
 	<div class="expandable-collapsedView">
@@ -722,7 +777,7 @@ Only available if this module provides an app.</p>
 			</td>
 
 			<td class="table-cell">
-				<code><a href="source-Ui5.Contracts.Ui5ModuleInterface.html#93-98" title="Go to source code">getResources</a>(): <a href="LaravelUi5.Core.Ui5.Contracts.Ui5ResourceInterface.html"><span title="LaravelUi5\Core\Ui5\Contracts\Ui5ResourceInterface">Ui5ResourceInterface</span></a>[]</code>
+				<code><a href="source-Ui5.Contracts.Ui5ModuleInterface.html#112-117" title="Go to source code">getResources</a>(): <a href="LaravelUi5.Core.Ui5.Contracts.Ui5ResourceInterface.html"><span title="LaravelUi5\Core\Ui5\Contracts\Ui5ResourceInterface">Ui5ResourceInterface</span></a>[]</code>
 
 
 	<div class="expandable-collapsedView">
@@ -749,6 +804,173 @@ Only available if this module provides an app.</p>
 			</td>
 		<td class="table-anchor">
 			<a href="#_getResources">#</a>
+		</td>
+	</tr>
+	<tr class="expandable collapsed" data-order="getDashboards" id="_getDashboards">
+			<td class="table-cell table-shrink">
+				<code class="nowrap">
+					
+	public
+					
+					
+				</code>
+			</td>
+
+			<td class="table-cell">
+				<code><a href="source-Ui5.Contracts.Ui5ModuleInterface.html#119-128" title="Go to source code">getDashboards</a>(): <a href="LaravelUi5.Core.Ui5.Contracts.Ui5DashboardInterface.html"><span title="LaravelUi5\Core\Ui5\Contracts\Ui5DashboardInterface">Ui5DashboardInterface</span></a>[]</code>
+
+
+	<div class="expandable-collapsedView">
+		Returns an array of all dashboards (API) provided by this module.
+	</div>
+
+	<div class="expandable-expandedView">
+	<div class="description"><p>Returns an array of all dashboards (API) provided by this module.</p>
+<p>This artifact type is not discovered automatically. It must be declared
+under the dedicated configuration key <code>dashboards</code> inside your module’s
+<code>config/ui5.php</code>.</p>
+</div>
+
+
+
+
+		<h4>Implemented by</h4>
+		<ul>
+				<li>
+<a href="LaravelUi5.Core.DashboardModule.html#_getDashboards">						<code>LaravelUi5\Core\DashboardModule::getDashboards()</code></a>				</li>
+				<li>
+<a href="LaravelUi5.Core.ReportModule.html#_getDashboards">						<code>LaravelUi5\Core\ReportModule::getDashboards()</code></a>				</li>
+				<li>
+<a href="LaravelUi5.Core.CoreModule.html#_getDashboards">						<code>LaravelUi5\Core\CoreModule::getDashboards()</code></a>				</li>
+		</ul>
+	</div>
+			</td>
+		<td class="table-anchor">
+			<a href="#_getDashboards">#</a>
+		</td>
+	</tr>
+	<tr class="expandable collapsed" data-order="getReports" id="_getReports">
+			<td class="table-cell table-shrink">
+				<code class="nowrap">
+					
+	public
+					
+					
+				</code>
+			</td>
+
+			<td class="table-cell">
+				<code><a href="source-Ui5.Contracts.Ui5ModuleInterface.html#130-139" title="Go to source code">getReports</a>(): <a href="LaravelUi5.Core.Ui5.Contracts.Ui5ReportInterface.html"><span title="LaravelUi5\Core\Ui5\Contracts\Ui5ReportInterface">Ui5ReportInterface</span></a>[]</code>
+
+
+	<div class="expandable-collapsedView">
+		Returns an array of all resports (API) provided by this module.
+	</div>
+
+	<div class="expandable-expandedView">
+	<div class="description"><p>Returns an array of all resports (API) provided by this module.</p>
+<p>This artifact type is not discovered automatically. It must be declared
+under the dedicated configuration key <code>reports</code> inside your module’s
+<code>config/ui5.php</code>.</p>
+</div>
+
+
+
+
+		<h4>Implemented by</h4>
+		<ul>
+				<li>
+<a href="LaravelUi5.Core.DashboardModule.html#_getReports">						<code>LaravelUi5\Core\DashboardModule::getReports()</code></a>				</li>
+				<li>
+<a href="LaravelUi5.Core.ReportModule.html#_getReports">						<code>LaravelUi5\Core\ReportModule::getReports()</code></a>				</li>
+				<li>
+<a href="LaravelUi5.Core.CoreModule.html#_getReports">						<code>LaravelUi5\Core\CoreModule::getReports()</code></a>				</li>
+		</ul>
+	</div>
+			</td>
+		<td class="table-anchor">
+			<a href="#_getReports">#</a>
+		</td>
+	</tr>
+	<tr class="expandable collapsed" data-order="getDialogs" id="_getDialogs">
+			<td class="table-cell table-shrink">
+				<code class="nowrap">
+					
+	public
+					
+					
+				</code>
+			</td>
+
+			<td class="table-cell">
+				<code><a href="source-Ui5.Contracts.Ui5ModuleInterface.html#141-150" title="Go to source code">getDialogs</a>(): <a href="LaravelUi5.Core.Ui5.Contracts.Ui5DialogInterface.html"><span title="LaravelUi5\Core\Ui5\Contracts\Ui5DialogInterface">Ui5DialogInterface</span></a>[]</code>
+
+
+	<div class="expandable-collapsedView">
+		Returns an array of all dialogs (API) provided by this module.
+	</div>
+
+	<div class="expandable-expandedView">
+	<div class="description"><p>Returns an array of all dialogs (API) provided by this module.</p>
+<p>This artifact type is not discovered automatically. It must be declared
+under the dedicated configuration key <code>dialogs</code> inside your module’s
+<code>config/ui5.php</code>.</p>
+</div>
+
+
+
+
+		<h4>Implemented by</h4>
+		<ul>
+				<li>
+<a href="LaravelUi5.Core.DashboardModule.html#_getDialogs">						<code>LaravelUi5\Core\DashboardModule::getDialogs()</code></a>				</li>
+				<li>
+<a href="LaravelUi5.Core.ReportModule.html#_getDialogs">						<code>LaravelUi5\Core\ReportModule::getDialogs()</code></a>				</li>
+				<li>
+<a href="LaravelUi5.Core.CoreModule.html#_getDialogs">						<code>LaravelUi5\Core\CoreModule::getDialogs()</code></a>				</li>
+		</ul>
+	</div>
+			</td>
+		<td class="table-anchor">
+			<a href="#_getDialogs">#</a>
+		</td>
+	</tr>
+	<tr class="expandable collapsed" data-order="getAllArtifacts" id="_getAllArtifacts">
+			<td class="table-cell table-shrink">
+				<code class="nowrap">
+					
+	public
+					
+					
+				</code>
+			</td>
+
+			<td class="table-cell">
+				<code><a href="source-Ui5.Contracts.Ui5ModuleInterface.html#152-158" title="Go to source code">getAllArtifacts</a>(): <a href="LaravelUi5.Core.Ui5.Contracts.Ui5ArtifactInterface.html"><span title="LaravelUi5\Core\Ui5\Contracts\Ui5ArtifactInterface">Ui5ArtifactInterface</span></a>[]</code>
+
+
+	<div class="expandable-collapsedView">
+		Returns all artifacts belonging to this module (app, library, tiles, cards,
+kpis, actions, resources, dashboards,…
+	</div>
+
+	<div class="expandable-expandedView">
+	<div class="description"><p>Returns all artifacts belonging to this module (app, library, tiles, cards,
+kpis, actions, resources, dashboards, reports, dialogs, etc.)</p>
+</div>
+
+
+
+
+		<h4>Implemented by</h4>
+		<ul>
+				<li>
+<a href="LaravelUi5.Core.Ui5.AbstractUi5Module.html#_getAllArtifacts">						<code>LaravelUi5\Core\Ui5\AbstractUi5Module::getAllArtifacts()</code></a>				</li>
+		</ul>
+	</div>
+			</td>
+		<td class="table-anchor">
+			<a href="#_getAllArtifacts">#</a>
 		</td>
 	</tr>
 		</table>
