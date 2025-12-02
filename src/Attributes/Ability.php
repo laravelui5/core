@@ -44,7 +44,7 @@ use LaravelUi5\Core\Enums\AbilityType;
  * authorization gates or policy methods and resolve the derived i18n keys
  * for display.
  */
-#[Attribute(Attribute::TARGET_CLASS | Attribute::TARGET_METHOD)]
+#[Attribute(Attribute::TARGET_CLASS)]
 class Ability
 {
     /**

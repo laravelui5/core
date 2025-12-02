@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Renamed `sdk` namespace in manifest to `vendor`
 - `enhanceFragment` now directly plugs into `vendor` namespace
 - corrected PHP doc in `Ui5RegistryInterface` for `modules()` and `artifacts()`
+- removed method target
 
 ## [1.1.15] - 2025-11-25
 - Added settings with default values to manifest
