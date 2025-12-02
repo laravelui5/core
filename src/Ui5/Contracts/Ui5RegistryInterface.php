@@ -39,14 +39,14 @@ interface Ui5RegistryInterface extends Ui5RuntimeInterface
     /**
      * Returns all registered modules.
      *
-     * @return Ui5ModuleInterface[]
+     * @return array<string, Ui5ModuleInterface>
      */
     public function modules(): array;
 
     /**
      * Returns all registered artifacts across all modules.
      *
-     * @return Ui5ArtifactInterface[]
+     * @return array<string, Ui5ArtifactInterface>
      */
     public function artifacts(): array;
 
