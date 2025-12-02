@@ -339,6 +339,7 @@ class GenerateUi5AppCommand extends BaseGenerator
             'phpNamespace' => $this->phpNamespace,
             'class' => $this->className,
             'moduleClass' => $this->moduleClassName,
+            'name' => $this->appName,
         ]));
 
         // Manifest
