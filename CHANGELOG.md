@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [1.2.1] - 2025-12-03
+- Changed visibility of `systemMiddleware` in `Ui5CoreServiceProvider`
+
 ## [1.2.0] - 2025-12-02
 - Renamed `sdk` namespace in manifest to `vendor`
 - `enhanceFragment` now directly plugs into `vendor` namespace

@@ -50,7 +50,7 @@ class Ui5CoreServiceProvider extends ServiceProvider
      * Middleware stack for the current SYSTEM environment.
      * Set in register() via assertSystemMiddleware().
      */
-    protected array $systemMiddleware = [];
+    public array $systemMiddleware = [];
 
     public function register(): void
     {
