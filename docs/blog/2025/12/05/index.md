@@ -1,395 +1,185 @@
 ---
 author: mgerzabek
-title: Deep Dive
-teaser: How LaravelUi5 Brings Context-Sensitive In-App Help to Enterprise Frontends
----
-Below is the **full, polished, publication-ready deep-dive article draft** for **laravelui5.com** — including the requested **LeanShell clarification** woven in naturally and professionally.
-
-The tone is **developer-friendly**, **architect-aware**, and **practical**, with **zero storytelling fluff**.
-This is exactly the type of post that performs well for SaaS teams, Laravel developers, and tech leads.
-
+title: How LaravelUi5 Makes Self-Describing Software Possible
+description: LaravelUi5/Core gives applications a structured way to describe themselves. The Sdk builds on this foundation to deliver a living, context-aware help system that ships with your code. Learn how metadata, modules, and runtime context come together to let software finally speak for itself.
 ---
 
-# **Deep Dive: How LaravelUi5 Brings Context-Sensitive In-App Help to Enterprise Frontends**
+# How LaravelUi5 Makes Self-Describing Software Possible
 
-*(Draft for laravelui5.com)*
+> LaravelUi5/Core gives applications a structured way to describe themselves.  
+> The Sdk builds on this foundation to deliver a living, context-aware help system that ships with your code. Learn how metadata, modules, and runtime context come together to let software finally speak for itself.
+>
+> *From metadata… to a living help system.*
 
----
+When you read the essay [When Software Learns to Speak], you encounter a simple idea. Software shouldn’t rely on external documentation to explain itself. It should rather be able to speak from within.
 
-## **Introduction**
+This companion article shows how that idea becomes real inside LaravelUi5.
+Not through magic or convention, but through architecture: first [Core], then the [Sdk].
 
-Enterprise applications struggle with a persistent problem:
-Users rarely understand a feature in the exact moment they need to use it.
+Let’s walk through it in the way developers appreciate, from structure, to capability, to experience.
 
-Documentation lives in Confluence, Notion, Google Docs, Zendesk.
-Help articles fall out of sync with releases.
-And most systems don’t know where the user is or what they’re trying to do.
+## Why a Meta Layer Belongs in the Architecture
 
-LaravelUi5 solves this by adding a modern, context-aware help layer *directly inside the application*.
-This deep dive explains how it works.
+Modern applications already carry an enormous amount of knowledge about themselves:
 
-### **Important clarification**
+* which modules exist,
+* which features belong to which domain,
+* which actions are possible,
+* which screens and routes matter,
+* which states, roles, or flows define meaning.
 
-> **The Help System is not part of LaravelUi5/Core.**
-> It is part of the **LeanShell runtime**, which is included in the commercial **LaravelUi5 SDK**.
-> LeanShell uses the metadata, artifact registry, and manifest layer provided by the Core to offer the type of UX every SaaS solution for SMEs needs.
+Traditionally, none of this knowledge is available to a help system.
+It lives in the code, implicitly, and stays inaccessible to anything outside the code.
 
-With that out of the way, let’s look at the engineering behind the help layer itself — because it demonstrates exactly what LaravelUi5/Core enables.
+So teams compensate: wikis, onboarding calls, training slides, scattered documentation.
 
----
+LaravelUi5 takes a different approach.
+It turns the knowledge *inside* the codebase into a structured, explicit layer. A layer that other systems (including Help) can understand and build upon.
 
-# **1. Why LaravelUi5 Needed an Integrated Help Layer**
+That layer begins with [LaravelUi5/Core].
 
-Enterprise apps are modular. Each module ships features. Each feature changes over time.
+## Giving the Application a Vocabulary
 
-Traditional documentation workflows break down because:
+Core is not a help system.
+It is the [descriptive foundation] that makes any kind of meta layer possible.
 
-* Docs live outside the codebase
-* Users must switch apps to find help
-* Documentation rarely matches the release version
-* Developers forget to update guides
-* Onboarding becomes manual and repetitive
+Core gives each module, feature, action, and report:
 
-What we really want is:
+* a **stable identity**,
+* a **clear place in the module tree**,
+* and a **declarative description** through typed PHP attributes.
 
-* help that ships with the module
-* help that is versioned
-* help that follows the application context
-* help that works with F1
-* help that never drifts out of sync
-* help that feels like part of the product
+Developers write clean Laravel code.
+Core observes, reflects, and gathers the declarations into a single structure: the [Ui5Registry].
 
-LaravelUi5 implements exactly that.
+You can think of the registry as the application’s self-awareness.
+It knows:
 
----
+* which modules exist,
+* which artifacts those modules expose,
+* what each artifact is meant to do,
+* how features relate,
+* which abilities belong to which actions,
+* how navigation should behave.
 
-# **2. Help Lives Inside the Module**
+All of this is generated by scanning the code.
 
-Documentation is stored in the module itself:
+Core does not produce help content.
+But it exposes the *shape* of the system with enough precision that a help layer can read it.
 
-```
-ui5/Timesheet/
-  src/
-  resources/
-  doc/
-    123e4567-e89b-12d3-a456-426614174000/
-       en.md
-       de.md
-       diagram.png
-       diagram.de.png
-    7bb34d6d-099e-4093-9284-1f09b0392a77/
-       en.md
-       ...
-```
+Core provides the foundation.
+The [Sdk] builds the living system on top.
 
-A few key principles:
+## From Description to Understanding
 
-### **One File = One Concept**
+Once the registry exists, something becomes possible that is normally very difficult.
+The system can be understood from within.
 
-Each Markdown file contains a single topic.
+If a module declares its screens and actions,
+and if these declarations live in a versioned, unified registry,
+then the help system doesn’t need to guess.
 
-### **UUID = Global Identifier**
+It can:
 
-Every help page has a unique UUID inside its frontmatter:
+* identify where the user is,
+* map the UI location to a module,
+* discover the relevant concept or feature,
+* and select the correct help topic.
 
-```yaml
-id: 123e4567-e89b-12d3-a456-426614174000
-title: Timesheet Overview
-tags: [timesheet, overview]
-```
+This is why the meta layer is not a bolt-on feature in LaravelUi5.
+It’s the natural outcome of Core’s reflective design.
 
-### **Locales Live Next to the Document**
+In other words…
 
-If a module provides `en.md` and `de.md`, the system serves the matching locale.
+> **Core doesn’t implement help.
+> Core makes help possible.**
 
-### **Assets Belong to the Topic**
+The Sdk does the rest.
 
-Place images next to the Markdown so they remain stable and versioned.
+## Bringing the Meta Layer to Life
 
----
+The [Sdk] extends Core in the same spirit Laravel extends Symfony.
+Quietly, respectfully, without breaking the underlying foundation.
 
-# **3. Mapping Modules and Features to Help Topics**
+Where Core describes,
+the *Sdk operationalizes*.
 
-LaravelUi5 modules can define a **help root page**:
+This includes the entire runtime needed for a living help system.
 
-```php
-#[Help('123e4567-e89b-12d3-a456-426614174000')]
-class TimesheetModule implements Ui5ModuleInterface {}
-```
+**Context Resolution**
 
-This becomes the module’s table of contents page — the home document.
+The Sdk reads the registry and determines where the user is in the application.
+It knows the module, the feature, the artifact, the screen, the state.
 
-Each artifact (action, controller, list, detail page, etc.) can optionally bind its own context:
+**Help Service & Adapter**
 
-```php
-#[Context('Overview', '123e4567-e89b-12d3-a456-426614174000')]
-class TimesheetList implements Ui5ArtifactInterface {}
-```
+This small service receives the current context and decides which help topic belongs to it.
+If a topic exists at that exact location, it’s selected.
+If not, the system climbs the module tree until it finds the right level of abstraction.
 
-This mapping ties the documentation directly to the features.
+**Per-Module Help Trees**
 
-### **Runtime context from the UI5 App**
+Each module ships its own help content (Markdown files).
+Content stays versioned with the module.
 
-Your UI5 controller can override context dynamically:
+**Help Registry**
 
-```js
-LaravelUi5.setContext("io.pragmatiqu.timesheet.Overview");
-```
+The Sdk collects all help trees into a single, searchable structure.
+This registry mirrors the structure created by Core, just with documentation attached.
 
-This makes F1 context-aware during navigation, tab changes, detail transitions, etc.
+**Viewer & Search Overlay**
 
-The combination of **metadata + runtime context** is what powers a true in-app help system.
+Help is rendered into a clean HTML viewer,
+with deep linking, i18n, and instant search.
 
----
+**The F1 Workflow**
 
-# **4. The HelpRegistry: Scanning, Validating, and Building Metadata**
+When the user presses F1, the Sdk resolves context, finds the matching help topic, and opens the viewer.
 
-The HelpRegistry (part of the SDK) scans all modules during the `ui5:index` command.
+This is what transforms the conceptual idea of “software that can speak” into a daily experience.
 
-### **It performs five tasks:**
+## What This Means for Developers
 
-1. **Scans `doc/*` inside every module**
-   and identifies files by their UUID.
+Because the meta layer grows out of Core, using it requires no special discipline from developers.
 
-2. **Parses frontmatter**
-   (title, description, tags).
+* Write your modules cleanly.
+* Describe your artifacts using attributes.
+* Add help content as Markdown inside the module.
+* Run your builds.
+* Ship your release.
 
-3. **Detects locales**
-   e.g., finds `en.md`, `de.md`.
+The Sdk takes the descriptive foundation from Core and turns it into a help system that
 
-4. **Builds maps:**
+* never drifts out of sync,
+* travels with your deployments,
+* respects version boundaries,
+* works across modules,
+* and speaks the same language as your code.
 
-    * `documents`
-    * `roots` (module root pages)
-    * `bindings` (context → uuid)
+Your job is simply to write the truths of your system in one place, the code.
+Everything else flows from that.
 
-5. **Generates warnings for orphaned or missing topics**
+## A Layer We Forgot to Build
 
-### **Example cache output**
+Most applications treat help as content.
+LaravelUi5 treats help as architecture.
 
-```php
-return [
-  'documents' => [
-    '123e4567...' => [
-      'title' => 'Timesheet Overview',
-      'locales' => ['en', 'de'],
-      'module' => 'timesheet',
-      'html' => [
-         'en' => '<h1>Overview</h1>...',
-         'de' => '<h1>Übersicht</h1>...',
-      ],
-    ],
-  ],
-  'roots' => [
-    'timesheet' => '123e4567...',
-  ],
-  'bindings' => [
-    'io.pragmatiqu.timesheet.Overview' => '123e4567...',
-  ],
-];
-```
+Core gives the system the ability to describe itself.
+The Sdk gives it the ability to speak.
 
-This cache is loaded by the Shell at runtime — fast, predictable, stable.
+Together, they form the meta layer the industry has overlooked for decades, a layer where understanding finally has a home inside the product, not outside of it.
 
----
+If you’d like to explore the architectural story behind this idea,
+read the companion essay on Pragmatiqu.io:
 
-# **5. Markdown → HTML Conversion (Build-Time, Not Runtime)**
+[When Software Learns to Speak]
 
-During `php artisan ui5:index`, all Markdown is converted:
+And if you want to build systems where explanation is built-in instead of bolted-on,
+start with [LaravelUi5/Core] and bring it to life with the [Sdk].
 
-* using unified/CommonMark or similar
-* asset paths rewritten
-* HTML stored in cache
-* nothing left to parse on the frontend
-
-### **Why build-time?**
-
-* consistent rendering
-* fast frontend
-* stable preview
-* no runtime surprises
-* predictable HTML for search indexing
-
-This is one of the biggest architectural wins of the system.
-
----
-
-# **6. Four Clean Endpoints Power the Entire Help Layer**
-
-The Help system exposes only four endpoints:
-
-```
-GET /ui5/help/{uuid}/{locale?}       → HTML + metadata
-GET /ui5/help/toc/{locale?}          → module roots
-GET /ui5/help/index.json             → full-text search index
-GET /ui5/help/{uuid}/assets/{file}   → images, diagrams, etc.
-```
-
-### **Why so few?**
-
-Because everything else happens:
-
-* in the HelpRegistry (preparation)
-* in the HelpService (resolution)
-* in the Help UI (presentation)
-
-The endpoints remain minimal.
-
----
-
-# **7. Context Resolution — The “F1 Moment”**
-
-The most powerful feature of this system is **context resolution**.
-
-### When the user presses F1:
-
-1. The UI5 app reports the current context
-   (`LaravelUi5.getContext()` internally)
-
-2. The Shell checks if a matching help UUID exists
-   via `help.bindings`
-
-3. If found → open that help page
-
-4. If not → open the module root page
-
-5. If even that is missing → open the global help page
-
-6. Deep linking via `/ui5/help/{uuid}` still works
-
-7. Back/forward navigation is supported via `pushState`
-
-### **This is not UI logic. This is architecture.**
-
-It ensures:
-
-* every feature can have documentation
-* every user always lands on the right page
-* context is runtime-driven
-* modules remain isolated
-* the Shell coordinates everything
-
-This is exactly what enterprise apps need.
-
----
-
-# **8. The Help Viewer: A Mini Application Inside Your Application**
-
-The Help UI consists of:
-
-### **1. `<help>` Overlay**
-
-* keyboard handling (F1, ESC)
-* opens and closes viewer
-* houses search overlay
-* manages browser history
-
-### **2. `<help-viewer>`**
-
-* loads HTML from backend
-* intercepts `<a>` links
-* supports anchors
-* manages scroll
-* displays warnings (missing locale, missing document)
-
-### **3. `<help-search>`**
-
-* loads `/ui5/help/index.json`
-* indexes documents with MiniSearch/Lunr
-* shows instant results
-* clicking a result opens the right page
-
-### **Deep-linking**
-
-Opening a help topic directly is supported:
-
-```
-/ui5/help/123e4567-e89b-12d3-a456-426614174000/en
-```
-
-This is powerful for:
-
-* Customer support
-* Internal documentation
-* Developer tooling
-* External knowledge bases pointing into the UI
-
----
-
-# **9. Full-Text Search Built for Large Enterprise Apps**
-
-The search index contains:
-
-* UUID
-* Title
-* Description
-* Tags
-* Normalized HTML content (no tags)
-
-The index is rebuilt during `ui5:index` and contains:
-
-* one entry per document
-* per locale
-* fully normalized text
-* extremely fast local search
-
-No backend queries.
-No external services.
-Just instant results.
-
----
-
-# **10. Adding Help to a Module Takes Two Minutes**
-
-A simple workflow:
-
-```
-1. Add doc/<uuid>/en.md
-2. Add #[Help(uuid)] to the module (root help page)
-3. Add #[Context(..., uuid)] to artifacts (optional)
-4. Run php artisan ui5:index
-5. Press F1 inside the app
-6. Help works — context-sensitive & versioned
-```
-
-This is simple enough that teams will actually use it — and consistent enough that documentation never drifts.
-
----
-
-# **11. Summary & Next Steps**
-
-LaravelUi5’s Help Layer:
-
-* is part of LeanShell (not Core)
-* sits on top of Core’s powerful metadata + registry
-* ships help with modules
-* is version-aware
-* provides deep linking
-* supports i18n
-* handles context dynamically
-* integrates with F1
-* uses build-time HTML
-* and gives enterprise apps a true in-product help system
-
-This post focused on the implementation.
-If you want to understand the *architecture and philosophy behind it*, read the vision article here:
-
-**→ Help Systems Are a Meta Layer — Not an Afterthought**
-*(link to pragmatiqu.io)*
-
-And if you want to follow development, updates, and pre-release access:
-
-**→ Join the LaravelUi5 newsletter here.**
-
----
-
-# **Your deep dive is ready.**
-
-If you want, I can now:
-
-* Write the **pragmatiqu.io vision article** in full
-* Produce **diagrams** for both posts
-* Craft **landingpage content** for laravelui5.com
-* Or write a **LinkedIn promo post** for both articles
-
-What should we do next?
+[When Software Learns to Speak]: https://pragmatiqu.io/archive/2025/12/05
+[Core]: https://packagist.org/packages/laravelui5/core
+[Sdk]: https://pragmatiqu.io/laravelui5/sdk
+[LaravelUi5/Core]: https://github.com/laravelui5/core
+[descriptive foundation]: https://laravelui5.com/blog/2025/11/21/
+[Ui5Registry]: https://laravelui5.com/api/LaravelUi5.Core.Ui5.Contracts.Ui5RegistryInterface.html
