@@ -1,7 +1,0 @@
----
-title: Archive
----
-
-# Posts
-
-<BlogArchive />
