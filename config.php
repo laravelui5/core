@@ -93,15 +93,30 @@ return [
     | Registered UI5 Dashboards
     |--------------------------------------------------------------------------
     |
-    | Dashboards are standalone UI5 XML fragments used for tile-based overviews,
-    | often rendered in the shell container or as entry points in business flows.
+    | Dashboards are standalone UI5 artifacts that represent global entry points
+    | into business workflows, such as tile-based overviews or landing pages.
     |
-    | They are not bound to a specific module and are resolved by global namespace.
-    | Each dashboard must implement the Ui5DashboardInterface and declare a unique
-    | JavaScript namespace for reverse lookup and permission control.
+    | Dashboards are exposed, not embedded.
+    |
+    | Unlike module-bound UI5 apps, dashboards are exposed directly through the
+    | Shell layer and are available independently of any specific module context.
+    | They may be rendered inside the Shell container or linked to from other
+    | Shell components (e.g. command palette, navigation, tiles).
+    |
+    | Dashboards are resolved via this configuration mapping, where the array key
+    | defines the external slug used for routing and identification, and the value
+    | references the Dashboard implementation class.
+    |
+    | The slug is part of the public URL structure (e.g. /app/dashboard/{slug})
+    | and must therefore be unique across the entire application. It is considered
+    | an exposure concern and must not be hard-coded inside the dashboard class.
+    |
+    | Each dashboard class must implement Ui5DashboardInterface and is responsible
+    | for providing its metadata, permissions, and UI5 namespace, but not its final
+    | route or slug.
     |
     | Example:
-    | \Vendor\Package\Dashboards\OffersDashboard::class
+    | 'offers' => \Vendor\Package\Dashboards\OffersDashboard::class,
     |
     */
     'dashboards' => [
@@ -112,20 +127,70 @@ return [
     | Registered UI5 Reports
     |--------------------------------------------------------------------------
     |
-    | Reports are standalone UI5 artifacts representing business evaluations
-    | with an optional selection mask, a rendered result view, and follow-up
-    | actions such as exports or workflow triggers.
+    | Reports are standalone UI5 artifacts that represent structured data outputs,
+    | such as tables, lists, or analytical views, often supporting multiple output
+    | formats (e.g. HTML, PDF, XLSX).
     |
-    | Reports are not bound to a specific module and are resolved by global
-    | namespace. Each report must implement the Ui5ReportInterface and
-    | register a unique urlKey and JavaScript namespace for reverse lookup
-    | and permission control.
+    | Reports are exposed through the global Shell layer and can be accessed
+    | independently of any specific UI5 application or module context. They may be
+    | launched from Shell components such as dashboards, command palettes, or
+    | contextual actions.
+    |
+    | Reports are resolved via this configuration mapping, where the array key
+    | defines the external slug used for routing and identification, and the value
+    | references the Report implementation class.
+    |
+    | The slug is part of the public URL structure (e.g. /app/report/{slug}) and
+    | must therefore be unique across the entire application. It is considered an
+    | exposure concern and must not be hard-coded inside the report class.
+    |
+    | Each report class must implement Ui5ReportInterface and is responsible for
+    | defining its metadata, supported output formats, permissions, and data
+    | providers, but not its final route or slug.
     |
     | Example:
-    | \Vendor\Package\Reports\Hours\Report::class
+    | 'timesheet' => \Vendor\Package\Reports\TimesheetReport::class,
     |
     */
     'reports' => [
+
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Registered UI5 Dialogs
+    |--------------------------------------------------------------------------
+    |
+    | This registration is only required for dialogs that should be exposed as
+    | global Shell entry points; regular, app-local UI5 dialogs can be used freely
+    | without being registered here.
+    |
+    | Global dialogs are standalone UI5 artifacts that represent modal or overlay-based
+    | user interactions, such as confirmations, editors, or focused task flows.
+    |
+    | Dialogs are exposed through the global Shell layer and can be invoked
+    | independently of any specific UI5 application or module context. They are
+    | typically opened from Shell components (e.g. command palette, global actions)
+    | or from other UI5 artifacts such as dashboards or reports.
+    |
+    | Dialogs are resolved via this configuration mapping, where the array key
+    | defines the external slug used for routing and identification, and the value
+    | references the Dialog implementation class.
+    |
+    | The slug is part of the public URL structure (e.g. /app/dialog/{slug}) and
+    | must therefore be unique across the entire application. It is considered an
+    | exposure concern and must not be hard-coded inside the dialog class.
+    |
+    | Each dialog class must implement Ui5DialogInterface and is responsible for
+    | defining its metadata, permissions, UI behavior, and UI5 namespace, but not
+    | its final route or slug.
+    |
+    | Example:
+    | 'user-lock' => \Vendor\Package\Dialogs\UserLockDialog::class,
+    |
+    */
+    'dialogs' => [
+
     ],
 
     /*

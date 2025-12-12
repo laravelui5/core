@@ -9,9 +9,11 @@ use LaravelUi5\Core\Enums\ArtifactType;
 
 class Report implements Ui5ReportInterface
 {
+    private string $slug;
 
-    public function __construct()
+    public function __construct(string $slug)
     {
+        $this->slug = $slug;
     }
 
     public function getModule(): ?Ui5ModuleInterface
@@ -46,7 +48,7 @@ class Report implements Ui5ReportInterface
 
     public function getSlug(): string
     {
-        return '{{ urlKey }}';
+        return $this->slug;
     }
 
     public function getProvider(): DataProviderInterface

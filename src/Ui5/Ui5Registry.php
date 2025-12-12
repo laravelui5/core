@@ -154,14 +154,14 @@ class Ui5Registry implements Ui5RegistryInterface
 
         // Register independent artifacts
         $dashboards = $config['dashboards'] ?? [];
-        foreach ($dashboards as $dashboardClass) {
-            $dashboard = new $dashboardClass;
+        foreach ($dashboards as $slug => $dashboardClass) {
+            $dashboard = new $dashboardClass($slug);
             $this->registerArtifact($dashboard, null);
         }
 
         $reports = $config['reports'] ?? [];
-        foreach ($reports as $reportClass) {
-            $report = new $reportClass;
+        foreach ($reports as $slug => $reportClass) {
+            $report = new $reportClass($slug);
             $this->registerArtifact($report, null);
         }
 

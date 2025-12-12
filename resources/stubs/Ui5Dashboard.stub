@@ -8,6 +8,12 @@ use LaravelUi5\Core\Enums\ArtifactType;
 
 class {{ class }} implements Ui5DashboardInterface
 {
+    private string $slug;
+
+    public function __construct(string $slug)
+    {
+        $this->slug = $slug;
+    }
 
     public function getModule(): ?Ui5ModuleInterface
     {
@@ -41,7 +47,7 @@ class {{ class }} implements Ui5DashboardInterface
 
     public function getSlug(): string
     {
-        return '{{ url_key }}';
+        return $this->slug;
     }
 
     public function getDashboard(): string
