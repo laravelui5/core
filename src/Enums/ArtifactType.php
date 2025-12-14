@@ -227,15 +227,15 @@ enum ArtifactType: int
      *   or does not map to a known artifact type.
      *
      * @param string $path Relative request path below the UI5 route prefix
-     * @return string Non-null urlKey for Ui5Registry lookup
+     * @return string|null urlKey for Ui5Registry lookup or null if infrastructure route
      */
-    public static function urlKeyFromPath(string $path): string
+    public static function urlKeyFromPath(string $path): ?string
     {
         $parts = explode('/', trim($path, '/'));
         if (count($parts) < 2) {
             throw new InvalidPathException($path);
         }
-        $key = match ($parts[0]) {
+        return match ($parts[0]) {
             'app' => "app/" . $parts[1],
             'lib' => "lib/" . $parts[1],
             'dashboard' => "dashboard/" . $parts[1],
@@ -252,10 +252,5 @@ enum ArtifactType: int
                 : null,
             default => null,
         };
-
-        if (null === $key) {
-            throw new InvalidPathException($path);
-        }
-        return $key;
     }
 }

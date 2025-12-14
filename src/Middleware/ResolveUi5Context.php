@@ -103,11 +103,20 @@ class ResolveUi5Context
 
         if (str_starts_with($path, Ui5CoreServiceProvider::UI5_ROUTE_PREFIX)) {
             $relative = trim(substr($path, strlen(Ui5CoreServiceProvider::UI5_ROUTE_PREFIX)), '/');
+
             $urlKey = ArtifactType::urlKeyFromPath($relative);
-            if ($artifact = $this->runtime->fromSlug($urlKey)) {
-                return $artifact;
+
+            if (is_null($urlKey)) {
+                return null;
             }
-            throw new MissingArtifactException($urlKey);
+
+            $artifact = $this->runtime->fromSlug($urlKey);
+
+            if (is_null($artifact)) {
+                throw new MissingArtifactException($urlKey);
+            }
+
+            return $artifact;
         }
 
         return null;
