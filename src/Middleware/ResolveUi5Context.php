@@ -9,6 +9,7 @@ use LaravelUi5\Core\Contracts\BusinessPartnerInterface;
 use LaravelUi5\Core\Contracts\BusinessPartnerResolverInterface;
 use LaravelUi5\Core\Contracts\HasBusinessPartnerInterface;
 use LaravelUi5\Core\Contracts\TenantResolverInterface;
+use LaravelUi5\Core\Contracts\Ui5ArtifactResolverInterface;
 use LaravelUi5\Core\Contracts\Ui5Context;
 use LaravelUi5\Core\Enums\ArtifactType;
 use LaravelUi5\Core\Exceptions\MissingArtifactException;
@@ -48,77 +49,51 @@ class ResolveUi5Context
 
     public function handle(Request $request, Closure $next)
     {
-        if ($artifact = $this->resolveArtifact($request)) {
+        /** @var Ui5ArtifactResolverInterface[] $resolvers */
+        $resolvers = app('ui5.artifact.resolvers');
 
-            /** @var TenantResolverInterface $tenantResolver */
-            $tenantResolver = app(TenantResolverInterface::class);
-            $tenant = $tenantResolver->resolve($request);
+        foreach ($resolvers as $resolver) {
+            $artifact = $resolver->resolve($request);
 
-            $authUser = Auth::user();
-
-            $authPartner = $authUser instanceof HasBusinessPartnerInterface
-                ? $authUser->partner()
-                : null;
-
-            $impersonatePartnerId = session(self::SESSION_KEY_PARTNER_ID);
-
-            $partnerResolver = app(BusinessPartnerResolverInterface::class);
-
-            /** @var BusinessPartnerInterface $partner */
-            $partner = $impersonatePartnerId
-                ? $partnerResolver->resolveById($impersonatePartnerId)
-                : $authPartner;
-
-            $locale = $request->getLocale();
-
-            app()->instance(Ui5Context::class, new Ui5Context(
-                request: $request,
-                artifact: $artifact,
-                tenant: $tenant,
-                partner: $partner,
-                authPartner: $authPartner,
-                locale: $locale
-            ));
+            if ($artifact) {
+                $this->bindContext($request, $artifact);
+                break;
+            }
         }
 
         return $next($request);
     }
 
-    /**
-     * Resolve the Ui5Artifact from the request path.
-     *
-     * This extracts the relative path (below the UI5 route prefix),
-     * normalizes it into a urlKey, and queries the Ui5Registry.
-     *
-     * @param Request $request Current HTTP request
-     * @return Ui5ArtifactInterface|null Returns the artifact if found,
-     *                                   null if the request path is outside UI5 scope.
-     *
-     * @throws MissingArtifactException
-     *         If the path looks like a UI5 artifact but no artifact is registered.
-     */
-    protected function resolveArtifact(Request $request): Ui5ArtifactInterface|null
+    protected function bindContext(Request $request, Ui5ArtifactInterface $artifact): void
     {
-        $path = $request->path();
+        /** @var TenantResolverInterface $tenantResolver */
+        $tenantResolver = app(TenantResolverInterface::class);
+        $tenant = $tenantResolver->resolve($request);
 
-        if (str_starts_with($path, Ui5CoreServiceProvider::UI5_ROUTE_PREFIX)) {
-            $relative = trim(substr($path, strlen(Ui5CoreServiceProvider::UI5_ROUTE_PREFIX)), '/');
+        $authUser = Auth::user();
 
-            $urlKey = ArtifactType::urlKeyFromPath($relative);
+        $authPartner = $authUser instanceof HasBusinessPartnerInterface
+            ? $authUser->partner()
+            : null;
 
-            if (is_null($urlKey)) {
-                return null;
-            }
+        $impersonatePartnerId = session(self::SESSION_KEY_PARTNER_ID);
 
-            $artifact = $this->runtime->fromSlug($urlKey);
+        $partnerResolver = app(BusinessPartnerResolverInterface::class);
 
-            if (is_null($artifact)) {
-                throw new MissingArtifactException($urlKey);
-            }
+        /** @var BusinessPartnerInterface $partner */
+        $partner = $impersonatePartnerId
+            ? $partnerResolver->resolveById($impersonatePartnerId)
+            : $authPartner;
 
-            return $artifact;
-        }
+        $locale = $request->getLocale();
 
-        return null;
+        app()->instance(Ui5Context::class, new Ui5Context(
+            request: $request,
+            artifact: $artifact,
+            tenant: $tenant,
+            partner: $partner,
+            authPartner: $authPartner,
+            locale: $locale
+        ));
     }
 }

@@ -92,6 +92,12 @@ class Ui5CoreServiceProvider extends ServiceProvider
         $this->app->singleton(ParameterResolverInterface::class, ParameterResolver::class);
         $this->app->singleton(SettingResolverInterface::class, SettingResolver::class);
 
+        $this->app->singleton('ui5.artifact.resolvers', function () {
+            return collect(config('ui5.artifact_resolvers'))
+                ->map(fn ($class) => app($class))
+                ->all();
+        });
+
         $this->mergeConfigFrom(__DIR__.'/../config.php', 'ui5');
     }
 

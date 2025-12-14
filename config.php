@@ -1,5 +1,7 @@
 <?php
 
+use LaravelUi5\Core\Services\PathBasedArtifactResolver;
+
 return [
 
     /*
@@ -236,6 +238,10 @@ return [
             ],
         ],
 
+    ],
+
+    'artifact_resolvers' => [
+        PathBasedArtifactResolver::class,
     ],
 
     /*

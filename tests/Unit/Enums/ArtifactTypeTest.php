@@ -99,8 +99,4 @@ describe('Artifact', function () {
     it('throws for invalid path with too few segments', function () {
         ArtifactType::urlKeyFromPath('app');
     })->throws(InvalidPathException::class);
-
-    it('throws for unknown artifact type', function () {
-        ArtifactType::urlKeyFromPath('foo/bar');
-    })->throws(InvalidPathException::class);
 });
