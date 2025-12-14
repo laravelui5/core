@@ -113,18 +113,19 @@ class Ui5Registry implements Ui5RegistryInterface
             /** @var Ui5ModuleInterface $module */
             $module = new $moduleClass($slug);
 
+            $this->modules[$slug] = $module;
+
             $this->registerRoles($module);
         }
 
         // Pass 2: Reflect everything else
-        foreach ($modules as $slug => $moduleClass) {
+        $dashboards = $config['dashboards'] ?? [];
+        $reports = $config['reports'] ?? [];
+        $dialogs = $config['dialogs'] ?? [];
 
-            /** @var Ui5ModuleInterface $module */
-            $module = new $moduleClass($slug);
+        foreach ($this->modules as $slug => $module) {
 
             $this->registerSemanticObject($module);
-
-            $this->modules[$slug] = $module;
 
             if ($module->hasApp() && ($app = $module->getApp())) {
                 $this->registerArtifact($app, $slug);
@@ -147,23 +148,31 @@ class Ui5Registry implements Ui5RegistryInterface
             foreach ($module->getResources() as $resource) {
                 $this->registerArtifact($resource, $slug);
             }
+            foreach ($module->getReports() as $report) {
+                $key = get_class($report);
+                if (array_key_exists($key, $reports)) {
+                    $report->setSlug($reports[$key]);
+                    $this->registerArtifact($report, $slug);
+                }
+            }
+            foreach ($module->getDashboards() as $dashboard) {
+                $key = get_class($dashboard);
+                if (array_key_exists($key, $dashboards)) {
+                    $dashboard->setSlug($dashboards[$key]);
+                    $this->registerArtifact($dashboard, $slug);
+                }
+            }
+            foreach ($module->getDialogs() as $dialog) {
+                $key = get_class($dialog);
+                if (array_key_exists($key, $dialogs)) {
+                    $dialog->setSlug($dialogs[$key]);
+                    $this->registerArtifact($dialog, $slug);
+                }
+            }
         }
 
         // Pass 3: Register inter module dependencies
         $this->registerSemanticLinks();
-
-        // Register independent artifacts
-        $dashboards = $config['dashboards'] ?? [];
-        foreach ($dashboards as $slug => $dashboardClass) {
-            $dashboard = new $dashboardClass($slug);
-            $this->registerArtifact($dashboard, null);
-        }
-
-        $reports = $config['reports'] ?? [];
-        foreach ($reports as $slug => $reportClass) {
-            $report = new $reportClass($slug);
-            $this->registerArtifact($report, null);
-        }
 
         // Extension Hook
         $this->afterLoad($config);

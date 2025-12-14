@@ -13,7 +13,7 @@ namespace LaravelUi5\Core\Ui5\Contracts;
  * Implementations are responsible for providing a valid XML blade path which can be rendered
  * and injected into the SAPUI5 shell container or application shell.
  */
-interface Ui5DashboardInterface extends Ui5ArtifactInterface, SluggableInterface
+interface Ui5DashboardInterface extends Ui5ArtifactInterface, SluggableInterface, SlugSettableInterface
 {
     /**
      * Returns the absolute or resource-relative path to the dashboard Blade view.

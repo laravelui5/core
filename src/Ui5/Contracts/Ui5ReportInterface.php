@@ -16,7 +16,7 @@ namespace LaravelUi5\Core\Ui5\Contracts;
  * - View templates for selection and report output
  * - Optionally: follow-up actions
  */
-interface Ui5ReportInterface extends Ui5ArtifactInterface, SluggableInterface
+interface Ui5ReportInterface extends Ui5ArtifactInterface, SluggableInterface, SlugSettableInterface
 {
     /**
      * Returns the class that handles data retrieval and export logic.

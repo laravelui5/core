@@ -10,14 +10,13 @@ class {{ class }} implements Ui5DashboardInterface
 {
     private string $slug;
 
-    public function __construct(string $slug)
+    public function __construct(protected Ui5ModuleInterface $module)
     {
-        $this->slug = $slug;
     }
 
     public function getModule(): ?Ui5ModuleInterface
     {
-        return null;
+        return $this->module;
     }
 
     public function getType(): ArtifactType
@@ -43,6 +42,11 @@ class {{ class }} implements Ui5DashboardInterface
     public function getDescription(): string
     {
         return '{{ description }}';
+    }
+
+    public function setSlug(string $slug): void
+    {
+        $this->slug = $slug;
     }
 
     public function getSlug(): string

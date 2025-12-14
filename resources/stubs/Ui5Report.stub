@@ -11,14 +11,13 @@ class Report implements Ui5ReportInterface
 {
     private string $slug;
 
-    public function __construct(string $slug)
+    public function __construct(protected Ui5ModuleInterface $module)
     {
-        $this->slug = $slug;
     }
 
     public function getModule(): ?Ui5ModuleInterface
     {
-        return null;
+        return $this->module;
     }
 
     public function getNamespace(): string
@@ -49,6 +48,11 @@ class Report implements Ui5ReportInterface
     public function getSlug(): string
     {
         return $this->slug;
+    }
+
+    public function setSlug(string $slug): void
+    {
+        $this->slug = $slug;
     }
 
     public function getProvider(): DataProviderInterface
