@@ -72,6 +72,12 @@ class Ui5CoreServiceProvider extends ServiceProvider
             Ui5RegistryInterface::class,
             config('ui5.registry', Ui5Registry::class)
         );
+        $this->app->singleton(Ui5RuntimeInterface::class, function($app) {
+            if ($runtime = config('ui5.runtime')) {
+                return $app->make($runtime);
+            }
+            return $app->make(Ui5RegistryInterface::class);
+        });
         if (config('ui5.runtime')) {
             $this->app->singleton(Ui5RuntimeInterface::class, config('ui5.runtime'));
         } else {
