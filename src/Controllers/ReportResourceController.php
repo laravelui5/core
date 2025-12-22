@@ -4,20 +4,16 @@ namespace LaravelUi5\Core\Controllers;
 
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\File;
-use LaravelUi5\Core\Contracts\Ui5CoreContext;
+use LaravelUi5\Core\Contracts\Ui5ContextInterface;
 use LaravelUi5\Core\Ui5\Contracts\Ui5ReportInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ReportResourceController
 {
-    public function __invoke(Ui5CoreContext $context, string $slug, string $extension): Response
+    public function __invoke(Ui5ContextInterface $context, string $slug, string $extension): Response
     {
         /** @var Ui5ReportInterface $report */
-        $report = $context->artifact;
-
-        if (null === $report) {
-            throw new NotFoundHttpException("Report with key [$slug] not found.");
-        }
+        $report = $context->artifact();
 
         $path = match ($extension) {
             'js' => $report->getSelectionControllerPath(),

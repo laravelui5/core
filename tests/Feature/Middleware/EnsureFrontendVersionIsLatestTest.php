@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Route;
+use LaravelUi5\Core\Contracts\Ui5ContextInterface;
 use LaravelUi5\Core\Contracts\Ui5CoreContext;
 use LaravelUi5\Core\Exceptions\OutdatedVersionException;
 use LaravelUi5\Core\Middleware\EnsureFrontendVersionIsLatest;
@@ -20,7 +21,7 @@ it('allows request when version matches (direct middleware test)', function () {
     $route->bind($request);
     $request->setRouteResolver(fn () => $route);
 
-    app()->instance(Ui5CoreContext::class, new Ui5CoreContext($request, $hello));
+    app()->instance(Ui5ContextInterface::class, new Ui5CoreContext($request, $hello));
 
     $response = $this->middleware->handle($request, fn() => response('OK', 200));
     expect($response->getStatusCode())->toBe(200);
@@ -34,7 +35,7 @@ it('throws OutdatedVersionException when version does not match (direct middlewa
     $route->bind($request);
     $request->setRouteResolver(fn () => $route);
 
-    app()->instance(Ui5CoreContext::class, new Ui5CoreContext($request, $hello));
+    app()->instance(Ui5ContextInterface::class, new Ui5CoreContext($request, $hello));
 
     $this->middleware->handle($request, fn() => null);
 })->throws(OutdatedVersionException::class);

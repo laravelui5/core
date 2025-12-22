@@ -4,7 +4,7 @@ namespace LaravelUi5\Core\Controllers;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
-use LaravelUi5\Core\Contracts\Ui5CoreContext;
+use LaravelUi5\Core\Contracts\Ui5ContextInterface;
 use LaravelUi5\Core\Services\ExecutableHandler;
 use LaravelUi5\Core\Ui5\Contracts\Ui5ResourceInterface;
 
@@ -28,10 +28,10 @@ use LaravelUi5\Core\Ui5\Contracts\Ui5ResourceInterface;
  */
 class ResourceController extends Controller
 {
-    public function __invoke(Ui5CoreContext $context, ExecutableHandler $dataProviderHandler): JsonResponse
+    public function __invoke(Ui5ContextInterface $context, ExecutableHandler $dataProviderHandler): JsonResponse
     {
         /** @var Ui5ResourceInterface $resource */
-        $resource = $context->artifact;
+        $resource = $context->artifact();
 
         $provider = $resource->getProvider();
 

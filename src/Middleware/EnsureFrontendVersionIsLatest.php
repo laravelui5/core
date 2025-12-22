@@ -4,7 +4,7 @@ namespace LaravelUi5\Core\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use LaravelUi5\Core\Contracts\Ui5CoreContext;
+use LaravelUi5\Core\Contracts\Ui5ContextInterface;
 use LaravelUi5\Core\Exceptions\OutdatedVersionException;
 
 /**
@@ -28,16 +28,16 @@ class EnsureFrontendVersionIsLatest
 {
     public function handle(Request $request, Closure $next)
     {
-        /** @var Ui5CoreContext|null $context */
-        $context = app(Ui5CoreContext::class);
+        /** @var Ui5ContextInterface|null $context */
+        $context = app(Ui5ContextInterface::class);
 
-        if ($context && $context->artifact && $request->route('version')) {
+        if ($context && $context->artifact() && $request->route('version')) {
             $requestedVersion = $request->route('version');
-            $registeredVersion = $context->artifact->getVersion();
+            $registeredVersion = $context->artifact()->getVersion();
 
             if ($requestedVersion !== $registeredVersion) {
                 throw new OutdatedVersionException(
-                    $context->artifact->getNamespace(),
+                    $context->artifact()->getNamespace(),
                     $requestedVersion,
                     $registeredVersion
                 );

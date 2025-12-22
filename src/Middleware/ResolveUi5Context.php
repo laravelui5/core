@@ -5,6 +5,7 @@ namespace LaravelUi5\Core\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use LaravelUi5\Core\Contracts\Ui5ArtifactResolverInterface;
+use LaravelUi5\Core\Contracts\Ui5ContextInterface;
 use LaravelUi5\Core\Contracts\Ui5CoreContext;
 use LaravelUi5\Core\Exceptions\MissingArtifactException;
 use LaravelUi5\Core\Ui5\Contracts\Ui5ArtifactInterface;
@@ -57,10 +58,6 @@ class ResolveUi5Context
     {
         $locale = $request->getLocale();
 
-        app()->instance(Ui5CoreContext::class, new Ui5CoreContext(
-            request: $request,
-            artifact: $artifact,
-            locale: $locale
-        ));
+        app()->instance(Ui5ContextInterface::class, new Ui5CoreContext($request, $artifact, $locale));
     }
 }
