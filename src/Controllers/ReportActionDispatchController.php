@@ -6,7 +6,7 @@ use Exception;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Container\CircularDependencyException;
 use Illuminate\Http\JsonResponse;
-use LaravelUi5\Core\Contracts\Ui5Context;
+use LaravelUi5\Core\Contracts\Ui5CoreContext;
 use LaravelUi5\Core\Exceptions\InvalidReportActionException;
 use LaravelUi5\Core\Exceptions\MissingReportActionException;
 use LaravelUi5\Core\Services\ExecutableHandler;
@@ -20,10 +20,10 @@ class ReportActionDispatchController
      * @throws BindingResolutionException
      */
     public function __invoke(
-        Ui5Context        $context,
+        Ui5CoreContext    $context,
         ExecutableHandler $handler,
-        string $slug,
-        string $action
+        string            $slug,
+        string            $action
     ): JsonResponse
     {
         /** @var Ui5ReportInterface $report */

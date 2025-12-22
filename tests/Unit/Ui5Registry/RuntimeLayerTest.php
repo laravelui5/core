@@ -17,12 +17,6 @@ describe('Slug resolution', function () {
         $registry = Ui5Registry::fromArray(Hello::ui5Config());
         expect($registry->fromSlug('app/unknown'))->toBeNull();
     });
-
-    it('computes slugFor correctly', function () {
-        $registry = Ui5Registry::fromArray(Hello::ui5Config());
-        $artifact = $registry->get(Hello::NAMESPACE);
-        expect($registry->slugFor($artifact))->toContain('app/hello');
-    });
 });
 
 describe('Resource path resolution', function () {
@@ -40,34 +34,6 @@ describe('Resource path resolution', function () {
     });
 });
 
-describe('Semantic intents resolution', function () {
-    it('returns incoming intents for a module', function () {
-        $config = [
-            'modules' => [
-                'user' => \Tests\Fixture\Hello\HelloModule::class,
-                'order' => \Tests\Fixture\Hello\Order2Module::class,
-            ]
-        ];
-        $registry = Ui5Registry::fromArray($config);
-        $intents = $registry->resolveIntents('user');
-
-        expect($intents)->toHaveKey('Order')
-            ->and($intents['Order'])->toHaveKey('detail')
-            ->and($intents['Order']['detail']['label'])->toBe('Order Details');
-    });
-
-    it('returns empty array for module without incoming links', function () {
-        $config = [
-            'modules' => [
-                'user' => \Tests\Fixture\Hello\HelloModule::class,
-                'order' => \Tests\Fixture\Hello\Order2Module::class,
-            ]
-        ];
-        $registry = Ui5Registry::fromArray($config);
-        expect($registry->resolveIntents('order'))->toBeEmpty();
-    });
-});
-
 describe('Introspect snapshot', function () {
     it('returns all expected keys in introspection array', function () {
         $registry = Ui5Registry::fromArray(Hello::ui5Config());
@@ -75,7 +41,7 @@ describe('Introspect snapshot', function () {
 
         expect($data)->toHaveKeys([
             'modules', 'artifacts', 'namespaceToModule', 'slugs',
-            'roles', 'abilities', 'objects', 'links'
+            'artifactToModule', 'settings'
         ]);
     });
 });

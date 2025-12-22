@@ -3,16 +3,17 @@
 namespace LaravelUi5\Core\Services;
 
 use Illuminate\Http\Request;
+use LaravelUi5\Core\Contracts\Ui5ArtifactResolverInterface;
 use LaravelUi5\Core\Enums\ArtifactType;
 use LaravelUi5\Core\Ui5\Contracts\Ui5ArtifactInterface;
-use LaravelUi5\Core\Ui5\Contracts\Ui5RuntimeInterface;
+use LaravelUi5\Core\Ui5\Contracts\Ui5RegistryInterface;
 use LaravelUi5\Core\Ui5CoreServiceProvider;
 
-readonly class PathBasedArtifactResolver
+readonly class PathBasedArtifactResolver implements Ui5ArtifactResolverInterface
 {
 
     public function __construct(
-        private Ui5RuntimeInterface $runtime
+        private Ui5RegistryInterface $registry
     )
     {
     }
@@ -32,6 +33,6 @@ readonly class PathBasedArtifactResolver
             return null;
         }
 
-        return $this->runtime->fromSlug($urlKey);
+        return $this->registry->fromSlug($urlKey);
     }
 }

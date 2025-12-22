@@ -24,20 +24,13 @@ use LaravelUi5\Core\Commands\GenerateUi5LibraryCommand;
 use LaravelUi5\Core\Commands\GenerateUi5ReportCommand;
 use LaravelUi5\Core\Commands\GenerateUi5ResourceCommand;
 use LaravelUi5\Core\Commands\GenerateUi5TileCommand;
-use LaravelUi5\Core\Contracts\AuthServiceInterface;
-use LaravelUi5\Core\Contracts\BusinessPartnerResolverInterface;
 use LaravelUi5\Core\Contracts\ParameterResolverInterface;
 use LaravelUi5\Core\Contracts\SettingResolverInterface;
-use LaravelUi5\Core\Contracts\TenantResolverInterface;
 use LaravelUi5\Core\Controllers\ODataController;
-use LaravelUi5\Core\Services\NullAuthService;
-use LaravelUi5\Core\Services\NullBusinessPartnerResolver;
-use LaravelUi5\Core\Services\NullTenantResolver;
 use LaravelUi5\Core\Services\ParameterResolver;
 use LaravelUi5\Core\Services\SettingResolver;
 use LaravelUi5\Core\Ui5\Contracts\Ui5ModuleInterface;
 use LaravelUi5\Core\Ui5\Contracts\Ui5RegistryInterface;
-use LaravelUi5\Core\Ui5\Contracts\Ui5RuntimeInterface;
 use LaravelUi5\Core\Ui5\Ui5Registry;
 use LaravelUi5\Core\View\Components\Ui5Element;
 use RuntimeException;
@@ -71,29 +64,6 @@ class Ui5CoreServiceProvider extends ServiceProvider
         $this->app->singleton(
             Ui5RegistryInterface::class,
             config('ui5.registry', Ui5Registry::class)
-        );
-        $this->app->singleton(Ui5RuntimeInterface::class, function($app) {
-            if ($runtime = config('ui5.runtime')) {
-                return $app->make($runtime);
-            }
-            return $app->make(Ui5RegistryInterface::class);
-        });
-        if (config('ui5.runtime')) {
-            $this->app->singleton(Ui5RuntimeInterface::class, config('ui5.runtime'));
-        } else {
-            $this->app->alias(Ui5RegistryInterface::class, Ui5RuntimeInterface::class);
-        }
-        $this->app->singleton(
-            TenantResolverInterface::class,
-            config('ui5.tenant_resolver', NullTenantResolver::class)
-        );
-        $this->app->singleton(
-            BusinessPartnerResolverInterface::class,
-            config('ui5.business_partner_resolver', NullBusinessPartnerResolver::class)
-        );
-        $this->app->singleton(
-            AuthServiceInterface::class,
-            config('ui5.auth_service', NullAuthService::class)
         );
         $this->app->singleton(ParameterResolverInterface::class, ParameterResolver::class);
         $this->app->singleton(SettingResolverInterface::class, SettingResolver::class);

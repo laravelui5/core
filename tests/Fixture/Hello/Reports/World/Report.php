@@ -75,4 +75,8 @@ class Report implements Ui5ReportInterface
             'take_off' => TakeOffAction::class
         ];
     }
+
+    public function setSlug(string $slug): void
+    {
+    }
 }

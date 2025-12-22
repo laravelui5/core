@@ -2,32 +2,15 @@
 
 namespace LaravelUi5\Core\Ui5;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\Relation;
-use LaravelUi5\Core\Attributes\Ability;
-use LaravelUi5\Core\Attributes\Role;
-use LaravelUi5\Core\Attributes\SemanticLink;
-use LaravelUi5\Core\Attributes\SemanticObject;
 use LaravelUi5\Core\Attributes\Setting;
 use LaravelUi5\Core\Enums\ArtifactType;
-use LaravelUi5\Core\Ui5\Contracts\ReportActionInterface;
 use LaravelUi5\Core\Ui5\Contracts\SluggableInterface;
-use LaravelUi5\Core\Ui5\Contracts\Ui5ActionInterface;
-use LaravelUi5\Core\Ui5\Contracts\Ui5AppInterface;
 use LaravelUi5\Core\Ui5\Contracts\Ui5ArtifactInterface;
-use LaravelUi5\Core\Ui5\Contracts\Ui5CardInterface;
-use LaravelUi5\Core\Ui5\Contracts\Ui5DashboardInterface;
-use LaravelUi5\Core\Ui5\Contracts\Ui5DialogInterface;
-use LaravelUi5\Core\Ui5\Contracts\Ui5KpiInterface;
 use LaravelUi5\Core\Ui5\Contracts\Ui5ModuleInterface;
 use LaravelUi5\Core\Ui5\Contracts\Ui5RegistryInterface;
-use LaravelUi5\Core\Ui5\Contracts\Ui5ReportInterface;
-use LaravelUi5\Core\Ui5\Contracts\Ui5ResourceInterface;
-use LaravelUi5\Core\Ui5\Contracts\Ui5TileInterface;
+use LaravelUi5\Core\Ui5CoreServiceProvider;
 use LogicException;
 use ReflectionClass;
-use ReflectionException;
-use Throwable;
 
 class Ui5Registry implements Ui5RegistryInterface
 {
@@ -57,33 +40,10 @@ class Ui5Registry implements Ui5RegistryInterface
     protected array $slugs = [];
 
     /**
-     * @var array<string, string>
-     */
-    protected array $roles = [];
-
-    /**
-     * @var array<string, array<string, array<string, string[]>>>
-     */
-    protected array $abilities = [];
-
-    /**
      * @var array<string, array<string, string[]>>
      */
     protected array $settings = [];
 
-    /**
-     * @var array<class-string<Model>, array<string, mixed>>
-     */
-    protected array $objects = [];
-
-    /**
-     * @var array<class-string<Model>, class-string<Model>[]>
-     */
-    protected array $links = [];
-
-    /**
-     * @throws ReflectionException
-     */
     public function __construct(?array $config = null)
     {
         if ($config) {
@@ -93,17 +53,11 @@ class Ui5Registry implements Ui5RegistryInterface
         }
     }
 
-    /**
-     * @throws ReflectionException
-     */
     public static function fromArray(array $config): self
     {
         return new self($config);
     }
 
-    /**
-     * @throws ReflectionException
-     */
     protected function loadFromArray(array $config): void
     {
         $modules = $config['modules'] ?? [];
@@ -114,8 +68,6 @@ class Ui5Registry implements Ui5RegistryInterface
             $module = new $moduleClass($slug);
 
             $this->modules[$slug] = $module;
-
-            $this->registerRoles($module);
         }
 
         // Pass 2: Reflect everything else
@@ -124,8 +76,6 @@ class Ui5Registry implements Ui5RegistryInterface
         $dialogs = $config['dialogs'] ?? [];
 
         foreach ($this->modules as $slug => $module) {
-
-            $this->registerSemanticObject($module);
 
             if ($module->hasApp() && ($app = $module->getApp())) {
                 $this->registerArtifact($app, $slug);
@@ -171,9 +121,6 @@ class Ui5Registry implements Ui5RegistryInterface
             }
         }
 
-        // Pass 3: Register inter module dependencies
-        $this->registerSemanticLinks();
-
         // Extension Hook
         $this->afterLoad($config);
     }
@@ -181,32 +128,6 @@ class Ui5Registry implements Ui5RegistryInterface
     protected function afterLoad(array $config): void
     {
         // extension hook (no-op by default)
-    }
-
-    /**
-     * Extract all role definitions from a given Ui5Module class.
-     *
-     * @param Ui5ModuleInterface $module
-     *
-     * @throws LogicException If a role is declared twice
-     */
-    protected function registerRoles(Ui5ModuleInterface $module): void
-    {
-        $ref = new ReflectionClass($module);
-        $attributes = $ref->getAttributes(Role::class);
-        foreach ($attributes as $attribute) {
-            /** @var Role $role */
-            $role = $attribute->newInstance();
-            if (array_key_exists($role->role, $this->roles)) {
-                $namespace = $module->getArtifactRoot()->getNamespace();
-                throw new LogicException("Role '$role->role' declared in module '$namespace' already exists.");
-            }
-            $this->roles[$role->role] = [
-                'note' => $role->note,
-                'scope' => $role->scope,
-                'abilities' => [],
-            ];
-        }
     }
 
     /**
@@ -218,7 +139,6 @@ class Ui5Registry implements Ui5RegistryInterface
      *
      * @param Ui5ArtifactInterface $artifact
      * @param string|null $moduleSlug
-     * @throws ReflectionException
      */
     protected function registerArtifact(Ui5ArtifactInterface $artifact, ?string $moduleSlug): void
     {
@@ -230,214 +150,11 @@ class Ui5Registry implements Ui5RegistryInterface
             $this->artifactToModule[get_class($artifact)] = $moduleSlug;
         }
 
-        $this->discoverAbilities($artifact);
         $this->discoverSettings($artifact);
 
         if ($artifact instanceof SluggableInterface) {
             $urlKey = ArtifactType::urlKeyFromArtifact($artifact);
             $this->slugs[$urlKey] = $artifact;
-        }
-    }
-
-    /**
-     * Discover and register Ability attributes defined on Ui5 artifacts or report actions.
-     *
-     * - Only one Ability per class is allowed.
-     * - Type::Use and Type::See are not permitted on backend classes.
-     * - Type::Act must appear only on Ui5ActionInterface or ReportActionInterface.
-     * - Type::Access must appear only on respective artifacts
-     *
-     * @throws ReflectionException|LogicException
-     */
-    protected function discoverAbilities(Ui5ArtifactInterface|ReportActionInterface $artifact): void
-    {
-        $ref = new ReflectionClass($artifact);
-
-        // The module root (i.e. app/lib) defines the canonical namespace grouping for Abilities
-        $namespace = $artifact->getModule()->getArtifactRoot()->getNamespace();
-        $attributes = $ref->getAttributes(Ability::class);
-
-        // PHP natively prevents multiple non-repeatable attributes.
-        // Therefore, no explicit duplicate Ability check is required.
-
-        if (count($attributes) === 1) {
-            /** @var Ability $ability */
-            $ability = $attributes[0]->newInstance();
-
-            if ($ability->type->shouldBeInManifest()) {
-                throw new LogicException(sprintf(
-                    'AbilityType::%s for ability %s cannot be declared in backend artifacts (%s). Move this definition to your manifest.json file.',
-                    $ability->ability,
-                    $ability->type->name,
-                    get_class($artifact)
-                ));
-            }
-
-            if ($ability->type->isAct() && !($artifact instanceof Ui5ActionInterface || $artifact instanceof ReportActionInterface)) {
-                throw new LogicException(sprintf(
-                    'AbilityType::Act for ability %s must be declared on an executable artifact, found on (%s).',
-                    $ability->ability,
-                    get_class($artifact)
-                ));
-            }
-
-            if ($ability->type->isAccess() && !(
-                    $artifact instanceof Ui5AppInterface
-                    || $artifact instanceof Ui5CardInterface
-                    || $artifact instanceof Ui5ReportInterface
-                    || $artifact instanceof Ui5TileInterface
-                    || $artifact instanceof Ui5KpiInterface
-                    || $artifact instanceof Ui5DashboardInterface
-                    || $artifact instanceof Ui5ResourceInterface
-                    || $artifact instanceof Ui5DialogInterface
-                )) {
-                throw new LogicException(
-                    sprintf('AbilityType::Access is only valid for entry-level artifacts (%s)', get_class($artifact))
-                );
-            }
-
-            if (array_key_exists($ability->ability, $this->abilities[$namespace][$ability->type->label()] ?? [])) {
-                throw new LogicException(sprintf(
-                    'Duplicate ability [%s] found on [%s].',
-                    $ability->ability,
-                    get_class($artifact)
-                ));
-            }
-
-            if (!array_key_exists($ability->role, $this->roles)) {
-                throw new LogicException(sprintf(
-                    'Role [%s] referenced by ability [%s] is not declared [%s].',
-                    $ability->role,
-                    $ability->ability,
-                    get_class($artifact)
-                ));
-            }
-
-            $this->abilities[$namespace][$ability->type->label()][$ability->ability] = [
-                'type' => $ability->type,
-                'role' => $ability->role,
-                'note' => $ability->note,
-            ];
-            $this->roles[$ability->role]['abilities'][] = [
-                'namespace' => $namespace,
-                'ability' => $ability->ability,
-                'type' => $ability->type,
-                'note' => $ability->note,
-            ];
-
-            if ($artifact instanceof Ui5ReportInterface) {
-                foreach ($artifact->getActions() as $action) {
-                    $this->discoverAbilities($action);
-                }
-            }
-        }
-    }
-
-    /**
-     * Detects and registers a module's declared SemanticObject.
-     *
-     * @throws LogicException
-     */
-    protected function registerSemanticObject(Ui5ModuleInterface $module): void
-    {
-        $ref = new ReflectionClass($module);
-        $attributes = $ref->getAttributes(SemanticObject::class);
-
-        if (count($attributes) === 0) {
-            return; // Module may not declare a semantic object
-        }
-
-        // PHP natively prevents multiple non-repeatable attributes.
-        // Therefore, no explicit duplicate Ability check is required.
-
-        /** @var SemanticObject $semantic */
-        $semantic = $attributes[0]->newInstance();
-
-        // Validate required fields
-        if (empty($semantic->model) || empty($semantic->name)) {
-            throw new LogicException(sprintf(
-                'Invalid SemanticObject definition in [%s]. Parameters $model, $name, and $routes are required.',
-                $ref->getName()
-            ));
-        }
-
-        // Ensure at least one route
-        if (count($semantic->routes) < 1) {
-            throw new LogicException(sprintf(
-                'SemanticObject [%s] must define at least one route intent.',
-                $semantic->name
-            ));
-        }
-
-        // Prevent duplicate model ownership
-        if (isset($this->objects[$semantic->model])) {
-            throw new LogicException(sprintf(
-                'Model [%s] is already registered as a SemanticObject by [%s].',
-                $semantic->model,
-                $this->objects[$semantic->model]['name']
-            ));
-        }
-
-        $slug = $module->getSlug();
-
-        $this->objects[$semantic->model] = [
-            'module' => $slug,
-            'name' => $semantic->name,
-            'model' => $semantic->model,
-            'routes' => $semantic->routes,
-            'icon' => $semantic->icon,
-        ];
-    }
-
-    /**
-     * Performs the second discovery pass to resolve SemanticLink attributes.
-     *
-     * Scans only models registered as SemanticObjects and validates that each link
-     * points to another registered SemanticObject model.
-     *
-     * @throws ReflectionException|LogicException
-     */
-    protected function registerSemanticLinks(): void
-    {
-        if (empty($this->objects)) {
-            return; // nothing to process
-        }
-
-        foreach ($this->objects as $slug => $object) {
-            $ref = new ReflectionClass($slug);
-
-            foreach ($ref->getMethods() as $method) {
-                foreach ($method->getAttributes(SemanticLink::class) as $attribute) {
-                    /** @var SemanticLink $link */
-                    $link = $attribute->newInstance();
-                    $model = $link->model ?? null;
-
-                    if (!$model) {
-                        try {
-                            $instance ??= app($slug);
-                            $relation = $instance->{$method->getName()}();
-
-                            if ($relation instanceof Relation) {
-                                $model = get_class($relation->getRelated());
-                            }
-                        } catch (Throwable $e) {
-                            // ignore if method cannot be executed safely (non-ORM class etc.)
-                        }
-                    }
-
-                    // Validation: target model must exist as a registered semantic object
-                    if (!$model || !isset($this->objects[$model])) {
-                        throw new LogicException(sprintf(
-                            'SemanticLink on [%s::%s] points to unknown model [%s]. Target must be declared as a SemanticObject.',
-                            $slug,
-                            $method->getName(),
-                            $link->model
-                        ));
-                    }
-
-                    $this->links[$slug][] = $model;
-                }
-            }
         }
     }
 
@@ -481,6 +198,11 @@ class Ui5Registry implements Ui5RegistryInterface
 
     /** -- Lookup ---------------------------------------------------------- */
 
+    public function modules(): array
+    {
+        return $this->modules;
+    }
+
     public function hasModule(string $slug): bool
     {
         return isset($this->modules[$slug]);
@@ -495,9 +217,9 @@ class Ui5Registry implements Ui5RegistryInterface
         return null;
     }
 
-    public function modules(): array
+    public function artifacts(): array
     {
-        return $this->modules;
+        return $this->artifacts;
     }
 
     public function has(string $namespace): bool
@@ -514,41 +236,6 @@ class Ui5Registry implements Ui5RegistryInterface
         return null;
     }
 
-    public function artifacts(): array
-    {
-        return $this->artifacts;
-    }
-
-    /** -- Introspection --------------------------------------------------- */
-    public function roles(): array
-    {
-        return $this->roles;
-    }
-
-    public function abilities(?string $namespace = null, ?ArtifactType $type = null): array
-    {
-        if ($namespace === null) {
-            if ($type === null) {
-                return $this->abilities;
-            }
-
-            $result = [];
-            foreach ($this->abilities as $ns => $types) {
-                if (isset($types[$type->label()])) {
-                    $result[$ns] = $types[$type->label()];
-                }
-            }
-
-            return $result;
-        }
-
-        if ($type === null) {
-            return $this->abilities[$namespace] ?? [];
-        }
-
-        return $this->abilities[$namespace][$type->label()] ?? [];
-    }
-
     public function settings(?string $namespace = null): array
     {
         if (null === $namespace) {
@@ -558,11 +245,6 @@ class Ui5Registry implements Ui5RegistryInterface
         return $this->settings[$namespace] ?? [];
     }
 
-    public function objects(): array
-    {
-        return $this->objects;
-    }
-
     /** -- Laravel routing ------------------------------------------------- */
 
     public function fromSlug(string $slug): ?Ui5ArtifactInterface
@@ -570,59 +252,15 @@ class Ui5Registry implements Ui5RegistryInterface
         return $this->slugs[$slug] ?? null;
     }
 
-    public function slugFor(Ui5ArtifactInterface $artifact): ?string
-    {
-        return ArtifactType::urlKeyFromArtifact($artifact);
-    }
-
-    /** -- manifest.json facing -------------------------------------------- */
-    public function resolveIntents(string $slug): array
-    {
-        $sourceModel = null;
-        foreach ($this->objects as $model => $meta) {
-            if ($meta['module'] === $slug) {
-                $sourceModel = $model;
-                break;
-            }
-        }
-
-        if (!$sourceModel) {
-            return []; // module has no semantic object → no intents to expose
-        }
-
-        $referencingModels = [];
-        foreach ($this->links as $fromModel => $targets) {
-            foreach ($targets as $toModel) {
-                if ($toModel === $sourceModel) {
-                    $referencingModels[] = $fromModel;
-                }
-            }
-        }
-
-        $intents = [];
-        foreach ($referencingModels as $model) {
-            $semantic = $this->objects[$model];
-            if (!$semantic) {
-                continue;
-            }
-
-            $objectName = $semantic['name'];
-            foreach ($semantic['routes'] as $intent => $route) {
-                $intents[$objectName][$intent] = [
-                    'label' => $route['label'] ?? $intent,
-                    'icon' => $route['icon'] ?? null,
-                ];
-            }
-        }
-
-        return $intents;
-    }
-
     public function resolve(string $namespace): ?string
     {
         $artifact = $this->get($namespace);
         if ($artifact) {
-            return '/ui5/' . $this->slugFor($artifact) . '/' . $artifact->getVersion();
+            $slug = ArtifactType::urlKeyFromArtifact($artifact);
+
+            $prefix = Ui5CoreServiceProvider::UI5_ROUTE_PREFIX;
+
+            return "/{$prefix}/{$slug}/{$artifact->getVersion()}";
         }
 
         return null;
@@ -642,11 +280,7 @@ class Ui5Registry implements Ui5RegistryInterface
             'namespaceToModule' => $this->namespaceToModule,
             'artifactToModule' => $this->artifactToModule,
             'slugs' => $this->slugs,
-            'roles' => $this->roles,
-            'abilities' => $this->abilities,
             'settings' => $this->settings,
-            'objects' => $this->objects,
-            'links' => $this->links,
         ];
     }
 }

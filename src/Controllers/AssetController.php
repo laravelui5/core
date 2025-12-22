@@ -3,7 +3,7 @@
 namespace LaravelUi5\Core\Controllers;
 
 use Illuminate\Routing\Controller;
-use LaravelUi5\Core\Contracts\Ui5Context;
+use LaravelUi5\Core\Contracts\Ui5CoreContext;
 use LaravelUi5\Core\Exceptions\MissingAssetException;
 use LaravelUi5\Core\Ui5\Contracts\HasAssetsInterface;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -22,11 +22,11 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 class AssetController extends Controller
 {
     public function __invoke(
-        Ui5Context $context,
-        string     $type,
-        string     $slug,
-        string     $version,
-        string     $file
+        Ui5CoreContext $context,
+        string         $type,
+        string         $slug,
+        string         $version,
+        string         $file
     ): BinaryFileResponse
     {
 

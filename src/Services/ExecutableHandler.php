@@ -4,7 +4,7 @@ namespace LaravelUi5\Core\Services;
 
 use LaravelUi5\Core\Contracts\ParameterResolverInterface;
 use LaravelUi5\Core\Contracts\SettingResolverInterface;
-use LaravelUi5\Core\Contracts\Ui5Context;
+use LaravelUi5\Core\Contracts\Ui5CoreContext;
 use LaravelUi5\Core\Ui5\Contracts\ConfigurableInterface;
 use LaravelUi5\Core\Ui5\Contracts\ExecutableInterface;
 use LaravelUi5\Core\Ui5\Contracts\ParameterizableInterface;
@@ -14,7 +14,7 @@ readonly class ExecutableHandler
     public function __construct(
         private ParameterResolverInterface $parameterResolver,
         private SettingResolverInterface   $settingResolver,
-        private Ui5Context                 $context,
+        private Ui5CoreContext             $context,
     ) {}
 
     /**

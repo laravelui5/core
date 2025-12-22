@@ -44,11 +44,6 @@ final class LaravelUi5ManifestKeys
     public const string RESOURCES = 'resources';
 
     /**
-     * Defines navigation intents defined by semantic object graph.
-     */
-    public const string INTENTS = 'intents';
-
-    /**
      * Defines settings exposed to the frontend.
      * Can include feature toggles, UI preferences, branding info, etc.
      */
@@ -107,7 +102,6 @@ final class LaravelUi5ManifestKeys
             self::ROUTES,
             self::ACTIONS,
             self::RESOURCES,
-            self::INTENTS,
             self::SETTINGS,
             self::VENDOR,
             self::SHELL,

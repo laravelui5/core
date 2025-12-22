@@ -2,9 +2,7 @@
 
 namespace Tests\Fixture\Hello\Errors\Settings;
 
-use LaravelUi5\Core\Attributes\Ability;
 use LaravelUi5\Core\Attributes\Setting;
-use LaravelUi5\Core\Enums\AbilityType;
 use LaravelUi5\Core\Enums\ArtifactType;
 use LaravelUi5\Core\Enums\HttpMethod;
 use LaravelUi5\Core\Enums\SettingScope;
@@ -14,7 +12,6 @@ use LaravelUi5\Core\Ui5\Contracts\ActionHandlerInterface;
 use LaravelUi5\Core\Ui5\AbstractUi5Action;
 use LaravelUi5\Core\Ui5\Contracts\Ui5ModuleInterface;
 use Tests\Fixture\Hello\Actions\World\Handler;
-use Tests\Fixture\Hello\Hello;
 
 #[Setting('darkMode', type: ValueType::Boolean, default: false, scope: SettingScope::User, role: SettingVisibilityRole::Employee, note: 'Something')]
 class Action extends AbstractUi5Action

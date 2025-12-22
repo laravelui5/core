@@ -2,16 +2,11 @@
 
 namespace Tests\Fixture\Hello;
 
-use LaravelUi5\Core\Attributes\Role;
-use LaravelUi5\Core\Attributes\SemanticObject;
 use LaravelUi5\Core\Ui5\Contracts\Ui5AppInterface;
 use LaravelUi5\Core\Ui5\Contracts\Ui5ArtifactInterface;
 use LaravelUi5\Core\Ui5\Contracts\Ui5LibraryInterface;
 use LaravelUi5\Core\Ui5\AbstractUi5Module;
-use Tests\Fixture\Hello\Models\User;
 
-#[Role(Hello::ROLE, 'Administrative access to Hello module')]
-#[SemanticObject(User::class, 'User', ['detail' => ['uri' => '/detail/{id}', 'label' => 'User Details']])]
 class HelloModule extends AbstractUi5Module
 {
     public function hasApp(): bool

@@ -4,13 +4,13 @@ namespace LaravelUi5\Core\Controllers;
 
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\File;
-use LaravelUi5\Core\Contracts\Ui5Context;
+use LaravelUi5\Core\Contracts\Ui5CoreContext;
 use LaravelUi5\Core\Ui5\Contracts\Ui5ReportInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ReportResourceController
 {
-    public function __invoke(Ui5Context $context, string $slug, string $extension): Response
+    public function __invoke(Ui5CoreContext $context, string $slug, string $extension): Response
     {
         /** @var Ui5ReportInterface $report */
         $report = $context->artifact;

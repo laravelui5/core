@@ -3,7 +3,7 @@
 namespace LaravelUi5\Core\Controllers;
 
 use Illuminate\Http\JsonResponse;
-use LaravelUi5\Core\Contracts\Ui5Context;
+use LaravelUi5\Core\Contracts\Ui5CoreContext;
 use LaravelUi5\Core\Services\ExecutableHandler;
 use LaravelUi5\Core\Ui5\Contracts\Ui5ActionInterface;
 
@@ -22,7 +22,7 @@ use LaravelUi5\Core\Ui5\Contracts\Ui5ActionInterface;
  */
 class ActionDispatchController
 {
-    public function __invoke(Ui5Context $context, ExecutableHandler $handler): JsonResponse
+    public function __invoke(Ui5CoreContext $context, ExecutableHandler $handler): JsonResponse
     {
         /** @var Ui5ActionInterface $action */
         $action = $context->artifact;

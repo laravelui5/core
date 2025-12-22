@@ -3,6 +3,7 @@
 namespace LaravelUi5\Core\Ui5;
 
 use LaravelUi5\Core\Attributes\Parameter;
+use LaravelUi5\Core\Enums\ArtifactType;
 use LaravelUi5\Core\Enums\ParameterSource;
 use LaravelUi5\Core\Exceptions\InvalidHttpMethodActionException;
 use LaravelUi5\Core\Exceptions\InvalidModuleException;
@@ -11,8 +12,9 @@ use LaravelUi5\Core\Ui5\Contracts\LaravelUi5ManifestInterface;
 use LaravelUi5\Core\Ui5\Contracts\LaravelUi5ManifestKeys;
 use LaravelUi5\Core\Ui5\Contracts\ParameterizableInterface;
 use LaravelUi5\Core\Ui5\Contracts\Ui5ModuleInterface;
-use LaravelUi5\Core\Ui5\Contracts\Ui5RuntimeInterface;
+use LaravelUi5\Core\Ui5\Contracts\Ui5RegistryInterface;
 use LaravelUi5\Core\Ui5\Contracts\Ui5ShellFragmentInterface;
+use LaravelUi5\Core\Ui5CoreServiceProvider;
 use ReflectionClass;
 
 /**
@@ -26,7 +28,7 @@ use ReflectionClass;
 abstract class AbstractManifest implements LaravelUi5ManifestInterface
 {
 
-    public function __construct(protected Ui5RuntimeInterface $registry)
+    public function __construct(protected Ui5RegistryInterface $registry)
     {
     }
 
@@ -54,7 +56,6 @@ abstract class AbstractManifest implements LaravelUi5ManifestInterface
             LaravelUi5ManifestKeys::ROUTES => $this->buildRoutes(),
             LaravelUi5ManifestKeys::ACTIONS => $this->buildActions($resolved),
             LaravelUi5ManifestKeys::RESOURCES => $this->buildResources($resolved),
-            LaravelUi5ManifestKeys::INTENTS => $this->buildIntents($module),
             LaravelUi5ManifestKeys::SETTINGS => $this->buildSettings($namespace),
             LaravelUi5ManifestKeys::VENDOR => $this->enhanceFragment($module),
             LaravelUi5ManifestKeys::SHELL => $this->buildShell(),
@@ -111,9 +112,13 @@ abstract class AbstractManifest implements LaravelUi5ManifestInterface
                 ->map(fn(string $parameter) => "/{{$parameter}}")
                 ->implode('');
 
+            $slug = ArtifactType::urlKeyFromArtifact($action);
+
+            $prefix = Ui5CoreServiceProvider::UI5_ROUTE_PREFIX;
+
             $actions[$action->getSlug()] = [
                 'method' => $action->getMethod()->label(),
-                'url' => "/ui5/{$this->registry->slugFor($action)}{$uri}"
+                'url' => "/{$prefix}/{$slug}{$uri}"
             ];
         };
 
@@ -131,9 +136,13 @@ abstract class AbstractManifest implements LaravelUi5ManifestInterface
                     ->map(fn(string $parameter) => "/{{$parameter}}")
                     ->implode('');
 
+                $slug = ArtifactType::urlKeyFromArtifact($resource);
+
+                $prefix = Ui5CoreServiceProvider::UI5_ROUTE_PREFIX;
+
                 $resources[$resource->getSlug()] = [
                     'method' => 'GET',
-                    'url' => "/ui5/{$this->registry->slugFor($resource)}{$uri}"
+                    'url' => "/{$prefix}/{$slug}{$uri}"
                 ];
             }
         }
@@ -156,11 +165,6 @@ abstract class AbstractManifest implements LaravelUi5ManifestInterface
         }
 
         return [];
-    }
-
-    private function buildIntents(string $module): array
-    {
-        return $this->registry->resolveIntents($module);
     }
 
     /** -- Helper ---------------------------------------------------------- */

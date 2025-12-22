@@ -2,39 +2,53 @@
 
 namespace LaravelUi5\Core\Ui5\Contracts;
 
-use LaravelUi5\Core\Enums\ArtifactType;
-
 /**
  * Interface Ui5RegistryInterface
  *
- * Defines the build-time introspection and coordination contract of the
- * LaravelUi5 ecosystem. The registry exposes a unified API to discover,
- * inspect, and reflect upon all UI5-related modules, artifacts, roles,
- * abilities, settings, and semantic objects declared in a Laravel application.
+ * Build-time registry and introspection contract for the LaravelUi5 Core.
  *
- * The registry operates at development or build time and performs reflection
- * across modules and PHP attributes. It is the authoritative source for
- * generating cache files, documentation, and metadata used at runtime
- * by the {@see Ui5RuntimeInterface}.
+ * The Ui5Registry is the authoritative source of truth for all UI5-related
+ * artifacts declared in a Laravel application. It is responsible for
+ * discovering, instantiating, and indexing UI5 modules and artifacts
+ * based on configuration and PHP attributes.
+ *
+ * The registry operates exclusively at build time (or during application
+ * bootstrapping) and is intentionally reflection-heavy. Its primary purpose
+ * is to provide normalized, deterministic metadata for:
+ *
+ *  - runtime cache generation
+ *  - manifest and resource root assembly
+ *  - documentation and inspection tooling
+ *
+ * The registry does NOT:
+ *  - perform authorization
+ *  - interpret semantic meaning
+ *  - resolve user intents
+ *  - make runtime decisions
+ *
+ * In Core 2.0, the registry is strictly technical and URI-oriented.
+ * Semantic concerns (navigation meaning, intent declaration, authorization)
+ * are explicitly handled by the SDK layer.
  *
  * Responsibilities:
- *  - Discover modules and artifacts from configuration and attributes
- *  - Collect and normalize metadata (roles, abilities, settings, semantic objects)
- *  - Provide build-time data for the runtime cache generator (`ui5:cache`)
+ *  - Discover UI5 modules from configuration
+ *  - Discover UI5 artifacts via module registration
+ *  - Guarantee uniqueness of module slugs and artifact namespaces
+ *  - Provide deterministic lookup structures for cache generation
  *
  * System guarantees:
- *  - Every module has a unique slug
- *  - Every artifact has a globally unique namespace
- *  - Artifacts are addressable either through their module or namespace
+ *  - Each module has exactly one unique slug
+ *  - Each artifact has a globally unique namespace
+ *  - Artifact type (app, lib, action, report, …) is stable and deterministic
  *
- * Example use cases:
- *  - Generate the runtime cache file via `php artisan ui5:cache`
- *  - Produce manifest.json files or capability maps for modules
- *  - Inspect declared roles, settings, or abilities for validation or documentation
+ * Typical consumers:
+ *  - ui5:cache command
+ *  - build-time manifest generators
+ *  - tooling and diagnostics
  *
  * @package LaravelUi5\Core\Ui5\Contracts
  */
-interface Ui5RegistryInterface extends Ui5RuntimeInterface
+interface Ui5RegistryInterface
 {
     /**
      * Returns all registered modules.
@@ -44,6 +58,22 @@ interface Ui5RegistryInterface extends Ui5RuntimeInterface
     public function modules(): array;
 
     /**
+     * Checks whether a module with the given slug exists.
+     *
+     * @param string $slug The URL slug to identify the module (from `config/ui5.php > modules`)
+     * @return bool True if module for slug is known
+     */
+    public function hasModule(string $slug): bool;
+
+    /**
+     * Returns the module instance for the given slug, or null if not found.
+     *
+     * @param string $slug The URL slug to identify the module (from `config/ui5.php > modules`)
+     * @return Ui5ModuleInterface|null The instantiated module, or null if not found
+     */
+    public function getModule(string $slug): ?Ui5ModuleInterface;
+
+    /**
      * Returns all registered artifacts across all modules.
      *
      * @return array<string, Ui5ArtifactInterface>
@@ -51,56 +81,67 @@ interface Ui5RegistryInterface extends Ui5RuntimeInterface
     public function artifacts(): array;
 
     /**
-     * Returns all roles declared across all modules via #[Role] attributes.
+     * Checks whether an artifact with the given namespace is registered.
      *
-     * @return array<string, array>
+     * @param string $namespace The fqn of the UI5 artifact
+     * @return bool True if namespace for artifact is known
      */
-    public function roles(): array;
+    public function has(string $namespace): bool;
 
     /**
-     * Returns all registered abilities, grouped by namespace and ability type.
+     * Returns the artifact instance for the given namespace, or null if not found.
+     *
+     * @param string $namespace The fqn of the UI5 artifact
+     * @return Ui5ArtifactInterface|null The instantiated artifact, or null if not found
+     */
+    public function get(string $namespace): ?Ui5ArtifactInterface;
+
+    /**
+     * Returns all settings declared via #[Setting] attributes,
+     * grouped by artifact namespace.
+     *
+     * - When `$namespace` is provided, only settings belonging to
+     *   that namespace are returned.
+     * - When `$namespace` is null, all settings across all registered
+     *   artifacts are returned.
      *
      * The result reflects the normalized internal structure:
-     * `$abilities[$namespace][$type->label()][$abilityName] = Ability`.
-     *
-     * - When `$namespace` is provided, abilities are limited to that artifact
-     *   namespace (e.g. "io.pragmatiqu.offers").
-     * - When `$type` is provided, only abilities of that `AbilityType`
-     *   (e.g. `AbilityType::Act`) are returned.
-     * - When both are null, all abilities across all namespaces and types
-     *   are returned.
+     * `$settings[$namespace][$settingName] = Setting`.
      *
      * Example:
      * ```php
-     * $registry->abilities('io.pragmatiqu.reports', AbilityType::Act);
-     * // → [ 'toggleLock' => Ability, 'exportPdf' => Ability, ... ]
+     * $registry->settings('io.pragmatiqu.dashboard');
+     * // → [ 'refreshInterval' => Setting, 'theme' => Setting, ... ]
      * ```
      *
-     * @param string|null $namespace Optional artifact namespace to filter by.
-     * @param ArtifactType|null $type Optional ability type to filter by.
+     * @param string|null $namespace  Optional artifact namespace to filter by.
      * @return array
      */
-    public function abilities(?string $namespace = null, ?ArtifactType $type = null): array;
+    public function settings(?string $namespace = null): array;
 
     /**
-     * Returns all semantic objects declared via #[SemanticObject] attributes.
+     * Returns the artifact instance for the given slug (as used in routing or URLs),
+     * or null if not found.
      *
-     * Each object entry describes a business entity and its
-     * available routes or actions as defined in PHP attributes.
-     *
-     * Example structure:
-     * [
-     *   "User" => [
-     *     "name" => "User",
-     *     "module" => "users",
-     *     "routes" => [
-     *       "display" => ["label" => "Show", "icon" => "sap-icon://display"],
-     *       "edit"    => ["label" => "Edit", "icon" => "sap-icon://edit"]
-     *     ]
-     *   ]
-     * ]
-     *
-     * @return array<string, array>
+     * @param string $slug The URL slug to identify the artifact
+     * @return Ui5ArtifactInterface|null The instantiated artifact, or null if not found
      */
-    public function objects(): array;
+    public function fromSlug(string $slug): ?Ui5ArtifactInterface;
+
+    /**
+     * Resolves a full public URL path for the given namespace
+     *  (e.g. "/ui5/app/offers/1.0.0").
+     *
+     * @param string $namespace The fqn of the UI5 artifact
+     * @return string|null The absolute path, or null if not found
+     */
+    public function resolve(string $namespace): ?string;
+
+    /**
+     * Resolves resource root URLs (namespace => URL) for multiple namespaces.
+     *
+     * @param array<int,string> $namespaces The fqn of the UI5 artifact (app or lib!)
+     * @return array<string,string>
+     */
+    public function resolveRoots(array $namespaces): array;
 }

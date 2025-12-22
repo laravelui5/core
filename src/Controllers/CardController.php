@@ -6,7 +6,7 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\File;
-use LaravelUi5\Core\Contracts\Ui5Context;
+use LaravelUi5\Core\Contracts\Ui5CoreContext;
 use LaravelUi5\Core\Exceptions\MissingCardManifestException;
 use LaravelUi5\Core\Services\ExecutableHandler;
 use LaravelUi5\Core\Ui5\Contracts\ConfigurableInterface;
@@ -40,7 +40,7 @@ use LaravelUi5\Core\Ui5\Contracts\Ui5CardInterface;
 class CardController extends Controller
 {
     public function __invoke(
-        Ui5Context        $context,
+        Ui5CoreContext    $context,
         ExecutableHandler $dataProviderHandler,
         string            $app,
         string            $slug,

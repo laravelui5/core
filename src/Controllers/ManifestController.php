@@ -5,14 +5,14 @@ namespace LaravelUi5\Core\Controllers;
 use Flat3\Lodata\Interfaces\ServiceEndpointInterface;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\File;
-use LaravelUi5\Core\Contracts\Ui5Context;
+use LaravelUi5\Core\Contracts\Ui5CoreContext;
 use LaravelUi5\Core\Exceptions\MissingManifestException;
 use LaravelUi5\Core\Ui5\Contracts\Ui5AppInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 class ManifestController extends Controller
 {
-    public function __invoke(Ui5Context $context, string $slug, string $version): Response
+    public function __invoke(Ui5CoreContext $context, string $slug, string $version): Response
     {
         /** @var Ui5AppInterface $app */
         $app = $context->artifact;

@@ -6,7 +6,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
-use LaravelUi5\Core\Contracts\Ui5Context;
+use LaravelUi5\Core\Contracts\Ui5CoreContext;
 use LaravelUi5\Core\Services\ExecutableHandler;
 use LaravelUi5\Core\Ui5\Contracts\Ui5ReportInterface;
 
@@ -14,7 +14,7 @@ class ReportController
 {
     public function __invoke(
         Request           $request,
-        Ui5Context        $context,
+        Ui5CoreContext    $context,
         ExecutableHandler $handler,
         string            $slug
     ): Factory|View|Application
