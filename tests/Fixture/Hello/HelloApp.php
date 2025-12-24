@@ -21,7 +21,7 @@ class HelloApp implements Ui5AppInterface
     {
     }
 
-    public function getModule(): ?Ui5ModuleInterface
+    public function getModule(): Ui5ModuleInterface
     {
         return $this->module;
     }

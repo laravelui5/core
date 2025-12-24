@@ -48,7 +48,7 @@ describe('Artifact', function () {
     });
 
     it('generates urlKey from report artifact', function () {
-        $report = new Tests\Fixture\Hello\Reports\World\Report();
+        $report = collect(getModule()->getReports())->first();
         $key = ArtifactType::urlKeyFromArtifact($report);
 
         expect($key)->toBe('report/hello-world-report');

@@ -15,7 +15,7 @@ class HelloLibrary implements Ui5LibraryInterface
     {
     }
 
-    public function getModule(): ?Ui5ModuleInterface
+    public function getModule(): Ui5ModuleInterface
     {
         return $this->module;
     }

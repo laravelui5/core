@@ -10,13 +10,14 @@ use LaravelUi5\Core\Enums\ArtifactType;
 class Report implements Ui5ReportInterface
 {
 
-    public function __construct()
+    public function __construct(private Ui5ModuleInterface $module)
     {
+
     }
 
-    public function getModule(): ?Ui5ModuleInterface
+    public function getModule(): Ui5ModuleInterface
     {
-        return null;
+        return $this->module;
     }
 
     public function getNamespace(): string

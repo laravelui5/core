@@ -77,7 +77,9 @@ class HelloModule extends AbstractUi5Module
 
     public function getReports(): array
     {
-        return [];
+        return [
+            new Reports\World\Report($this),
+        ];
     }
 
     public function getDialogs(): array

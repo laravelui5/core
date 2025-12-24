@@ -21,7 +21,7 @@ class Action extends AbstractUi5Action
     {
     }
 
-    public function getModule(): ?Ui5ModuleInterface
+    public function getModule(): Ui5ModuleInterface
     {
         return $this->module;
     }

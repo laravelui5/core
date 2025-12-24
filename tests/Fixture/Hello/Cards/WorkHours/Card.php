@@ -14,7 +14,7 @@ class Card implements Ui5CardInterface
     {
     }
 
-    public function getModule(): ?Ui5ModuleInterface
+    public function getModule(): Ui5ModuleInterface
     {
         return $this->module;
     }
