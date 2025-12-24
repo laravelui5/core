@@ -14,7 +14,7 @@ class Resource implements Ui5ResourceInterface
     {
     }
 
-    public function getModule(): ?Ui5ModuleInterface
+    public function getModule(): Ui5ModuleInterface
     {
         return $this->module;
     }

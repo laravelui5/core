@@ -14,7 +14,7 @@ class {{ class }} implements Ui5DashboardInterface
     {
     }
 
-    public function getModule(): ?Ui5ModuleInterface
+    public function getModule(): Ui5ModuleInterface
     {
         return $this->module;
     }

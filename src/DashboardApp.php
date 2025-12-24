@@ -3,11 +3,13 @@
 namespace LaravelUi5\Core;
 
 use Illuminate\Support\Facades\File;
+use LaravelUi5\Core\Attributes\HideIntent;
 use LaravelUi5\Core\Enums\ArtifactType;
 use LaravelUi5\Core\Ui5\Contracts\LaravelUi5ManifestInterface;
 use LaravelUi5\Core\Ui5\Contracts\Ui5AppInterface;
 use LaravelUi5\Core\Ui5\Contracts\Ui5ModuleInterface;
 
+#[HideIntent]
 class DashboardApp implements Ui5AppInterface
 {
 
@@ -15,7 +17,7 @@ class DashboardApp implements Ui5AppInterface
     {
     }
 
-    public function getModule(): ?Ui5ModuleInterface
+    public function getModule(): Ui5ModuleInterface
     {
         return $this->module;
     }

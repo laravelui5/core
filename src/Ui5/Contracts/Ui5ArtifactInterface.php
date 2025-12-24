@@ -21,9 +21,9 @@ interface Ui5ArtifactInterface
      *   this returns the Ui5ModuleInterface instance that owns the artifact.
      * - For Dashboards (global containers outside module scope), this returns null.
      *
-     * @return Ui5ModuleInterface|null
+     * @return Ui5ModuleInterface
      */
-    public function getModule(): ?Ui5ModuleInterface;
+    public function getModule(): Ui5ModuleInterface;
 
     /**
      * Returns the JavaScript namespace of the artifact.
