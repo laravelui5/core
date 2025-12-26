@@ -2,11 +2,13 @@
 
 namespace LaravelUi5\Core\Ui5\Contracts;
 
+use LaravelUi5\Core\Contracts\Ui5Source;
+
 /**
  * A Ui5Module represents the root-level container for all UI5-related artifacts
  * provided by a feature package or domain module in the LaravelUi5 ecosystem.
  *
- * A module can contain either a UI5 application or a library, but not both.
+ * A module can contain either a UI5 application or a UI5 library, but not both.
  * Only applications can provide subordinate artifacts such as cards, actions,
  * reports, KPIs, and tiles.
  *
@@ -40,6 +42,28 @@ interface Ui5ModuleInterface extends SluggableInterface
      * @return string The canonical module name.
      */
     public function getName(): string;
+
+    /**
+     * Returns the absolute filesystem path to the source directory of the UI5
+     * application represented by this module.
+     *
+     * The source path points to the root directory of a standard UI5 application,
+     * containing canonical project artifacts such as `ui5.yaml` and the
+     * `webapp/` directory (including `webapp/manifest.json`).
+     *
+     * It serves as the single source of truth for:
+     *  - asset discovery and resolution,
+     *  - build and bundling processes,
+     *  - tooling and CLI operations,
+     *  - and local frontend development and consumption.
+     *
+     * This path is intended to be consumed by external systems (builders,
+     * registries, renderers) and must therefore always resolve to an existing,
+     * readable directory on the filesystem.
+     *
+     * @return Ui5Source|null The module’s UI5 source object.
+     */
+    public function getSource(): ?Ui5Source;
 
     /**
      * Returns true if this module provides a UI5 application.

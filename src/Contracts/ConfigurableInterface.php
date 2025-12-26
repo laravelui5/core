@@ -1,8 +1,6 @@
 <?php
 
-namespace LaravelUi5\Core\Ui5\Contracts;
-
-use LaravelUi5\Core\Contracts\Ui5Config;
+namespace LaravelUi5\Core\Contracts;
 
 /**
  * Contract for classes that consume declarative settings/configuration.

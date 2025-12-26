@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use LaravelUi5\Core\Attributes\Parameter;
+use LaravelUi5\Core\Contracts\ParameterizableInterface;
 use LaravelUi5\Core\Contracts\ParameterResolverInterface;
 use LaravelUi5\Core\Contracts\Ui5Args;
 use LaravelUi5\Core\Enums\ParameterSource;
@@ -20,7 +21,6 @@ use LaravelUi5\Core\Exceptions\InvalidParameterValueException;
 use LaravelUi5\Core\Exceptions\InvalidPathException;
 use LaravelUi5\Core\Exceptions\MissingRequiredParameterException;
 use LaravelUi5\Core\Exceptions\NoModelFoundForParameterException;
-use LaravelUi5\Core\Ui5\Contracts\ParameterizableInterface;
 use ReflectionClass;
 use Throwable;
 

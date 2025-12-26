@@ -1,9 +1,7 @@
 <?php
 
-namespace LaravelUi5\Core\Ui5\Contracts;
+namespace LaravelUi5\Core\Contracts;
 
-
-use LaravelUi5\Core\Contracts\Ui5Args;
 
 /**
  * Contract for classes that accept declarative, resolved request parameters.

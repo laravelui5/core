@@ -2,6 +2,9 @@
 
 namespace LaravelUi5\Core\Ui5\Contracts;
 
+use LaravelUi5\Core\Contracts\ConfigurableInterface;
+use LaravelUi5\Core\Contracts\ParameterizableInterface;
+
 /**
  * Contract for UI5 Card artifacts.
  *

@@ -22,11 +22,6 @@ class DashboardApp implements Ui5AppInterface
         return $this->module;
     }
 
-    public function getSlug(): string
-    {
-        return $this->module->getSlug();
-    }
-
     public function getType(): ArtifactType
     {
         return ArtifactType::Application;

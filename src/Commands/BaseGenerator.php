@@ -2,6 +2,7 @@
 
 namespace LaravelUi5\Core\Commands;
 
+use Illuminate\Support\Str;
 use InvalidArgumentException;
 use Illuminate\Support\Facades\File;
 use Illuminate\Console\Command;
@@ -95,5 +96,10 @@ class BaseGenerator extends Command
                 }
             }
         }
+    }
+
+    protected function relativePath(string $path): string
+    {
+        return Str::after($path, base_path() . DIRECTORY_SEPARATOR);
     }
 }

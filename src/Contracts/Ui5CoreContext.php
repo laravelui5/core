@@ -16,7 +16,7 @@ use LaravelUi5\Core\Ui5\Contracts\Ui5ArtifactInterface;
  *
  * @see ResolveUi5CoreContext
  */
-class Ui5CoreContext implements Ui5ContextInterface
+final readonly class Ui5CoreContext implements Ui5ContextInterface
 {
     public function __construct(
         private ?Request             $request = null,

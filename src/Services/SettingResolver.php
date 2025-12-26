@@ -3,11 +3,11 @@
 namespace LaravelUi5\Core\Services;
 
 use LaravelUi5\Core\Attributes\Setting;
+use LaravelUi5\Core\Contracts\ConfigurableInterface;
 use LaravelUi5\Core\Contracts\SettingResolverInterface;
 use LaravelUi5\Core\Contracts\Ui5Config;
 use LaravelUi5\Core\Contracts\Ui5ContextInterface;
 use LaravelUi5\Core\Exceptions\MissingDefaultValueException;
-use LaravelUi5\Core\Ui5\Contracts\ConfigurableInterface;
 use ReflectionClass;
 
 readonly class SettingResolver implements SettingResolverInterface

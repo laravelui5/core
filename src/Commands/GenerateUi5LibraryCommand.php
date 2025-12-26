@@ -5,28 +5,36 @@ namespace LaravelUi5\Core\Commands;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
-use Symfony\Component\Yaml\Yaml;
-use Throwable;
+use JsonException;
+use LaravelUi5\Core\Commands\Concerns\RunsUi5Build;
+use LaravelUi5\Core\Internal\Ui5SourceMap;
+use LaravelUi5\Core\Ui5\Ui5LibrarySource;
+use LogicException;
 
 class GenerateUi5LibraryCommand extends BaseGenerator
 {
+    use RunsUi5Build;
+
     protected $signature = 'ui5:lib
                             {name : The CamelCase name of the library}
                             {--php-ns-prefix=Pragmatiqu : The PHP namespace prefix}
                             {--js-ns-prefix=io.pragmatiqu : The JS namespace prefix}
                             {--create : Create a new module from scratch}
-                            {--refresh : Refresh metadata and assets from source project}';
+                            {--refresh : Refresh metadata and assets from source project}
+                            {--auto-build : Run UI5 build before importing assets}';
 
-    protected $description = 'Generate a Ui5Library implementation from a UI5 library build';
+    protected $description = 'Generate a Ui5Library module from a UI5 library project';
 
-    protected Filesystem $files;
-
-    public function __construct(Filesystem $files)
+    public function __construct(
+        protected Filesystem $files
+    )
     {
         parent::__construct();
-        $this->files = $files;
     }
 
+    /**
+     * @throws JsonException
+     */
     public function handle(): int
     {
         $name = $this->argument('name');
@@ -43,14 +51,25 @@ class GenerateUi5LibraryCommand extends BaseGenerator
             base_path("../{$jsPrefix}.{$kebab}/"),
         ];
 
-        $sourcePath = collect($conventionPaths)->first(fn($path) => File::exists($path));
+        /** @var string $sourcePath */
+        $sourcePath = collect($conventionPaths)
+            ->first(fn($path) => File::exists($path));
+
         if (is_null($sourcePath)) {
-            $this->components->error("Source folder for UI5 lib not found. Tried:");
-            foreach ($conventionPaths as $conventionPath) {
-                $this->components->info("- {$conventionPath}");
-            }
-            return self::FAILURE;
+            throw new LogicException(
+                sprintf(
+                    'Source folder for UI5 app not found. Tried:\n - %s',
+                    implode("\n - ", $conventionPaths)
+                )
+            );
         }
+
+        if ($this->option('auto-build')) {
+            $this->runBuild($sourcePath);
+        }
+
+        // Build source model
+        $source = Ui5LibrarySource::fromFilesystem($sourcePath);
 
         $targetPath = base_path("ui5/{$name}/src/");
         $classPath = base_path("ui5/{$name}/src/{$name}Library.php");
@@ -58,21 +77,21 @@ class GenerateUi5LibraryCommand extends BaseGenerator
 
         $create = $this->option('create');
         $refresh = $this->option('refresh');
-        $moduleExists = File::exists($classPath);
+        $exists = File::exists($classPath);
 
         // Decision tree
-        if ($create && $moduleExists) {
+        if ($create && $exists) {
             $this->components->error("Module already exists. Use --refresh to update.");
             return 1;
         }
 
-        if ($refresh && !$moduleExists) {
+        if ($refresh && !$exists) {
             $this->components->error("Module does not exist. Use --create to scaffold.");
             return 1;
         }
 
         if (!$create && !$refresh) {
-            if ($moduleExists) {
+            if ($exists) {
                 $this->components->info("Module already exists. Use --refresh to update.");
             } else {
                 $this->components->info("Module does not exist. Use --create to scaffold.");
@@ -80,44 +99,23 @@ class GenerateUi5LibraryCommand extends BaseGenerator
             return 0;
         }
 
-        $yaml = Yaml::parseFile($sourcePath . 'ui5.yaml');
-        $ui5Namespace = $yaml['metadata']['name'] ?? null;
-        if (!$ui5Namespace || !is_string($ui5Namespace)) {
-            $this->components->error("Invalid or missing namespace in ui5.yaml");
-            return 1;
-        }
-
-        $distPath = $sourcePath . 'dist/resources/' . Str::of($ui5Namespace)->replace('.', '/');
-        $libraryPath = "{$distPath}/.library";
-        if (!File::exists($libraryPath)) {
-            $this->components->error("Failed to load .library file at: {$libraryPath}");
-            $this->newLine();
-            $this->components->info("Run `npm run build` to create library assets.");
-            return 1;
-        }
-
-        $libraryXml = simplexml_load_file($libraryPath);
-        $title = (string)$libraryXml->title ?? 'Untitled';
-        $description = (string)$libraryXml->documentation ?? 'No description';
-        $vendor = (string)$libraryXml->vendor ?? 'Vendor not supplied';
-
-        $package = json_decode(file_get_contents($sourcePath . 'package.json'), true);
-        $version = $package['version'] ?? '1.0.0';
-
         File::ensureDirectoryExists($targetPath);
 
-        // Generate class
+
+        // Generate Ui5Library class
+        $descriptor = $source->getDescriptor();
         $this->files->put($classPath, $this->compileStub('Ui5Library.stub', [
             'namespace' => $phpNamespace,
             'class' => "{$name}Library",
-            'ui5Namespace' => $ui5Namespace,
-            'version' => $version,
-            'title' => $title,
-            'description' => $description,
-            'vendor' => $vendor,
+            'ui5Namespace' => $descriptor->getNamespace(),
+            'version' => $descriptor->getVersion(),
+            'title' => $descriptor->getTitle(),
+            'description' => $descriptor->getDescription(),
+            'vendor' => $descriptor->getVendor(),
             'name' => $name,
         ]));
 
+        // Generate Ui5Module class
         $this->files->put($modulePath, $this->compileStub('Ui5ModuleLib.stub', [
             'phpNamespace' => $phpNamespace,
             'class' => "{$name}Library",
@@ -125,25 +123,42 @@ class GenerateUi5LibraryCommand extends BaseGenerator
         ]));
 
         // Copy artefacts
-        $i18nFiles = collect(File::files($sourcePath))
-            ->filter(fn($f) => Str::endsWith($f->getFilename(), '.properties'))
-            ->map(fn($f) => $f->getFilename())
-            ->all();
+        $this->copyLibraryAssets($source, $targetPath);
 
-        $staticFiles = collect([
+        // Register source
+        Ui5SourceMap::addOrUpdate(
+            module: $name,
+            type: 'library',
+            srcPath: $this->relativePath($sourcePath),
+            vendor: $descriptor->getVendor(),
+        );
+
+        $operation = $exists ? 'Updated' : 'Created';
+        $this->components->success("{$operation} Ui5Library module `{$name}`");
+
+        return self::SUCCESS;
+    }
+
+    protected function copyLibraryAssets(Ui5LibrarySource $source, string $target): void
+    {
+        $distPath = $source->getSourcePath()
+            . '/dist/resources/'
+            . str_replace('.', '/', $source->getDescriptor()->getNamespace());
+
+        $staticFiles = [
             'library-preload.js',
             'library-preload.js.map',
             'library-dbg.js',
             'library-dbg.js.map',
-        ]);
+        ];
 
-        $assets = $staticFiles->merge($i18nFiles)->unique()->values()->all();
+        $i18nFiles = collect(File::files($distPath))
+            ->filter(fn($f) => Str::endsWith($f->getFilename(), '.properties'))
+            ->map(fn($f) => $f->getFilename())
+            ->all();
 
-        $this->copyDistAssets($distPath, $targetPath, $assets);
+        $assets = array_unique(array_merge($staticFiles, $i18nFiles));
 
-        $operation = $moduleExists ? 'Updated' : 'Created';
-        $this->components->success("{$operation} Ui5Library module `{$name}`");
-
-        return self::SUCCESS;
+        $this->copyDistAssets($distPath, $target, $assets);
     }
 }

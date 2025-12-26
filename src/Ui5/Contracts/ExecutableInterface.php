@@ -2,6 +2,9 @@
 
 namespace LaravelUi5\Core\Ui5\Contracts;
 
+use LaravelUi5\Core\Contracts\ConfigurableInterface;
+use LaravelUi5\Core\Contracts\ParameterizableInterface;
+
 /**
  * Generic contract for any executable UI5 component.
  *

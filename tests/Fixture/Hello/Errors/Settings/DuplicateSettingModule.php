@@ -2,6 +2,7 @@
 
 namespace Tests\Fixture\Hello\Errors\Settings;
 
+use LaravelUi5\Core\Contracts\Ui5Source;
 use LaravelUi5\Core\Ui5\Contracts\Ui5AppInterface;
 use LaravelUi5\Core\Ui5\Contracts\Ui5ArtifactInterface;
 use LaravelUi5\Core\Ui5\Contracts\Ui5LibraryInterface;
@@ -13,6 +14,11 @@ use Tests\Fixture\Hello\Resources;
 
 class DuplicateSettingModule extends AbstractUi5Module
 {
+    public function getSource(): ?Ui5Source
+    {
+        return null;
+    }
+
     public function hasApp(): bool
     {
         return true;

@@ -4,7 +4,8 @@ namespace LaravelUi5\Core\Ui5;
 
 use LaravelUi5\Core\Attributes\Setting;
 use LaravelUi5\Core\Enums\ArtifactType;
-use LaravelUi5\Core\Ui5\Contracts\SluggableInterface;
+use LaravelUi5\Core\Internal\AttachesUi5SourceInterface;
+use LaravelUi5\Core\Internal\Ui5SourceMap;
 use LaravelUi5\Core\Ui5\Contracts\Ui5ArtifactInterface;
 use LaravelUi5\Core\Ui5\Contracts\Ui5ModuleInterface;
 use LaravelUi5\Core\Ui5\Contracts\Ui5RegistryInterface;
@@ -62,12 +63,20 @@ class Ui5Registry implements Ui5RegistryInterface
     {
         $modules = $config['modules'] ?? [];
 
-        // Pass 1: Reflect Roles
+        $sources = Ui5SourceMap::load(base_path('.ui5-sources.php'));
+
+        // Pass 1: Instantiate modules
         foreach ($modules as $slug => $moduleClass) {
             /** @var Ui5ModuleInterface $module */
             $module = new $moduleClass($slug);
 
             $this->modules[$slug] = $module;
+
+            $source = $sources->forModule($module->getName());
+
+            if ($module instanceof AttachesUi5SourceInterface && null !== $source) {
+                $module->__attachSource($source);
+            }
         }
 
         // Pass 2: Reflect everything else
@@ -152,8 +161,8 @@ class Ui5Registry implements Ui5RegistryInterface
 
         $this->discoverSettings($artifact);
 
-        if ($artifact instanceof SluggableInterface) {
-            $urlKey = ArtifactType::urlKeyFromArtifact($artifact);
+        $urlKey = ArtifactType::urlKeyFromArtifact($artifact);
+        if (null !== $urlKey) {
             $this->slugs[$urlKey] = $artifact;
         }
     }

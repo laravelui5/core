@@ -2,6 +2,7 @@
 
 namespace LaravelUi5\Core\Ui5\Contracts;
 
+use LaravelUi5\Core\Contracts\ParameterizableInterface;
 use LaravelUi5\Core\Enums\HttpMethod;
 
 /**

@@ -2,8 +2,6 @@
 
 namespace LaravelUi5\Core\Contracts;
 
-use LaravelUi5\Core\Ui5\Contracts\ConfigurableInterface;
-
 /**
  * Resolves effective settings for a Configurable target into an immutable Ui5Config.
  *

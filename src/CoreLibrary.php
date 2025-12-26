@@ -20,11 +20,6 @@ class CoreLibrary implements Ui5LibraryInterface
         return $this->module;
     }
 
-    public function getSlug(): string
-    {
-        return $this->module->getSlug();
-    }
-
     public function getType(): ArtifactType
     {
         return ArtifactType::Library;

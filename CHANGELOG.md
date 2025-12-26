@@ -4,9 +4,18 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [2.0.2] - 2025-12-
+- Made Ui5CoreContext final readonly
+- Moved `ConfigurableInterface` and `ParameterizableInterface` to Core namespace
+- Removed `SluggableInterface` from `Ui5AppInterface` and `Ui5LibraryInterface`
+- Added `getSource` to `Ui5ModuleInterface`
+- Added introspection capabilities for Ui5Apps via `Ui5SourceMap` and corresponding classes
+- Complete refactoring of `GenerateUi5LibraryCommand`
+- Complete refactoring of `GenerateUi5AppCommand`
+
 ## [2.0.1] - 2025-12-24
-- made `Ui5ArtifactInterface->getModule` mandatory
-- added `#[HideIntent]`
+- Made `Ui5ArtifactInterface->getModule` mandatory
+- Added `#[HideIntent]`
 
 ## [2.0.1] - 2025-12-22
 - Introduced Ui5ContextInterface

@@ -2,7 +2,9 @@
 
 namespace LaravelUi5\Core\Ui5;
 
+use LaravelUi5\Core\Contracts\Ui5Source;
 use LaravelUi5\Core\Enums\ArtifactType;
+use LaravelUi5\Core\Internal\AttachesUi5SourceInterface;
 use LaravelUi5\Core\Ui5\Contracts\Ui5ModuleInterface;
 
 /**
@@ -16,12 +18,24 @@ use LaravelUi5\Core\Ui5\Contracts\Ui5ModuleInterface;
  * such as Cards, Reports, Tiles, and Actions. All artifact instances are expected
  * to be fully constructed and ready to register at boot time.
  */
-abstract class AbstractUi5Module implements Ui5ModuleInterface
+abstract class AbstractUi5Module implements Ui5ModuleInterface, AttachesUi5SourceInterface
 {
     /**
      * @var string
      */
     protected string $slug;
+
+    protected ?Ui5Source $source;
+
+    public function __attachSource(Ui5Source $source): void
+    {
+        $this->source = $source;
+    }
+
+    public function getSource(): ?Ui5Source
+    {
+        return $this->source;
+    }
 
     /**
      * Create a new UI5 module instance.

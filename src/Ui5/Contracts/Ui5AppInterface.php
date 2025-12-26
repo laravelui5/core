@@ -18,9 +18,8 @@ namespace LaravelUi5\Core\Ui5\Contracts;
  * @see Ui5ArtifactInterface
  * @see HasAssetsInterface
  * @see VendorTaggedInterface
- * @see SluggableInterface
  */
-interface Ui5AppInterface extends Ui5ArtifactInterface, HasAssetsInterface, VendorTaggedInterface, SluggableInterface
+interface Ui5AppInterface extends Ui5ArtifactInterface, HasAssetsInterface, VendorTaggedInterface
 {
     /**
      * Returns a key-value map of sap-ui bootstrap attributes

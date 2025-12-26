@@ -3,7 +3,6 @@
 namespace LaravelUi5\Core\Contracts;
 
 use LaravelUi5\Core\Attributes\Parameter;
-use LaravelUi5\Core\Ui5\Contracts\ParameterizableInterface;
 
 /**
  * Contract for validating input parameters for UI5 artifacts.

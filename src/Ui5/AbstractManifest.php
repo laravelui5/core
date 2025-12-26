@@ -3,6 +3,7 @@
 namespace LaravelUi5\Core\Ui5;
 
 use LaravelUi5\Core\Attributes\Parameter;
+use LaravelUi5\Core\Contracts\ParameterizableInterface;
 use LaravelUi5\Core\Enums\ArtifactType;
 use LaravelUi5\Core\Enums\ParameterSource;
 use LaravelUi5\Core\Exceptions\InvalidHttpMethodActionException;
@@ -10,7 +11,6 @@ use LaravelUi5\Core\Exceptions\InvalidModuleException;
 use LaravelUi5\Core\Exceptions\InvalidParameterSourceException;
 use LaravelUi5\Core\Ui5\Contracts\LaravelUi5ManifestInterface;
 use LaravelUi5\Core\Ui5\Contracts\LaravelUi5ManifestKeys;
-use LaravelUi5\Core\Ui5\Contracts\ParameterizableInterface;
 use LaravelUi5\Core\Ui5\Contracts\Ui5ModuleInterface;
 use LaravelUi5\Core\Ui5\Contracts\Ui5RegistryInterface;
 use LaravelUi5\Core\Ui5\Contracts\Ui5ShellFragmentInterface;

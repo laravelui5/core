@@ -60,6 +60,7 @@ class GenerateSelfContainedUi5AppCommand extends BaseGenerator
             'phpNamespace' => $phpNamespace,
             'class' => $className,
             'moduleClass' => $moduleName,
+            'srcPath' => "{$targetPath}/resources/app"
         ]));
 
         // Create Ui5App

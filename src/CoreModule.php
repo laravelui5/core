@@ -2,6 +2,7 @@
 
 namespace LaravelUi5\Core;
 
+use LaravelUi5\Core\Contracts\Ui5Source;
 use LaravelUi5\Core\Ui5\Contracts\Ui5AppInterface;
 use LaravelUi5\Core\Ui5\Contracts\Ui5ArtifactInterface;
 use LaravelUi5\Core\Ui5\Contracts\Ui5LibraryInterface;
