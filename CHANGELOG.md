@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [2.1.3] - 2025-12-27
+- Fixed name for Ui5ModuleLib scaffolding
+
 ## [2.1.2] - 2025-12-27
 - Fixed single quotes for `Ui5Module->getName()` scaffolding
 - Fixed quotes in `--vendor` default for app scaffolder
