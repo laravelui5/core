@@ -112,7 +112,7 @@ class GenerateUi5LibraryCommand extends BaseGenerator
             'title' => $descriptor->getTitle(),
             'description' => $descriptor->getDescription(),
             'vendor' => $descriptor->getVendor(),
-            'name' => $name,
+            'name' => json_encode($name),
         ]));
 
         // Generate Ui5Module class

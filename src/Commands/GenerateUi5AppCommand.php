@@ -21,7 +21,7 @@ class GenerateUi5AppCommand extends BaseGenerator
                             {--js-ns-prefix=io.pragmatiqu : The JS namespace prefix}
                             {--create : Create a new module from scratch}
                             {--refresh : Overwrite existing files without confirmation}
-                            {--vendor="Pragmatiqu IT GmbH" : The vendor of the module}
+                            {--vendor=Pragmatiqu IT GmbH : The vendor of the module}
                             {--auto-build : Run UI5 build before importing assets}';
 
     protected $description = 'Generate a Ui5App module from a UI5 frontend project';
@@ -138,7 +138,7 @@ class GenerateUi5AppCommand extends BaseGenerator
                 'phpNamespace' => $phpNamespace,
                 'class' => $className,
                 'moduleClass' => $moduleClassName,
-                'name' => $appName,
+                'name' => json_encode($appName),
             ]));
 
             // Manifest

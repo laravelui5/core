@@ -41,7 +41,11 @@ final readonly class Ui5SourceMap
 
     private static function export(array $config): string
     {
-        $data = var_export($config, true);
+        $data = preg_replace(
+            ['/array \(/', '/\)(,?)/'],
+            ['[', ']$1'],
+            var_export($config, true)
+        );
         return <<<PHP
 <?php
 return {$data};
