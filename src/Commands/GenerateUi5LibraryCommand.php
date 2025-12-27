@@ -112,7 +112,6 @@ class GenerateUi5LibraryCommand extends BaseGenerator
             'title' => $descriptor->getTitle(),
             'description' => $descriptor->getDescription(),
             'vendor' => $descriptor->getVendor(),
-            'name' => json_encode($name),
         ]));
 
         // Generate Ui5Module class
@@ -120,6 +119,7 @@ class GenerateUi5LibraryCommand extends BaseGenerator
             'phpNamespace' => $phpNamespace,
             'class' => "{$name}Library",
             'moduleClass' => "{$name}Module",
+            'name' => json_encode($name),
         ]));
 
         // Copy artefacts
