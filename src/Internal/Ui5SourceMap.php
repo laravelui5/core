@@ -36,11 +36,16 @@ final readonly class Ui5SourceMap
             'vendor' => $vendor,
         ];
 
-        File::put($path, <<<PHP
+        File::put($path, self::export($config));
+    }
+
+    private static function export(array $config): string
+    {
+        $data = var_export($config, true);
+        return <<<PHP
 <?php
-return {var_export($config, true)};
-PHP
-        );
+return {$data};
+PHP;
     }
 
     public static function load(string $path): self

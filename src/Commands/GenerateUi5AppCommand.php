@@ -134,7 +134,7 @@ class GenerateUi5AppCommand extends BaseGenerator
             ]));
 
             // Module
-            $this->files->put($targetFile, $this->compileStub('Ui5ModuleApp.stub', [
+            $this->files->put("{$targetPath}/{$appName}Module.php", $this->compileStub('Ui5ModuleApp.stub', [
                 'phpNamespace' => $phpNamespace,
                 'class' => $className,
                 'moduleClass' => $moduleClassName,
