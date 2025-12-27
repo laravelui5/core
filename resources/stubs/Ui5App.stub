@@ -2,25 +2,15 @@
 
 namespace {{ namespace }};
 
-use Flat3\Lodata\Endpoint;
+use LaravelUi5\Core\Ui5\AbstractUi5App;
 use LaravelUi5\Core\Ui5\Contracts\LaravelUi5ManifestInterface;
 use LaravelUi5\Core\Ui5\Contracts\Ui5ModuleInterface;
-use LaravelUi5\Core\Ui5\Contracts\Ui5AppInterface;
 use LaravelUi5\Core\Enums\ArtifactType;
 use LaravelUi5\Core\Traits\HasAssetsTrait;
 
-class {{ class }} extends Endpoint implements Ui5AppInterface
+class {{ class }} extends AbstractUi5App
 {
     use HasAssetsTrait;
-
-    public function __construct(protected Ui5ModuleInterface $module)
-    {
-    }
-
-    public function getModule(): Ui5ModuleInterface
-    {
-        return $this->module;
-    }
 
     public function getType(): ArtifactType
     {
@@ -69,11 +59,6 @@ JS;
         return <<<CSS
 {{ inlineCss }}
 CSS;
-    }
-
-    public function getManifestPath(): string
-    {
-        return __DIR__ . '/../resources/ui5/manifest.json';
     }
 
     public function getLaravelUiManifest(): LaravelUi5ManifestInterface

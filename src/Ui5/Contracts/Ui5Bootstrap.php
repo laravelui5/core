@@ -1,6 +1,6 @@
 <?php
 
-namespace LaravelUi5\Core\Ui5;
+namespace LaravelUi5\Core\Ui5\Contracts;
 
 use DOMDocument;
 use DOMElement;
@@ -21,11 +21,17 @@ final readonly class Ui5Bootstrap
 
     /* -- API -------------------------------------------------------------- */
 
+    /**
+     * @return array<string, string>
+     */
     public function getAttributes(): array
     {
         return $this->attributes;
     }
 
+    /**
+     * @return string[]
+     */
     public function getResourceNamespaces(): array
     {
         return $this->resourceNamespaces;
@@ -78,7 +84,7 @@ final readonly class Ui5Bootstrap
             if (str_starts_with($attr->name, 'data-sap-ui-')) {
                 $key = str_replace('data-sap-ui-', '', $attr->name);
 
-                if ($key === 'resource-roots') {
+                if ($key === 'resourceroots') {
                     $roots = json_decode(
                         $attr->value,
                         true,

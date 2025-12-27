@@ -1,6 +1,6 @@
 <?php
 
-namespace LaravelUi5\Core\Ui5;
+namespace LaravelUi5\Core\Ui5\Contracts;
 
 use JsonException;
 use LaravelUi5\Core\Contracts\Ui5Descriptor;
@@ -14,7 +14,9 @@ final readonly class Ui5AppDescriptor extends Ui5Descriptor
         private string $title,
         private string $description,
         private string $vendor,
-        private array  $dependencies
+        private array  $dependencies,
+        private array  $routes,
+        private array  $targets,
     )
     {
     }
@@ -49,6 +51,18 @@ final readonly class Ui5AppDescriptor extends Ui5Descriptor
     public function getDependencies(): array
     {
         return $this->dependencies;
+    }
+
+    /** @return Ui5Route[] */
+    public function getRoutes(): array
+    {
+        return $this->routes;
+    }
+
+    /** @return array<string, Ui5Target> keyed by target name */
+    public function getTargets(): array
+    {
+        return $this->targets;
     }
 
     /* -- Factory ---------------------------------------------------------- */
@@ -88,13 +102,42 @@ final readonly class Ui5AppDescriptor extends Ui5Descriptor
 
         $dependencies = array_keys($libs);
 
+        $routing = $manifest['sap.ui5']['routing'] ?? [];
+        $routes = [];
+        foreach ($routing['routes'] ?? [] as $route) {
+            if (!isset($route['name'], $route['pattern'], $route['target'])) {
+                continue;
+            }
+
+            $routes[] = new Ui5Route(
+                name: $route['name'],
+                pattern: $route['pattern'],
+                target: $route['target']
+            );
+        }
+
+        $targets = [];
+
+        foreach ($routing['targets'] ?? [] as $key => $target) {
+            if (!isset($target['viewName']) && !isset($target['name'])) {
+                continue;
+            }
+
+            $targets[] = new Ui5Target(
+                key: $key,
+                name: $target['viewName'] ?? $target['name'],
+            );
+        }
+
         return new self(
             namespace: $namespace,
             version: $version,
             title: $i18n->getTitle(),
             description: $i18n->getDescription(),
             vendor: $vendor,
-            dependencies: $dependencies
+            dependencies: $dependencies,
+            routes: $routes,
+            targets: $targets,
         );
     }
 }

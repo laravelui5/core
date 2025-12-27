@@ -10,8 +10,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Removed `SluggableInterface` from `Ui5AppInterface` and `Ui5LibraryInterface`
 - Added `getSource` to `Ui5ModuleInterface`
 - Added introspection capabilities for Ui5Apps via `Ui5SourceMap` and corresponding classes
+- Added introspection capabilities for Ui5Libraries via `Ui5SourceMap` and corresponding classes
 - Complete refactoring of `GenerateUi5LibraryCommand`
 - Complete refactoring of `GenerateUi5AppCommand`
+- Enhanced `Ui5AppInterface` for introspection
+- Enhanced `Ui5LibraryInterface` for introspection
+- Created abstract classes for Ui5Apps and Ui5Libraries
+- Created tests for all value object factories
 
 ## [2.0.1] - 2025-12-24
 - Made `Ui5ArtifactInterface->getModule` mandatory

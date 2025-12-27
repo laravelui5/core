@@ -2,8 +2,8 @@
 
 namespace LaravelUi5\Core\Contracts;
 
-use LaravelUi5\Core\Ui5\Ui5Framework;
-use LaravelUi5\Core\Ui5\Ui5PackageMeta;
+use LaravelUi5\Core\Ui5\Contracts\Ui5Framework;
+use LaravelUi5\Core\Ui5\Contracts\Ui5PackageMeta;
 
 abstract readonly class Ui5Source
 {

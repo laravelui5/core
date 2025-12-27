@@ -25,7 +25,7 @@ abstract class AbstractUi5Module implements Ui5ModuleInterface, AttachesUi5Sourc
      */
     protected string $slug;
 
-    protected ?Ui5Source $source;
+    protected ?Ui5Source $source = null;
 
     public function __attachSource(Ui5Source $source): void
     {

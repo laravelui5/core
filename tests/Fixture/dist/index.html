@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="de">
+	<head>
+		<meta http-equiv="Cache-control" content="no-cache, no-store, must-revalidate" />
+		<meta http-equiv="Pragma" content="no-cache" />
+		<meta http-equiv="expires" content="0" />
+		<meta charset="utf-8" />
+
+		<title>Kaufmännisches Projektcontrolling</title>
+
+		<script
+			id="sap-ui-bootstrap"
+			src="resources/sap-ui-core.js"
+			data-sap-ui-resourceroots='{
+				"io.pragmatiqu.portal": "./"
+			}'
+			data-sap-ui-theme="sap_horizon"
+			data-sap-ui-oninit="module:sap/ui/core/ComponentSupport"
+			data-sap-ui-async="true"
+			data-sap-ui-compatVersion="edge"
+			data-sap-ui-frameOptions="trusted"
+			data-sap-ui-xx-waitForTheme="true"
+			data-sap-ui-xx-supportedLanguages="en,de"
+		></script>
+		<script>
+			sap.ui.loader.config({
+				map: {
+					"*": {
+						"d3": null
+					}
+				}
+			});
+		</script>
+
+		<style>
+			.zUiFullHeight .sapMDialogScroll {
+				height: 100%;
+			}
+			/**
+			 * Plugin styles
+			 */
+			.ce-section {
+				padding: 0.6em 0 3px;
+				margin: 0;
+				line-height: 1.25em;
+				outline: none;
+				background-color: lavenderblush;
+				font-family: sans-serif;
+			}
+
+			.ce-section p,
+			.ce-section div {
+				padding: 0 !important;
+				margin: 0 !important;
+			}
+
+			/* EditorJS Tooltip ausblenden, macht Probleme… */
+			.ct--shown {
+				display: none;
+			}
+
+			/**
+			 * Styles for Plugin icon in Toolbar
+			 */
+			.ce-section__icon {}
+
+			.ce-section[contentEditable=true][data-placeholder]::before {
+				position: absolute;
+				content: attr(data-placeholder);
+				color: #707684;
+				font-weight: normal;
+				display: none;
+				cursor: text;
+			}
+
+			.ce-section[contentEditable=true][data-placeholder]:empty::before {
+				display: block;
+			}
+
+			.ce-section[contentEditable=true][data-placeholder]:empty:focus::before {
+				display: none;
+			}
+
+			.maxWidth {
+				max-width: 800px;
+			}
+		</style>
+	</head>
+
+	<body class="sapUiBody">
+		<div data-sap-ui-component data-name="io.pragmatiqu.portal"></div>
+	</body>
+</html>

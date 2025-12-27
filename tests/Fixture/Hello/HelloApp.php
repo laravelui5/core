@@ -7,19 +7,17 @@ use LaravelUi5\Core\Attributes\Setting;
 use LaravelUi5\Core\Enums\SettingScope;
 use LaravelUi5\Core\Enums\SettingVisibilityRole;
 use LaravelUi5\Core\Enums\ValueType;
+use LaravelUi5\Core\Traits\HasAssetsTrait;
+use LaravelUi5\Core\Ui5\AbstractUi5App;
 use LaravelUi5\Core\Ui5\Contracts\LaravelUi5ManifestInterface;
-use LaravelUi5\Core\Ui5\Contracts\Ui5AppInterface;
 use LaravelUi5\Core\Enums\ArtifactType;
 use LaravelUi5\Core\Ui5\Contracts\Ui5ModuleInterface;
 
 #[Setting('darkMode', type: ValueType::Boolean, default: false, scope: SettingScope::User, role: SettingVisibilityRole::Employee, note: 'Something')]
 #[Setting('maxItems', type: ValueType::Integer, default: 10, scope: SettingScope::Installation, role: SettingVisibilityRole::TenantAdmin, note: 'nobody knows')]
-class HelloApp implements Ui5AppInterface
+class HelloApp extends AbstractUi5App
 {
-
-    public function __construct(protected Ui5ModuleInterface $module)
-    {
-    }
+    use HasAssetsTrait;
 
     public function getModule(): Ui5ModuleInterface
     {
@@ -139,12 +137,6 @@ JS;
     }
 }
 JSON;
-    }
-
-    public function getAssetPath(string $filename): ?string
-    {
-        $path = __DIR__ . '/../resources/app/' . ltrim($filename, '/');
-        return File::exists($path) ? $path : null;
     }
 
     public function getManifestPath(): string

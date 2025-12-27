@@ -5,8 +5,8 @@ namespace LaravelUi5\Core\Internal;
 use Illuminate\Support\Facades\File;
 use JsonException;
 use LaravelUi5\Core\Contracts\Ui5Source;
-use LaravelUi5\Core\Ui5\Ui5AppSource;
-use LaravelUi5\Core\Ui5\Ui5LibrarySource;
+use LaravelUi5\Core\Ui5\Contracts\Ui5AppSource;
+use LaravelUi5\Core\Ui5\Contracts\Ui5LibrarySource;
 use LogicException;
 
 final readonly class Ui5SourceMap
@@ -75,7 +75,7 @@ PHP
 
         return match ($entry['type']) {
             'app' => Ui5AppSource::fromFilesystem($rootPath, $entry['vendor'], !app()->runningInConsole()),
-            'lib' => Ui5LibrarySource::fromFilesystem($rootPath),
+            'library' => Ui5LibrarySource::fromFilesystem($rootPath),
             default => null,
         };
     }

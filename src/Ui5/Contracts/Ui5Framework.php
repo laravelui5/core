@@ -1,6 +1,6 @@
 <?php
 
-namespace LaravelUi5\Core\Ui5;
+namespace LaravelUi5\Core\Ui5\Contracts;
 
 use Illuminate\Support\Facades\File;
 use LogicException;
@@ -25,10 +25,6 @@ final readonly class Ui5Framework
         }
 
         $yaml = Yaml::parseFile($ui5Yaml);
-
-        if (($yaml['type'] ?? null) !== 'library') {
-            throw new LogicException("UI5 project at {$path} is not a library");
-        }
 
         $namespace = $yaml['metadata']['name'] ?? null;
         if (!$namespace) {

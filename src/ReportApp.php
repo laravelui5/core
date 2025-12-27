@@ -5,23 +5,12 @@ namespace LaravelUi5\Core;
 use Illuminate\Support\Facades\File;
 use LaravelUi5\Core\Attributes\HideIntent;
 use LaravelUi5\Core\Enums\ArtifactType;
+use LaravelUi5\Core\Ui5\AbstractUi5App;
 use LaravelUi5\Core\Ui5\Contracts\LaravelUi5ManifestInterface;
-use LaravelUi5\Core\Ui5\Contracts\Ui5AppInterface;
-use LaravelUi5\Core\Ui5\Contracts\Ui5ModuleInterface;
 
 #[HideIntent]
-class ReportApp implements Ui5AppInterface
+class ReportApp extends AbstractUi5App
 {
-
-    public function __construct(protected Ui5ModuleInterface $module)
-    {
-    }
-
-    public function getModule(): Ui5ModuleInterface
-    {
-        return $this->module;
-    }
-
     public function getType(): ArtifactType
     {
         return ArtifactType::Application;

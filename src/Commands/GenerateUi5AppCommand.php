@@ -7,7 +7,8 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use JsonException;
 use LaravelUi5\Core\Commands\Concerns\RunsUi5Build;
-use LaravelUi5\Core\Ui5\Ui5AppSource;
+use LaravelUi5\Core\Internal\Ui5SourceMap;
+use LaravelUi5\Core\Ui5\Contracts\Ui5AppSource;
 use LogicException;
 
 class GenerateUi5AppCommand extends BaseGenerator
@@ -83,7 +84,7 @@ class GenerateUi5AppCommand extends BaseGenerator
 
         $create = $this->option('create');
         $refresh = $this->option('refresh');
-        $exists = File::exists($targetPath);
+        $exists = File::exists($targetFile);
 
         // Decision tree
         if ($create && $exists) {
@@ -181,6 +182,14 @@ class GenerateUi5AppCommand extends BaseGenerator
         $assets = $staticFiles->merge($i18nFiles)->unique()->values()->all();
 
         $this->copyDistAssets($sourcePath . 'dist', $targetPath, $assets);
+
+        // Register source
+        Ui5SourceMap::addOrUpdate(
+            module: $appName,
+            type: 'app',
+            srcPath: $this->relativePath($sourcePath),
+            vendor: $vendor,
+        );
 
         $operation = $exists ? 'Updated' : 'Created';
         $this->components->success("{$operation} Ui5App module `{$appName}`");

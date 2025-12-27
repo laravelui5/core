@@ -2,18 +2,14 @@
 
 namespace Tests\Fixture\Hello;
 
-use LaravelUi5\Core\Ui5\Contracts\Ui5LibraryInterface;
+use LaravelUi5\Core\Ui5\AbstractUi5Library;
 use LaravelUi5\Core\Enums\ArtifactType;
 use LaravelUi5\Core\Traits\HasAssetsTrait;
 use LaravelUi5\Core\Ui5\Contracts\Ui5ModuleInterface;
 
-class HelloLibrary implements Ui5LibraryInterface
+class HelloLibrary extends AbstractUi5Library
 {
     use HasAssetsTrait;
-
-    public function __construct(protected Ui5ModuleInterface $module)
-    {
-    }
 
     public function getModule(): Ui5ModuleInterface
     {

@@ -1,6 +1,6 @@
 <?php
 
-namespace LaravelUi5\Core\Ui5;
+namespace LaravelUi5\Core\Ui5\Contracts;
 
 use JsonException;
 use LaravelUi5\Core\Contracts\Ui5Descriptor;
