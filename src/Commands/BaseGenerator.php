@@ -97,9 +97,4 @@ class BaseGenerator extends Command
             }
         }
     }
-
-    protected function relativePath(string $path): string
-    {
-        return Str::after($path, base_path() . DIRECTORY_SEPARATOR);
-    }
 }

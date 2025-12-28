@@ -78,7 +78,7 @@ final readonly class Ui5LibraryDescriptor extends Ui5Descriptor
             . '/.library';
 
         if (!File::exists($srcPath)) {
-            throw new LogicException("Missing .library file. Run `$builder` first.");
+            throw new LogicException("Missing .library file at {$path}. Run `$builder` first.");
         }
 
         $xml = simplexml_load_file($srcPath);

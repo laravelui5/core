@@ -22,19 +22,15 @@ namespace LaravelUi5\Core\Ui5\Contracts;
 interface Ui5AppInterface extends Ui5ArtifactInterface, HasAssetsInterface, VendorTaggedInterface
 {
     /**
-     * Returns the UI5 source associated with this app, if available.
+     * Returns the UI5 source associated with this app.
      *
      * The source represents the original UI5 project (application) from which
      * this app was generated and provides access to introspection data such as
      * the manifest, dependencies, bootstrap configuration and i18n resources.
      *
-     * A source is typically available during development and SDK usage.
-     * In runtime or cached environments, this method may return null if the
-     * application is running in a self-contained or packaged state.
-     *
-     * @return Ui5AppSource|null The associated UI5 app source, or null if not available.
+     * @return Ui5AppSource The associated UI5 app source.
      */
-    public function getSource(): ?Ui5AppSource;
+    public function getSource(): Ui5AppSource;
 
     /**
      * Returns a key-value map of sap-ui bootstrap attributes

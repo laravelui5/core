@@ -1,8 +1,8 @@
 <?php
 
+use Fixtures\Hello\Hello;
+use Fixtures\Hello\HelloManifest;
 use LaravelUi5\Core\Ui5\Ui5Registry;
-use Tests\Fixture\Hello\Hello;
-use Tests\Fixture\Hello\HelloManifest;
 
 beforeEach(function () {
     $this->registry = Ui5Registry::fromArray(Hello::ui5Config());
@@ -37,7 +37,7 @@ describe('AbstractManifest->buildResources', function () {
     it('returns empty array when module has no resources', function () {
         $registry = Ui5Registry::fromArray([
             'modules' => [
-                'hello' => \Tests\Fixture\Hello\HelloLibModule::class,
+                'hello' => \Fixtures\Hello\HelloLibModule::class,
             ]
         ]);
         $manifest = new HelloManifest($registry);

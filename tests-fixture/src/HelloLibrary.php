@@ -1,0 +1,48 @@
+<?php
+
+namespace Fixtures\Hello;
+
+use LaravelUi5\Core\Enums\ArtifactType;
+use LaravelUi5\Core\Traits\HasAssetsTrait;
+use LaravelUi5\Core\Ui5\AbstractUi5Library;
+use LaravelUi5\Core\Ui5\Contracts\Ui5ModuleInterface;
+
+class HelloLibrary extends AbstractUi5Library
+{
+    use HasAssetsTrait;
+
+    public function getModule(): Ui5ModuleInterface
+    {
+        return $this->module;
+    }
+
+    public function getType(): ArtifactType
+    {
+        return ArtifactType::Library;
+    }
+
+    public function getNamespace(): string
+    {
+        return 'com.laravelui5.hello';
+    }
+
+    public function getVersion(): string
+    {
+        return '1.0.0';
+    }
+
+    public function getTitle(): string
+    {
+        return 'Laravel Ui5 Hello Library';
+    }
+
+    public function getDescription(): string
+    {
+        return 'Some description here…';
+    }
+
+    public function getVendor(): string
+    {
+        return 'Pragmatiqu IT GmbH';
+    }
+}

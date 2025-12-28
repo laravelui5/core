@@ -1,9 +1,9 @@
 <?php
 
-use LaravelUi5\Core\Ui5\Ui5Registry;
-use LaravelUi5\Core\Ui5\Contracts\Ui5ModuleInterface;
+use Fixtures\Hello\Hello;
 use LaravelUi5\Core\Ui5\Contracts\Ui5ArtifactInterface;
-use Tests\Fixture\Hello\Hello;
+use LaravelUi5\Core\Ui5\Contracts\Ui5ModuleInterface;
+use LaravelUi5\Core\Ui5\Ui5Registry;
 
 beforeEach(function () {
     $this->registry = Ui5Registry::fromArray(Hello::ui5Config());

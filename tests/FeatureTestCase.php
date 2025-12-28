@@ -2,10 +2,10 @@
 
 namespace Tests;
 
+use Fixtures\Hello\HelloModule;
 use LaravelUi5\Core\Middleware\FetchCsrfToken;
 use LaravelUi5\Core\Middleware\ResolveUi5Context;
 use LaravelUi5\Core\Ui5CoreServiceProvider;
-use Tests\Fixture\Hello\HelloModule;
 
 class FeatureTestCase extends \Orchestra\Testbench\TestCase
 {
@@ -31,6 +31,6 @@ class FeatureTestCase extends \Orchestra\Testbench\TestCase
         $modules['hello'] = HelloModule::class;
         $app['config']->set('ui5.modules', $modules);
 
-        $app->setBasePath(__DIR__ . '/Fixture');
+        $app->setBasePath(__DIR__);
     }
 }

@@ -44,26 +44,24 @@ interface Ui5ModuleInterface extends SluggableInterface
     public function getName(): string;
 
     /**
-     * Returns the absolute filesystem path to the source directory of the UI5
-     * application represented by this module.
+     * Returns the absolute filesystem path to the UI5 source artifacts of this module.
      *
-     * The source path points to the root directory of a standard UI5 application,
-     * containing canonical project artifacts such as `ui5.yaml` and the
-     * `webapp/` directory (including `webapp/manifest.json`).
+     * The returned path MUST resolve to a directory that contains the canonical
+     * UI5 source artifacts of the module, either:
      *
-     * It serves as the single source of truth for:
-     *  - asset discovery and resolution,
-     *  - build and bundling processes,
-     *  - tooling and CLI operations,
-     *  - and local frontend development and consumption.
+     * - a development workspace (e.g. a locally linked UI5 project), or
+     * - a packaged distribution shipped with the module (e.g. under `vendor/`).
      *
-     * This path is intended to be consumed by external systems (builders,
-     * registries, renderers) and must therefore always resolve to an existing,
-     * readable directory on the filesystem.
+     * The concrete origin (workspace vs. package) is resolved by the registry at
+     * runtime and MUST be transparent to consumers.
      *
-     * @return Ui5Source|null The module’s UI5 source object.
+     * This path is intended to serve as the single source of truth for all UI5
+     * introspection and MUST remain stable for the lifetime of the application
+     * instance.
+     *
+     * @return string Absolute path to the module’s UI5 source directory.
      */
-    public function getSource(): ?Ui5Source;
+    public function getSourcePath(): string;
 
     /**
      * Returns true if this module provides a UI5 application.

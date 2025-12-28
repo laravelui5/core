@@ -1,9 +1,9 @@
 <?php
 
-use Tests\Fixture\Hello\Hello;
-use Tests\Fixture\Hello\HelloManifest;
-use LaravelUi5\Core\Ui5\Ui5Registry;
+use Fixtures\Hello\Hello;
+use Fixtures\Hello\HelloManifest;
 use Illuminate\Support\Facades\Route;
+use LaravelUi5\Core\Ui5\Ui5Registry;
 
 beforeEach(function () {
     Route::get('/hello', fn() => 'ok')->name('hello');

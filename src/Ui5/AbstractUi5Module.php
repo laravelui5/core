@@ -2,9 +2,7 @@
 
 namespace LaravelUi5\Core\Ui5;
 
-use LaravelUi5\Core\Contracts\Ui5Source;
 use LaravelUi5\Core\Enums\ArtifactType;
-use LaravelUi5\Core\Internal\AttachesUi5SourceInterface;
 use LaravelUi5\Core\Ui5\Contracts\Ui5ModuleInterface;
 
 /**
@@ -18,33 +16,22 @@ use LaravelUi5\Core\Ui5\Contracts\Ui5ModuleInterface;
  * such as Cards, Reports, Tiles, and Actions. All artifact instances are expected
  * to be fully constructed and ready to register at boot time.
  */
-abstract class AbstractUi5Module implements Ui5ModuleInterface, AttachesUi5SourceInterface
+abstract class AbstractUi5Module implements Ui5ModuleInterface
 {
-    /**
-     * @var string
-     */
     protected string $slug;
 
-    protected ?Ui5Source $source = null;
-
-    public function __attachSource(Ui5Source $source): void
-    {
-        $this->source = $source;
-    }
-
-    public function getSource(): ?Ui5Source
-    {
-        return $this->source;
-    }
+    protected string $srcPath;
 
     /**
      * Create a new UI5 module instance.
      *
      * @param string $slug Route-level slug as configured in config/ui5.php
+     * @param string $srcPath Physical path where this module resides in
      */
-    public function __construct(string $slug)
+    public function __construct(string $slug, string $srcPath)
     {
         $this->slug = $slug;
+        $this->srcPath = $srcPath;
     }
 
     public function getType(): ArtifactType
@@ -55,6 +42,11 @@ abstract class AbstractUi5Module implements Ui5ModuleInterface, AttachesUi5Sourc
     public function getSlug(): string
     {
         return $this->slug;
+    }
+
+    public function getSourcePath(): string
+    {
+        return $this->srcPath;
     }
 
     public function getAllArtifacts(): array

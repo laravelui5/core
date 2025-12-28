@@ -1,0 +1,19 @@
+<?php
+
+namespace Fixtures\Hello\Cards\WorkHours;
+
+use LaravelUi5\Core\Ui5\AbstractDataProvider;
+
+class Provider extends AbstractDataProvider
+{
+    public function execute(): array
+    {
+        // Example data structure
+        return [
+            'title' => 'Sample KPI',
+            'value' => 1234.56,
+            'unit' => 'EUR',
+            'trend' => 'up',
+        ];
+    }
+}

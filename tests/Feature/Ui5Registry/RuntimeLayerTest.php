@@ -1,7 +1,7 @@
 <?php
 
+use Fixtures\Hello\Hello;
 use LaravelUi5\Core\Ui5\Ui5Registry;
-use Tests\Fixture\Hello\Hello;
 
 describe('Slug resolution', function () {
     it('returns artifact for known slug', function () {

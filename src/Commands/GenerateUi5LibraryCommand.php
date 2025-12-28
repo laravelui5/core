@@ -7,13 +7,14 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use JsonException;
 use LaravelUi5\Core\Commands\Concerns\RunsUi5Build;
-use LaravelUi5\Core\Internal\Ui5SourceMap;
+use LaravelUi5\Core\Commands\Concerns\WritesSourceOverride;
 use LaravelUi5\Core\Ui5\Contracts\Ui5LibrarySource;
 use LogicException;
 
 class GenerateUi5LibraryCommand extends BaseGenerator
 {
     use RunsUi5Build;
+    use WritesSourceOverride;
 
     protected $signature = 'ui5:lib
                             {name : The CamelCase name of the library}
@@ -126,12 +127,7 @@ class GenerateUi5LibraryCommand extends BaseGenerator
         $this->copyLibraryAssets($source, $targetPath);
 
         // Register source
-        Ui5SourceMap::addOrUpdate(
-            module: $name,
-            type: 'library',
-            srcPath: $this->relativePath($sourcePath),
-            vendor: $descriptor->getVendor(),
-        );
+        $this->writeSourceOverride("$phpNamespace\\{$name}Module", $sourcePath);
 
         $operation = $exists ? 'Updated' : 'Created';
         $this->components->success("{$operation} Ui5Library module `{$name}`");

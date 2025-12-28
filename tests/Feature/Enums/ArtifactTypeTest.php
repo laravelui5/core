@@ -1,25 +1,26 @@
 <?php
 
+use Fixtures\Hello\Hello;
+use Fixtures\Hello\HelloLibModule;
 use LaravelUi5\Core\Enums\ArtifactType;
 use LaravelUi5\Core\Exceptions\InvalidPathException;
-use Tests\Fixture\Hello\HelloLibModule;
-use Tests\Fixture\Hello\HelloModule;
+use LaravelUi5\Core\Ui5\Contracts\Ui5ArtifactInterface;
+use LaravelUi5\Core\Ui5\Ui5Registry;
 
-function getModule(): HelloModule
-{
-    return new HelloModule('hello');
-}
+beforeEach(function () {
+    $this->registry = Ui5Registry::fromArray(Hello::ui5Config());
+});
 
 describe('Artifact', function () {
     it('generates urlKey from app artifact', function () {
-        $app = getModule()->getApp();
+        $app = $this->registry->getModule(Hello::SLUG)->getApp();
         $key = ArtifactType::urlKeyFromArtifact($app);
 
         expect($key)->toBe('app/hello');
     });
 
     it('generates urlKey from library artifact', function () {
-        $module = new HelloLibModule('hello');
+        $module = new HelloLibModule('hello', '');
         $app = $module->getLibrary();
         $key = ArtifactType::urlKeyFromArtifact($app);
 
@@ -27,28 +28,36 @@ describe('Artifact', function () {
     });
 
     it('generates urlKey from action artifact', function () {
-        $action = collect(getModule()->getActions())->first();
+        $module = $this->registry->getModule(Hello::SLUG);
+        /** @var Ui5ArtifactInterface $action */
+        $action = collect($module->getActions())->first();
         $key = ArtifactType::urlKeyFromArtifact($action);
 
         expect($key)->toBe('api/hello/world');
     });
 
     it('generates urlKey from resource artifact', function () {
-        $resource = collect(getModule()->getResources())->first();
+        $module = $this->registry->getModule(Hello::SLUG);
+        /** @var Ui5ArtifactInterface $resource */
+        $resource = collect($module->getResources())->first();
         $key = ArtifactType::urlKeyFromArtifact($resource);
 
         expect($key)->toBe('resource/hello/first');
     });
 
     it('generates urlKey from card artifact', function () {
-        $card = collect(getModule()->getCards())->first();
+        $module = $this->registry->getModule(Hello::SLUG);
+        /** @var Ui5ArtifactInterface $card */
+        $card = collect($module->getCards())->first();
         $key = ArtifactType::urlKeyFromArtifact($card);
 
         expect($key)->toBe('card/hello/work-hours');
     });
 
     it('generates urlKey from report artifact', function () {
-        $report = collect(getModule()->getReports())->first();
+        $module = $this->registry->getModule(Hello::SLUG);
+        /** @var Ui5ArtifactInterface $report */
+        $report = collect($module->getReports())->first();
         $key = ArtifactType::urlKeyFromArtifact($report);
 
         expect($key)->toBe('report/hello-world-report');

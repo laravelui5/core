@@ -4,14 +4,13 @@ namespace LaravelUi5\Core\Ui5;
 
 use LaravelUi5\Core\Attributes\Setting;
 use LaravelUi5\Core\Enums\ArtifactType;
-use LaravelUi5\Core\Internal\AttachesUi5SourceInterface;
-use LaravelUi5\Core\Internal\Ui5SourceMap;
 use LaravelUi5\Core\Ui5\Contracts\Ui5ArtifactInterface;
 use LaravelUi5\Core\Ui5\Contracts\Ui5ModuleInterface;
 use LaravelUi5\Core\Ui5\Contracts\Ui5RegistryInterface;
 use LaravelUi5\Core\Ui5CoreServiceProvider;
 use LogicException;
 use ReflectionClass;
+use ReflectionException;
 
 class Ui5Registry implements Ui5RegistryInterface
 {
@@ -45,6 +44,14 @@ class Ui5Registry implements Ui5RegistryInterface
      */
     protected array $settings = [];
 
+    /**
+     * @var array<class-string<Ui5ModuleInterface>,string>
+     */
+    private array $sourceOverrides = [];
+
+    /**
+     * @throws ReflectionException
+     */
     public function __construct(?array $config = null)
     {
         if ($config) {
@@ -59,24 +66,57 @@ class Ui5Registry implements Ui5RegistryInterface
         return new self($config);
     }
 
+    protected function loadSourceOverrides(): void
+    {
+        $path = base_path('.ui5-sources.php');
+
+        if (!is_file($path)) {
+            return;
+        }
+
+        $config = require $path;
+
+        $modules = $config['modules'] ?? [];
+
+        $overrides = [];
+
+        foreach ($modules as $moduleClass => $relativePath) {
+            if (!is_string($moduleClass) || !is_string($relativePath)) {
+                continue;
+            }
+
+            $absolutePath = base_path($relativePath);
+
+            if (is_dir($absolutePath)) {
+                $overrides[$moduleClass] = $absolutePath;
+            }
+        }
+
+        $this->sourceOverrides = $overrides;
+    }
+
+    /**
+     * @throws ReflectionException
+     */
     protected function loadFromArray(array $config): void
     {
         $modules = $config['modules'] ?? [];
 
-        $sources = Ui5SourceMap::load(base_path('.ui5-sources.php'));
+        $this->loadSourceOverrides();
 
         // Pass 1: Instantiate modules
         foreach ($modules as $slug => $moduleClass) {
+
+            if (!class_exists($moduleClass)) {
+                throw new LogicException("UI5 module class [{$moduleClass}] does not exist.");
+            }
+
+            $sourcePath = $this->resolveSourcePathForModule($moduleClass);
+
             /** @var Ui5ModuleInterface $module */
-            $module = new $moduleClass($slug);
+            $module = new $moduleClass($slug, $sourcePath);
 
             $this->modules[$slug] = $module;
-
-            $source = $sources->forModule($module->getName());
-
-            if ($module instanceof AttachesUi5SourceInterface && null !== $source) {
-                $module->__attachSource($source);
-            }
         }
 
         // Pass 2: Reflect everything else
@@ -137,6 +177,32 @@ class Ui5Registry implements Ui5RegistryInterface
     protected function afterLoad(array $config): void
     {
         // extension hook (no-op by default)
+    }
+
+    /**
+     * @throws ReflectionException
+     */
+    public function resolveSourcePathForModule(string $moduleClass): string
+    {
+        if (isset($this->sourceOverrides[$moduleClass])) {
+            return base_path($this->sourceOverrides[$moduleClass]);
+        }
+
+        $ref = new ReflectionClass($moduleClass);
+
+        $moduleDir = dirname($ref->getFileName());
+
+        // Convention:
+        // ui5/<Module>/src/ → ui5/<Module>/resources/ui5
+        $packagePath = realpath($moduleDir . '/../resources/ui5');
+
+        if ($packagePath && is_dir($packagePath)) {
+            return $packagePath;
+        }
+
+        throw new LogicException(
+            "Unable to resolve UI5 source path for module [{$moduleClass}] {$moduleDir}."
+        );
     }
 
     /**
@@ -290,6 +356,7 @@ class Ui5Registry implements Ui5RegistryInterface
             'artifactToModule' => $this->artifactToModule,
             'slugs' => $this->slugs,
             'settings' => $this->settings,
+            'sourceOverrides' => $this->sourceOverrides,
         ];
     }
 }

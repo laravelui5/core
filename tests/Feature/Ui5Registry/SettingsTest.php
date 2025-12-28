@@ -1,10 +1,11 @@
 <?php
 
+use Fixtures\Hello\DuplicateSettingModule;
+use Fixtures\Hello\Hello;
 use LaravelUi5\Core\Enums\SettingScope;
 use LaravelUi5\Core\Enums\SettingVisibilityRole;
 use LaravelUi5\Core\Enums\ValueType;
 use LaravelUi5\Core\Ui5\Ui5Registry;
-use Tests\Fixture\Hello\Hello;
 
 describe('Settings discovery', function () {
     it('discovers settings attributes correctly', function () {
@@ -30,7 +31,7 @@ describe('Settings discovery', function () {
     it('throws when Setting with same name per namespace', function () {
         expect(fn() => Ui5Registry::fromArray([
             'modules' => [
-                'foo' => \Tests\Fixture\Hello\Errors\Settings\DuplicateSettingModule::class,
+                'hello' => DuplicateSettingModule::class,
             ]
         ]))->toThrow(LogicException::class, 'Duplicate setting');
     });
