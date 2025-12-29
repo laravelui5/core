@@ -2,7 +2,7 @@
 
 namespace LaravelUi5\Core\Ui5\Contracts;
 
-use LaravelUi5\Core\Infrastructure\Ui5SourceStrategyInterface;
+use LaravelUi5\Core\Infrastructure\Contracts\Ui5SourceStrategyInterface;
 use LaravelUi5\Core\Ui5\Capabilities\SluggableInterface;
 
 /**

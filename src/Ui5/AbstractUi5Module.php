@@ -3,7 +3,7 @@
 namespace LaravelUi5\Core\Ui5;
 
 use LaravelUi5\Core\Enums\ArtifactType;
-use LaravelUi5\Core\Infrastructure\Ui5SourceStrategyInterface;
+use LaravelUi5\Core\Infrastructure\Contracts\Ui5SourceStrategyInterface;
 use LaravelUi5\Core\Ui5\Contracts\Ui5ModuleInterface;
 
 /**

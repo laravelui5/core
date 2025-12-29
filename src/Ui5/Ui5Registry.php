@@ -4,9 +4,7 @@ namespace LaravelUi5\Core\Ui5;
 
 use LaravelUi5\Core\Attributes\Setting;
 use LaravelUi5\Core\Enums\ArtifactType;
-use LaravelUi5\Core\Infrastructure\PackageStrategy;
-use LaravelUi5\Core\Infrastructure\Ui5SourceStrategyInterface;
-use LaravelUi5\Core\Infrastructure\WorkspaceStrategy;
+use LaravelUi5\Core\Infrastructure\Contracts\Ui5SourceStrategyResolverInterface;
 use LaravelUi5\Core\Ui5\Contracts\Ui5ArtifactInterface;
 use LaravelUi5\Core\Ui5\Contracts\Ui5ModuleInterface;
 use LaravelUi5\Core\Ui5\Contracts\Ui5RegistryInterface;
@@ -47,16 +45,15 @@ class Ui5Registry implements Ui5RegistryInterface
      */
     protected array $settings = [];
 
-    /**
-     * @var array<class-string<Ui5ModuleInterface>,string>
-     */
-    private array $sourceOverrides = [];
+    protected Ui5SourceStrategyResolverInterface $sourceStrategyResolver;
 
     /**
      * @throws ReflectionException
      */
-    public function __construct(?array $config = null)
+    public function __construct(Ui5SourceStrategyResolverInterface $sourceStrategyResolver, ?array $config = null)
     {
+        $this->sourceStrategyResolver = $sourceStrategyResolver;
+
         if ($config) {
             $this->loadFromArray($config);
         } else {
@@ -69,36 +66,7 @@ class Ui5Registry implements Ui5RegistryInterface
      */
     public static function fromArray(array $config): self
     {
-        return new self($config);
-    }
-
-    protected function loadSourceOverrides(): void
-    {
-        $path = base_path('.ui5-sources.php');
-
-        if (!is_file($path)) {
-            return;
-        }
-
-        $config = require $path;
-
-        $modules = $config['modules'] ?? [];
-
-        $overrides = [];
-
-        foreach ($modules as $moduleClass => $relativePath) {
-            if (!is_string($moduleClass) || !is_string($relativePath)) {
-                continue;
-            }
-
-            $absolutePath = base_path($relativePath);
-
-            if (is_dir($absolutePath)) {
-                $overrides[$moduleClass] = $absolutePath;
-            }
-        }
-
-        $this->sourceOverrides = $overrides;
+        return new self(app(Ui5SourceStrategyResolverInterface::class), $config);
     }
 
     /**
@@ -108,8 +76,6 @@ class Ui5Registry implements Ui5RegistryInterface
     {
         $modules = $config['modules'] ?? [];
 
-        $this->loadSourceOverrides();
-
         // Pass 1: Instantiate modules
         foreach ($modules as $slug => $moduleClass) {
 
@@ -117,7 +83,7 @@ class Ui5Registry implements Ui5RegistryInterface
                 throw new LogicException("UI5 module class [{$moduleClass}] does not exist.");
             }
 
-            $strategy = $this->resolveSourceStrategy($moduleClass);
+            $strategy = $this->sourceStrategyResolver->resolve($moduleClass);
 
             /** @var Ui5ModuleInterface $module */
             $module = new $moduleClass($slug, $strategy);
@@ -183,32 +149,6 @@ class Ui5Registry implements Ui5RegistryInterface
     protected function afterLoad(array $config): void
     {
         // extension hook (no-op by default)
-    }
-
-    /**
-     * @throws ReflectionException
-     */
-    public function resolveSourceStrategy(string $moduleClass): Ui5SourceStrategyInterface
-    {
-        if (isset($this->sourceOverrides[$moduleClass])) {
-            return new WorkspaceStrategy($this->sourceOverrides[$moduleClass]);
-        }
-
-        $ref = new ReflectionClass($moduleClass);
-
-        $moduleDir = dirname($ref->getFileName());
-
-        // Convention:
-        // ui5/<Module>/src/ → ui5/<Module>/resources/ui5
-        $packagePath = realpath($moduleDir . '/../resources/ui5');
-
-        if ($packagePath && is_dir($packagePath)) {
-            return new PackageStrategy($packagePath);
-        }
-
-        throw new LogicException(
-            "Unable to resolve UI5 source path for module [{$moduleClass}] from {$moduleDir}."
-        );
     }
 
     /**
@@ -362,7 +302,6 @@ class Ui5Registry implements Ui5RegistryInterface
             'artifactToModule' => $this->artifactToModule,
             'slugs' => $this->slugs,
             'settings' => $this->settings,
-            'sourceOverrides' => $this->sourceOverrides,
         ];
     }
 }

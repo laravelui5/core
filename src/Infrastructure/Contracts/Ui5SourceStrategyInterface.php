@@ -1,6 +1,6 @@
 <?php
 
-namespace LaravelUi5\Core\Infrastructure;
+namespace LaravelUi5\Core\Infrastructure\Contracts;
 
 use LaravelUi5\Core\Introspection\App\Ui5AppSource;
 use LaravelUi5\Core\Introspection\Library\Ui5LibrarySource;

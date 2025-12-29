@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [2.3.1] - 2025-12-29
+- Changed visibility of `sourceOverrides` in `Ui5Registry`
+- Added `Ui5SourceOverrideStoreInterface` and implementation
+- Added `Ui5SourceStrategyResolverInterface` and implementation
+
 ## [2.3.0] - 2025-12-29
 - Namespace refactoring
 

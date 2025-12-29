@@ -3,6 +3,7 @@
 namespace LaravelUi5\Core\Infrastructure;
 
 use JsonException;
+use LaravelUi5\Core\Infrastructure\Contracts\Ui5SourceStrategyInterface;
 use LaravelUi5\Core\Introspection\App\Ui5AppSource;
 use LaravelUi5\Core\Introspection\Library\Ui5LibrarySource;
 

@@ -27,6 +27,10 @@ use LaravelUi5\Core\Commands\GenerateUi5TileCommand;
 use LaravelUi5\Core\Contracts\ParameterResolverInterface;
 use LaravelUi5\Core\Contracts\SettingResolverInterface;
 use LaravelUi5\Core\Controllers\ODataController;
+use LaravelUi5\Core\Infrastructure\Contracts\Ui5SourceOverrideStoreInterface;
+use LaravelUi5\Core\Infrastructure\Contracts\Ui5SourceStrategyResolverInterface;
+use LaravelUi5\Core\Infrastructure\Ui5SourceOverrideStore;
+use LaravelUi5\Core\Infrastructure\Ui5SourceStrategyResolver;
 use LaravelUi5\Core\Services\ParameterResolver;
 use LaravelUi5\Core\Services\SettingResolver;
 use LaravelUi5\Core\Ui5\Contracts\Ui5ModuleInterface;
@@ -61,6 +65,8 @@ class Ui5CoreServiceProvider extends ServiceProvider
             ]);
         }
 
+        $this->app->singleton(Ui5SourceOverrideStoreInterface::class, Ui5SourceOverrideStore::class);
+        $this->app->singleton(Ui5SourceStrategyResolverInterface::class, Ui5SourceStrategyResolver::class);
         $this->app->singleton(
             Ui5RegistryInterface::class,
             config('ui5.registry', Ui5Registry::class)

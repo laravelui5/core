@@ -7,14 +7,13 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use JsonException;
 use LaravelUi5\Core\Commands\Concerns\RunsUi5Build;
-use LaravelUi5\Core\Commands\Concerns\WritesSourceOverride;
+use LaravelUi5\Core\Infrastructure\Contracts\Ui5SourceOverrideStoreInterface;
 use LaravelUi5\Core\Introspection\App\Ui5AppSource;
 use LogicException;
 
 class GenerateUi5AppCommand extends BaseGenerator
 {
     use RunsUi5Build;
-    use WritesSourceOverride;
 
     protected $signature = 'ui5:app {name : The name of the ui5 app}
                             {--package-prefix=pragmatiqu : The composer package namespace prefix}
@@ -38,7 +37,7 @@ class GenerateUi5AppCommand extends BaseGenerator
     /**
      * @throws JsonException
      */
-    public function handle(): int
+    public function handle(Ui5SourceOverrideStoreInterface $store): int
     {
         $appName = $this->argument('name');
         $this->assertCamelCase('Ui5App', $appName);
@@ -185,7 +184,7 @@ class GenerateUi5AppCommand extends BaseGenerator
         $this->copyDistAssets($sourcePath . 'dist', $targetPath, $assets);
 
         // Register source
-        $this->writeSourceOverride("$phpNamespace\\$moduleClassName", $sourcePath);
+        $store->put("$phpNamespace\\$moduleClassName", $sourcePath);
 
         $operation = $exists ? 'Updated' : 'Created';
         $this->components->success("{$operation} Ui5App module `{$appName}`");
