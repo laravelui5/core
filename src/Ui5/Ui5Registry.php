@@ -159,17 +159,14 @@ class Ui5Registry implements Ui5RegistryInterface
      * it also registers the composed `urlKey` for reverse lookup.
      *
      * @param Ui5ArtifactInterface $artifact
-     * @param string|null $moduleSlug
+     * @param string $moduleSlug
      */
-    protected function registerArtifact(Ui5ArtifactInterface $artifact, ?string $moduleSlug): void
+    protected function registerArtifact(Ui5ArtifactInterface $artifact, string $moduleSlug): void
     {
         $namespace = $artifact->getNamespace();
         $this->artifacts[$namespace] = $artifact;
-
-        if (null !== $moduleSlug) {
-            $this->namespaceToModule[$namespace] = $moduleSlug;
-            $this->artifactToModule[get_class($artifact)] = $moduleSlug;
-        }
+        $this->namespaceToModule[$namespace] = $moduleSlug;
+        $this->artifactToModule[get_class($artifact)] = $moduleSlug;
 
         $this->discoverSettings($artifact);
 
