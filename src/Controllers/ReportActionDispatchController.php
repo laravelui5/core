@@ -10,7 +10,7 @@ use LaravelUi5\Core\Contracts\Ui5ContextInterface;
 use LaravelUi5\Core\Exceptions\InvalidReportActionException;
 use LaravelUi5\Core\Exceptions\MissingReportActionException;
 use LaravelUi5\Core\Services\ExecutableHandler;
-use LaravelUi5\Core\Ui5\Contracts\ReportActionInterface;
+use LaravelUi5\Core\Ui5\Capabilities\ReportActionInterface;
 use LaravelUi5\Core\Ui5\Contracts\Ui5ReportInterface;
 
 class ReportActionDispatchController

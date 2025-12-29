@@ -4,10 +4,12 @@ namespace LaravelUi5\Core\Ui5;
 
 use LaravelUi5\Core\Attributes\Setting;
 use LaravelUi5\Core\Enums\ArtifactType;
+use LaravelUi5\Core\Infrastructure\PackageStrategy;
+use LaravelUi5\Core\Infrastructure\Ui5SourceStrategyInterface;
+use LaravelUi5\Core\Infrastructure\WorkspaceStrategy;
 use LaravelUi5\Core\Ui5\Contracts\Ui5ArtifactInterface;
 use LaravelUi5\Core\Ui5\Contracts\Ui5ModuleInterface;
 use LaravelUi5\Core\Ui5\Contracts\Ui5RegistryInterface;
-use LaravelUi5\Core\Ui5\Contracts\Ui5SourceStrategyInterface;
 use LaravelUi5\Core\Ui5CoreServiceProvider;
 use LogicException;
 use ReflectionClass;

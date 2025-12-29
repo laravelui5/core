@@ -2,7 +2,7 @@
 
 namespace {{ namespace }};
 
-use LaravelUi5\Core\Ui5\Contracts\ProviderInterface;
+use LaravelUi5\Core\Ui5\Capabilities\ProviderInterface;
 use LaravelUi5\Core\Ui5\Data\Payload;
 use LaravelUi5\Core\Ui5\Data\NumericContentData;
 use LaravelUi5\Core\Ui5\Enums\DeviationIndicator;

@@ -1,6 +1,6 @@
 <?php
 
-namespace LaravelUi5\Core\Ui5\Contracts;
+namespace LaravelUi5\Core\Ui5\Capabilities;
 
 use LaravelUi5\Core\Contracts\ConfigurableInterface;
 use LaravelUi5\Core\Contracts\ParameterizableInterface;

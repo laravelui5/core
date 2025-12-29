@@ -3,7 +3,7 @@
 namespace LaravelUi5\Core\Ui5;
 
 use LaravelUi5\Core\Contracts\Ui5Args;
-use LaravelUi5\Core\Ui5\Contracts\ActionHandlerInterface;
+use LaravelUi5\Core\Ui5\Capabilities\ActionHandlerInterface;
 
 abstract class AbstractActionHandler implements ActionHandlerInterface
 {

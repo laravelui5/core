@@ -1,6 +1,6 @@
 <?php
 
-namespace LaravelUi5\Core\Ui5\Contracts;
+namespace LaravelUi5\Core\Ui5\Capabilities;
 
 /**
  * Contract for all UI5 entities that can be addressed via a URL segment (slug).

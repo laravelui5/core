@@ -11,6 +11,7 @@ use LaravelUi5\Core\Contracts\ParameterizableInterface;
 use LaravelUi5\Core\Contracts\Ui5ContextInterface;
 use LaravelUi5\Core\Exceptions\MissingCardManifestException;
 use LaravelUi5\Core\Services\ExecutableHandler;
+use LaravelUi5\Core\Ui5\Capabilities\DataProviderInterface;
 use LaravelUi5\Core\Ui5\Contracts\Ui5CardInterface;
 
 /**

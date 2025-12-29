@@ -3,8 +3,8 @@
 namespace LaravelUi5\Core\Ui5;
 
 use LaravelUi5\Core\Enums\ArtifactType;
+use LaravelUi5\Core\Infrastructure\Ui5SourceStrategyInterface;
 use LaravelUi5\Core\Ui5\Contracts\Ui5ModuleInterface;
-use LaravelUi5\Core\Ui5\Contracts\Ui5SourceStrategyInterface;
 
 /**
  * Abstract base class for a UI5 module definition.

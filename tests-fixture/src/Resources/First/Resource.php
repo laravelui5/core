@@ -3,7 +3,7 @@
 namespace Fixtures\Hello\Resources\First;
 
 use LaravelUi5\Core\Enums\ArtifactType;
-use LaravelUi5\Core\Ui5\Contracts\DataProviderInterface;
+use LaravelUi5\Core\Ui5\Capabilities\DataProviderInterface;
 use LaravelUi5\Core\Ui5\Contracts\Ui5ModuleInterface;
 use LaravelUi5\Core\Ui5\Contracts\Ui5ResourceInterface;
 

@@ -3,7 +3,7 @@
 namespace LaravelUi5\Core\View\Components;
 
 use Illuminate\View\Component;
-use LaravelUi5\Core\Ui5\Contracts\ResolvableInterface;
+use LaravelUi5\Core\Ui5\Capabilities\ResolvableInterface;
 use LaravelUi5\Core\Ui5\Contracts\Ui5RegistryInterface;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;

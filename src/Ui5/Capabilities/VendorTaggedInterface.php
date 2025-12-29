@@ -1,6 +1,6 @@
 <?php
 
-namespace LaravelUi5\Core\Ui5\Contracts;
+namespace LaravelUi5\Core\Ui5\Capabilities;
 
 /**
  * Declares the vendor name of a top-level UI5 artifact.

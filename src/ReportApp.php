@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\File;
 use LaravelUi5\Core\Attributes\HideIntent;
 use LaravelUi5\Core\Enums\ArtifactType;
 use LaravelUi5\Core\Ui5\AbstractUi5App;
-use LaravelUi5\Core\Ui5\Contracts\LaravelUi5ManifestInterface;
+use LaravelUi5\Core\Ui5\Capabilities\LaravelUi5ManifestInterface;
 
 #[HideIntent]
 class ReportApp extends AbstractUi5App

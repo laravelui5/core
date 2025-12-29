@@ -1,6 +1,6 @@
 <?php
 
-use LaravelUi5\Core\Ui5\Contracts\Ui5LibraryDescriptor;
+use LaravelUi5\Core\Introspection\Library\Ui5LibraryDescriptor;
 
 describe('Ui5LibraryDescriptor', function () {
     it('resolves metadata from .library', function () {

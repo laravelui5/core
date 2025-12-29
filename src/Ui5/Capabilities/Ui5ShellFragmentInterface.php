@@ -1,6 +1,6 @@
 <?php
 
-namespace LaravelUi5\Core\Ui5\Contracts;
+namespace LaravelUi5\Core\Ui5\Capabilities;
 
 /**
  * Allows a module or application to contribute configuration data

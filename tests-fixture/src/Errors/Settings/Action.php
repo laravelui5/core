@@ -10,7 +10,7 @@ use LaravelUi5\Core\Enums\SettingScope;
 use LaravelUi5\Core\Enums\SettingVisibilityRole;
 use LaravelUi5\Core\Enums\ValueType;
 use LaravelUi5\Core\Ui5\AbstractUi5Action;
-use LaravelUi5\Core\Ui5\Contracts\ActionHandlerInterface;
+use LaravelUi5\Core\Ui5\Capabilities\ActionHandlerInterface;
 use LaravelUi5\Core\Ui5\Contracts\Ui5ModuleInterface;
 
 #[Setting('darkMode', type: ValueType::Boolean, default: false, scope: SettingScope::User, role: SettingVisibilityRole::Employee, note: 'Something')]

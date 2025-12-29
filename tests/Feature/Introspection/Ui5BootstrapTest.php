@@ -1,7 +1,7 @@
 <?php
 
-use LaravelUi5\Core\Ui5\Contracts\Ui5AppSource;
-use LaravelUi5\Core\Ui5\Contracts\Ui5Bootstrap;
+use LaravelUi5\Core\Introspection\App\Ui5AppSource;
+use LaravelUi5\Core\Introspection\App\Ui5Bootstrap;
 
 describe('Ui5Bootstrap', function () {
     it('resolves metadata from ui5.yaml', function () {

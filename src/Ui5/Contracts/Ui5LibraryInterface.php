@@ -2,6 +2,10 @@
 
 namespace LaravelUi5\Core\Ui5\Contracts;
 
+use LaravelUi5\Core\Introspection\Library\Ui5LibrarySource;
+use LaravelUi5\Core\Ui5\Capabilities\HasAssetsInterface;
+use LaravelUi5\Core\Ui5\Capabilities\VendorTaggedInterface;
+
 /**
  * Marker interface for UI5 libraries.
  *

@@ -9,7 +9,7 @@ use LaravelUi5\Core\Enums\SettingVisibilityRole;
 use LaravelUi5\Core\Enums\ValueType;
 use LaravelUi5\Core\Traits\HasAssetsTrait;
 use LaravelUi5\Core\Ui5\AbstractUi5App;
-use LaravelUi5\Core\Ui5\Contracts\LaravelUi5ManifestInterface;
+use LaravelUi5\Core\Ui5\Capabilities\LaravelUi5ManifestInterface;
 use LaravelUi5\Core\Ui5\Contracts\Ui5ModuleInterface;
 
 #[Setting('darkMode', type: ValueType::Boolean, default: false, scope: SettingScope::User, role: SettingVisibilityRole::Employee, note: 'Something')]

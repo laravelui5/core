@@ -2,7 +2,8 @@
 
 namespace LaravelUi5\Core\Ui5\Contracts;
 
-use LaravelUi5\Core\Contracts\Ui5Source;
+use LaravelUi5\Core\Infrastructure\Ui5SourceStrategyInterface;
+use LaravelUi5\Core\Ui5\Capabilities\SluggableInterface;
 
 /**
  * A Ui5Module represents the root-level container for all UI5-related artifacts

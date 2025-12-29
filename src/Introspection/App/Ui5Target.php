@@ -1,6 +1,6 @@
 <?php
 
-namespace LaravelUi5\Core\Ui5\Contracts;
+namespace LaravelUi5\Core\Introspection\App;
 
 /**
  * Represents a UI5 routing target reduced to its navigational identity.

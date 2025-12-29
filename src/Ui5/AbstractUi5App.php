@@ -3,8 +3,8 @@
 namespace LaravelUi5\Core\Ui5;
 
 use Flat3\Lodata\Endpoint;
+use LaravelUi5\Core\Introspection\App\Ui5AppSource;
 use LaravelUi5\Core\Ui5\Contracts\Ui5AppInterface;
-use LaravelUi5\Core\Ui5\Contracts\Ui5AppSource;
 use LaravelUi5\Core\Ui5\Contracts\Ui5ModuleInterface;
 
 abstract class AbstractUi5App extends Endpoint implements Ui5AppInterface

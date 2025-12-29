@@ -2,8 +2,8 @@
 
 namespace LaravelUi5\Core\Ui5;
 
+use LaravelUi5\Core\Introspection\Library\Ui5LibrarySource;
 use LaravelUi5\Core\Ui5\Contracts\Ui5LibraryInterface;
-use LaravelUi5\Core\Ui5\Contracts\Ui5LibrarySource;
 use LaravelUi5\Core\Ui5\Contracts\Ui5ModuleInterface;
 
 abstract class AbstractUi5Library implements Ui5LibraryInterface

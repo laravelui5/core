@@ -5,7 +5,7 @@ namespace LaravelUi5\Core\Controllers;
 use Illuminate\Routing\Controller;
 use LaravelUi5\Core\Contracts\Ui5ContextInterface;
 use LaravelUi5\Core\Exceptions\MissingAssetException;
-use LaravelUi5\Core\Ui5\Contracts\HasAssetsInterface;
+use LaravelUi5\Core\Ui5\Capabilities\HasAssetsInterface;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 /**

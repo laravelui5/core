@@ -6,7 +6,7 @@ use Fixtures\Hello\Hello;
 use LaravelUi5\Core\Enums\ArtifactType;
 use LaravelUi5\Core\Enums\HttpMethod;
 use LaravelUi5\Core\Ui5\AbstractUi5Action;
-use LaravelUi5\Core\Ui5\Contracts\ActionHandlerInterface;
+use LaravelUi5\Core\Ui5\Capabilities\ActionHandlerInterface;
 use LaravelUi5\Core\Ui5\Contracts\Ui5ModuleInterface;
 
 class Action extends AbstractUi5Action

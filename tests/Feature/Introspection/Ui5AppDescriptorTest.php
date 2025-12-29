@@ -1,9 +1,9 @@
 <?php
 
-use LaravelUi5\Core\Ui5\Contracts\Ui5AppDescriptor;
-use LaravelUi5\Core\Ui5\Contracts\Ui5AppSource;
-use LaravelUi5\Core\Ui5\Contracts\Ui5Route;
-use LaravelUi5\Core\Ui5\Contracts\Ui5Target;
+use LaravelUi5\Core\Introspection\App\Ui5AppDescriptor;
+use LaravelUi5\Core\Introspection\App\Ui5AppSource;
+use LaravelUi5\Core\Introspection\App\Ui5Route;
+use LaravelUi5\Core\Introspection\App\Ui5Target;
 
 describe('Ui5AppDescriptor', function () {
     it('resolves metadata from ui5.yaml', function () {

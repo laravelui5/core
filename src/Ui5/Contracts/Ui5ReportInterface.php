@@ -2,6 +2,11 @@
 
 namespace LaravelUi5\Core\Ui5\Contracts;
 
+use LaravelUi5\Core\Ui5\Capabilities\DataProviderInterface;
+use LaravelUi5\Core\Ui5\Capabilities\ReportActionInterface;
+use LaravelUi5\Core\Ui5\Capabilities\SluggableInterface;
+use LaravelUi5\Core\Ui5\Capabilities\SlugSettableInterface;
+
 /**
  * A discoverable UI5 Report Artifact that includes selection, result, and optional actions.
  *

@@ -2,6 +2,9 @@
 
 namespace LaravelUi5\Core\Ui5\Contracts;
 
+use LaravelUi5\Core\Ui5\Capabilities\SluggableInterface;
+use LaravelUi5\Core\Ui5\Capabilities\SlugSettableInterface;
+
 /**
  * Represents a UI5 Dashboard artifact that aggregates Tiles and Cards into a structured layout.
  *

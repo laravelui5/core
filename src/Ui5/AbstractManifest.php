@@ -9,11 +9,11 @@ use LaravelUi5\Core\Enums\ParameterSource;
 use LaravelUi5\Core\Exceptions\InvalidHttpMethodActionException;
 use LaravelUi5\Core\Exceptions\InvalidModuleException;
 use LaravelUi5\Core\Exceptions\InvalidParameterSourceException;
-use LaravelUi5\Core\Ui5\Contracts\LaravelUi5ManifestInterface;
-use LaravelUi5\Core\Ui5\Contracts\LaravelUi5ManifestKeys;
+use LaravelUi5\Core\Ui5\Capabilities\LaravelUi5ManifestInterface;
+use LaravelUi5\Core\Ui5\Capabilities\LaravelUi5ManifestKeys;
+use LaravelUi5\Core\Ui5\Capabilities\Ui5ShellFragmentInterface;
 use LaravelUi5\Core\Ui5\Contracts\Ui5ModuleInterface;
 use LaravelUi5\Core\Ui5\Contracts\Ui5RegistryInterface;
-use LaravelUi5\Core\Ui5\Contracts\Ui5ShellFragmentInterface;
 use LaravelUi5\Core\Ui5CoreServiceProvider;
 use ReflectionClass;
 

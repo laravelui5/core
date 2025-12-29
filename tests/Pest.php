@@ -1,7 +1,7 @@
 <?php
 
 use Fixtures\Hello\Hello;
-use LaravelUi5\Core\Ui5\Contracts\Ui5AppSource;
+use LaravelUi5\Core\Introspection\App\Ui5AppSource;
 use LaravelUi5\Core\Ui5\Ui5Registry;
 use Tests\FeatureTestCase;
 use Tests\UnitTestCase;

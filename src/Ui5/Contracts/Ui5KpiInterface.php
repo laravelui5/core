@@ -3,6 +3,8 @@
 namespace LaravelUi5\Core\Ui5\Contracts;
 
 use LaravelUi5\Core\Enums\AggregationLevel;
+use LaravelUi5\Core\Ui5\Capabilities\KpiProviderInterface;
+use LaravelUi5\Core\Ui5\Capabilities\SluggableInterface;
 
 /**
  * Contract for UI5 KPI tiles embedded in dashboards or standalone views.

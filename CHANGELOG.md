@@ -4,9 +4,19 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-## [2.1.4] - 2025-12-29
+## [2.3.0] - 2025-12-29
+- Namespace refactoring
+
+## [2.2.1] - 2025-12-29
 - Added `Ui5SourceStrategyInterface` to for resolving packaged artifact information
 - Consolidated test setup for common patterns
+
+## [2.2.0] - 2025-12-28
+- Move source path resolution back to Ui5Registry
+- Remove Ui5SourceMap and implicit source attachment
+- Resolve UI5 sources lazily via App and Library artifacts
+- Introduce class-based workspace source overrides
+- Align tests and fixtures with real package layout 
 
 ## [2.1.3] - 2025-12-27
 - Fixed name for Ui5ModuleLib scaffolding

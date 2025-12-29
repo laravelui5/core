@@ -1,7 +1,7 @@
 <?php
 
-use LaravelUi5\Core\Ui5\Contracts\Ui5AppSource;
-use LaravelUi5\Core\Ui5\Contracts\Ui5I18n;
+use LaravelUi5\Core\Introspection\App\Ui5AppSource;
+use LaravelUi5\Core\Introspection\Ui5I18n;
 
 describe('Ui5I18n', function () {
     it('resolves metadata from ui5.yaml', function () {

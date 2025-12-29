@@ -1,6 +1,6 @@
 <?php
 
-use LaravelUi5\Core\Ui5\Contracts\Ui5AppSource;
+use LaravelUi5\Core\Introspection\App\Ui5AppSource;
 
 describe('Ui5Framework', function () {
     it('resolves metadata from ui5.yaml', function () {

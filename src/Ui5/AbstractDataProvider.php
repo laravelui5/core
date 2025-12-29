@@ -6,7 +6,7 @@ use LaravelUi5\Core\Contracts\ConfigurableInterface;
 use LaravelUi5\Core\Contracts\ParameterizableInterface;
 use LaravelUi5\Core\Contracts\Ui5Args;
 use LaravelUi5\Core\Contracts\Ui5Config;
-use LaravelUi5\Core\Ui5\Contracts\DataProviderInterface;
+use LaravelUi5\Core\Ui5\Capabilities\DataProviderInterface;
 
 abstract class AbstractDataProvider implements DataProviderInterface, ConfigurableInterface, ParameterizableInterface
 {

@@ -3,7 +3,7 @@
 namespace Fixtures\Hello\Reports\World;
 
 use LaravelUi5\Core\Contracts\Ui5Args;
-use LaravelUi5\Core\Ui5\Contracts\ReportActionInterface;
+use LaravelUi5\Core\Ui5\Capabilities\ReportActionInterface;
 
 class TakeOffAction implements ReportActionInterface
 {

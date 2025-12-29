@@ -4,6 +4,8 @@ namespace LaravelUi5\Core\Ui5\Contracts;
 
 use LaravelUi5\Core\Contracts\ConfigurableInterface;
 use LaravelUi5\Core\Contracts\ParameterizableInterface;
+use LaravelUi5\Core\Ui5\Capabilities\DataProviderInterface;
+use LaravelUi5\Core\Ui5\Capabilities\SluggableInterface;
 
 /**
  * Contract for UI5 Card artifacts.

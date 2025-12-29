@@ -1,9 +1,10 @@
 <?php
 
-namespace LaravelUi5\Core\Ui5\Contracts;
+namespace LaravelUi5\Core\Introspection\App;
 
 use JsonException;
 use LaravelUi5\Core\Contracts\Ui5Descriptor;
+use LaravelUi5\Core\Introspection\Ui5I18n;
 use LogicException;
 
 final readonly class Ui5AppDescriptor extends Ui5Descriptor

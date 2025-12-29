@@ -2,9 +2,9 @@
 
 namespace LaravelUi5\Core\Contracts;
 
-use LaravelUi5\Core\Ui5\Contracts\Ui5Framework;
-use LaravelUi5\Core\Ui5\Contracts\Ui5I18n;
-use LaravelUi5\Core\Ui5\Contracts\Ui5PackageMeta;
+use LaravelUi5\Core\Introspection\Ui5Framework;
+use LaravelUi5\Core\Introspection\Ui5I18n;
+use LaravelUi5\Core\Introspection\Ui5PackageMeta;
 
 /**
  * Represents an introspection-capable UI5 source.

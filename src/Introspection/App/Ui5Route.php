@@ -1,6 +1,6 @@
 <?php
 
-namespace LaravelUi5\Core\Ui5\Contracts;
+namespace LaravelUi5\Core\Introspection\App;
 
 /**
  * Represents a UI5 routing entry as declared in the application manifest.

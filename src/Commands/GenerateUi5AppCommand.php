@@ -8,7 +8,7 @@ use Illuminate\Support\Str;
 use JsonException;
 use LaravelUi5\Core\Commands\Concerns\RunsUi5Build;
 use LaravelUi5\Core\Commands\Concerns\WritesSourceOverride;
-use LaravelUi5\Core\Ui5\Contracts\Ui5AppSource;
+use LaravelUi5\Core\Introspection\App\Ui5AppSource;
 use LogicException;
 
 class GenerateUi5AppCommand extends BaseGenerator
