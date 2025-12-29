@@ -38,7 +38,7 @@ final readonly class Ui5LibrarySource extends Ui5Source
         return $this->framework;
     }
 
-    public function getDescriptor(): Ui5Descriptor
+    public function getDescriptor(): Ui5LibraryDescriptor
     {
         return $this->descriptor;
     }
@@ -59,9 +59,9 @@ final readonly class Ui5LibrarySource extends Ui5Source
 
         $package = Ui5PackageMeta::fromPackageJson($path);
 
-        $library = Ui5LibraryDescriptor::fromLibraryXml($path, $framework->namespace, $package->builder);
+        $library = Ui5LibraryDescriptor::fromLibraryXml($path, $framework->getNamespace(), $package->getBuilder());
 
-        $i18n = Ui5I18n::fromMessageBundles($path, $framework->namespace);
+        $i18n = Ui5I18n::fromMessageBundles($path, $framework->getNamespace());
 
         return new self(
             srcPath: $path,

@@ -9,12 +9,31 @@ use Symfony\Component\Yaml\Yaml;
 final readonly class Ui5Framework
 {
     public function __construct(
-        public string $name,
-        public string $version,
-        public string $namespace,
+        private string $name,
+        private string $version,
+        private string $namespace,
     )
     {
     }
+
+    /* -- API -------------------------------------------------------------- */
+
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    public function getVersion(): string
+    {
+        return $this->version;
+    }
+
+    public function getNamespace(): string
+    {
+        return $this->namespace;
+    }
+
+    /* -- Factory ---------------------------------------------------------- */
 
     public static function fromUi5Yaml(string $path): self
     {

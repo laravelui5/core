@@ -124,7 +124,7 @@ final readonly class Ui5AppDescriptor extends Ui5Descriptor
                 continue;
             }
 
-            $targets[] = new Ui5Target(
+            $targets[$key] = new Ui5Target(
                 key: $key,
                 name: $target['viewName'] ?? $target['name'],
             );

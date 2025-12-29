@@ -21,11 +21,26 @@ namespace LaravelUi5\Core\Introspection\App;
 final readonly class Ui5Route
 {
     public function __construct(
-        public string       $name,
-        public string       $pattern,
-        public string|array $target,
+        private string       $name,
+        private string       $pattern,
+        private string|array $target,
     )
     {
+    }
+
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    public function getPattern(): string
+    {
+        return $this->pattern;
+    }
+
+    public function getTarget(): string|array
+    {
+        return $this->target;
     }
 
     /**

@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [2.3.4] - 2025-12-29
+- Added getter for introspection objects
+- Removed `getDescriptor` from `Ui5Source`
+
 ## [2.3.3] - 2025-12-29
 - Ordering detection of source strategy
 

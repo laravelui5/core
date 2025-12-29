@@ -7,11 +7,11 @@ describe('Ui5PackageMeta', function () {
         $source = getAppSource();
         expect($source)
             ->toBeInstanceOf(Ui5AppSource::class)
-            ->and($source->getPackageMeta()->name)
+            ->and($source->getPackageMeta()->getName())
             ->toBe('@pragmatiqu/portal')
-            ->and($source->getPackageMeta()->version)
+            ->and($source->getPackageMeta()->getVersion())
             ->toBe('0.3.0')
-            ->and($source->getPackageMeta()->builder)
+            ->and($source->getPackageMeta()->getBuilder())
             ->toBe('ui5 build --clean-dest');
     });
 });

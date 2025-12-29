@@ -8,10 +8,31 @@ use LogicException;
 final readonly class Ui5PackageMeta
 {
     public function __construct(
-        public string $name,
-        public string $version,
-        public string $builder,
-    ) {}
+        private string $name,
+        private string $version,
+        private string $builder,
+    )
+    {
+    }
+
+    /* -- API -------------------------------------------------------------- */
+
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    public function getVersion(): string
+    {
+        return $this->version;
+    }
+
+    public function getBuilder(): string
+    {
+        return $this->builder;
+    }
+
+    /* -- Factory ---------------------------------------------------------- */
 
     /**
      * @throws JsonException

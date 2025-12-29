@@ -12,13 +12,13 @@ use LaravelUi5\Core\Introspection\Ui5PackageMeta;
 final readonly class Ui5AppSource extends Ui5Source
 {
     public function __construct(
-        private string          $srcPath,
-        private Ui5Descriptor   $descriptor,
-        private Ui5I18n         $i18n,
-        private bool            $isDev,
-        private ?Ui5PackageMeta $package = null,
-        private ?Ui5Framework   $framework = null,
-        private ?Ui5Bootstrap   $bootstrap = null,
+        private string           $srcPath,
+        private Ui5AppDescriptor $descriptor,
+        private Ui5I18n          $i18n,
+        private bool             $isDev,
+        private ?Ui5PackageMeta  $package = null,
+        private ?Ui5Framework    $framework = null,
+        private ?Ui5Bootstrap    $bootstrap = null,
     )
     {
     }
@@ -40,7 +40,7 @@ final readonly class Ui5AppSource extends Ui5Source
         return $this->framework;
     }
 
-    public function getDescriptor(): Ui5Descriptor
+    public function getDescriptor(): Ui5AppDescriptor
     {
         return $this->descriptor;
     }

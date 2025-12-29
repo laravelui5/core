@@ -23,7 +23,5 @@ abstract readonly class Ui5Source
 
     public abstract function getFramework(): ?Ui5Framework;
 
-    public abstract function getDescriptor(): Ui5Descriptor;
-
     public abstract function getI18n(): Ui5I18n;
 }

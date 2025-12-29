@@ -7,11 +7,11 @@ describe('Ui5Framework', function () {
         $source = getAppSource();
         expect($source)
             ->toBeInstanceOf(Ui5AppSource::class)
-            ->and($source->getFramework()->name)
+            ->and($source->getFramework()->getName())
             ->toBe('OpenUI5')
-            ->and($source->getFramework()->version)
+            ->and($source->getFramework()->getVersion())
             ->toBe('1.136.7')
-            ->and($source->getFramework()->namespace)
+            ->and($source->getFramework()->getNamespace())
             ->toBe('io.pragmatiqu.portal');
     });
 });
