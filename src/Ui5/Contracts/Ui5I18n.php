@@ -2,6 +2,7 @@
 
 namespace LaravelUi5\Core\Ui5\Contracts;
 
+use Illuminate\Support\Facades\File;
 use LogicException;
 
 final readonly class Ui5I18n
@@ -88,13 +89,46 @@ final readonly class Ui5I18n
         return new self($locales);
     }
 
+    public static function fromMessageBundles(string $path, string $namespace): self
+    {
+        $srcDir = $path
+            . '/dist/resources/'
+            . str_replace('.', '/', $namespace);
+
+        if (!File::exists($srcDir)) {
+            throw new LogicException("Missing .library file at {$path}. Run builder first.");
+        }
+
+        return self::fromBundles($srcDir);
+    }
+
+    public static function fromBundles(string $path): self
+    {
+        $locales = [];
+
+        foreach (glob($path . '/messagebundle*.properties') as $file) {
+            $locale = self::resolveLocaleFromFilename($file);
+            $locales[$locale] = self::parsePropertiesFile($file);
+        }
+
+        if (!isset($locales['default'])) {
+            throw new LogicException('Missing base i18n.properties file');
+        }
+
+        return new self($locales);
+    }
+
     private static function resolveLocaleFromFilename(string $file): string
     {
-        if (basename($file) === 'i18n.properties') {
+        if ('i18n.properties' === basename($file) || 'messagebundle.properties' === basename($file)) {
             return 'default';
         }
 
         if (preg_match('/i18n_([a-zA-Z_]+)\.properties$/', $file, $m)) {
+            return strtolower($m[1]);
+        }
+
+        if (preg_match('/messagebundle_([a-zA-Z_]+)\.properties$/', $file, $m)) {
             return strtolower($m[1]);
         }
 

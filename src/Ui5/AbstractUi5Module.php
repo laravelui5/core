@@ -4,6 +4,7 @@ namespace LaravelUi5\Core\Ui5;
 
 use LaravelUi5\Core\Enums\ArtifactType;
 use LaravelUi5\Core\Ui5\Contracts\Ui5ModuleInterface;
+use LaravelUi5\Core\Ui5\Contracts\Ui5SourceStrategyInterface;
 
 /**
  * Abstract base class for a UI5 module definition.
@@ -20,18 +21,18 @@ abstract class AbstractUi5Module implements Ui5ModuleInterface
 {
     protected string $slug;
 
-    protected string $srcPath;
+    protected Ui5SourceStrategyInterface $strategy;
 
     /**
      * Create a new UI5 module instance.
      *
      * @param string $slug Route-level slug as configured in config/ui5.php
-     * @param string $srcPath Physical path where this module resides in
+     * @param Ui5SourceStrategyInterface $strategy Physical path where this module resides in
      */
-    public function __construct(string $slug, string $srcPath)
+    public function __construct(string $slug, Ui5SourceStrategyInterface $strategy)
     {
         $this->slug = $slug;
-        $this->srcPath = $srcPath;
+        $this->strategy = $strategy;
     }
 
     public function getType(): ArtifactType
@@ -44,9 +45,9 @@ abstract class AbstractUi5Module implements Ui5ModuleInterface
         return $this->slug;
     }
 
-    public function getSourcePath(): string
+    public function getSourceStrategy(): Ui5SourceStrategyInterface
     {
-        return $this->srcPath;
+        return $this->strategy;
     }
 
     public function getAllArtifacts(): array

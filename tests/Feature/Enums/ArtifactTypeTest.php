@@ -20,11 +20,16 @@ describe('Artifact', function () {
     });
 
     it('generates urlKey from library artifact', function () {
-        $module = new HelloLibModule('hello', '');
+        $registry = Ui5Registry::fromArray([
+            'modules' => [
+                'hello-lib' => HelloLibModule::class,
+            ]
+        ]);
+        $module = $registry->getModule('hello-lib');
         $app = $module->getLibrary();
         $key = ArtifactType::urlKeyFromArtifact($app);
 
-        expect($key)->toBe('lib/hello');
+        expect($key)->toBe('lib/hello-lib');
     });
 
     it('generates urlKey from action artifact', function () {

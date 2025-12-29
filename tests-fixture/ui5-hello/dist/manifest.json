@@ -1,0 +1,161 @@
+{
+    "_version": "1.60.0",
+
+    "sap.app": {
+        "id": "io.pragmatiqu.portal",
+        "type": "application",
+        "i18n": "i18n/i18n.properties",
+        "title": "{{appTitle}}",
+        "description": "{{appDescription}}",
+        "applicationVersion": {
+            "version": "APP_VERSION"
+        },
+        "dataSources": {
+            "mainService": {
+                "uri": "{{serviceUrl}}",
+                "type": "OData",
+                "settings": {
+                    "odataVersion": "4.0",
+                    "localUri": "localService/metadata.xml"
+                }
+            }
+        }
+    },
+
+    "sap.ui": {
+        "technology": "UI5",
+        "icons": {},
+        "deviceTypes": {
+            "desktop": true,
+            "tablet": true,
+            "phone": true
+        }
+    },
+
+    "sap.ui5": {
+
+        "rootView": {
+            "viewName": "io.pragmatiqu.portal.view.App",
+            "type": "XML",
+            "async": true,
+            "id": "app"
+        },
+
+        "dependencies": {
+            "minUI5Version": "1.136.0",
+            "libs": {
+                "sap.ui.core": {},
+                "sap.m": {}
+            }
+        },
+
+        "handleValidation": true,
+
+        "contentDensities": {
+            "compact": true,
+            "cozy": true
+        },
+
+        "models": {
+            "i18n": {
+                "type": "sap.ui.model.resource.ResourceModel",
+                "settings": {
+                    "bundleName": "io.pragmatiqu.portal.i18n.i18n",
+                    "supportedLocales": [
+                        "", "de", "en"
+                    ],
+                    "fallbackLocale": ""
+                }
+            },
+            "": {
+                "dataSource": "mainService",
+                "settings": {
+                    "operationMode": "Server"
+                }
+            }
+        },
+
+        "routing": {
+            "config": {
+                "routerClass": "sap.m.routing.Router",
+                "viewType": "XML",
+                "viewPath": "io.pragmatiqu.portal.view",
+                "controlId": "appId",
+                "controlAggregation": "pages",
+                "async": true,
+                "clearControlAggregation": true
+            },
+            "routes": [
+                {
+                    "pattern": "",
+                    "name": "Portal",
+                    "target": "Portal"
+                },
+                {
+                    "pattern": "report",
+                    "name": "Report",
+                    "target": "Report"
+                },
+                {
+                    "pattern": "projects",
+                    "name": "Projects",
+                    "target": "Projects"
+                },
+                {
+                    "pattern": "projects/:id:",
+                    "name": "ProjectDetails",
+                    "target": "Projects"
+                },
+                {
+                    "pattern": "clearable",
+                    "name": "ClearableHome",
+                    "target": [
+                        "ClearableShell",
+                        "ClearableMaster",
+                        "ClearableDetail"
+                    ]
+                },
+                {
+                    "pattern": "clearable/{id}",
+                    "name": "ClearableDetails",
+                    "target": "Clearable"
+                }
+            ],
+            "targets": {
+                "Portal": {
+                    "viewId": "Portal",
+                    "viewName": "Portal"
+                },
+                "Report": {
+                    "viewId": "Report",
+                    "viewName": "Report"
+                },
+                "Projects": {
+                    "viewId": "Projects",
+                    "viewName": "Projects"
+                },
+                "ClearableShell": {
+                    "viewName": "Clearable"
+                },
+                "ClearableMaster": {
+                    "parent": "ClearableShell",
+                    "viewName": "clearable/Master",
+                    "controlId": "clearableSplitContainerId",
+                    "controlAggregation": "masterPages",
+                    "viewLevel": 1
+                },
+                "ClearableDetail": {
+                    "parent": "ClearableShell",
+                    "viewName": "clearable/Detail",
+                    "controlId": "clearableSplitContainerId",
+                    "controlAggregation": "detailPages",
+                    "viewLevel": 2
+                },
+                "Clearable": {
+                    "viewId": "Clearable",
+                    "viewName": "Clearable"
+                }
+            }
+        }
+    }
+}

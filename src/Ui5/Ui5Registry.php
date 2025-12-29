@@ -7,6 +7,7 @@ use LaravelUi5\Core\Enums\ArtifactType;
 use LaravelUi5\Core\Ui5\Contracts\Ui5ArtifactInterface;
 use LaravelUi5\Core\Ui5\Contracts\Ui5ModuleInterface;
 use LaravelUi5\Core\Ui5\Contracts\Ui5RegistryInterface;
+use LaravelUi5\Core\Ui5\Contracts\Ui5SourceStrategyInterface;
 use LaravelUi5\Core\Ui5CoreServiceProvider;
 use LogicException;
 use ReflectionClass;
@@ -61,6 +62,9 @@ class Ui5Registry implements Ui5RegistryInterface
         }
     }
 
+    /**
+     * @throws ReflectionException
+     */
     public static function fromArray(array $config): self
     {
         return new self($config);
@@ -111,10 +115,10 @@ class Ui5Registry implements Ui5RegistryInterface
                 throw new LogicException("UI5 module class [{$moduleClass}] does not exist.");
             }
 
-            $sourcePath = $this->resolveSourcePathForModule($moduleClass);
+            $strategy = $this->resolveSourceStrategy($moduleClass);
 
             /** @var Ui5ModuleInterface $module */
-            $module = new $moduleClass($slug, $sourcePath);
+            $module = new $moduleClass($slug, $strategy);
 
             $this->modules[$slug] = $module;
         }
@@ -182,10 +186,10 @@ class Ui5Registry implements Ui5RegistryInterface
     /**
      * @throws ReflectionException
      */
-    public function resolveSourcePathForModule(string $moduleClass): string
+    public function resolveSourceStrategy(string $moduleClass): Ui5SourceStrategyInterface
     {
         if (isset($this->sourceOverrides[$moduleClass])) {
-            return base_path($this->sourceOverrides[$moduleClass]);
+            return new WorkspaceStrategy($this->sourceOverrides[$moduleClass]);
         }
 
         $ref = new ReflectionClass($moduleClass);
@@ -197,11 +201,11 @@ class Ui5Registry implements Ui5RegistryInterface
         $packagePath = realpath($moduleDir . '/../resources/ui5');
 
         if ($packagePath && is_dir($packagePath)) {
-            return $packagePath;
+            return new PackageStrategy($packagePath);
         }
 
         throw new LogicException(
-            "Unable to resolve UI5 source path for module [{$moduleClass}] {$moduleDir}."
+            "Unable to resolve UI5 source path for module [{$moduleClass}] from {$moduleDir}."
         );
     }
 

@@ -113,7 +113,7 @@ class GenerateUi5AppCommand extends BaseGenerator
 
         File::ensureDirectoryExists($targetPath);
 
-        $source = Ui5AppSource::fromFilesystem(
+        $source = Ui5AppSource::fromWorkspace(
             path: $sourcePath,
             vendor: $vendor,
             isDev: true

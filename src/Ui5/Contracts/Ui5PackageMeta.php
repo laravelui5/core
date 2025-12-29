@@ -3,6 +3,7 @@
 namespace LaravelUi5\Core\Ui5\Contracts;
 
 use JsonException;
+use LogicException;
 
 final readonly class Ui5PackageMeta
 {
@@ -20,7 +21,7 @@ final readonly class Ui5PackageMeta
         $srcPath = "{$path}/package.json";
 
         if (!file_exists($srcPath)) {
-            throw new \LogicException("package.json not found at {$srcPath}");
+            throw new LogicException("package.json not found at {$srcPath}");
         }
 
         $data = json_decode(

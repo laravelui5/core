@@ -70,7 +70,7 @@ class GenerateUi5LibraryCommand extends BaseGenerator
         }
 
         // Build source model
-        $source = Ui5LibrarySource::fromFilesystem($sourcePath);
+        $source = Ui5LibrarySource::fromWorkspace($sourcePath);
 
         $targetPath = base_path("ui5/{$name}/src/");
         $classPath = base_path("ui5/{$name}/src/{$name}Library.php");
@@ -142,6 +142,7 @@ class GenerateUi5LibraryCommand extends BaseGenerator
             . str_replace('.', '/', $source->getDescriptor()->getNamespace());
 
         $staticFiles = [
+            'manifest.json',
             'library-preload.js',
             'library-preload.js.map',
             'library-dbg.js',

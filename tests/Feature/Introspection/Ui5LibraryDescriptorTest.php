@@ -4,7 +4,7 @@ use LaravelUi5\Core\Ui5\Contracts\Ui5LibraryDescriptor;
 
 describe('Ui5LibraryDescriptor', function () {
     it('resolves metadata from .library', function () {
-        $descriptor = Ui5LibraryDescriptor::fromLibraryXml(base_path('/../tests-fixture/resources/ui5'), 'com.laravelui5.core', 'npm run build');
+        $descriptor = Ui5LibraryDescriptor::fromLibraryXml(base_path('/../tests-fixture/ui5-hello-lib'), 'com.laravelui5.core', 'npm run build');
         $dependencies = $descriptor->getDependencies();
         expect($descriptor)
             ->toBeInstanceOf(Ui5LibraryDescriptor::class)

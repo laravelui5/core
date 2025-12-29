@@ -44,24 +44,25 @@ interface Ui5ModuleInterface extends SluggableInterface
     public function getName(): string;
 
     /**
-     * Returns the absolute filesystem path to the UI5 source artifacts of this module.
+     * Returns the Ui5SourceStrategy used to resolve UI5 source artifacts
+     * for this module.
      *
-     * The returned path MUST resolve to a directory that contains the canonical
-     * UI5 source artifacts of the module, either:
+     * The source strategy defines *how* and *from where* UI5 resources
+     * (manifest, preload bundles, i18n files, descriptors) are accessed,
+     * depending on the module's origin (e.g. workspace-based or packaged).
      *
-     * - a development workspace (e.g. a locally linked UI5 project), or
-     * - a packaged distribution shipped with the module (e.g. under `vendor/`).
+     * The returned value is resolved by the Ui5Registry.
+     * The strategy itself is responsible for:
+     *  - determining the runtime UI5 resource path,
+     *  - and optionally providing introspection capabilities.
      *
-     * The concrete origin (workspace vs. package) is resolved by the registry at
-     * runtime and MUST be transparent to consumers.
+     * Important:
+     * - This method does NOT perform any filesystem access.
+     * - It only declares which strategy applies to this module.
      *
-     * This path is intended to serve as the single source of truth for all UI5
-     * introspection and MUST remain stable for the lifetime of the application
-     * instance.
-     *
-     * @return string Absolute path to the module’s UI5 source directory.
+     * @return Ui5SourceStrategyInterface Strategy for resolving Ui5Source artifacts.
      */
-    public function getSourcePath(): string;
+    public function getSourceStrategy(): Ui5SourceStrategyInterface;
 
     /**
      * Returns true if this module provides a UI5 application.

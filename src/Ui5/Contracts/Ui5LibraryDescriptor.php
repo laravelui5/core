@@ -3,6 +3,7 @@
 namespace LaravelUi5\Core\Ui5\Contracts;
 
 use Illuminate\Support\Facades\File;
+use JsonException;
 use LaravelUi5\Core\Contracts\Ui5Descriptor;
 use LogicException;
 use SimpleXMLElement;
@@ -101,6 +102,54 @@ final readonly class Ui5LibraryDescriptor extends Ui5Descriptor
             version: (string)$xml->version,
             title: (string)$xml->title,
             documentation: (string)$xml->documentation,
+            dependencies: $dependencies
+        );
+    }
+
+    /**
+     * @throws JsonException
+     */
+    public static function fromLibraryManifest(string $path, string $vendor): self
+    {
+        $manifestPath = "{$path}/manifest.json";
+
+        if (!is_file($manifestPath)) {
+            throw new LogicException("manifest.json not found at {$manifestPath}");
+        }
+
+        $manifest = json_decode(
+            file_get_contents($manifestPath),
+            true,
+            512,
+            JSON_THROW_ON_ERROR
+        );
+
+        if (!isset($manifest['sap.app']['id'])) {
+            throw new LogicException('Invalid manifest.json: missing sap.app.id');
+        }
+
+        $namespace = $manifest['sap.app']['id'];
+
+        $title = $manifest['sap.app']['title'] ?? 'Missing title';
+
+        $description = $manifest['sap.app']['description'] ?? 'Missing description';
+
+        $version = $manifest['sap.app']['applicationVersion']['version'] ?? '0.0.0';
+
+        // Dependencies: sap.ui5.dependencies.libs (keys only!)
+        $libs = $manifest['sap.ui5']['dependencies']['libs'] ?? [];
+        if (!is_array($libs)) {
+            throw new LogicException('Invalid manifest.json: sap.ui5.dependencies.libs must be an object');
+        }
+
+        $dependencies = array_keys($libs);
+
+        return new self(
+            name: $namespace,
+            vendor: $vendor,
+            version: $version,
+            title: $title,
+            documentation: $description,
             dependencies: $dependencies
         );
     }

@@ -9,13 +9,13 @@ use LaravelUi5\Core\Contracts\Ui5Source;
 final readonly class Ui5AppSource extends Ui5Source
 {
     public function __construct(
-        private string         $srcPath,
-        private Ui5PackageMeta $package,
-        private Ui5Framework   $framework,
-        private Ui5Descriptor  $descriptor,
-        private Ui5Bootstrap   $bootstrap,
-        private Ui5I18n        $i18n,
-        private bool           $isDev,
+        private string          $srcPath,
+        private Ui5Descriptor   $descriptor,
+        private Ui5I18n         $i18n,
+        private bool            $isDev,
+        private ?Ui5PackageMeta $package = null,
+        private ?Ui5Framework   $framework = null,
+        private ?Ui5Bootstrap   $bootstrap = null,
     )
     {
     }
@@ -27,12 +27,12 @@ final readonly class Ui5AppSource extends Ui5Source
         return $this->srcPath;
     }
 
-    public function getPackageMeta(): Ui5PackageMeta
+    public function getPackageMeta(): ?Ui5PackageMeta
     {
         return $this->package;
     }
 
-    public function getFramework(): Ui5Framework
+    public function getFramework(): ?Ui5Framework
     {
         return $this->framework;
     }
@@ -42,7 +42,7 @@ final readonly class Ui5AppSource extends Ui5Source
         return $this->descriptor;
     }
 
-    public function getBootstrap(): Ui5Bootstrap
+    public function getBootstrap(): ?Ui5Bootstrap
     {
         return $this->bootstrap;
     }
@@ -62,7 +62,7 @@ final readonly class Ui5AppSource extends Ui5Source
     /**
      * @throws JsonException
      */
-    public static function fromFilesystem(string $path, string $vendor, bool $isDev = false): Ui5AppSource
+    public static function fromWorkspace(string $path, string $vendor, bool $isDev = false): Ui5AppSource
     {
         $base = $isDev ? 'webapp' : 'dist';
 
@@ -80,12 +80,29 @@ final readonly class Ui5AppSource extends Ui5Source
 
         return new self(
             srcPath: $path,
+            descriptor: $descriptor,
+            i18n: $i18n,
+            isDev: $isDev,
             package: $package,
             framework: $framework,
+            bootstrap: $bootstrap
+        );
+    }
+
+    /**
+     * @throws JsonException
+     */
+    public static function fromPackage(string $path, string $vendor): Ui5AppSource
+    {
+        $i18n = Ui5I18n::fromI18nProperties($path);
+
+        $descriptor = Ui5AppDescriptor::fromManifestJson($path, $i18n, $vendor);
+
+        return new self(
+            srcPath: $path,
             descriptor: $descriptor,
-            bootstrap: $bootstrap,
             i18n: $i18n,
-            isDev: $isDev
+            isDev: false,
         );
     }
 }
