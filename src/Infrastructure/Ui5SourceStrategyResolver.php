@@ -24,12 +24,30 @@ class Ui5SourceStrategyResolver implements Ui5SourceStrategyResolverInterface
 
         $moduleDir = dirname($ref->getFileName());
 
-        // Convention:
+        // Convention for packaged UI5 projects:
         // ui5/<Module>/src/ → ui5/<Module>/resources/ui5
         $packagePath = realpath($moduleDir . '/../resources/ui5');
 
         if ($packagePath && is_dir($packagePath)) {
             return new PackageStrategy($packagePath);
+        }
+
+        // Convention for self-contained apps:
+        // ui5/<Module>/src/ → ui5/<Module>/resources/app
+        $packagePath = realpath($moduleDir . '/../resources/app');
+        if ($packagePath && is_dir($packagePath)) {
+            return new SelfContainedStrategy($packagePath);
+        }
+
+        // packaged core apps
+        $packagePath = realpath($moduleDir . '/../resources/dashboard-app');
+        if ($packagePath && is_dir($packagePath)) {
+            return new SelfContainedStrategy($packagePath);
+        }
+
+        $packagePath = realpath($moduleDir . '/../resources/report-app');
+        if ($packagePath && is_dir($packagePath)) {
+            return new SelfContainedStrategy($packagePath);
         }
 
         throw new LogicException(
