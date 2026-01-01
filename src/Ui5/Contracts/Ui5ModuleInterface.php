@@ -100,9 +100,9 @@ interface Ui5ModuleInterface extends SluggableInterface
      * This method allows consumers to access the primary artifact in a generic way,
      * without checking whether the module is app- or library-based.
      *
-     * @return Ui5ArtifactInterface The root artifact (App or Library)
+     * @return Ui5AppInterface|Ui5LibraryInterface The root artifact (App or Library)
      */
-    public function getArtifactRoot(): Ui5ArtifactInterface;
+    public function getArtifactRoot(): Ui5AppInterface|Ui5LibraryInterface;
 
     /**
      * Returns an array of all cards provided by this module.

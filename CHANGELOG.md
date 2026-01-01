@@ -6,6 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [2.3.5] - 2025-12-
 - Every artifact belongs to a module
+- tightened return type of `getArtifactRoot`
 
 ## [2.3.4] - 2025-12-29
 - Added getter for introspection objects
