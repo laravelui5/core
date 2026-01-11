@@ -46,7 +46,6 @@
         "ext-libxml": "*",
         "ext-simplexml": "*",
         "doctrine/dbal": "^4.3",
-        "flat3/lodata": "dev-ServiceLocator",
         "illuminate/console": "^12.0",
         "illuminate/contracts": "^12.0",
         "illuminate/database": "^12.0",
@@ -56,7 +55,8 @@
         "illuminate/support": "^12.0",
         "illuminate/view": "^12.0",
         "league/flysystem": "^3.0",
-        "symfony/yaml": "^7.2"
+        "symfony/yaml": "^7.2",
+        "pragmatiqu/lodata-modular": "^1.0"
     },
     "autoload": {
         "psr-4": {
@@ -74,8 +74,5 @@
             "Tests\\": "tests/",
             "Fixtures\\Hello\\": "tests-fixture/src"
         }
-    },
-    "suggest": {
-        "flat3/lodata": "Provides OData v4 support. This package uses a fork (branch ServiceLocator) until upstream support for multiple endpoints is merged."
     }
 }

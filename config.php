@@ -159,43 +159,6 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Registered UI5 Dialogs
-    |--------------------------------------------------------------------------
-    |
-    | This registration is only required for dialogs that should be exposed as
-    | global Shell entry points; regular, app-local UI5 dialogs can be used freely
-    | without being registered here.
-    |
-    | Global dialogs are standalone UI5 artifacts that represent modal or overlay-based
-    | user interactions, such as confirmations, editors, or focused task flows.
-    |
-    | Dialogs are exposed through the global Shell layer and can be invoked
-    | independently of any specific UI5 application or module context. They are
-    | typically opened from Shell components (e.g. command palette, global actions)
-    | or from other UI5 artifacts such as dashboards or reports.
-    |
-    | Dialogs are resolved via this configuration mapping, where the array key
-    | defines the external slug used for routing and identification, and the value
-    | references the Dialog implementation class.
-    |
-    | The slug is part of the public URL structure (e.g. /app/dialog/{slug}) and
-    | must therefore be unique across the entire application. It is considered an
-    | exposure concern and must not be hard-coded inside the dialog class.
-    |
-    | Each dialog class must implement Ui5DialogInterface and is responsible for
-    | defining its metadata, permissions, UI behavior, and UI5 namespace, but not
-    | its final route or slug.
-    |
-    | Example:
-    | 'user-lock' => \Vendor\Package\Dialogs\UserLockDialog::class,
-    |
-    */
-    'dialogs' => [
-
-    ],
-
-    /*
-    |--------------------------------------------------------------------------
     | Active System
     |--------------------------------------------------------------------------
     |

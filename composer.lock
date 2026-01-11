@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c56e6fd2737923211bffb3cad333881f",
+    "content-hash": "3394c51d2eda6037bc691e595b907f8e",
     "packages": [
         {
             "name": "brick/math",
@@ -661,117 +661,6 @@
                 }
             ],
             "time": "2025-03-06T22:45:56+00:00"
-        },
-        {
-            "name": "flat3/lodata",
-            "version": "dev-ServiceLocator",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/pragmatiqu/lodata.git",
-                "reference": "fdb8806e05631684037390237b36e9e6874b687e"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/pragmatiqu/lodata/zipball/fdb8806e05631684037390237b36e9e6874b687e",
-                "reference": "fdb8806e05631684037390237b36e9e6874b687e",
-                "shasum": ""
-            },
-            "require": {
-                "doctrine/dbal": "^3|^4",
-                "ext-dom": "*",
-                "ext-json": "*",
-                "ext-pdo": "*",
-                "ext-simplexml": "*",
-                "guzzlehttp/guzzle": "^6.5.5|^7.0.1",
-                "illuminate/bus": "^8.0|^9.0|^10.0|^11.0|^12.0",
-                "illuminate/database": "^8.40.0|^9.0|^10.0|^11.0|^12.0",
-                "illuminate/events": "^8.0|^9.0|^10.0|^11.0|^12.0",
-                "illuminate/http": "^8.0|^9.0|^10.0|^11.0|^12.0",
-                "illuminate/queue": "^8.0|^9.0|^10.0|^11.0|^12.0",
-                "illuminate/routing": "^8.0|^9.0|^10.0|^11.0|^12.0",
-                "league/flysystem": "^1.0|^3.0",
-                "php": "^7.3|^8.0",
-                "zbateson/stream-decorators": "^1.0"
-            },
-            "require-dev": {
-                "brianium/paratest": "^6.2|^7.0",
-                "eclipxe/xmlschemavalidator": "^3.0",
-                "ext-mongodb": "*",
-                "ext-odbc": "*",
-                "ext-pdo_mysql": "*",
-                "ext-pdo_odbc": "*",
-                "ext-pdo_pgsql": "*",
-                "ext-pdo_sqlite": "*",
-                "ext-pdo_sqlsrv": "*",
-                "ext-redis": "*",
-                "league/csv": "^9.7",
-                "m6web/redis-mock": "^5.5",
-                "mongodb/mongodb": "^1.11",
-                "nunomaduro/collision": "^5.3|^6.0|^7.0|^8.0",
-                "orchestra/testbench": "^5.0|^6.0|^7.0|^8.0|^9.0|^10.0",
-                "phpstan/phpstan": "^1.0.0",
-                "phpunit/phpunit": "^8.4|^9.0|^10.0|^11.0",
-                "predis/predis": "^2.1.2",
-                "sebastian/diff": "^4.0|^5.0|^6.0",
-                "spatie/phpunit-snapshot-assertions": "^4.2|main-dev",
-                "staudenmeir/eloquent-json-relations": "^1.0"
-            },
-            "suggest": {
-                "league/csv": "To use the CSV entity set",
-                "mongodb/mongodb": "To use the MongoDB entity set"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "aliases": {
-                        "Lodata": "Flat3\\Lodata\\Facades\\Lodata"
-                    }
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Flat3\\Lodata\\": "src/",
-                    "Flat3\\Lodata\\Tests\\": "tests/"
-                }
-            },
-            "scripts": {
-                "test": [
-                    "Composer\\Config::disableProcessTimeout",
-                    "phpunit"
-                ],
-                "test-parallel": [
-                    "testbench package:test --parallel"
-                ],
-                "coverage": [
-                    "XDEBUG_MODE=coverage phpunit --coverage-clover clover.xml"
-                ],
-                "analyse": [
-                    "phpstan analyse --memory-limit 1G"
-                ],
-                "translate": [
-                    "@php bin/translate.php"
-                ]
-            },
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Chris Lloyd",
-                    "email": "chrislloyd403@gmail.com"
-                }
-            ],
-            "description": "OData v4.01 Producer for Laravel",
-            "homepage": "https://github.com/flat3/lodata",
-            "keywords": [
-                "laravel",
-                "odata",
-                "openapi"
-            ],
-            "support": {
-                "source": "https://github.com/pragmatiqu/lodata/tree/ServiceLocator"
-            },
-            "time": "2025-07-22T12:52:35+00:00"
         },
         {
             "name": "fruitcake/php-cors",
@@ -2730,6 +2619,101 @@
                 }
             ],
             "time": "2025-08-21T11:53:16+00:00"
+        },
+        {
+            "name": "pragmatiqu/lodata-modular",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/pragmatiqu/lodata-modular.git",
+                "reference": "a68def0798cdac4dc5cee6e3fcffe8703ec0f5e9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/pragmatiqu/lodata-modular/zipball/a68def0798cdac4dc5cee6e3fcffe8703ec0f5e9",
+                "reference": "a68def0798cdac4dc5cee6e3fcffe8703ec0f5e9",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/dbal": "^3|^4",
+                "ext-dom": "*",
+                "ext-json": "*",
+                "ext-pdo": "*",
+                "ext-simplexml": "*",
+                "guzzlehttp/guzzle": "^6.5.5|^7.0.1",
+                "illuminate/bus": "^8.0|^9.0|^10.0|^11.0|^12.0",
+                "illuminate/database": "^8.40.0|^9.0|^10.0|^11.0|^12.0",
+                "illuminate/events": "^8.0|^9.0|^10.0|^11.0|^12.0",
+                "illuminate/http": "^8.0|^9.0|^10.0|^11.0|^12.0",
+                "illuminate/queue": "^8.0|^9.0|^10.0|^11.0|^12.0",
+                "illuminate/routing": "^8.0|^9.0|^10.0|^11.0|^12.0",
+                "league/flysystem": "^1.0|^3.0",
+                "php": "^7.3|^8.0",
+                "zbateson/stream-decorators": "^1.0"
+            },
+            "require-dev": {
+                "brianium/paratest": "^6.2|^7.0",
+                "eclipxe/xmlschemavalidator": "^3.0",
+                "ext-mongodb": "*",
+                "ext-odbc": "*",
+                "ext-pdo_mysql": "*",
+                "ext-pdo_odbc": "*",
+                "ext-pdo_pgsql": "*",
+                "ext-pdo_sqlite": "*",
+                "ext-pdo_sqlsrv": "*",
+                "ext-redis": "*",
+                "league/csv": "^9.7",
+                "m6web/redis-mock": "^5.5",
+                "mongodb/mongodb": "^1.11",
+                "nunomaduro/collision": "^5.3|^6.0|^7.0|^8.0",
+                "orchestra/testbench": "^5.0|^6.0|^7.0|^8.0|^9.0|^10.0",
+                "phpstan/phpstan": "^1.0.0",
+                "phpunit/phpunit": "^8.4|^9.0|^10.0|^11.0",
+                "predis/predis": "^2.1.2",
+                "sebastian/diff": "^4.0|^5.0|^6.0",
+                "spatie/phpunit-snapshot-assertions": "^4.2|main-dev",
+                "staudenmeir/eloquent-json-relations": "^1.0"
+            },
+            "suggest": {
+                "league/csv": "To use the CSV entity set",
+                "mongodb/mongodb": "To use the MongoDB entity set"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "aliases": {
+                        "Lodata": "Flat3\\Lodata\\Facades\\Lodata"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Flat3\\Lodata\\": "src/",
+                    "Flat3\\Lodata\\Tests\\": "tests/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Chris Lloyd",
+                    "email": "chrislloyd403@gmail.com"
+                }
+            ],
+            "description": "Modular OData endpoint support based on Lodata (temporary bridge for LaravelUi5)",
+            "homepage": "https://github.com/flat3/lodata",
+            "keywords": [
+                "laravel",
+                "odata",
+                "openapi"
+            ],
+            "support": {
+                "issues": "https://github.com/pragmatiqu/lodata-modular/issues",
+                "source": "https://github.com/pragmatiqu/lodata-modular/tree/v1.0.0"
+            },
+            "time": "2026-01-09T12:48:35+00:00"
         },
         {
             "name": "psr/cache",
@@ -10158,11 +10142,9 @@
         }
     ],
     "aliases": [],
-    "minimum-stability": "dev",
-    "stability-flags": {
-        "flat3/lodata": 20
-    },
-    "prefer-stable": true,
+    "minimum-stability": "stable",
+    "stability-flags": {},
+    "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
         "php": "^8.3",

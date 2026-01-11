@@ -94,7 +94,6 @@ class Ui5Registry implements Ui5RegistryInterface
         // Pass 2: Reflect everything else
         $dashboards = $config['dashboards'] ?? [];
         $reports = $config['reports'] ?? [];
-        $dialogs = $config['dialogs'] ?? [];
 
         foreach ($this->modules as $slug => $module) {
 
@@ -119,6 +118,9 @@ class Ui5Registry implements Ui5RegistryInterface
             foreach ($module->getResources() as $resource) {
                 $this->registerArtifact($resource, $slug);
             }
+            foreach ($module->getDialogs() as $dialog) {
+                $this->registerArtifact($dialog, $slug);
+            }
             foreach ($module->getReports() as $report) {
                 $key = get_class($report);
                 if (array_key_exists($key, $reports)) {
@@ -131,13 +133,6 @@ class Ui5Registry implements Ui5RegistryInterface
                 if (array_key_exists($key, $dashboards)) {
                     $dashboard->setSlug($dashboards[$key]);
                     $this->registerArtifact($dashboard, $slug);
-                }
-            }
-            foreach ($module->getDialogs() as $dialog) {
-                $key = get_class($dialog);
-                if (array_key_exists($key, $dialogs)) {
-                    $dialog->setSlug($dialogs[$key]);
-                    $this->registerArtifact($dialog, $slug);
                 }
             }
         }

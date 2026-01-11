@@ -199,8 +199,7 @@ enum ArtifactType: int
             self::Resource => "resource/{$artifact->getModule()->getSlug()}/{$artifact->getSlug()}",
             self::Dashboard => "dashboard/{$artifact->getSlug()}",
             self::Report => "report/{$artifact->getSlug()}",
-            self::Dialog => "dialog/{$artifact->getSlug()}",
-            self::Module, self::Tile, self::Kpi => null,
+            self::Dialog, self::Module, self::Tile, self::Kpi => null,
         };
     }
 
@@ -240,7 +239,6 @@ enum ArtifactType: int
             'lib' => "lib/" . $parts[1],
             'dashboard' => "dashboard/" . $parts[1],
             'report' => "report/" . $parts[1],
-            'dialog' => "dialog/" . $parts[1],
             'card' => isset($parts[2])
                 ? "card/" . $parts[1] . "/" . $parts[2]
                 : null,
