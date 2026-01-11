@@ -2,6 +2,8 @@
 
 namespace LaravelUi5\Core\Ui5\Capabilities;
 
+use LaravelUi5\Core\Ui5\Contracts\Ui5RegistryInterface;
+
 /**
  * Allows a module or application to contribute configuration data
  * to the global LaravelUi5 Shell layer.
@@ -43,5 +45,5 @@ interface Ui5ShellFragmentInterface
      *
      * @return array<string, mixed> The Shell fragment to be added to the manifest.
      */
-    public function buildShellFragment(): array;
+    public function buildShellFragment(Ui5RegistryInterface $registry): array;
 }
