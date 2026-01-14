@@ -23,32 +23,55 @@ class AssetController extends Controller
 {
     public function __invoke(
         Ui5ContextInterface $context,
-        string         $type,
-        string         $slug,
-        string         $version,
-        string         $file
+        string              $type,
+        string              $slug,
+        string              $version,
+        string              $file
     ): BinaryFileResponse
     {
 
         $artifact = $context->artifact();
 
-        if ($artifact instanceof HasAssetsInterface) {
-            $path = $artifact->getAssetPath($file);
+        if (!($artifact instanceof HasAssetsInterface)) {
+            throw new MissingAssetException($type, $slug, $version, $file);
+        }
 
-            if ($path && file_exists($path)) {
-                $mime = match (true) {
-                    str_ends_with($file, '.js') => 'application/javascript',
-                    str_ends_with($file, '.js.map') => 'application/json',
-                    str_ends_with($file, '.json') => 'application/json',
-                    str_ends_with($file, '.css') => 'text/css',
-                    str_ends_with($file, '.properties') => 'text/plain; charset=utf-8',
-                    default => 'application/octet-stream',
-                };
+        $path = $artifact->getAssetPath($file);
 
-                return response()->file($path, ['Content-Type' => $mime]);
-            }
+        if (!$path || !file_exists($path)) {
+            throw new MissingAssetException($type, $slug, $version, $file);
+        }
+
+        if ('PRO' !== config('ui5.active')) {
+            return $this->serveFile($path, $file);
+        }
+
+        if ($this->allowedInProduction($file)) {
+            return $this->serveFile($path, $file);
         }
 
         throw new MissingAssetException($type, $slug, $version, $file);
+    }
+
+    private function allowedInProduction(string $file): bool
+    {
+        return str_ends_with($file, 'Component-preload.js')
+            || str_ends_with($file, 'library-preload.js')
+            || str_ends_with($file, '.css')
+            || str_ends_with($file, '.properties');
+    }
+
+    private function serveFile(string $path, string $file): BinaryFileResponse
+    {
+        $mime = match (true) {
+            str_ends_with($file, '.js') => 'application/javascript',
+            str_ends_with($file, '.js.map') => 'application/json',
+            str_ends_with($file, '.json') => 'application/json',
+            str_ends_with($file, '.css') => 'text/css',
+            str_ends_with($file, '.properties') => 'text/plain; charset=utf-8',
+            default => 'application/octet-stream',
+        };
+
+        return response()->file($path, ['Content-Type' => $mime]);
     }
 }

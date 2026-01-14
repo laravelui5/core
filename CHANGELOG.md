@@ -4,9 +4,14 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-## [2.3.5] - 2025-12-
+## [2.3.5] - 2026-01-14
 - Every artifact belongs to a module
 - tightened return type of `getArtifactRoot`
+- Upgraded default OpenUI5 library load to 1.136.11
+- Tightened loading of JS artifacts for PRO mode
+- added all dbg sources for core JS lib
+- added extension for body scripts
+- tweaked Composer build resources
 
 ## [2.3.4] - 2025-12-29
 - Added getter for introspection objects

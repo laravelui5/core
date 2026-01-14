@@ -30,7 +30,7 @@ class HelloLibModule extends AbstractUi5Module
         return new HelloLibrary($this);
     }
 
-    public function getArtifactRoot(): Ui5ArtifactInterface
+    public function getArtifactRoot(): Ui5AppInterface|Ui5LibraryInterface
     {
         return $this->getLibrary();
     }

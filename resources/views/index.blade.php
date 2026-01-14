@@ -16,7 +16,7 @@
     {{-- UI5 Bootstrap --}}
     <script
         id="sap-ui-bootstrap"
-        src="https://sdk.openui5.org/{{ config('ui5.version', '1.136.1') }}/resources/sap-ui-core.js"
+        src="https://sdk.openui5.org/{{ config('ui5.version', '1.136.11') }}/resources/sap-ui-core.js"
         data-sap-ui-resourceroots='@json($roots, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES)'
         @foreach($app->getUi5BootstrapAttributes() as $key => $value)
             data-sap-ui-{{ $key }}="{{ $value }}"
@@ -35,7 +35,8 @@
 </head>
 
 <body class="sapUiBody">
-<div id="content" data-sap-ui-component data-name="{{ $app->getNamespace() }}"></div>
+    <div id="content" data-sap-ui-component data-name="{{ $app->getNamespace() }}"></div>
+    @includeIf('ui5::sdk')
 </body>
 </html>
 

@@ -3,12 +3,15 @@
 
 # Exclude non-essential files from distribution archives (Composer installs)
 .github/ export-ignore
+
+/tests/ export-ignore
+/tests-fixture/ export-ignore
+/tools/ export-ignore
+/vendor/ export-ignore
 .editorconfig export-ignore
 .gitattributes export-ignore
-/docs/ export-ignore
-/tests/ export-ignore
-/ROADMAP.md export-ignore
-/CHANGELOG.md export-ignore
-
-# Mark documentation folder as documentation for GitHub Linguist
-/docs/* linguist-documentation
+.gitignore export-ignore
+CHANGELOG.md export-ignore
+composer.lock export-ignore
+phpunit.xml export-ignore
+ROADMAP.md export-ignore

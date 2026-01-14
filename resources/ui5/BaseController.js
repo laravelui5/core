@@ -1,0 +1,2 @@
+sap.ui.define(["sap/ui/core/mvc/Controller"],function(e){"use strict";return e.extend("com.laravelui5.core.BaseController",{getOwnerComponent:function(){return e.prototype.getOwnerComponent.call(this)},getResourceBundle:function(){const e=this.getOwnerComponent().getModel("i18n");return e.getResourceBundle()},getModel:function(e){return this.getView().getModel(e)},setModel:function(e,t){this.getView().setModel(e,t);return this}})});
+//# sourceMappingURL=BaseController.js.map

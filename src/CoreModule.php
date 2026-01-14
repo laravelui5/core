@@ -36,7 +36,7 @@ class CoreModule extends AbstractUi5Module
         return new CoreLibrary($this);
     }
 
-    public function getArtifactRoot(): Ui5ArtifactInterface
+    public function getArtifactRoot(): Ui5AppInterface|Ui5LibraryInterface
     {
         return $this->getLibrary();
     }
