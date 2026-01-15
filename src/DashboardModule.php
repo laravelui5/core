@@ -2,43 +2,14 @@
 
 namespace LaravelUi5\Core;
 
-use LaravelUi5\Core\Contracts\Ui5Source;
 use LaravelUi5\Core\Ui5\Contracts\Ui5AppInterface;
-use LaravelUi5\Core\Ui5\Contracts\Ui5ArtifactInterface;
-use LaravelUi5\Core\Ui5\Contracts\Ui5LibraryInterface;
 use LaravelUi5\Core\Ui5\AbstractUi5Module;
 
 class DashboardModule extends AbstractUi5Module
 {
-
-    public function getName(): string
-    {
-        return 'Dashboard';
-    }
-
-    public function hasApp(): bool
-    {
-        return true;
-    }
-
     public function getApp(): ?Ui5AppInterface
     {
         return new DashboardApp($this);
-    }
-
-    public function hasLibrary(): bool
-    {
-        return false;
-    }
-
-    public function getLibrary(): ?Ui5LibraryInterface
-    {
-        return null;
-    }
-
-    public function getArtifactRoot(): Ui5AppInterface|Ui5LibraryInterface
-    {
-        return $this->getApp();
     }
 
     public function getCards(): array

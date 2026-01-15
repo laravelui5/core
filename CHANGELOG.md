@@ -4,7 +4,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-## [2.3.5] - 2026-01-14
+## [2.4.3] - 2026-01-
+- Consolidated AbstractUi5Manifest class
+
+## [2.4.2] - 2026-01-14
 - Every artifact belongs to a module
 - tightened return type of `getArtifactRoot`
 - Upgraded default OpenUI5 library load to 1.136.11
@@ -12,6 +15,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - added all dbg sources for core JS lib
 - added extension for body scripts
 - tweaked Composer build resources
+
+## [2.4.1] - 2026-01-11
+- Hand the registry over to shell fragment builder
+
+## [2.4.0] - 2026-01-11
+- JS: Introduced com.laravelui5.core.BaseComponent as the shared base UI5 component
+- Simplified dialog artifact registration in Ui5Registry
+- Removed dialog-specific configuration switches and slug handling
 
 ## [2.3.4] - 2025-12-29
 - Added getter for introspection objects

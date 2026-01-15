@@ -2,41 +2,14 @@
 
 namespace {{ phpNamespace }};
 
-use LaravelUi5\Core\Ui5\Contracts\Ui5AppInterface;
-use LaravelUi5\Core\Ui5\Contracts\Ui5ArtifactInterface;
 use LaravelUi5\Core\Ui5\Contracts\Ui5LibraryInterface;
 use LaravelUi5\Core\Ui5\AbstractUi5Module;
 
 class {{ moduleClass }} extends AbstractUi5Module
 {
-    public function getName(): string
-    {
-        return {{ name }};
-    }
-
-    public function hasApp(): bool
-    {
-        return false;
-    }
-
-    public function getApp(): ?Ui5AppInterface
-    {
-        return null;
-    }
-
-    public function hasLibrary(): bool
-    {
-        return true;
-    }
-
     public function getLibrary(): ?Ui5LibraryInterface
     {
         return new {{ class }}($this);
-    }
-
-    public function getArtifactRoot(): Ui5ArtifactInterface
-    {
-        return $this->getLibrary();
     }
 
     public function getCards(): array

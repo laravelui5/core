@@ -3,7 +3,10 @@
 namespace LaravelUi5\Core\Ui5;
 
 use LaravelUi5\Core\Enums\ArtifactType;
+use LaravelUi5\Core\Exceptions\MissingArtifactRootException;
 use LaravelUi5\Core\Infrastructure\Contracts\Ui5SourceStrategyInterface;
+use LaravelUi5\Core\Ui5\Contracts\Ui5AppInterface;
+use LaravelUi5\Core\Ui5\Contracts\Ui5LibraryInterface;
 use LaravelUi5\Core\Ui5\Contracts\Ui5ModuleInterface;
 
 /**
@@ -33,6 +36,44 @@ abstract class AbstractUi5Module implements Ui5ModuleInterface
     {
         $this->slug = $slug;
         $this->strategy = $strategy;
+    }
+
+    public function getName(): string
+    {
+        return $this->getArtifactRoot()->getNamespace();
+    }
+
+    public function getApp(): ?Ui5AppInterface
+    {
+        return null;
+    }
+
+    public function hasApp(): bool
+    {
+        return null !== $this->getApp();
+    }
+
+    public function getLibrary(): ?Ui5LibraryInterface
+    {
+        return null;
+    }
+
+    public function hasLibrary(): bool
+    {
+        return null !== $this->getLibrary();
+    }
+
+    public function getArtifactRoot(): Ui5AppInterface|Ui5LibraryInterface
+    {
+        if ($this->hasApp()) {
+            return $this->getApp();
+        }
+
+        if ($this->hasLibrary()) {
+            return $this->getLibrary();
+        }
+
+        throw new MissingArtifactRootException(get_class($this));
     }
 
     public function getType(): ArtifactType

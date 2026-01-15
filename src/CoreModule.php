@@ -2,43 +2,15 @@
 
 namespace LaravelUi5\Core;
 
-use LaravelUi5\Core\Ui5\Contracts\Ui5AppInterface;
-use LaravelUi5\Core\Ui5\Contracts\Ui5ArtifactInterface;
 use LaravelUi5\Core\Ui5\Contracts\Ui5LibraryInterface;
 use LaravelUi5\Core\Ui5\AbstractUi5Module;
 
 
 class CoreModule extends AbstractUi5Module
 {
-
-    public function getName(): string
-    {
-        return 'Core';
-    }
-
-    public function hasApp(): bool
-    {
-        return false;
-    }
-
-    public function getApp(): ?Ui5AppInterface
-    {
-        return null;
-    }
-
-    public function hasLibrary(): bool
-    {
-        return true;
-    }
-
     public function getLibrary(): ?Ui5LibraryInterface
     {
         return new CoreLibrary($this);
-    }
-
-    public function getArtifactRoot(): Ui5AppInterface|Ui5LibraryInterface
-    {
-        return $this->getLibrary();
     }
 
     public function getCards(): array
