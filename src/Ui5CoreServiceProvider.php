@@ -106,7 +106,7 @@ try {
     \$__ui5_context = app(\\LaravelUi5\\Core\\Contracts\\Ui5ContextInterface::class);
     \$__ui5_app = \$__ui5_context->artifact();
     if (
-        \$__ui5_app instanceof \\LaravelUi5\\Core\\Contracts\\Ui5AppInterface
+        \$__ui5_app instanceof \\LaravelUi5\\Core\\Ui5\\Contracts\\Ui5AppInterface
         && \$__ui5_app->getLaravelUiManifest() instanceof \\LaravelUi5\\Core\\Ui5\\Capabilities\\Ui5ShellFragmentInterface
     ) {
         if (\$__env->exists({$expression})) echo \$__env->make({$expression}, array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render();
