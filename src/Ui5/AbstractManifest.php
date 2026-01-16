@@ -58,7 +58,7 @@ abstract class AbstractManifest implements LaravelUi5ManifestInterface
             LaravelUi5ManifestKeys::RESOURCES => $this->buildResources($resolved),
             LaravelUi5ManifestKeys::SETTINGS => $this->buildSettings($namespace),
             LaravelUi5ManifestKeys::VENDOR => $this->enhanceFragment($module),
-            LaravelUi5ManifestKeys::SHELL => $this->buildShell($this->registry),
+            LaravelUi5ManifestKeys::SHELL => $this->buildShell($this->registry, $namespace),
         ];
 
         return array_filter($core, fn($value) => !empty($value));
@@ -157,11 +157,10 @@ abstract class AbstractManifest implements LaravelUi5ManifestInterface
             ->all();
     }
 
-    private function buildShell(Ui5RegistryInterface $registry): array
+    private function buildShell(Ui5RegistryInterface $registry, string $namespace): array
     {
-
         if ($this instanceof Ui5ShellFragmentInterface) {
-            return $this->buildShellFragment($registry);
+            return $this->buildShellFragment($registry, $namespace);
         }
 
         return [];

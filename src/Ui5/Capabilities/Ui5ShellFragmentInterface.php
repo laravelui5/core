@@ -45,5 +45,5 @@ interface Ui5ShellFragmentInterface
      *
      * @return array<string, mixed> The Shell fragment to be added to the manifest.
      */
-    public function buildShellFragment(Ui5RegistryInterface $registry): array;
+    public function buildShellFragment(Ui5RegistryInterface $registry, string $namespace): array;
 }
