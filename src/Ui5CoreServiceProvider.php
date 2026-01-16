@@ -29,6 +29,7 @@ use LaravelUi5\Core\Contracts\SettingResolverInterface;
 use LaravelUi5\Core\Controllers\ODataController;
 use LaravelUi5\Core\Infrastructure\Contracts\Ui5SourceOverrideStoreInterface;
 use LaravelUi5\Core\Infrastructure\Contracts\Ui5SourceStrategyResolverInterface;
+use LaravelUi5\Core\Infrastructure\NoSourceStrategy;
 use LaravelUi5\Core\Infrastructure\Ui5SourceOverrideStore;
 use LaravelUi5\Core\Infrastructure\Ui5SourceStrategyResolver;
 use LaravelUi5\Core\Services\ParameterResolver;
@@ -181,7 +182,7 @@ PHP;
             }
 
             if (is_subclass_of($clazz, Ui5ModuleInterface::class)) {
-                $module = new $clazz($key);
+                $module = new $clazz($key, new NoSourceStrategy());
                 $app = $module->getApp();
                 if (is_subclass_of($app, Endpoint::class)) {
                     return $app;
