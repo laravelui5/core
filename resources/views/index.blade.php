@@ -11,7 +11,7 @@
     <title>{{ $app->getTitle() }}</title>
 
     {{-- Optionale Favicon/Manifest-Elemente – zentral verwaltbar --}}
-    @includeIf('ui5::meta')
+    @IncludeIfSdk('ui5::head')
 
     {{-- UI5 Bootstrap --}}
     <script
@@ -36,7 +36,7 @@
 
 <body class="sapUiBody">
     <div id="content" data-sap-ui-component data-name="{{ $app->getNamespace() }}"></div>
-    @includeIf('ui5::sdk')
+    @IncludeIfSdk('ui5::body')
 </body>
 </html>
 
