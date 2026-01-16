@@ -101,6 +101,7 @@ class Ui5CoreServiceProvider extends ServiceProvider
         Blade::component('element', Ui5Element::class, 'ui5');
         Blade::directive('IncludeIfSdk', function (string $expression): string {
             return <<<PHP
+<?php
 try {
     \$__ui5_context = app(\\LaravelUi5\\Core\\Contracts\\Ui5ContextInterface::class);
     \$__ui5_app = \$__ui5_context->artifact();
@@ -114,6 +115,7 @@ try {
 catch(\\Illuminate\\Contracts\\Container\\BindingResolutionException \$e) {
     // ignored if no Ui5Context bound
 }
+?>
 PHP;
         });
 
