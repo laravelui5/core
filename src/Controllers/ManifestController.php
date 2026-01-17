@@ -38,7 +38,8 @@ class ManifestController extends Controller
                 '' => [
                     'dataSource' => 'mainService',
                     'settings' => [
-                        'operationMode' => 'Server'
+                        'operationMode' => 'Server',
+                        'earlyRequests' => true,
                     ]
                 ]
             ];
