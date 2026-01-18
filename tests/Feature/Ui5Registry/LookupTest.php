@@ -10,20 +10,13 @@ beforeEach(function () {
 });
 
 describe('Lookup Layer — Modules', function () {
-    it('returns true for known module slug', function () {
-        expect($this->registry->hasModule(Hello::SLUG))->toBeTrue();
-    });
-
-    it('returns false for unknown module slug', function () {
-        expect($this->registry->hasModule('unknown'))->toBeFalse();
-    });
 
     it('returns correct module instance for getModule()', function () {
-        $module = $this->registry->getModule(Hello::SLUG);
+        $module = $this->registry->getModule(Hello::NAMESPACE);
 
         expect($module)
             ->toBeInstanceOf(Ui5ModuleInterface::class)
-            ->and($module->getSlug())->toBe(Hello::SLUG);
+            ->and($module->getName())->toBe(Hello::NAMESPACE);
     });
 
     it('returns null for unknown module slug', function () {
@@ -33,23 +26,17 @@ describe('Lookup Layer — Modules', function () {
     it('returns all registered modules as array', function () {
         $modules = $this->registry->modules();
 
-        expect($modules)
-            ->toBeArray()
-            ->toHaveKey(Hello::SLUG)
-            ->and($modules[Hello::SLUG])->toBeInstanceOf(Ui5ModuleInterface::class);
+        expect($modules)->toBeArray()
+            ->and($modules)
+            ->toHaveCount(1)
+            ->and($modules[0])
+            ->toBeInstanceOf(Ui5ModuleInterface::class)
+            ->and($modules[0]->getName())
+            ->toBe(Hello::NAMESPACE);
     });
 });
 
 describe('Lookup Layer — Artifacts', function () {
-    it('returns true for known artifact namespace', function () {
-        $knownNamespace = Hello::NAMESPACE;
-        expect($this->registry->has($knownNamespace))->toBeTrue();
-    });
-
-    it('returns false for unknown artifact namespace', function () {
-        expect($this->registry->has('App\\Ui5\\DoesNotExist'))->toBeFalse();
-    });
-
     it('returns artifact instance for known namespace', function () {
         $namespace = Hello::NAMESPACE;
         $artifact = $this->registry->get($namespace);

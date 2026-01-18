@@ -5,7 +5,6 @@ namespace LaravelUi5\Core\Ui5\Contracts;
 use LaravelUi5\Core\Contracts\ParameterizableInterface;
 use LaravelUi5\Core\Enums\HttpMethod;
 use LaravelUi5\Core\Ui5\Capabilities\ActionHandlerInterface;
-use LaravelUi5\Core\Ui5\Capabilities\SluggableInterface;
 
 /**
  * Contract for UI5 Actions.
@@ -32,7 +31,7 @@ use LaravelUi5\Core\Ui5\Capabilities\SluggableInterface;
  * Each Action must have a unique slug within its module. The slug is used
  * to generate the manifest entry and the API route.
  */
-interface Ui5ActionInterface extends Ui5ArtifactInterface, SluggableInterface
+interface Ui5ActionInterface extends Ui5ArtifactInterface
 {
     /**
      * Returns the HTTP method for calling this Action.

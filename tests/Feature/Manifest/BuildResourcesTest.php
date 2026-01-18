@@ -7,7 +7,7 @@ use LaravelUi5\Core\Ui5\Ui5Registry;
 beforeEach(function () {
     $this->registry = Ui5Registry::fromArray(Hello::ui5Config());
     $this->manifest = new HelloManifest($this->registry);
-    $this->module = $this->registry->getModule(Hello::SLUG);
+    $this->module = $this->registry->getModule(Hello::NAMESPACE);
 });
 
 describe('AbstractManifest->buildResources', function () {
@@ -26,7 +26,7 @@ describe('AbstractManifest->buildResources', function () {
         expect($userData)
             ->toMatchArray([
                 'method' => 'GET',
-                'url' => '/ui5/resource/hello/first',
+                'url' => '/ui5/resource/com/laravelui5/hello/resources/first@1.0.0/',
             ]);
     });
 
@@ -41,7 +41,7 @@ describe('AbstractManifest->buildResources', function () {
             ]
         ]);
         $manifest = new HelloManifest($registry);
-        $module = $registry->getModule('hello');
+        $module = $registry->getModule('com.laravelui5.hello.lib');
 
         $resources = invokePrivateMethod($manifest, 'buildResources', $module);
 

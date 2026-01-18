@@ -22,25 +22,16 @@ use LaravelUi5\Core\Ui5\Contracts\Ui5ModuleInterface;
  */
 abstract class AbstractUi5Module implements Ui5ModuleInterface
 {
-    protected string $slug;
-
     protected Ui5SourceStrategyInterface $strategy;
 
     /**
      * Create a new UI5 module instance.
      *
-     * @param string $slug Route-level slug as configured in config/ui5.php
      * @param Ui5SourceStrategyInterface $strategy Physical path where this module resides in
      */
-    public function __construct(string $slug, Ui5SourceStrategyInterface $strategy)
+    public function __construct(Ui5SourceStrategyInterface $strategy)
     {
-        $this->slug = $slug;
         $this->strategy = $strategy;
-    }
-
-    public function getName(): string
-    {
-        return $this->getArtifactRoot()->getNamespace();
     }
 
     public function getApp(): ?Ui5AppInterface
@@ -79,11 +70,6 @@ abstract class AbstractUi5Module implements Ui5ModuleInterface
     public function getType(): ArtifactType
     {
         return ArtifactType::Module;
-    }
-
-    public function getSlug(): string
-    {
-        return $this->slug;
     }
 
     public function getSourceStrategy(): Ui5SourceStrategyInterface

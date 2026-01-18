@@ -58,6 +58,7 @@ class GenerateSelfContainedUi5AppCommand extends BaseGenerator
 
         $this->files->put("{$targetPath}/src/{$moduleName}.php", $this->compileStub('Ui5ModuleApp.stub', [
             'phpNamespace' => $phpNamespace,
+            'ui5Namespace' => $ui5Namespace,
             'class' => $className,
             'moduleClass' => $moduleName,
             'srcPath' => "{$targetPath}/resources/app"

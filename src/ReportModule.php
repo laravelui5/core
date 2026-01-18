@@ -7,6 +7,11 @@ use LaravelUi5\Core\Ui5\AbstractUi5Module;
 
 class ReportModule extends AbstractUi5Module
 {
+    public function getName(): string
+    {
+        return 'com.laravelui5.report';
+    }
+
     public function getApp(): ?Ui5AppInterface
     {
         return new ReportApp($this);

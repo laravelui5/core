@@ -5,7 +5,6 @@ namespace LaravelUi5\Core\Ui5\Contracts;
 use LaravelUi5\Core\Contracts\ConfigurableInterface;
 use LaravelUi5\Core\Contracts\ParameterizableInterface;
 use LaravelUi5\Core\Ui5\Capabilities\DataProviderInterface;
-use LaravelUi5\Core\Ui5\Capabilities\SluggableInterface;
 
 /**
  * Contract for UI5 Card artifacts.
@@ -28,7 +27,7 @@ use LaravelUi5\Core\Ui5\Capabilities\SluggableInterface;
  *
  * Cards are read-only artifacts: they must not change application state.
  */
-interface Ui5CardInterface extends Ui5ArtifactInterface, SluggableInterface
+interface Ui5CardInterface extends Ui5ArtifactInterface
 {
     /**
      * Returns the class name or instance of the associated DataProvider.

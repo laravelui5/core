@@ -3,34 +3,18 @@
 use Fixtures\Hello\Hello;
 use LaravelUi5\Core\Ui5\Ui5Registry;
 
-describe('Slug resolution', function () {
-    it('returns artifact for known slug', function () {
-        $registry = Ui5Registry::fromArray(Hello::ui5Config());
-        $slug = 'app/hello';
-
-        $artifact = $registry->fromSlug($slug);
-        expect($artifact)->not->toBeNull()
-            ->and($artifact->getNamespace())->toContain(Hello::NAMESPACE);
-    });
-
-    it('returns null for unknown slug', function () {
-        $registry = Ui5Registry::fromArray(Hello::ui5Config());
-        expect($registry->fromSlug('app/unknown'))->toBeNull();
-    });
-});
-
 describe('Resource path resolution', function () {
     it('resolves resource path for namespace', function () {
         $registry = Ui5Registry::fromArray(Hello::ui5Config());
         $path = $registry->resolve(Hello::NAMESPACE);
-        expect($path)->toStartWith('/ui5/app/hello/');
+        expect($path)->toStartWith('/ui5/app/com/laravelui5/hello@1.0.0');
     });
 
     it('resolves multiple roots correctly', function () {
         $registry = Ui5Registry::fromArray(Hello::ui5Config());
         $roots = $registry->resolveRoots([Hello::NAMESPACE]);
         expect($roots)->toHaveKey(Hello::NAMESPACE)
-            ->and($roots[Hello::NAMESPACE])->toStartWith('/ui5/app/hello/');
+            ->and($roots[Hello::NAMESPACE])->toStartWith('/ui5/app/com/laravelui5/hello@1.0.0');
     });
 });
 
@@ -40,8 +24,7 @@ describe('Introspect snapshot', function () {
         $data = $registry->exportToCache();
 
         expect($data)->toHaveKeys([
-            'modules', 'artifacts', 'namespaceToModule', 'slugs',
-            'artifactToModule', 'settings'
+            'modules', 'artifacts', 'namespaceToModule', 'artifactToModule', 'settings'
         ]);
     });
 });

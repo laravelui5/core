@@ -11,16 +11,12 @@ it('does not register Ui5Context in the container for non-ui5 routes', function 
 });
 
 it('does register Ui5Context in the container for ui5 routes', function () {
-    $request = Request::create('/ui5/app/hello/1.0.0/index.html', 'GET');
+    $response = $this->get('/ui5/app/com/laravelui5/hello@1.0.0/index.html');
 
-    $middleware = app(ResolveUi5Context::class);
+    expect(app()->bound(Ui5ContextInterface::class))->toBeTrue();
 
-    $middleware->handle($request, function ($req) {
-        expect(app()->bound(Ui5ContextInterface::class))->toBeTrue();
-        $context = app(Ui5ContextInterface::class);
-        expect($context->artifact()->getNamespace())->toBe('com.laravelui5.hello');
-        return response('OK');
-    });
+    $context = app(Ui5ContextInterface::class);
+    expect($context->artifact()->getNamespace())->toBe('com.laravelui5.hello');
 });
 
 it('returns 404 for unknown ui5 path', function () {

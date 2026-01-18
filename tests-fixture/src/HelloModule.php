@@ -9,29 +9,14 @@ use LaravelUi5\Core\Ui5\Contracts\Ui5LibraryInterface;
 
 class HelloModule extends AbstractUi5Module
 {
-    public function hasApp(): bool
+    public function getName(): string
     {
-        return true;
+        return 'com.laravelui5.hello';
     }
 
     public function getApp(): ?Ui5AppInterface
     {
         return new HelloApp($this);
-    }
-
-    public function hasLibrary(): bool
-    {
-        return false;
-    }
-
-    public function getLibrary(): ?Ui5LibraryInterface
-    {
-        return null;
-    }
-
-    public function getArtifactRoot(): Ui5AppInterface|Ui5LibraryInterface
-    {
-        return $this->getApp();
     }
 
     public function getCards(): array
@@ -63,11 +48,6 @@ class HelloModule extends AbstractUi5Module
         return [
             new \Fixtures\Hello\Resources\First\Resource($this)
         ];
-    }
-
-    public function getName(): string
-    {
-        return 'Hello';
     }
 
     public function getDashboards(): array

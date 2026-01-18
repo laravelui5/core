@@ -20,19 +20,14 @@ readonly class PathBasedArtifactResolver implements Ui5ArtifactResolverInterface
 
     public function resolve(Request $request): ?Ui5ArtifactInterface
     {
-        $path = $request->path();
+        $path = $request->route('namespace');
 
-        if (!str_starts_with($path, Ui5CoreServiceProvider::UI5_ROUTE_PREFIX)) {
-            return null;
-        }
-        $relative = trim(substr($path, strlen(Ui5CoreServiceProvider::UI5_ROUTE_PREFIX)), '/');
-
-        $urlKey = ArtifactType::urlKeyFromPath($relative);
-
-        if (is_null($urlKey)) {
+        if (!is_string($path) || '' === $path) {
             return null;
         }
 
-        return $this->registry->fromSlug($urlKey);
+        $namespace = $this->registry->pathToNamespace($path);
+
+        return $this->registry->get($namespace);
     }
 }

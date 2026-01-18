@@ -1,5 +1,6 @@
 <?php
 
+use LaravelUi5\Core\Middleware\ResolveUi5Context;
 use LaravelUi5\Core\Services\PathBasedArtifactResolver;
 
 return [
@@ -184,19 +185,24 @@ return [
 
         'DEV' => [
             'middleware' => [
-                'web'
+                'web',
+                ResolveUi5Context::class,
             ],
         ],
 
         'QS' => [
             'middleware' => [
-                'web', 'auth.odata'
+                'web',
+                ResolveUi5Context::class,
+                'auth.odata'
             ],
         ],
 
         'PRO' => [
             'middleware' => [
-                'web', 'auth.odata'
+                'web',
+                ResolveUi5Context::class,
+                'auth.odata'
             ],
         ],
 

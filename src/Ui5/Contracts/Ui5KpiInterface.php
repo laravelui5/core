@@ -4,7 +4,6 @@ namespace LaravelUi5\Core\Ui5\Contracts;
 
 use LaravelUi5\Core\Enums\AggregationLevel;
 use LaravelUi5\Core\Ui5\Capabilities\KpiProviderInterface;
-use LaravelUi5\Core\Ui5\Capabilities\SluggableInterface;
 
 /**
  * Contract for UI5 KPI tiles embedded in dashboards or standalone views.
@@ -16,7 +15,7 @@ use LaravelUi5\Core\Ui5\Capabilities\SluggableInterface;
  * namespace and version. This enables them to be listed, routed and managed
  * like any other UI5 entity (App, Library, Card, etc.).
  */
-interface Ui5KpiInterface extends Ui5ArtifactInterface, SluggableInterface
+interface Ui5KpiInterface extends Ui5ArtifactInterface
 {
     /**
      * Returns the aggregation level (e.g. daily, weekly, monthly).

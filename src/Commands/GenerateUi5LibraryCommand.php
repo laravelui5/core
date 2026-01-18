@@ -117,6 +117,7 @@ class GenerateUi5LibraryCommand extends BaseGenerator
         // Generate Ui5Module class
         $this->files->put($modulePath, $this->compileStub('Ui5ModuleLib.stub', [
             'phpNamespace' => $phpNamespace,
+            'ui5Namespace' => $descriptor->getNamespace(),
             'class' => "{$name}Library",
             'moduleClass' => "{$name}Module",
             'name' => json_encode($name),

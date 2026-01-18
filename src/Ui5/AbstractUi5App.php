@@ -11,7 +11,7 @@ abstract class AbstractUi5App extends Endpoint implements Ui5AppInterface
 {
     public function __construct(protected Ui5ModuleInterface $module)
     {
-        parent::__construct($module->getSlug());
+        parent::__construct($module->getName());
     }
 
     public function getModule(): Ui5ModuleInterface

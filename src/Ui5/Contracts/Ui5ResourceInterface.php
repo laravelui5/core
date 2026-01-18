@@ -3,7 +3,6 @@
 namespace LaravelUi5\Core\Ui5\Contracts;
 
 use LaravelUi5\Core\Ui5\Capabilities\DataProviderInterface;
-use LaravelUi5\Core\Ui5\Capabilities\SluggableInterface;
 
 /**
  * Contract for discoverable UI5 Resources.
@@ -18,7 +17,7 @@ use LaravelUi5\Core\Ui5\Capabilities\SluggableInterface;
  * The actual execution logic lives in the ResourceDataProvider, keeping
  * metadata and runtime separate.
  */
-interface Ui5ResourceInterface extends Ui5ArtifactInterface, SluggableInterface
+interface Ui5ResourceInterface extends Ui5ArtifactInterface
 {
 
     /**

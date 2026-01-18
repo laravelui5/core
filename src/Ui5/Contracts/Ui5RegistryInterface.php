@@ -58,20 +58,12 @@ interface Ui5RegistryInterface
     public function modules(): array;
 
     /**
-     * Checks whether a module with the given slug exists.
-     *
-     * @param string $slug The URL slug to identify the module (from `config/ui5.php > modules`)
-     * @return bool True if module for slug is known
-     */
-    public function hasModule(string $slug): bool;
-
-    /**
      * Returns the module instance for the given slug, or null if not found.
      *
-     * @param string $slug The URL slug to identify the module (from `config/ui5.php > modules`)
+     * @param string $namespace The URL slug to identify the module (from `config/ui5.php > modules`)
      * @return Ui5ModuleInterface|null The instantiated module, or null if not found
      */
-    public function getModule(string $slug): ?Ui5ModuleInterface;
+    public function getModule(string $namespace): ?Ui5ModuleInterface;
 
     /**
      * Returns all registered artifacts across all modules.
@@ -79,14 +71,6 @@ interface Ui5RegistryInterface
      * @return array<string, Ui5ArtifactInterface>
      */
     public function artifacts(): array;
-
-    /**
-     * Checks whether an artifact with the given namespace is registered.
-     *
-     * @param string $namespace The fqn of the UI5 artifact
-     * @return bool True if namespace for artifact is known
-     */
-    public function has(string $namespace): bool;
 
     /**
      * Returns the artifact instance for the given namespace, or null if not found.
@@ -120,13 +104,32 @@ interface Ui5RegistryInterface
     public function settings(?string $namespace = null): array;
 
     /**
-     * Returns the artifact instance for the given slug (as used in routing or URLs),
-     * or null if not found.
+     * Converts external URI path segments to canonical registry namespace.
      *
-     * @param string $slug The URL slug to identify the artifact
-     * @return Ui5ArtifactInterface|null The instantiated artifact, or null if not found
+     * Example:
+     *  - "io/pragmatiqu/partners" → "io.pragmatiqu.partners"
+     *
+     * This method centralizes URI-to-registry normalization logic and
+     * avoids scattering string transformation rules across the codebase.
+     *
+     * @param string $namespace
+     * @return string
      */
-    public function fromSlug(string $slug): ?Ui5ArtifactInterface;
+    public function pathToNamespace(string $namespace): string;
+
+    /**
+     * Converts canonical registry namespace to external URI path segments.
+     *
+     * Example:
+     *   - "io.pragmatiqu.partners" → "io/pragmatiqu/partners"
+     *
+     *  This method centralizes registry-to-URI normalization logic and
+     *  avoids scattering string transformation rules across the codebase.
+     *
+     * @param string $namespace
+     * @return string
+     */
+    public function namespaceToPath(string $namespace): string;
 
     /**
      * Resolves a full public URL path for the given namespace

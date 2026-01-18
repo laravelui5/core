@@ -12,7 +12,7 @@ pest()->extends(UnitTestCase::class)->in('Unit');
 function getAppSource(): Ui5AppSource
 {
     $registry = Ui5Registry::fromArray(Hello::ui5Config());
-    $module = $registry->getModule(Hello::SLUG);
+    $module = $registry->getModule(Hello::NAMESPACE);
     $app = $module->getApp();
     return $app->getSource();
 }

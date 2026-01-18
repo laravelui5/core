@@ -18,11 +18,6 @@ class HelloApp extends AbstractUi5App
 {
     use HasAssetsTrait;
 
-    public function getModule(): Ui5ModuleInterface
-    {
-        return $this->module;
-    }
-
     public function getType(): ArtifactType
     {
         return ArtifactType::Application;

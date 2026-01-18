@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [3.0.0] - 2026-01-19
+- Remove Sluggable/SlugSettable interfaces
+- Make namespace@version the sole artifact identity
+- Simplify Ui5Registry to build-time, namespace-based lookup
+- Separate module identity from artifact identity
+- Reduce ArtifactType to semantic role and route prefix
+- Move resolution logic fully into middleware
+
 ## [2.4.9] - 2026-01-17
 - Fetch XSRF-Token early
 

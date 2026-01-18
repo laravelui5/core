@@ -8,6 +8,11 @@ use LaravelUi5\Core\Ui5\AbstractUi5Module;
 
 class CoreModule extends AbstractUi5Module
 {
+    public function getName(): string
+    {
+        return 'com.laravelui5.core';
+    }
+
     public function getLibrary(): ?Ui5LibraryInterface
     {
         return new CoreLibrary($this);

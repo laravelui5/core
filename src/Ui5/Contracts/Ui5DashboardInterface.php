@@ -2,9 +2,6 @@
 
 namespace LaravelUi5\Core\Ui5\Contracts;
 
-use LaravelUi5\Core\Ui5\Capabilities\SluggableInterface;
-use LaravelUi5\Core\Ui5\Capabilities\SlugSettableInterface;
-
 /**
  * Represents a UI5 Dashboard artifact that aggregates Tiles and Cards into a structured layout.
  *
@@ -16,7 +13,7 @@ use LaravelUi5\Core\Ui5\Capabilities\SlugSettableInterface;
  * Implementations are responsible for providing a valid XML blade path which can be rendered
  * and injected into the SAPUI5 shell container or application shell.
  */
-interface Ui5DashboardInterface extends Ui5ArtifactInterface, SluggableInterface, SlugSettableInterface
+interface Ui5DashboardInterface extends Ui5ArtifactInterface
 {
     /**
      * Returns the absolute or resource-relative path to the dashboard Blade view.

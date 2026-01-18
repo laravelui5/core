@@ -4,7 +4,6 @@ namespace LaravelUi5\Core\Ui5;
 
 use LaravelUi5\Core\Attributes\Parameter;
 use LaravelUi5\Core\Contracts\ParameterizableInterface;
-use LaravelUi5\Core\Enums\ArtifactType;
 use LaravelUi5\Core\Enums\ParameterSource;
 use LaravelUi5\Core\Exceptions\InvalidHttpMethodActionException;
 use LaravelUi5\Core\Exceptions\InvalidModuleException;
@@ -14,7 +13,6 @@ use LaravelUi5\Core\Ui5\Capabilities\LaravelUi5ManifestKeys;
 use LaravelUi5\Core\Ui5\Capabilities\Ui5ShellFragmentInterface;
 use LaravelUi5\Core\Ui5\Contracts\Ui5ModuleInterface;
 use LaravelUi5\Core\Ui5\Contracts\Ui5RegistryInterface;
-use LaravelUi5\Core\Ui5CoreServiceProvider;
 use ReflectionClass;
 
 /**
@@ -44,11 +42,11 @@ abstract class AbstractManifest implements LaravelUi5ManifestInterface
      */
     public function getFragment(string $module): array
     {
-        if (!$this->registry->hasModule($module)) {
+        $resolved = $this->registry->getModule($module);
+        if (!$resolved) {
             throw new InvalidModuleException($module);
         }
 
-        $resolved = $this->registry->getModule($module);
         $namespace = $resolved->getArtifactRoot()->getNamespace();
 
         $core = [
@@ -112,13 +110,11 @@ abstract class AbstractManifest implements LaravelUi5ManifestInterface
                 ->map(fn(string $parameter) => "/{{$parameter}}")
                 ->implode('');
 
-            $slug = ArtifactType::urlKeyFromArtifact($action);
-
-            $prefix = Ui5CoreServiceProvider::UI5_ROUTE_PREFIX;
+            $path = $this->registry->resolve($action->getNamespace());
 
             $actions[$action->getSlug()] = [
                 'method' => $action->getMethod()->label(),
-                'url' => "/{$prefix}/{$slug}{$uri}"
+                'url' => "{$path}/{$uri}"
             ];
         };
 
@@ -136,13 +132,11 @@ abstract class AbstractManifest implements LaravelUi5ManifestInterface
                     ->map(fn(string $parameter) => "/{{$parameter}}")
                     ->implode('');
 
-                $slug = ArtifactType::urlKeyFromArtifact($resource);
-
-                $prefix = Ui5CoreServiceProvider::UI5_ROUTE_PREFIX;
+                $path = $this->registry->resolve($resource->getNamespace());
 
                 $resources[$resource->getSlug()] = [
                     'method' => 'GET',
-                    'url' => "/{$prefix}/{$slug}{$uri}"
+                    'url' => "{$path}/{$uri}"
                 ];
             }
         }

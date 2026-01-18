@@ -30,6 +30,7 @@ class FeatureTestCase extends \Orchestra\Testbench\TestCase
         $modules = $app['config']->get('ui5.modules', []);
         $modules['hello'] = HelloModule::class;
         $app['config']->set('ui5.modules', $modules);
+        $app['config']->set('ui5.active', 'DEV');
 
         $app->setBasePath(__DIR__);
     }

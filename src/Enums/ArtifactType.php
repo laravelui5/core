@@ -2,7 +2,7 @@
 
 namespace LaravelUi5\Core\Enums;
 
-use LaravelUi5\Core\Exceptions\InvalidPathException;
+use LaravelUi5\Core\Exceptions\NonRoutableArtifactException;
 use LaravelUi5\Core\Ui5\Contracts\Ui5ActionInterface;
 use LaravelUi5\Core\Ui5\Contracts\Ui5AppInterface;
 use LaravelUi5\Core\Ui5\Contracts\Ui5ArtifactInterface;
@@ -167,88 +167,21 @@ enum ArtifactType: int
     }
 
     /**
-     * Returns the composed URL key (slug path) for a given artifact.
+     * Returns the type prefix for routable ArtifactTypes.
      *
-     * The URL key determines the routing path used by the UI5 frontend and Laravel
-     * backend to locate and invoke this artifact. It forms the core part of the
-     * dynamic route segment that appears in URLs like:
-     *
-     *     /ui5/app/{slug}/{version}
-     *     /ui5/card/{module}/{slug}
-     *     /ui5/api/{module}/{action}
-     *
-     * This method mirrors the routing conventions defined in `routes/ui5.php`
-     * and must remain in sync with the corresponding Route::pattern definitions.
-     *
-     * In cases where no slug is required (e.g., Applications or Libraries),
-     * the returned path includes only the module-level key (e.g. "app/core").
-     *
-     * In cases where the artifact is not addressable via URL (e.g., abstract types),
-     * this method returns `null`.
-     *
-     * @param Ui5ArtifactInterface $artifact The artifact to generate the URL key for
-     * @return string|null URL key (e.g. "card/core/budget") or null if an artifact type is not routable
+     * @return string
      */
-    public static function urlKeyFromArtifact(Ui5ArtifactInterface $artifact): ?string
+    public function routePrefix(): string
     {
-        return match ($artifact->getType()) {
-            self::Application => "app/{$artifact->getModule()->getSlug()}",
-            self::Library => "lib/{$artifact->getModule()->getSlug()}",
-            self::Card => "card/{$artifact->getModule()->getSlug()}/{$artifact->getSlug()}",
-            self::Action => "api/{$artifact->getModule()->getSlug()}/{$artifact->getSlug()}",
-            self::Resource => "resource/{$artifact->getModule()->getSlug()}/{$artifact->getSlug()}",
-            self::Dashboard => "dashboard/{$artifact->getSlug()}",
-            self::Report => "report/{$artifact->getSlug()}",
-            self::Dialog, self::Module, self::Tile, self::Kpi => null,
-        };
-    }
-
-    /**
-     * Resolve a UI5 artifact urlKey from a request path.
-     *
-     * This method inspects the path relative to the configured UI5 route prefix
-     * and attempts to construct a valid urlKey suitable for Ui5Registry lookup.
-     *
-     * Expected formats:
-     * - app/{module}
-     * - lib/{module}
-     * - card/{module}/{slug}
-     * - dashboard/{slug}
-     * - report/{module}.{slug}
-     * - api/{module}/{slug}
-     * - resource/{module}/{slug}
-     *
-     * Behavior:
-     * - Returns the normalized urlKey string (e.g. "card/foo/bar").
-     * - Aborts with HTTP 400 if the path matches a UI5 artifact type
-     *   but is incomplete or malformed.
-     * - Aborts with HTTP 400 if the path has fewer than two parts
-     *   or does not map to a known artifact type.
-     *
-     * @param string $path Relative request path below the UI5 route prefix
-     * @return string|null urlKey for Ui5Registry lookup or null if infrastructure route
-     */
-    public static function urlKeyFromPath(string $path): ?string
-    {
-        $parts = explode('/', trim($path, '/'));
-        if (count($parts) < 2) {
-            throw new InvalidPathException($path);
-        }
-        return match ($parts[0]) {
-            'app' => "app/" . $parts[1],
-            'lib' => "lib/" . $parts[1],
-            'dashboard' => "dashboard/" . $parts[1],
-            'report' => "report/" . $parts[1],
-            'card' => isset($parts[2])
-                ? "card/" . $parts[1] . "/" . $parts[2]
-                : null,
-            'api' => isset($parts[2])
-                ? "api/" . $parts[1] . "/" . $parts[2]
-                : null,
-            'resource' => isset($parts[2])
-                ? "resource/" . $parts[1] . "/" . $parts[2]
-                : null,
-            default => null,
+        return match ($this) {
+            self::Application => 'app',
+            self::Library     => 'lib',
+            self::Card        => 'card',
+            self::Dashboard   => 'dashboard',
+            self::Report      => 'report',
+            self::Resource    => 'resource',
+            self::Action      => 'api',
+            default => throw new NonRoutableArtifactException($this->name)
         };
     }
 }

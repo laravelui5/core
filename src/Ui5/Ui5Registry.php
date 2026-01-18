@@ -3,7 +3,6 @@
 namespace LaravelUi5\Core\Ui5;
 
 use LaravelUi5\Core\Attributes\Setting;
-use LaravelUi5\Core\Enums\ArtifactType;
 use LaravelUi5\Core\Infrastructure\Contracts\Ui5SourceStrategyResolverInterface;
 use LaravelUi5\Core\Ui5\Contracts\Ui5ArtifactInterface;
 use LaravelUi5\Core\Ui5\Contracts\Ui5ModuleInterface;
@@ -16,7 +15,7 @@ use ReflectionException;
 class Ui5Registry implements Ui5RegistryInterface
 {
     /**
-     * @var array<string, Ui5ModuleInterface>
+     * @var array<Ui5ModuleInterface>
      */
     protected array $modules = [];
 
@@ -34,11 +33,6 @@ class Ui5Registry implements Ui5RegistryInterface
      * @var array<class-string<Ui5ArtifactInterface>, string>
      */
     protected array $artifactToModule = [];
-
-    /**
-     * @var array<string, Ui5ArtifactInterface>
-     */
-    protected array $slugs = [];
 
     /**
      * @var array<string, array<string, string[]>>
@@ -77,63 +71,24 @@ class Ui5Registry implements Ui5RegistryInterface
         $modules = $config['modules'] ?? [];
 
         // Pass 1: Instantiate modules
-        foreach ($modules as $slug => $moduleClass) {
+        foreach ($modules as $class) {
 
-            if (!class_exists($moduleClass)) {
-                throw new LogicException("UI5 module class [{$moduleClass}] does not exist.");
+            if (!class_exists($class)) {
+                throw new LogicException("UI5 module class `{$class}` does not exist.");
             }
 
-            $strategy = $this->sourceStrategyResolver->resolve($moduleClass);
+            $strategy = $this->sourceStrategyResolver->resolve($class);
 
             /** @var Ui5ModuleInterface $module */
-            $module = new $moduleClass($slug, $strategy);
+            $module = new $class($strategy);
 
-            $this->modules[$slug] = $module;
+            $this->modules[] = $module;
         }
 
         // Pass 2: Reflect everything else
-        $dashboards = $config['dashboards'] ?? [];
-        $reports = $config['reports'] ?? [];
-
-        foreach ($this->modules as $slug => $module) {
-
-            if ($module->hasApp() && ($app = $module->getApp())) {
-                $this->registerArtifact($app, $slug);
-            }
-            if ($module->hasLibrary() && ($lib = $module->getLibrary())) {
-                $this->registerArtifact($lib, $slug);
-            }
-            foreach ($module->getCards() as $card) {
-                $this->registerArtifact($card, $slug);
-            }
-            foreach ($module->getKpis() as $kpi) {
-                $this->registerArtifact($kpi, $slug);
-            }
-            foreach ($module->getTiles() as $tile) {
-                $this->registerArtifact($tile, $slug);
-            }
-            foreach ($module->getActions() as $action) {
-                $this->registerArtifact($action, $slug);
-            }
-            foreach ($module->getResources() as $resource) {
-                $this->registerArtifact($resource, $slug);
-            }
-            foreach ($module->getDialogs() as $dialog) {
-                $this->registerArtifact($dialog, $slug);
-            }
-            foreach ($module->getReports() as $report) {
-                $key = get_class($report);
-                if (array_key_exists($key, $reports)) {
-                    $report->setSlug($reports[$key]);
-                    $this->registerArtifact($report, $slug);
-                }
-            }
-            foreach ($module->getDashboards() as $dashboard) {
-                $key = get_class($dashboard);
-                if (array_key_exists($key, $dashboards)) {
-                    $dashboard->setSlug($dashboards[$key]);
-                    $this->registerArtifact($dashboard, $slug);
-                }
+        foreach ($this->modules as $module) {
+            foreach ($module->getAllArtifacts() as $artifact) {
+                $this->registerArtifact($artifact);
             }
         }
 
@@ -154,21 +109,16 @@ class Ui5Registry implements Ui5RegistryInterface
      * it also registers the composed `urlKey` for reverse lookup.
      *
      * @param Ui5ArtifactInterface $artifact
-     * @param string $moduleSlug
      */
-    protected function registerArtifact(Ui5ArtifactInterface $artifact, string $moduleSlug): void
+    protected function registerArtifact(Ui5ArtifactInterface $artifact): void
     {
         $namespace = $artifact->getNamespace();
+        $moduleNamespace = $artifact->getModule()->getName();
         $this->artifacts[$namespace] = $artifact;
-        $this->namespaceToModule[$namespace] = $moduleSlug;
-        $this->artifactToModule[get_class($artifact)] = $moduleSlug;
+        $this->namespaceToModule[$namespace] = $moduleNamespace;
+        $this->artifactToModule[get_class($artifact)] = $moduleNamespace;
 
         $this->discoverSettings($artifact);
-
-        $urlKey = ArtifactType::urlKeyFromArtifact($artifact);
-        if (null !== $urlKey) {
-            $this->slugs[$urlKey] = $artifact;
-        }
     }
 
     /**
@@ -216,15 +166,12 @@ class Ui5Registry implements Ui5RegistryInterface
         return $this->modules;
     }
 
-    public function hasModule(string $slug): bool
+    public function getModule(string $namespace): ?Ui5ModuleInterface
     {
-        return isset($this->modules[$slug]);
-    }
-
-    public function getModule(string $slug): ?Ui5ModuleInterface
-    {
-        if (isset($this->modules[$slug])) {
-            return $this->modules[$slug];
+        foreach ($this->modules as $module) {
+            if ($module->getName() === $namespace) {
+                return $module;
+            }
         }
 
         return null;
@@ -235,18 +182,9 @@ class Ui5Registry implements Ui5RegistryInterface
         return $this->artifacts;
     }
 
-    public function has(string $namespace): bool
-    {
-        return isset($this->artifacts[$namespace]);
-    }
-
     public function get(string $namespace): ?Ui5ArtifactInterface
     {
-        if (isset($this->artifacts[$namespace])) {
-            return $this->artifacts[$namespace];
-        }
-
-        return null;
+        return $this->artifacts[$namespace] ?? null;
     }
 
     public function settings(?string $namespace = null): array
@@ -260,20 +198,26 @@ class Ui5Registry implements Ui5RegistryInterface
 
     /** -- Laravel routing ------------------------------------------------- */
 
-    public function fromSlug(string $slug): ?Ui5ArtifactInterface
+    public function pathToNamespace(string $namespace): string
     {
-        return $this->slugs[$slug] ?? null;
+        return str_replace('/', '.', trim($namespace, '/'));
+    }
+
+    public function namespaceToPath(string $namespace): string
+    {
+        return str_replace('.', '/', trim($namespace, '.'));
     }
 
     public function resolve(string $namespace): ?string
     {
         $artifact = $this->get($namespace);
         if ($artifact) {
-            $slug = ArtifactType::urlKeyFromArtifact($artifact);
-
             $prefix = Ui5CoreServiceProvider::UI5_ROUTE_PREFIX;
+            $typePrefix = $artifact->getType()->routePrefix();
+            $path = $this->namespaceToPath($namespace);
+            $version = $artifact->getVersion();
 
-            return "/{$prefix}/{$slug}/{$artifact->getVersion()}";
+            return "/{$prefix}/{$typePrefix}/{$path}@{$version}";
         }
 
         return null;
@@ -281,7 +225,11 @@ class Ui5Registry implements Ui5RegistryInterface
 
     public function resolveRoots(array $namespaces): array
     {
-        return collect($namespaces)->mapWithKeys(fn($ns) => [$ns => $this->resolve($ns)])->all();
+        $roots = [];
+        foreach ($namespaces as $ns) {
+            $roots[$ns] = $this->resolve($ns);
+        }
+        return $roots;
     }
 
     /** -- Export ---------------------------------------------------------- */
@@ -292,7 +240,6 @@ class Ui5Registry implements Ui5RegistryInterface
             'artifacts' => $this->artifacts,
             'namespaceToModule' => $this->namespaceToModule,
             'artifactToModule' => $this->artifactToModule,
-            'slugs' => $this->slugs,
             'settings' => $this->settings,
         ];
     }

@@ -6,6 +6,10 @@ use Fixtures\Hello\Errors\Settings\Action;
 
 class DuplicateSettingModule extends HelloModule
 {
+    public function getName(): string
+    {
+        return 'com.laravelui5.hello.duplicate';
+    }
 
     public function getActions(): array
     {
@@ -13,10 +17,5 @@ class DuplicateSettingModule extends HelloModule
             new \Fixtures\Hello\Actions\World\Action($this),
             new Action($this)
         ];
-    }
-
-    public function getName(): string
-    {
-        return 'DuplicateSetting';
     }
 }

@@ -11,11 +11,6 @@ class HelloLibrary extends AbstractUi5Library
 {
     use HasAssetsTrait;
 
-    public function getModule(): Ui5ModuleInterface
-    {
-        return $this->module;
-    }
-
     public function getType(): ArtifactType
     {
         return ArtifactType::Library;

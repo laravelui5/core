@@ -14,7 +14,7 @@ class Hello
     {
         return [
             'modules' => [
-                self::SLUG => \Fixtures\Hello\HelloModule::class,
+                \Fixtures\Hello\HelloModule::class,
             ]
         ];
     }

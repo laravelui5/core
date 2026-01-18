@@ -3,7 +3,6 @@
 namespace LaravelUi5\Core\Ui5\Contracts;
 
 use LaravelUi5\Core\Infrastructure\Contracts\Ui5SourceStrategyInterface;
-use LaravelUi5\Core\Ui5\Capabilities\SluggableInterface;
 
 /**
  * A Ui5Module represents the root-level container for all UI5-related artifacts
@@ -23,7 +22,7 @@ use LaravelUi5\Core\Ui5\Capabilities\SluggableInterface;
  * - A library MUST NOT define subordinate artifacts
  * - Every artifact must have a globally unique namespace
  */
-interface Ui5ModuleInterface extends SluggableInterface
+interface Ui5ModuleInterface
 {
     /**
      * Returns the canonical name of the module.
