@@ -1,11 +1,11 @@
 <?php
 
-namespace {{ namespace }};
+namespace Fixtures\Hello\Dashboards;
 
 use LaravelUi5\Core\Enums\ArtifactType;
 use LaravelUi5\Core\Ui5\AbstractUi5Dashboard;
 
-class {{ class }} extends AbstractUi5Dashboard
+class World extends AbstractUi5Dashboard
 {
     public function getType(): ArtifactType
     {
@@ -14,7 +14,7 @@ class {{ class }} extends AbstractUi5Dashboard
 
     public function getNamespace(): string
     {
-        return '{{ ui5Namespace }}';
+        return 'com.laravelui5.hello.dashboards.world';
     }
 
     public function getVersion(): string
@@ -24,11 +24,11 @@ class {{ class }} extends AbstractUi5Dashboard
 
     public function getTitle(): string
     {
-        return '{{ title }}';
+        return 'World';
     }
 
     public function getDescription(): string
     {
-        return '{{ description }}';
+        return 'Dashboard for World';
     }
 }

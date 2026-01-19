@@ -3,7 +3,7 @@
 namespace LaravelUi5\Core\Controllers;
 
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Blade;
 use LaravelUi5\Core\Contracts\Ui5ContextInterface;
 use LaravelUi5\Core\Ui5\Contracts\Ui5DashboardInterface;
 
@@ -14,7 +14,7 @@ class DashboardController
         /** @var Ui5DashboardInterface $dashboard */
         $dashboard = $context->artifact();
 
-        $xml = View::file($dashboard->getDashboard())->render();
+        $xml = Blade::render($dashboard->getDashboard());
 
         return response($xml, 200, [
             'Content-Type' => 'application/xml',

@@ -52,7 +52,9 @@ class HelloModule extends AbstractUi5Module
 
     public function getDashboards(): array
     {
-        return [];
+        return [
+            new \Fixtures\Hello\Dashboards\World($this)
+        ];
     }
 
     public function getReports(): array
