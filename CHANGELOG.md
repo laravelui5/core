@@ -17,6 +17,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Added `resolvePath` to SourceStrategyInterface
 - Added `CardControllerTest`
 - Added `DashboardControllerTest`
+- Added `ResourceControllerTest`
 
 ## [2.4.9] - 2026-01-17
 - Fetch XSRF-Token early

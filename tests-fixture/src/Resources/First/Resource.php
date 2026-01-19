@@ -3,22 +3,11 @@
 namespace Fixtures\Hello\Resources\First;
 
 use LaravelUi5\Core\Enums\ArtifactType;
+use LaravelUi5\Core\Ui5\AbstractUi5Resource;
 use LaravelUi5\Core\Ui5\Capabilities\DataProviderInterface;
-use LaravelUi5\Core\Ui5\Contracts\Ui5ModuleInterface;
-use LaravelUi5\Core\Ui5\Contracts\Ui5ResourceInterface;
 
-class Resource implements Ui5ResourceInterface
+class Resource extends AbstractUi5Resource
 {
-
-    public function __construct(protected Ui5ModuleInterface $module)
-    {
-    }
-
-    public function getModule(): Ui5ModuleInterface
-    {
-        return $this->module;
-    }
-
     public function getNamespace(): string
     {
         return 'com.laravelui5.hello.resources.first';
@@ -42,11 +31,6 @@ class Resource implements Ui5ResourceInterface
     public function getDescription(): string
     {
         return 'Resource for First';
-    }
-
-    public function getSlug(): string
-    {
-        return 'first';
     }
 
     public function getProvider(): DataProviderInterface
