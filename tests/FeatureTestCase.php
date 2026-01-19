@@ -31,6 +31,19 @@ class FeatureTestCase extends \Orchestra\Testbench\TestCase
         $modules['hello'] = HelloModule::class;
         $app['config']->set('ui5.modules', $modules);
         $app['config']->set('ui5.active', 'DEV');
+        $app['config']->set('lodata', [
+            'prefix' => 'odata',
+            'readonly' => true,
+            'authorization' => false,
+            'namespace' => 'com.laravelui5.hello',
+            'streaming' => true,
+            'disk' => 'local',
+            'version' => '4.0',
+            'pagination' => [
+                'max' => null,
+                'default' => 200,
+            ]
+        ]);
 
         $app->setBasePath(__DIR__);
     }

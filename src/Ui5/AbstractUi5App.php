@@ -12,7 +12,7 @@ abstract class AbstractUi5App extends Endpoint implements Ui5AppInterface
 {
     public function __construct(protected Ui5ModuleInterface $module)
     {
-        parent::__construct(Ui5CoreServiceProvider::ODATA_ROUTE_PREFIX . '/' . $module->getName());
+        parent::__construct(Ui5CoreServiceProvider::ODATA_ROUTE_PREFIX, $module->getName(), $this->getVersion());
     }
 
     public function getModule(): Ui5ModuleInterface

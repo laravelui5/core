@@ -31,11 +31,11 @@ final class ResolveODataEndpoint
 
         $key = $this->registry->pathToNamespace($namespace);
 
-        if (!$this->registry->has($key)) {
+        $artifact = $this->registry->get($key);
+
+        if (!$artifact) {
             throw new MissingArtifactException($key);
         }
-
-        $artifact = $this->registry->get($key);
 
         if (!$artifact instanceof Endpoint) {
             throw new UndefinedEndpointException($key);
