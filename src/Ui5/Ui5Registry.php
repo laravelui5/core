@@ -15,7 +15,7 @@ use ReflectionException;
 class Ui5Registry implements Ui5RegistryInterface
 {
     /**
-     * @var array<Ui5ModuleInterface>
+     * @var array<string, Ui5ModuleInterface>
      */
     protected array $modules = [];
 
@@ -82,7 +82,7 @@ class Ui5Registry implements Ui5RegistryInterface
             /** @var Ui5ModuleInterface $module */
             $module = new $class($strategy);
 
-            $this->modules[] = $module;
+            $this->modules[$module->getName()] = $module;
         }
 
         // Pass 2: Reflect everything else
@@ -168,13 +168,7 @@ class Ui5Registry implements Ui5RegistryInterface
 
     public function getModule(string $namespace): ?Ui5ModuleInterface
     {
-        foreach ($this->modules as $module) {
-            if ($module->getName() === $namespace) {
-                return $module;
-            }
-        }
-
-        return null;
+        return $this->modules[$namespace] ?? null;
     }
 
     public function artifacts(): array

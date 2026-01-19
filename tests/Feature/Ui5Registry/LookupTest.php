@@ -29,9 +29,9 @@ describe('Lookup Layer — Modules', function () {
         expect($modules)->toBeArray()
             ->and($modules)
             ->toHaveCount(1)
-            ->and($modules[0])
+            ->and($modules['com.laravelui5.hello'])
             ->toBeInstanceOf(Ui5ModuleInterface::class)
-            ->and($modules[0]->getName())
+            ->and($modules['com.laravelui5.hello']->getName())
             ->toBe(Hello::NAMESPACE);
     });
 });
