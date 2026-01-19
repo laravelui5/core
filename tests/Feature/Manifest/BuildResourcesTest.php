@@ -19,9 +19,9 @@ describe('AbstractManifest->buildResources', function () {
         // Assert
         expect($resources)
             ->toBeArray()
-            ->toHaveKey('first');
+            ->toHaveKey('com.laravelui5.hello.resources.first');
 
-        $userData = $resources['first'];
+        $userData = $resources['com.laravelui5.hello.resources.first'];
 
         expect($userData)
             ->toMatchArray([

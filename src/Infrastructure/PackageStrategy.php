@@ -3,11 +3,10 @@
 namespace LaravelUi5\Core\Infrastructure;
 
 use JsonException;
-use LaravelUi5\Core\Infrastructure\Contracts\Ui5SourceStrategyInterface;
 use LaravelUi5\Core\Introspection\App\Ui5AppSource;
 use LaravelUi5\Core\Introspection\Library\Ui5LibrarySource;
 
-final readonly class PackageStrategy implements Ui5SourceStrategyInterface
+final readonly class PackageStrategy extends AbstractSourceStrategy
 {
     public function __construct(
         private string $srcPath

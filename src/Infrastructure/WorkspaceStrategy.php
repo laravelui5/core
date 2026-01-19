@@ -7,7 +7,7 @@ use LaravelUi5\Core\Infrastructure\Contracts\Ui5SourceStrategyInterface;
 use LaravelUi5\Core\Introspection\App\Ui5AppSource;
 use LaravelUi5\Core\Introspection\Library\Ui5LibrarySource;
 
-final readonly class WorkspaceStrategy implements Ui5SourceStrategyInterface
+final readonly class WorkspaceStrategy extends AbstractSourceStrategy
 {
     public function __construct(
         private string $srcPath

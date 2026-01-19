@@ -112,7 +112,7 @@ abstract class AbstractManifest implements LaravelUi5ManifestInterface
 
             $path = $this->registry->resolve($action->getNamespace());
 
-            $actions[$action->getSlug()] = [
+            $actions[$action->getNamespace()] = [
                 'method' => $action->getMethod()->label(),
                 'url' => "{$path}/{$uri}"
             ];
@@ -134,7 +134,7 @@ abstract class AbstractManifest implements LaravelUi5ManifestInterface
 
                 $path = $this->registry->resolve($resource->getNamespace());
 
-                $resources[$resource->getSlug()] = [
+                $resources[$resource->getNamespace()] = [
                     'method' => 'GET',
                     'url' => "{$path}/{$uri}"
                 ];

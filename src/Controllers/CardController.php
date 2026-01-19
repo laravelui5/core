@@ -5,11 +5,9 @@ namespace LaravelUi5\Core\Controllers;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Blade;
-use Illuminate\Support\Facades\File;
 use LaravelUi5\Core\Contracts\ConfigurableInterface;
 use LaravelUi5\Core\Contracts\ParameterizableInterface;
 use LaravelUi5\Core\Contracts\Ui5ContextInterface;
-use LaravelUi5\Core\Exceptions\MissingCardManifestException;
 use LaravelUi5\Core\Services\ExecutableHandler;
 use LaravelUi5\Core\Ui5\Capabilities\DataProviderInterface;
 use LaravelUi5\Core\Ui5\Contracts\Ui5CardInterface;
@@ -40,25 +38,15 @@ use LaravelUi5\Core\Ui5\Contracts\Ui5CardInterface;
  */
 class CardController extends Controller
 {
-    public function __invoke(
-        Ui5ContextInterface    $context,
-        ExecutableHandler $dataProviderHandler,
-        string            $app,
-        string            $slug,
-        string            $version
-    ): Response
+    public function __invoke(Ui5ContextInterface $context, ExecutableHandler $dataProviderHandler): Response
     {
         /** @var Ui5CardInterface $card */
         $card = $context->artifact();
 
-        $manifestPath = base_path("ui5/{$app}/resources/ui5/cards/{$slug}.blade.php");
-        if (!File::exists($manifestPath)) {
-            throw new MissingCardManifestException($manifestPath);
-        }
-
         $data = $dataProviderHandler->run($card->getProvider());
 
-        $compiled = Blade::render(File::get($manifestPath), [
+        $compiled = Blade::render($card->getManifest(), [
+            'card' => $card,
             'data' => $data,
         ]);
 

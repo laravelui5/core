@@ -38,4 +38,11 @@ interface Ui5CardInterface extends Ui5ArtifactInterface
      * @return DataProviderInterface
      */
     public function getProvider(): DataProviderInterface;
+
+    /**
+     * Returns the realized manifest.json Blade component as string.
+     *
+     * @return string
+     */
+    public function getManifest(): string;
 }

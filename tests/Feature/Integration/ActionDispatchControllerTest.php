@@ -1,7 +1,7 @@
 <?php
 
 describe('ActionDispatchController', function () {
-    it('serves i18n properties for ui5 app', function () {
+    it('handles POST correctly', function () {
         $response = $this->post('/ui5/api/com/laravelui5/hello/actions/world@1.0.0');
         $response->assertStatus(200);
 

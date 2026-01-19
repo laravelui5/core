@@ -8,7 +8,7 @@ use LaravelUi5\Core\Introspection\App\Ui5AppSource;
 use LaravelUi5\Core\Introspection\Library\Ui5LibrarySource;
 use LogicException;
 
-final readonly class SelfContainedStrategy implements Ui5SourceStrategyInterface
+final readonly class SelfContainedStrategy extends AbstractSourceStrategy
 {
     public function __construct(
         private string $srcPath

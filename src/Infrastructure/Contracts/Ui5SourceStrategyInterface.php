@@ -44,6 +44,8 @@ interface Ui5SourceStrategyInterface
      */
     public function getSourcePath(): string;
 
+    public function resolvePath(string $path): string;
+
     /**
      * Creates and returns a Ui5AppSource instance for introspection.
      *

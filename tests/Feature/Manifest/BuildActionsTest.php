@@ -22,9 +22,12 @@ describe('AbstractManifest->buildActions', function () {
         $action = $actions[Hello::ACTION_SLUG];
         expect($action)
             ->toHaveKeys(['method', 'url'])
-            ->and($action['method'])->toBeString()
-            ->and($action['url'])->toStartWith('/ui5/')
-            ->and($action['url'])->toContain(Hello::ACTION_SLUG);
+            ->and($action['method'])
+            ->toBeString()
+            ->and($action['url'])
+            ->toStartWith('/ui5/')
+            ->and($action['url'])
+            ->toContain(str_replace('.', '/',Hello::ACTION_SLUG));
     });
 
     it('appends path parameters to the url when defined', function () {
