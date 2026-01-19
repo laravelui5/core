@@ -11,6 +11,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Separate module identity from artifact identity
 - Reduce ArtifactType to semantic role and route prefix
 - Move resolution logic fully into middleware
+- Renamed Integration Tests
+- Added Action Test
+- Register OData routes with const prefix
 
 ## [2.4.9] - 2026-01-17
 - Fetch XSRF-Token early

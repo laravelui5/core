@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use LaravelUi5\Core\Controllers\ODataController;
 
 Route::any(
-    'odata/{namespace}@{version}',
+    '{namespace}@{version}',
     ODataController::class
 )->where([
     'namespace' => '.+',

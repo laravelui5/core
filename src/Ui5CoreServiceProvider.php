@@ -37,6 +37,8 @@ class Ui5CoreServiceProvider extends ServiceProvider
 {
     public const string UI5_ROUTE_PREFIX = 'ui5';
 
+    public const string ODATA_ROUTE_PREFIX = 'odata';
+
     /**
      * Middleware stack for the current SYSTEM environment.
      * Set in register() via assertSystemMiddleware().
@@ -67,7 +69,7 @@ class Ui5CoreServiceProvider extends ServiceProvider
 
         $this->app->singleton('ui5.artifact.resolvers', function () {
             return collect(config('ui5.artifact_resolvers'))
-                ->map(fn ($class) => app($class))
+                ->map(fn($class) => app($class))
                 ->all();
         });
 
@@ -75,7 +77,7 @@ class Ui5CoreServiceProvider extends ServiceProvider
         $this->app->bind(Response::class, fn() => new Symfony\Response6());
         $this->app->bind(Filesystem::class, fn() => new Flysystem\Flysystem3());
 
-        $this->mergeConfigFrom(__DIR__.'/../config.php', 'ui5');
+        $this->mergeConfigFrom(__DIR__ . '/../config.php', 'ui5');
     }
 
     public function boot(): void
@@ -90,10 +92,11 @@ class Ui5CoreServiceProvider extends ServiceProvider
             ->middleware($this->systemMiddleware)
             ->group(__DIR__ . '/../routes/ui5.php');
 
-        Route::middleware([
-            ...$this->systemMiddleware,
-            ResolveODataEndpoint::class,
-        ])->group(__DIR__ . '/../routes/odata.php');
+        Route::prefix(self::ODATA_ROUTE_PREFIX)
+            ->middleware([
+                ...$this->systemMiddleware,
+                ResolveODataEndpoint::class,
+            ])->group(__DIR__ . '/../routes/odata.php');
 
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'ui5');
 

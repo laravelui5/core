@@ -10,7 +10,6 @@ use LaravelUi5\Core\Enums\ValueType;
 use LaravelUi5\Core\Traits\HasAssetsTrait;
 use LaravelUi5\Core\Ui5\AbstractUi5App;
 use LaravelUi5\Core\Ui5\Capabilities\LaravelUi5ManifestInterface;
-use LaravelUi5\Core\Ui5\Contracts\Ui5ModuleInterface;
 
 #[Setting('darkMode', type: ValueType::Boolean, default: false, scope: SettingScope::User, role: SettingVisibilityRole::Employee, note: 'Something')]
 #[Setting('maxItems', type: ValueType::Integer, default: 10, scope: SettingScope::Installation, role: SettingVisibilityRole::TenantAdmin, note: 'nobody knows')]
@@ -135,7 +134,7 @@ JSON;
 
     public function getManifestPath(): string
     {
-        return '';
+        return __DIR__ . '/../resources/ui5/manifest.json';
     }
 
     public function getLaravelUiManifest(): LaravelUi5ManifestInterface

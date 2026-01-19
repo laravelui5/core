@@ -45,7 +45,7 @@ class ManifestController extends Controller
             ];
         }
 
-        $manifest['laravel.ui5'] = $app->getLaravelUiManifest()->getFragment($slug);
+        $manifest['laravel.ui5'] = $app->getLaravelUiManifest()->getFragment($app->getNamespace());
 
         return response()->json(
             $this->emptyArraysToObjects($manifest),

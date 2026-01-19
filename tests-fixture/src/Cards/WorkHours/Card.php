@@ -39,11 +39,6 @@ class Card implements Ui5CardInterface
         return '1.0.0';
     }
 
-    public function getSlug(): string
-    {
-        return 'work-hours';
-    }
-
     public function getTitle(): string
     {
         return 'Work Hours';
