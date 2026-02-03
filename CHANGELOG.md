@@ -13,6 +13,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Simplified controller implementations by removing duplicated reflection and injection logic.
 - Removed implicit execution logic duplication across individual controllers.
 - Removed the need for per-controller parameter and setting resolution boilerplate.
+- Added production-ready frontend bundle
 
 ## [3.0.4] - 2026-01-19
 - Added ODataController Test

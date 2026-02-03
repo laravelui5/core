@@ -13,7 +13,7 @@ sap.ui.define([
 	 * Includes helpers for CSRF-safe fetch operations.
 	 *
 	 * @author Michael Gerzabek
-	 * @version 2.3.5
+	 * @version 3.1.0
 	 *
 	 * @public
 	 * @name com.laravelui5.core.Connection
@@ -60,10 +60,12 @@ sap.ui.define([
 
 		/**
 		 * Fetches JSON data from a backend endpoint under the base URL.
-		 * Returns the unwrapped response `data` payload.
+		 * Returns the unwrapped response payload.
 		 */
 		async fetchGet(path) {
-			const response = await fetch(`${this.baseUrl}${path}`, {
+			const serviceUrl = this.getBaseUrl();
+			const normalized = String(path).trim().replace(/^\/+/, "");
+			const response = await fetch(`${serviceUrl}/${normalized}`, {
 				method: "GET",
 				mode: "cors",
 				cache: "no-cache",
@@ -76,16 +78,17 @@ sap.ui.define([
 				}
 			});
 
-			const result = await this.handleJsonResponse(response);
-			return result.data;
+			return await this.handleJsonResponse(response);
 		}
 
 		/**
 		 * Fetches XML data from a backend endpoint under the base URL.
-		 * Parses and returns the XML document.
+		 * Returns the XML document as a string.
 		 */
 		async fetchXml(path) {
-			const response = await fetch(`${this.baseUrl}${path}`, {
+			const serviceUrl = this.getBaseUrl();
+			const normalized = String(path).trim().replace(/^\/+/, "");
+			const response = await fetch(`${serviceUrl}/${normalized}`, {
 				method: "GET",
 				mode: "cors",
 				cache: "no-cache",
@@ -98,20 +101,17 @@ sap.ui.define([
 				}
 			});
 
-			if (!response.ok) {
-				const errorText = await response.text();
-				throw new Error(`Request failed: ${response.status} ${response.statusText}\n${errorText}`);
-			}
-
-			return await response.text();
+			return await this.handleTextResponse(response);
 		}
 
 		/**
 		 * Fetches HTML data from a backend endpoint under the base URL.
-		 * Parses and returns the HTML document.
+		 * Returns the raw HTML markup as a string.
 		 */
 		async fetchHtml(path) {
-			const response = await fetch(`${this.baseUrl}${path}`, {
+			const serviceUrl = this.getBaseUrl();
+			const normalized = String(path).trim().replace(/^\/+/, "");
+			const response = await fetch(`${serviceUrl}/${normalized}`, {
 				method: "GET",
 				mode: "cors",
 				cache: "no-cache",
@@ -124,11 +124,7 @@ sap.ui.define([
 				}
 			});
 
-			if (!response.ok) {
-				throw new Error(`Failed to fetch HTML from '${path}' (status ${response.status})`);
-			}
-
-			return await response.text();
+			return await this.handleTextResponse(response);
 		}
 
 		/**
@@ -136,7 +132,9 @@ sap.ui.define([
 		 * Returns the parsed JSON result.
 		 */
 		async fetchPost(path, data) {
-			const response = await fetch(`${this.baseUrl}${path}`, {
+			const serviceUrl = this.getBaseUrl();
+			const normalized = String(path).trim().replace(/^\/+/, "");
+			const response = await fetch(`${serviceUrl}/${normalized}`, {
 				method: "POST",
 				mode: "cors",
 				cache: "no-cache",
@@ -159,7 +157,9 @@ sap.ui.define([
 		 * Returns the parsed JSON result.
 		 */
 		async fetchPatch(path, data) {
-			const response = await fetch(`${this.baseUrl}${path}`, {
+			const serviceUrl = this.getBaseUrl();
+			const normalized = String(path).trim().replace(/^\/+/, "");
+			const response = await fetch(`${serviceUrl}/${normalized}`, {
 				method: "PATCH",
 				mode: "cors",
 				cache: "no-cache",
@@ -182,7 +182,9 @@ sap.ui.define([
 		 * Returns the parsed JSON result.
 		 */
 		async fetchPut(path, data) {
-			const response = await fetch(`${this.baseUrl}${path}`, {
+			const serviceUrl = this.getBaseUrl();
+			const normalized = String(path).trim().replace(/^\/+/, "");
+			const response = await fetch(`${serviceUrl}/${normalized}`, {
 				method: "PUT",
 				mode: "cors",
 				cache: "no-cache",
@@ -206,7 +208,9 @@ sap.ui.define([
 		 * Returns the parsed JSON result.
 		 */
 		async fetchDelete(path, data) {
-			const response = await fetch(`${this.baseUrl}${path}`, {
+			const serviceUrl = this.getBaseUrl();
+			const normalized = String(path).trim().replace(/^\/+/, "");
+			const response = await fetch(`${serviceUrl}/${normalized}`, {
 				method: "DELETE",
 				mode: "cors",
 				cache: "no-cache",
@@ -229,10 +233,12 @@ sap.ui.define([
 		 * Returns the unwrapped response value array.
 		 */
 		async fetchEntitySet(path) {
-			if (!this.serviceUrl) {
+			const serviceUrl = this.getMainServiceUri();
+			if (!serviceUrl) {
 				throw new Error("[Connection] serviceUrl is not initialized.");
 			}
-			const response = await fetch(`${this.serviceUrl}${path}`, {
+			const normalized = String(path).trim().replace(/^\/+/, "");
+			const response = await fetch(`${serviceUrl}/${normalized}`, {
 				method: "GET",
 				mode: "cors",
 				cache: "no-cache",
@@ -246,6 +252,7 @@ sap.ui.define([
 			});
 
 			const result = await this.handleJsonResponse(response);
+
 			return result.value;
 		}
 
@@ -258,32 +265,63 @@ sap.ui.define([
 		 * - On success, it parses and returns the JSON result.
 		 *
 		 * @param {Response} response
-		 * @returns {Promise<object>}
+		 * @returns {Promise<object|null>}
+		 *
+		 * @private
 		 */
 		async handleJsonResponse(response) {
+
+			let payload = null;
+			if (response.status !== 204) {
+				try {
+					payload = await response.json();
+				} catch (e) {
+					payload = null;
+				}
+			}
+
 			if (!response.ok) {
-				const errorData = await this.tryParseJson(response).catch(() => ({}));
 				const error = new Error(response.statusText);
-				error.cause = errorData;
+				error.status = response.status;
+				error.cause = payload;
 				throw error;
 			}
-			return this.tryParseJson(response);
+
+			return payload;
 		}
 
 		/**
-		 * Attempts to parse a JSON body from a fetch response.
-		 * Returns `{}` if the body is empty or invalid.
+		 * Handles a fetch response with a textual body and standardized error propagation.
 		 *
-		 * @param {Response} response
-		 * @returns {Promise<object>}
+		 * - Reads the response body as text (or returns null for 204 No Content).
+		 * - If the response is not OK (4xx/5xx), throws an Error containing
+		 *   the HTTP status and the raw response payload as `cause`.
+		 * - On success, returns the raw response text.
+		 *
+		 * @param response
+		 * @return {Promise<string|null>}
+		 *
+		 * @private
 		 */
-		async tryParseJson(response) {
-			try {
-				const text = await response.text();
-				return text ? JSON.parse(text) : {};
-			} catch (e) {
-				return {};
+		async handleTextResponse(response) {
+
+			let payload = null;
+			if (response.status !== 204) {
+				try {
+					payload = await response.text();
+				} catch (_) {
+					payload = null;
+				}
 			}
+
+			if (!response.ok) {
+				const error = new Error(response.statusText);
+				error.status = response.status;
+				error.cause = payload;
+				throw error;
+			}
+
+			return payload;
 		}
 	}
 });
