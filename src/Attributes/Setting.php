@@ -3,7 +3,7 @@
 namespace LaravelUi5\Core\Attributes;
 
 use LaravelUi5\Core\Enums\SettingScope;
-use LaravelUi5\Core\Enums\ValueType;
+use LaravelUi5\Core\Enums\SettingType;
 use LaravelUi5\Core\Enums\SettingVisibilityRole;
 
 /**
@@ -54,20 +54,20 @@ use LaravelUi5\Core\Enums\SettingVisibilityRole;
 class Setting
 {
     /**
-     * @param string $setting Technical identifier, e.g. "module.service.setting.foo.bar"
-     * @param ValueType $type Type used to cast the JSON value (maps to `value_type`)
+     * @param string $key Technical identifier, e.g. "module.service.setting.foo.bar"
+     * @param SettingType $type Type used to cast the JSON value (maps to `value_type`)
      * @param mixed $default Default applied by package (developer)
+     * @param string $note Description of the setting's purpose or scope.
      * @param SettingScope $scope Intended/default scope for this setting (maps to `scope`)
      * @param SettingVisibilityRole $role Minimum role allowed to edit (maps to `visibility_role`)
-     * @param string $note Description of the setting's purpose or scope.
      */
     public function __construct(
-        public string                $setting,
-        public ValueType             $type = ValueType::String,
-        public mixed                 $default = null,
+        public string                $key,
+        public SettingType           $type = SettingType::String,
+        public mixed                 $default,
+        public string                $note,
         public SettingScope          $scope = SettingScope::Tenant,
         public SettingVisibilityRole $role = SettingVisibilityRole::TenantAdmin,
-        public string                $note,
     )
     {
     }

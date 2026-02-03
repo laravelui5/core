@@ -6,20 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use LaravelUi5\Core\Attributes\Parameter;
-use LaravelUi5\Core\Contracts\ParameterizableInterface;
 use LaravelUi5\Core\Contracts\ParameterResolverInterface;
-use LaravelUi5\Core\Contracts\Ui5Args;
-use LaravelUi5\Core\Enums\ParameterSource;
-use LaravelUi5\Core\Enums\ValueType;
-use LaravelUi5\Core\Exceptions\InvalidArrayParameterException;
-use LaravelUi5\Core\Exceptions\InvalidArrayValueParameterException;
-use LaravelUi5\Core\Exceptions\InvalidJsonParameterException;
+use LaravelUi5\Core\Enums\ParameterType;
 use LaravelUi5\Core\Exceptions\InvalidParameterDateException;
 use LaravelUi5\Core\Exceptions\InvalidParameterException;
 use LaravelUi5\Core\Exceptions\InvalidParameterTypeException;
 use LaravelUi5\Core\Exceptions\InvalidParameterValueException;
 use LaravelUi5\Core\Exceptions\InvalidPathException;
-use LaravelUi5\Core\Exceptions\MissingRequiredParameterException;
 use LaravelUi5\Core\Exceptions\NoModelFoundForParameterException;
 use ReflectionClass;
 use Throwable;
@@ -27,106 +20,90 @@ use Throwable;
 readonly class ParameterResolver implements ParameterResolverInterface
 {
 
-    public function __construct(
-        private Request $request
-    )
+    public function __construct(private Request $request)
     {
     }
 
-    public function resolve(ParameterizableInterface $target): Ui5Args
+    public function resolve(object $target): array
     {
+        $params = [];
+
+        $route = $this->request->route();
+
+        if (!$route) {
+            throw new InvalidPathException('No route bound to request.');
+        }
+
+        $uri = $route->parameter('uri');
+        $segments = is_string($uri) ? explode('/', $uri) : [];
+
         $reflection = new ReflectionClass($target);
         $attributes = $reflection->getAttributes(Parameter::class);
-        $uriKeys = $this->getUriKeys();
-        $out = [];
-        $index = 0;
 
-        /** @var Parameter $attribute */
-        foreach ($attributes as $a) {
-            $attribute = $a->newInstance();
-            $name = $attribute->name;
-            $raw = null;
-
-            // 1. Get the raw value
-            switch ($attribute->source) {
-                case ParameterSource::Path:
-                    $raw = $uriKeys[$index] ?? null;
-                    break;
-                case ParameterSource::Query:
-                    $raw = $this->request->query($name);
-                    break;
-            }
-
-            // 2. Handle required, default, and nullable
-            if (null === $raw) {
-                if ($attribute->required && !$attribute->nullable && $attribute->default === null) {
-                    throw new MissingRequiredParameterException($name);
-                }
-                $out[$name] = $attribute->nullable ? null : $attribute->default;
-                continue;
-            }
-
-            // 3. Cast raw value
-            $casted = $this->cast($raw, $attribute->type, $attribute->model, $name);
-
-            // 4. Validate casted value
-            if (null === $casted && !$attribute->nullable) {
-                throw new InvalidParameterValueException($name, $attribute->type->label());
-            }
-
-            $out[$name] = $casted;
-        }
-
-        return new Ui5Args($out);
-    }
-
-    public function getUriKeys(): array
-    {
-        $route = $this->request->route();
-        $uri = $route?->parameter('uri');
-        $segments = is_string($uri) ? explode('/', $uri) : [];
-        if (in_array("", $segments, true)) {
+        // Reject empty segments (/a//b)
+        if (in_array('', $segments, true)) {
             throw new InvalidPathException($uri);
         }
-        return $segments;
+
+        // Reject mismatch route <> definitions
+        if (count($segments) !== count($attributes)) {
+            throw new InvalidPathException(sprintf(
+                'Expected %d path parameters, got %d.',
+                count($attributes),
+                count($segments)
+            ));
+        }
+
+        foreach ($attributes as $index => $attribute) {
+
+            /** @var Parameter $definition */
+            $definition = $attribute->newInstance();
+
+            $raw = $segments[$index];
+
+            $value = $this->cast(
+                $raw,
+                $definition->type,
+                $definition->model,
+                $definition->name
+            );
+
+            if ($value === null) {
+                throw new InvalidParameterValueException(
+                    $definition->name,
+                    $definition->type->label()
+                );
+            }
+
+            $params[$definition->name] = $value;
+        }
+        return $params;
     }
 
-    private function cast(mixed $value, ValueType $type, ?string $modelClass, string $name): mixed
+    private function cast(mixed $value, ParameterType $type, ?string $modelClass, string $name): mixed
     {
         switch ($type) {
-            case ValueType::Integer:
+            case ParameterType::Integer:
                 return filter_var($value, FILTER_VALIDATE_INT, FILTER_NULL_ON_FAILURE);
 
-            case ValueType::Float:
+            case ParameterType::Float:
                 return filter_var($value, FILTER_VALIDATE_FLOAT, FILTER_NULL_ON_FAILURE);
 
-            case ValueType::Boolean:
+            case ParameterType::Boolean:
                 // Accepts "true/false/1/0/on/off/yes/no"
                 return filter_var($value, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
 
-            case ValueType::String:
+            case ParameterType::String:
                 return is_string($value) ? $value : (string)$value;
 
-            case ValueType::Date:
+            case ParameterType::Date:
                 try {
                     return Carbon::parse($value);
                 } catch (Throwable) {
                     throw new InvalidParameterDateException($name);
                 }
 
-            case ValueType::IntegerArray:
-                return $this->normalizeArray($value, fn($v) => filter_var($v, FILTER_VALIDATE_INT, FILTER_NULL_ON_FAILURE), $name);
-
-            case ValueType::FloatArray:
-                return $this->normalizeArray($value, fn($v) => filter_var($v, FILTER_VALIDATE_FLOAT, FILTER_NULL_ON_FAILURE), $name);
-
-            case ValueType::BooleanArray:
-                return $this->normalizeArray($value, fn($v) => filter_var($v, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE), $name);
-
-            case ValueType::StringArray:
-                return $this->normalizeArray($value, fn($v) => (string)$v, $name);
-
-            case ValueType::Model:
+            case ParameterType::Model:
                 if ($value instanceof $modelClass) {
                     return $value;
                 }
@@ -142,38 +119,5 @@ readonly class ParameterResolver implements ParameterResolverInterface
         }
 
         throw new InvalidParameterTypeException($name);
-    }
-
-    /**
-     * Normalize input into an array of the given type.
-     *
-     * @param mixed $value   Raw value (array or JSON string)
-     * @param callable $caster Function to cast each element
-     * @param string $name   Parameter name (for error reporting)
-     * @return array
-     */
-    private function normalizeArray(mixed $value, callable $caster, string $name): array
-    {
-        if (is_string($value)) {
-            $decoded = json_decode($value, true);
-            if (!is_array($decoded)) {
-                throw new InvalidJsonParameterException($name);
-            }
-            $value = $decoded;
-        }
-
-        if (!is_array($value)) {
-            throw new InvalidArrayParameterException($name);
-        }
-
-        $out = [];
-        foreach ($value as $v) {
-            $casted = $caster($v);
-            if ($casted === null) {
-                throw new InvalidArrayValueParameterException($name);
-            }
-            $out[] = $casted;
-        }
-        return $out;
     }
 }

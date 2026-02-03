@@ -5,10 +5,8 @@ namespace LaravelUi5\Core\Controllers;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Blade;
-use LaravelUi5\Core\Contracts\ConfigurableInterface;
-use LaravelUi5\Core\Contracts\ParameterizableInterface;
+use LaravelUi5\Core\Contracts\ExecutableInvokerInterface;
 use LaravelUi5\Core\Contracts\Ui5ContextInterface;
-use LaravelUi5\Core\Services\ExecutableHandler;
 use LaravelUi5\Core\Ui5\Capabilities\DataProviderInterface;
 use LaravelUi5\Core\Ui5\Contracts\Ui5CardInterface;
 
@@ -23,10 +21,6 @@ use LaravelUi5\Core\Ui5\Contracts\Ui5CardInterface;
  * - Locate the Blade-based card manifest by convention
  *   (`ui5/{app}/resources/ui5/cards/{slug}.blade.php`).
  * - Resolve the associated {@see DataProviderInterface}.
- * - If the provider implements {@see ParameterizableInterface},
- *   inject validated request parameters.
- * - If the provider implements {@see ConfigurableInterface},
- *   inject resolved settings.
  * - Execute the provider and render the manifest with the resulting data.
  * - Return the compiled manifest as JSON to the client.
  *
@@ -38,12 +32,15 @@ use LaravelUi5\Core\Ui5\Contracts\Ui5CardInterface;
  */
 class CardController extends Controller
 {
-    public function __invoke(Ui5ContextInterface $context, ExecutableHandler $dataProviderHandler): Response
+    public function __invoke(Ui5ContextInterface $context, ExecutableInvokerInterface $invoker): Response
     {
         /** @var Ui5CardInterface $card */
         $card = $context->artifact();
 
-        $data = $dataProviderHandler->run($card->getProvider());
+        $data = $invoker->invoke(
+            $card->getProvider(),
+            'provide'
+        );
 
         $compiled = Blade::render($card->getManifest(), [
             'card' => $card,

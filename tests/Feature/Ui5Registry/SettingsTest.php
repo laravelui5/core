@@ -4,7 +4,7 @@ use Fixtures\Hello\DuplicateSettingModule;
 use Fixtures\Hello\Hello;
 use LaravelUi5\Core\Enums\SettingScope;
 use LaravelUi5\Core\Enums\SettingVisibilityRole;
-use LaravelUi5\Core\Enums\ValueType;
+use LaravelUi5\Core\Enums\SettingType;
 use LaravelUi5\Core\Ui5\Ui5Registry;
 
 describe('Settings discovery', function () {
@@ -20,7 +20,7 @@ describe('Settings discovery', function () {
             ->toHaveKey('maxItems')
             ->and($settings[Hello::NAMESPACE]['darkMode'])
             ->toMatchArray([
-                'type' => ValueType::Boolean,
+                'type' => SettingType::Boolean,
                 'scope' => SettingScope::User,
                 'default' => false,
                 'role' => SettingVisibilityRole::Employee,

@@ -19,6 +19,7 @@ use LaravelUi5\Core\Commands\GenerateUi5LibraryCommand;
 use LaravelUi5\Core\Commands\GenerateUi5ReportCommand;
 use LaravelUi5\Core\Commands\GenerateUi5ResourceCommand;
 use LaravelUi5\Core\Commands\GenerateUi5TileCommand;
+use LaravelUi5\Core\Contracts\ExecutableInvokerInterface;
 use LaravelUi5\Core\Contracts\ParameterResolverInterface;
 use LaravelUi5\Core\Contracts\SettingResolverInterface;
 use LaravelUi5\Core\Infrastructure\Contracts\Ui5SourceOverrideStoreInterface;
@@ -26,6 +27,7 @@ use LaravelUi5\Core\Infrastructure\Contracts\Ui5SourceStrategyResolverInterface;
 use LaravelUi5\Core\Infrastructure\Ui5SourceOverrideStore;
 use LaravelUi5\Core\Infrastructure\Ui5SourceStrategyResolver;
 use LaravelUi5\Core\Middleware\ResolveODataEndpoint;
+use LaravelUi5\Core\Services\ExecutableInvoker;
 use LaravelUi5\Core\Services\ParameterResolver;
 use LaravelUi5\Core\Services\SettingResolver;
 use LaravelUi5\Core\Ui5\Contracts\Ui5RegistryInterface;
@@ -66,6 +68,7 @@ class Ui5CoreServiceProvider extends ServiceProvider
         $this->app->singleton(Ui5RegistryInterface::class, config('ui5.registry', Ui5Registry::class));
         $this->app->singleton(ParameterResolverInterface::class, ParameterResolver::class);
         $this->app->singleton(SettingResolverInterface::class, SettingResolver::class);
+        $this->app->singleton(ExecutableInvokerInterface::class, ExecutableInvoker::class);
 
         $this->app->singleton('ui5.artifact.resolvers', function () {
             return collect(config('ui5.artifact_resolvers'))
@@ -126,7 +129,7 @@ PHP;
 
     protected function assertSystemMiddleware(): void
     {
-        $system = env('SYSTEM', 'PRO');
+        $system = config('ui5.active', 'PRO');
         $middleware = config("ui5.systems.{$system}.middleware");
 
         if (!is_array($middleware) || empty($middleware)) {

@@ -2,10 +2,18 @@
 
 namespace Fixtures\Hello\Actions\World;
 
-use LaravelUi5\Core\Ui5\AbstractConfigurable;
+use Fixtures\Hello\Models\User;
+use LaravelUi5\Core\Attributes\Parameter;
+use LaravelUi5\Core\Enums\ParameterType;
 use LaravelUi5\Core\Ui5\Capabilities\ActionHandlerInterface;
 
-class Handler extends AbstractConfigurable implements ActionHandlerInterface
+#[Parameter(
+    name: 'user',
+    uriKey: 'user',
+    type: ParameterType::Model,
+    model: User::class
+)]
+class UserHandler implements ActionHandlerInterface
 {
     public function handle(): array
     {

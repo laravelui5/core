@@ -3,29 +3,53 @@
 namespace LaravelUi5\Core\Services;
 
 use LaravelUi5\Core\Attributes\Setting;
-use LaravelUi5\Core\Contracts\ConfigurableInterface;
 use LaravelUi5\Core\Contracts\SettingResolverInterface;
-use LaravelUi5\Core\Contracts\Ui5Config;
-use LaravelUi5\Core\Contracts\Ui5ContextInterface;
-use LaravelUi5\Core\Exceptions\MissingDefaultValueException;
+use LaravelUi5\Core\Exceptions\InvalidSettingException;
+use LaravelUi5\Core\Ui5\AbstractConfigurable;
 use ReflectionClass;
 
 readonly class SettingResolver implements SettingResolverInterface
 {
-    public function resolve(ConfigurableInterface $target, ?Ui5ContextInterface $ctx = null): Ui5Config
+    public function resolve(object $target): void
     {
-        $reflection = new ReflectionClass($target);
-        $settings = $reflection->getAttributes(Setting::class);
-
-        $out = [];
-        foreach ($settings as $s) {
-            $setting = $s->newInstance();
-            if (null === $setting->default) {
-                throw new MissingDefaultValueException($setting->key);
-            }
-            $out[$setting->key] = $setting->default;
+        if (!$target instanceof AbstractConfigurable) {
+            throw new InvalidSettingException(
+                sprintf(
+                    'Settings can only be injected into subclasses of %s, %s given.',
+                    AbstractConfigurable::class,
+                    $target::class
+                )
+            );
         }
 
-        return new Ui5Config($out);
+        $reflection = new ReflectionClass($target);
+        $attributes = $reflection->getAttributes(Setting::class);
+
+        if ($attributes === []) {
+            // Nothing to inject – but still valid
+            return;
+        }
+
+        $resolved = [];
+
+        foreach ($attributes as $attribute) {
+            /** @var Setting $definition */
+            $definition = $attribute->newInstance();
+
+            if (array_key_exists($definition->key, $resolved)) {
+                throw new InvalidSettingException(
+                    sprintf(
+                        'Duplicate setting "%s" declared on %s.',
+                        $definition->key,
+                        $target::class
+                    )
+                );
+            }
+
+            // Core does not cast defaults.
+            $resolved[$definition->key] = $definition->default;
+        }
+
+        $target->injectSettings($resolved);
     }
 }

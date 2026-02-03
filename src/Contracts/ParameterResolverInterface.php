@@ -3,6 +3,8 @@
 namespace LaravelUi5\Core\Contracts;
 
 use LaravelUi5\Core\Attributes\Parameter;
+use LaravelUi5\Core\Exceptions\InvalidParameterException;
+use LaravelUi5\Core\Exceptions\InvalidPathException;
 
 /**
  * Contract for validating input parameters for UI5 artifacts.
@@ -16,17 +18,30 @@ use LaravelUi5\Core\Attributes\Parameter;
  * - throw validation exceptions on error
  *
  * @see Parameter
- * @see ParameterizableInterface
  */
 interface ParameterResolverInterface
 {
     /**
-     * Validates and normalizes the report parameters.
+     * Resolve and validate all path parameters for a handler.
      *
-     * This method ensures that all parameters passed to the report
-     * match the declared rules in the report's parameter definition.
+     * This method reflects the handler's invocation contract by:
+     * - reading all #[Parameter] attributes declared on the handler class,
+     * - validating the request path against the declared parameter count,
+     * - resolving and casting each path segment,
+     * - and returning the fully resolved arguments keyed by parameter name.
      *
-     * @param ParameterizableInterface $target The report’s data provider implementation
+     * @param object $target
+     *   The handler instance whose parameters should be resolved.
+     *
+     * @return array<string, mixed>
+     *   A map of resolved argument values keyed by handler parameter name.
+     *
+     * @throws InvalidPathException
+     *   If the number or structure of path segments does not match the
+     *   declared parameter contract.
+     * @throws InvalidParameterException
+     *   If a path segment cannot be resolved or cast according to its
+     *   parameter definition.
      */
-    public function resolve(ParameterizableInterface $target): Ui5Args;
+    public function resolve(object $target): array;
 }

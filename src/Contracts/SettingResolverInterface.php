@@ -12,11 +12,9 @@ namespace LaravelUi5\Core\Contracts;
 interface SettingResolverInterface
 {
     /**
-     * Build an immutable configuration bag for the given target and context.
+     * Resolve and inject all declared settings into the target.
      *
-     * @param ConfigurableInterface $target The class decorated with #[Setting(...)] attributes
-     * @param Ui5ContextInterface|null $ctx Runtime context (artifact, tenant, partner, locale). Can be null in tests.
-     * @return Ui5Config Typed, read-only configuration values keyed by setting key
+     * @param object $target
      */
-    public function resolve(ConfigurableInterface $target, ?Ui5ContextInterface $ctx = null): Ui5Config;
+    public function resolve(object $target): void;
 }

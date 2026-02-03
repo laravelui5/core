@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [3.1.0] - 2026-02-03
+- Introduced a centralized `ExecutableInvoker` to handle execution of Actions, Cards, Reports, and Resources in a uniform way.
+- Added a first-class `SettingResolver` to inject declarative settings (`#[Setting]`) into handlers and providers.
+- Added `AbstractConfigurable` base class to provide read-only, virtual access to injected settings.
+- Refactored `ActionDispatchController`, `CardController` (and upcoming Report/Resource controllers) to delegate execution logic to `ExecutableInvoker`.
+- Unified parameter resolution, setting injection, FormRequest handling, and method invocation across all executable artifacts.
+- Simplified controller implementations by removing duplicated reflection and injection logic.
+- Removed implicit execution logic duplication across individual controllers.
+- Removed the need for per-controller parameter and setting resolution boilerplate.
+
 ## [3.0.4] - 2026-01-19
 - Added ODataController Test
 

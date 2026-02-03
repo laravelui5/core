@@ -3,11 +3,8 @@
 namespace LaravelUi5\Core\Ui5;
 
 use LaravelUi5\Core\Attributes\Parameter;
-use LaravelUi5\Core\Contracts\ParameterizableInterface;
-use LaravelUi5\Core\Enums\ParameterSource;
 use LaravelUi5\Core\Exceptions\InvalidHttpMethodActionException;
 use LaravelUi5\Core\Exceptions\InvalidModuleException;
-use LaravelUi5\Core\Exceptions\InvalidParameterSourceException;
 use LaravelUi5\Core\Ui5\Capabilities\LaravelUi5ManifestInterface;
 use LaravelUi5\Core\Ui5\Capabilities\LaravelUi5ManifestKeys;
 use LaravelUi5\Core\Ui5\Capabilities\Ui5ShellFragmentInterface;
@@ -116,7 +113,7 @@ abstract class AbstractManifest implements LaravelUi5ManifestInterface
                 'method' => $action->getMethod()->label(),
                 'url' => "{$path}/{$uri}"
             ];
-        };
+        }
 
         return $actions;
     }
@@ -127,18 +124,16 @@ abstract class AbstractManifest implements LaravelUi5ManifestInterface
         foreach ($module->getResources() as $resource) {
             $provider = $resource->getProvider();
 
-            if ($provider instanceof ParameterizableInterface) {
-                $uri = collect($this->getPathParameters($provider))
-                    ->map(fn(string $parameter) => "/{{$parameter}}")
-                    ->implode('');
+            $uri = collect($this->getPathParameters($provider))
+                ->map(fn(string $parameter) => "/{{$parameter}}")
+                ->implode('');
 
-                $path = $this->registry->resolve($resource->getNamespace());
+            $path = $this->registry->resolve($resource->getNamespace());
 
-                $resources[$resource->getNamespace()] = [
-                    'method' => 'GET',
-                    'url' => "{$path}/{$uri}"
-                ];
-            }
+            $resources[$resource->getNamespace()] = [
+                'method' => 'GET',
+                'url' => "{$path}/{$uri}"
+            ];
         }
 
         return $resources;
@@ -162,7 +157,7 @@ abstract class AbstractManifest implements LaravelUi5ManifestInterface
 
     /** -- Helper ---------------------------------------------------------- */
 
-    private function getPathParameters(ParameterizableInterface $target): array
+    private function getPathParameters(object $target): array
     {
         $reflection = new ReflectionClass($target);
         $attributes = $reflection->getAttributes(Parameter::class);
@@ -170,11 +165,7 @@ abstract class AbstractManifest implements LaravelUi5ManifestInterface
         foreach ($attributes as $attr) {
             /** @var Parameter $attribute */
             $attribute = $attr->newInstance();
-            if (ParameterSource::Path === $attribute->source) {
-                $parameters[] = $attribute->uriKey;
-            } else {
-                throw new InvalidParameterSourceException($attribute->name, $attribute->source->label());
-            }
+            $parameters[] = $attribute->uriKey;
         }
         return $parameters;
     }

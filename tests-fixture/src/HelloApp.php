@@ -6,13 +6,13 @@ use LaravelUi5\Core\Attributes\Setting;
 use LaravelUi5\Core\Enums\ArtifactType;
 use LaravelUi5\Core\Enums\SettingScope;
 use LaravelUi5\Core\Enums\SettingVisibilityRole;
-use LaravelUi5\Core\Enums\ValueType;
+use LaravelUi5\Core\Enums\SettingType;
 use LaravelUi5\Core\Traits\HasAssetsTrait;
 use LaravelUi5\Core\Ui5\AbstractUi5App;
 use LaravelUi5\Core\Ui5\Capabilities\LaravelUi5ManifestInterface;
 
-#[Setting('darkMode', type: ValueType::Boolean, default: false, scope: SettingScope::User, role: SettingVisibilityRole::Employee, note: 'Something')]
-#[Setting('maxItems', type: ValueType::Integer, default: 10, scope: SettingScope::Installation, role: SettingVisibilityRole::TenantAdmin, note: 'nobody knows')]
+#[Setting('darkMode', type: SettingType::Boolean, default: false, scope: SettingScope::User, role: SettingVisibilityRole::Employee, note: 'Something')]
+#[Setting('maxItems', type: SettingType::Integer, default: 10, scope: SettingScope::Installation, role: SettingVisibilityRole::TenantAdmin, note: 'nobody knows')]
 class HelloApp extends AbstractUi5App
 {
     use HasAssetsTrait;

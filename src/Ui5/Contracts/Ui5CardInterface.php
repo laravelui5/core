@@ -2,8 +2,6 @@
 
 namespace LaravelUi5\Core\Ui5\Contracts;
 
-use LaravelUi5\Core\Contracts\ConfigurableInterface;
-use LaravelUi5\Core\Contracts\ParameterizableInterface;
 use LaravelUi5\Core\Ui5\Capabilities\DataProviderInterface;
 
 /**
@@ -16,14 +14,7 @@ use LaravelUi5\Core\Ui5\Capabilities\DataProviderInterface;
  *
  * Responsibilities:
  * - Declares the association between the Card artifact and its provider.
- * - Provides routing information via {@see SluggableInterface}.
  * - Acts as a discoverable artifact within the {@see Ui5RegistryInterface}.
- *
- * Cross-cutting concerns:
- * - If the provider implements {@see ParameterizableInterface}, validated
- *   request parameters are injected before execution.
- * - If the provider implements {@see ConfigurableInterface}, resolved
- *   settings are injected before execution.
  *
  * Cards are read-only artifacts: they must not change application state.
  */

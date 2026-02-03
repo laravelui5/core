@@ -2,11 +2,12 @@
 
 namespace {{ phpNamespace }};
 
-use LaravelUi5\Core\Ui5\AbstractActionHandler;
+use LaravelUi5\Core\Ui5\AbstractConfigurable;
+use LaravelUi5\Core\Ui5\Capabilities\ActionHandlerInterface;
 
-class Handler extends AbstractActionHandler
+class Handler extends AbstractConfigurable implements ActionHandlerInterface
 {
-    public function execute(): array
+    public function handle(): array
     {
         return [
             'status' => 'Success',

@@ -8,24 +8,13 @@ use LaravelUi5\Core\Enums\ArtifactType;
 use LaravelUi5\Core\Enums\HttpMethod;
 use LaravelUi5\Core\Enums\SettingScope;
 use LaravelUi5\Core\Enums\SettingVisibilityRole;
-use LaravelUi5\Core\Enums\ValueType;
+use LaravelUi5\Core\Enums\SettingType;
 use LaravelUi5\Core\Ui5\AbstractUi5Action;
 use LaravelUi5\Core\Ui5\Capabilities\ActionHandlerInterface;
-use LaravelUi5\Core\Ui5\Contracts\Ui5ModuleInterface;
 
-#[Setting('darkMode', type: ValueType::Boolean, default: false, scope: SettingScope::User, role: SettingVisibilityRole::Employee, note: 'Something')]
+#[Setting('darkMode', type: SettingType::Boolean, default: false, note: 'Something', scope: SettingScope::User, role: SettingVisibilityRole::Employee)]
 class Action extends AbstractUi5Action
 {
-
-    public function __construct(protected Ui5ModuleInterface $module)
-    {
-    }
-
-    public function getModule(): Ui5ModuleInterface
-    {
-        return $this->module;
-    }
-
     public function getNamespace(): string
     {
         return 'com.laravelui5.hello.actions.world';

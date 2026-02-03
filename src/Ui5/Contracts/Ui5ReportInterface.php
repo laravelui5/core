@@ -3,7 +3,6 @@
 namespace LaravelUi5\Core\Ui5\Contracts;
 
 use LaravelUi5\Core\Ui5\Capabilities\DataProviderInterface;
-use LaravelUi5\Core\Ui5\Capabilities\ReportActionInterface;
 
 /**
  * A discoverable UI5 Report Artifact that includes selection, result, and optional actions.
@@ -47,7 +46,7 @@ interface Ui5ReportInterface extends Ui5ArtifactInterface
     /**
      * Returns a list of available follow-up actions.
      *
-     * @return array<string, ReportActionInterface> e.g. ['discard' => new Ui5AnnualCutOffCommitAction()]
+     * @return array<string, Ui5ActionInterface> e.g. ['discard' => new Ui5AnnualCutOffCommitAction()]
      */
     public function getActions(): array;
 }

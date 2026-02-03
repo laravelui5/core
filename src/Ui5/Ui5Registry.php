@@ -141,15 +141,15 @@ class Ui5Registry implements Ui5RegistryInterface
             /** @var Setting $setting */
             $setting = $attr->newInstance();
 
-            if (array_key_exists($setting->setting, $this->settings[$namespace] ?? [])) {
+            if (array_key_exists($setting->key, $this->settings[$namespace] ?? [])) {
                 throw new LogicException(sprintf(
                     'Duplicate setting [%s] found in [%s].',
-                    $setting->setting,
+                    $setting->key,
                     get_class($artifact)
                 ));
             }
 
-            $this->settings[$namespace][$setting->setting] = [
+            $this->settings[$namespace][$setting->key] = [
                 'default' => $setting->default,
                 'type' => $setting->type,
                 'scope' => $setting->scope,

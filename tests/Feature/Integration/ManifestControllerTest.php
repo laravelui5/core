@@ -15,7 +15,7 @@ describe('ManifestController', function () {
         expect($json['sap.app']['id'])
             ->toBe('io.pragmatiqu.portal')
             ->and($json['sap.app']['dataSources']['mainService']['uri'])
-            ->toBe('http://localhost/odata/com.laravelui5.hello/')
+            ->toBe('http://localhost/odata/com/laravelui5/hello@1.0.0/')
             ->and($json['sap.app']['dataSources']['mainService']['type'])
             ->toBe('OData')
             ->and($json['sap.app']['dataSources']['mainService']['settings']['odataVersion'])

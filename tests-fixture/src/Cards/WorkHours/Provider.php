@@ -2,11 +2,12 @@
 
 namespace Fixtures\Hello\Cards\WorkHours;
 
-use LaravelUi5\Core\Ui5\AbstractDataProvider;
+use LaravelUi5\Core\Ui5\AbstractConfigurable;
+use LaravelUi5\Core\Ui5\Capabilities\DataProviderInterface;
 
-class Provider extends AbstractDataProvider
+class Provider extends AbstractConfigurable implements DataProviderInterface
 {
-    public function execute(): array
+    public function provide(): array
     {
         // Example data structure
         return [

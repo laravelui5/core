@@ -2,7 +2,7 @@
 
 namespace LaravelUi5\Core\Ui5\Contracts;
 
-use LaravelUi5\Core\Contracts\ParameterizableInterface;
+use LaravelUi5\Core\Contracts\ParameterResolverInterface;
 use LaravelUi5\Core\Enums\HttpMethod;
 use LaravelUi5\Core\Ui5\Capabilities\ActionHandlerInterface;
 
@@ -17,19 +17,14 @@ use LaravelUi5\Core\Ui5\Capabilities\ActionHandlerInterface;
  *
  * Characteristics:
  * - Actions are always *mutating* operations (never pure reads).
- * - Therefore, they must only be exposed as *POST endpoints*.
+ * - Therefore, they must only be exposed as *mutating endpoints*, e.g. `POST`, `PATCH`, etc.
  * - Route parameters (IDs, slugs) are declared on the ActionHandler and resolved
- *   via {@see ParameterizableInterface}. The dispatcher validates and
- *   injects these before calling the handler.
+ *   via {@see ParameterResolverInterface}.
  * - Body parameters (form data, payloads) are validated *inside the
  *   ActionHandler*, following Laravel best practices.
  *
  * Responsibilities:
- * - Define the action’s slug (via {@see SluggableInterface}).
- * - Provide the {@see ActionHandlerInterface} that executes the logic.
- *
- * Each Action must have a unique slug within its module. The slug is used
- * to generate the manifest entry and the API route.
+ * - Provide the {@see ActionHandlerInterface} that handles the logic.
  */
 interface Ui5ActionInterface extends Ui5ArtifactInterface
 {
