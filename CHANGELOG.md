@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [3.1.1] - 2026-02-
+- Removed enum `AbilityType`
+
 ## [3.1.0] - 2026-02-03
 - Introduced a centralized `ExecutableInvoker` to handle execution of Actions, Cards, Reports, and Resources in a uniform way.
 - Added a first-class `SettingResolver` to inject declarative settings (`#[Setting]`) into handlers and providers.
