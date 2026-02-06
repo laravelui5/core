@@ -41,12 +41,19 @@ class Ui5Registry implements Ui5RegistryInterface
 
     protected Ui5SourceStrategyResolverInterface $sourceStrategyResolver;
 
+    protected Ui5InfrastructureCollector $collector;
+
     /**
      * @throws ReflectionException
      */
-    public function __construct(Ui5SourceStrategyResolverInterface $sourceStrategyResolver, ?array $config = null)
+    public function __construct(
+        Ui5SourceStrategyResolverInterface $source,
+        Ui5InfrastructureCollector         $infra,
+        ?array                             $config = null
+    )
     {
-        $this->sourceStrategyResolver = $sourceStrategyResolver;
+        $this->sourceStrategyResolver = $source;
+        $this->collector = $infra;
 
         if ($config) {
             $this->loadFromArray($config);
@@ -60,7 +67,11 @@ class Ui5Registry implements Ui5RegistryInterface
      */
     public static function fromArray(array $config): self
     {
-        return new self(app(Ui5SourceStrategyResolverInterface::class), $config);
+        return new self(
+            app(Ui5SourceStrategyResolverInterface::class),
+            app(Ui5InfrastructureCollector::class),
+            $config
+        );
     }
 
     /**
@@ -68,7 +79,7 @@ class Ui5Registry implements Ui5RegistryInterface
      */
     protected function loadFromArray(array $config): void
     {
-        $modules = $config['modules'] ?? [];
+        $modules = array_merge($config['modules'] ?? [], $this->collector->all());
 
         // Pass 1: Instantiate modules
         foreach ($modules as $class) {

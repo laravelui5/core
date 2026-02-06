@@ -28,7 +28,7 @@ describe('Lookup Layer — Modules', function () {
 
         expect($modules)->toBeArray()
             ->and($modules)
-            ->toHaveCount(1)
+            ->toHaveCount(4) // the one business module registered in this test + the 3 infra modules!
             ->and($modules['com.laravelui5.hello'])
             ->toBeInstanceOf(Ui5ModuleInterface::class)
             ->and($modules['com.laravelui5.hello']->getName())

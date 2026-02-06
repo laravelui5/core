@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [3.1.1] - 2026-02-
 - Removed enum `AbilityType`
+- Removed attribute `HideIntent`
+- Added interface `Ui5Infrastructure` to mark modules that are inherent to the LaravelUi5 universe
 
 ## [3.1.0] - 2026-02-03
 - Introduced a centralized `ExecutableInvoker` to handle execution of Actions, Cards, Reports, and Resources in a uniform way.

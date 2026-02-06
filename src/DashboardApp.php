@@ -3,12 +3,10 @@
 namespace LaravelUi5\Core;
 
 use Illuminate\Support\Facades\File;
-use LaravelUi5\Core\Attributes\HideIntent;
 use LaravelUi5\Core\Enums\ArtifactType;
 use LaravelUi5\Core\Ui5\AbstractUi5App;
 use LaravelUi5\Core\Ui5\Capabilities\LaravelUi5ManifestInterface;
 
-#[HideIntent]
 class DashboardApp extends AbstractUi5App
 {
     public function getType(): ArtifactType

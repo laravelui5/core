@@ -7,6 +7,7 @@ use Flat3\Lodata\Helper\DBAL;
 use Flat3\Lodata\Helper\Filesystem;
 use Flat3\Lodata\Helper\Flysystem;
 use Flat3\Lodata\Helper\Symfony;
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
@@ -31,6 +32,7 @@ use LaravelUi5\Core\Services\ExecutableInvoker;
 use LaravelUi5\Core\Services\ParameterResolver;
 use LaravelUi5\Core\Services\SettingResolver;
 use LaravelUi5\Core\Ui5\Contracts\Ui5RegistryInterface;
+use LaravelUi5\Core\Ui5\Ui5InfrastructureCollector;
 use LaravelUi5\Core\Ui5\Ui5Registry;
 use LaravelUi5\Core\View\Components\Ui5Element;
 use RuntimeException;
@@ -69,6 +71,7 @@ class Ui5CoreServiceProvider extends ServiceProvider
         $this->app->singleton(ParameterResolverInterface::class, ParameterResolver::class);
         $this->app->singleton(SettingResolverInterface::class, SettingResolver::class);
         $this->app->singleton(ExecutableInvokerInterface::class, ExecutableInvoker::class);
+        $this->app->singleton(Ui5InfrastructureCollector::class);
 
         $this->app->singleton('ui5.artifact.resolvers', function () {
             return collect(config('ui5.artifact_resolvers'))
@@ -83,6 +86,9 @@ class Ui5CoreServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(__DIR__ . '/../config.php', 'ui5');
     }
 
+    /**
+     * @throws BindingResolutionException
+     */
     public function boot(): void
     {
         $this->assertSystemMiddleware();
@@ -90,6 +96,11 @@ class Ui5CoreServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             $this->publishes([__DIR__ . '/../config.php' => config_path('ui5.php')], 'ui5-config');
         }
+
+        $this->app->make(Ui5InfrastructureCollector::class)
+            ->add(CoreModule::class)
+            ->add(DashboardModule::class)
+            ->add(ReportModule::class);
 
         Route::prefix(self::UI5_ROUTE_PREFIX)
             ->middleware($this->systemMiddleware)

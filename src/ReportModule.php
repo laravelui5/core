@@ -2,10 +2,11 @@
 
 namespace LaravelUi5\Core;
 
-use LaravelUi5\Core\Ui5\Contracts\Ui5AppInterface;
 use LaravelUi5\Core\Ui5\AbstractUi5Module;
+use LaravelUi5\Core\Ui5\Contracts\Ui5AppInterface;
+use LaravelUi5\Core\Ui5\Contracts\Ui5Infrastructure;
 
-class ReportModule extends AbstractUi5Module
+class ReportModule extends AbstractUi5Module implements Ui5Infrastructure
 {
     public function getName(): string
     {

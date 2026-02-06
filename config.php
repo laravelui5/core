@@ -67,31 +67,32 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Registered UI5 Modules
+    | Registered UI5 Business Modules
     |--------------------------------------------------------------------------
     |
-    | This array maps a route-level "module" slug to its corresponding module class.
-    | Each module represents a cohesive functional unit within the application,
-    | containing either a UI5 application or a UI5 library, and optionally
-    | associated artifacts like cards, KPIs, reports, tiles, and actions.
+    | This configuration explicitly declares all UI5 business modules
+    | that are part of the application.
     |
-    | The key is used as the first route segment in URLs (e.g., /app/users/...).
-    | It must be unique across all modules to ensure correct routing and reverse lookup.
+    | Each entry must reference a module class implementing
+    | Ui5ModuleInterface and represents a deliberate product decision:
+    | only modules listed here are considered visible, supported,
+    | and user-facing.
     |
-    | ⛔ WARNING: This configuration is critical to the correct resolution of modules,
-    | artifact routing, and namespace disambiguation. Only experienced users should
-    | make changes here, as incorrect mappings will break route resolution and
-    | lead to ambiguous artifact lookups.
+    | Business modules are loaded deterministically during application
+    | bootstrap and form the functional scope of the product.
+    |
+    | Infrastructure modules (e.g. authentication, dashboards, reporting)
+    | are NOT registered here. They are provided implicitly by the platform
+    | or installed packages and are collected automatically.
+    |
+    | Rule of thumb:
+    | Visibility is a product decision, not a technical consequence.
     |
     | Example:
-    | 'users' => \Vendor\Package\UsersModule::class
+    | \Vendor\Package\UsersModule::class
     |
     */
-    'modules' => [
-        CoreModule::class,
-        DashboardModule::class,
-        ReportModule::class,
-    ],
+    'modules' => [],
 
     /*
     |--------------------------------------------------------------------------
