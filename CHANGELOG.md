@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [3.4.0] - 2026-02-07
+- Stabilize UI5 routes and move auth handling to route-level middleware
+- Added `ODataAuthGate` and `Ui5AuthGate`
+- Removed `systems` config switches together with `active`
+
 ## [3.3.3] - 2026-02-07
 - allow container service injection in executable handlers
 

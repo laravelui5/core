@@ -4,6 +4,7 @@ namespace LaravelUi5\Core\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * From SAP documentation: **Security Token Handling**
@@ -26,11 +27,9 @@ class FetchCsrfToken
     /**
      * Handle an incoming request.
      *
-     * @param  Request  $request
-     * @param  Closure  $next
-     * @return mixed
+     * @param Closure(Request): (Response) $next
      */
-    public function handle(Request $request, Closure $next): mixed
+    public function handle(Request $request, Closure $next): Response
     {
         $response = $next($request);
 

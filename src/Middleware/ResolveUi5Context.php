@@ -9,6 +9,7 @@ use LaravelUi5\Core\Contracts\Ui5ContextInterface;
 use LaravelUi5\Core\Contracts\Ui5CoreContext;
 use LaravelUi5\Core\Exceptions\MissingArtifactException;
 use LaravelUi5\Core\Ui5\Contracts\Ui5ArtifactInterface;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Middleware: ResolveUi5Context
@@ -37,7 +38,12 @@ class ResolveUi5Context
     {
     }
 
-    public function handle(Request $request, Closure $next)
+    /**
+     * Handle an incoming request.
+     *
+     * @param Closure(Request): (Response) $next
+     */
+    public function handle(Request $request, Closure $next): Response
     {
         /** @var Ui5ArtifactResolverInterface[] $resolvers */
         $resolvers = app('ui5.artifact.resolvers');

@@ -72,6 +72,11 @@ abstract class AbstractUi5Module implements Ui5ModuleInterface
         return ArtifactType::Module;
     }
 
+    public function requiresAuth(): bool
+    {
+        return true;
+    }
+
     public function getSourceStrategy(): Ui5SourceStrategyInterface
     {
         return $this->strategy;

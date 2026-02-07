@@ -27,7 +27,11 @@ use LaravelUi5\Core\Infrastructure\Contracts\Ui5SourceOverrideStoreInterface;
 use LaravelUi5\Core\Infrastructure\Contracts\Ui5SourceStrategyResolverInterface;
 use LaravelUi5\Core\Infrastructure\Ui5SourceOverrideStore;
 use LaravelUi5\Core\Infrastructure\Ui5SourceStrategyResolver;
+use LaravelUi5\Core\Middleware\FetchCsrfToken;
+use LaravelUi5\Core\Middleware\ODataAuthGate;
 use LaravelUi5\Core\Middleware\ResolveODataEndpoint;
+use LaravelUi5\Core\Middleware\ResolveUi5Context;
+use LaravelUi5\Core\Middleware\Ui5AuthGate;
 use LaravelUi5\Core\Services\ExecutableInvoker;
 use LaravelUi5\Core\Services\ParameterResolver;
 use LaravelUi5\Core\Services\SettingResolver;
@@ -35,19 +39,12 @@ use LaravelUi5\Core\Ui5\Contracts\Ui5RegistryInterface;
 use LaravelUi5\Core\Ui5\Ui5InfrastructureCollector;
 use LaravelUi5\Core\Ui5\Ui5Registry;
 use LaravelUi5\Core\View\Components\Ui5Element;
-use RuntimeException;
 
 class Ui5CoreServiceProvider extends ServiceProvider
 {
     public const string UI5_ROUTE_PREFIX = 'ui5';
 
     public const string ODATA_ROUTE_PREFIX = 'odata';
-
-    /**
-     * Middleware stack for the current SYSTEM environment.
-     * Set in register() via assertSystemMiddleware().
-     */
-    public array $systemMiddleware = [];
 
     public function register(): void
     {
@@ -91,8 +88,6 @@ class Ui5CoreServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        $this->assertSystemMiddleware();
-
         if ($this->app->runningInConsole()) {
             $this->publishes([__DIR__ . '/../config.php' => config_path('ui5.php')], 'ui5-config');
         }
@@ -103,13 +98,18 @@ class Ui5CoreServiceProvider extends ServiceProvider
             ->add(ReportModule::class);
 
         Route::prefix(self::UI5_ROUTE_PREFIX)
-            ->middleware($this->systemMiddleware)
-            ->group(__DIR__ . '/../routes/ui5.php');
+            ->middleware([
+                'web',
+                ResolveUi5Context::class,
+                Ui5AuthGate::class
+            ])->group(__DIR__ . '/../routes/ui5.php');
 
         Route::prefix(self::ODATA_ROUTE_PREFIX)
             ->middleware([
-                ...$this->systemMiddleware,
+                'web',
+                FetchCsrfToken::class,
                 ResolveODataEndpoint::class,
+                ODataAuthGate::class,
             ])->group(__DIR__ . '/../routes/odata.php');
 
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'ui5');
@@ -136,17 +136,5 @@ catch(\\Illuminate\\Contracts\\Container\\BindingResolutionException \$e) {
 ?>
 PHP;
         });
-    }
-
-    protected function assertSystemMiddleware(): void
-    {
-        $system = config('ui5.active', 'PRO');
-        $middleware = config("ui5.systems.{$system}.middleware");
-
-        if (!is_array($middleware) || empty($middleware)) {
-            throw new RuntimeException("Missing middleware configuration for SYSTEM environment: '{$system}' in config/ui5.php");
-        }
-
-        $this->systemMiddleware = $middleware;
     }
 }

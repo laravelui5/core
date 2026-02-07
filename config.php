@@ -104,45 +104,7 @@ return [
     | should be applied for the current environment.
     |
     */
-    'active' => env('SYSTEM', 'PRO'),
-
-    /*
-    |--------------------------------------------------------------------------
-    | System-Specific Configurations
-    |--------------------------------------------------------------------------
-    |
-    | Depending on the active environment (e.g., DEV, QA, PROD), different
-    | middleware definitions can be applied. Middleware is automatically
-    | loaded for all OData endpoints, provided your routing is configured
-    | accordingly.
-    |
-    */
-    'systems' => [
-
-        'DEV' => [
-            'middleware' => [
-                'web',
-                ResolveUi5Context::class,
-            ],
-        ],
-
-        'QS' => [
-            'middleware' => [
-                'web',
-                ResolveUi5Context::class,
-                'auth.odata'
-            ],
-        ],
-
-        'PRO' => [
-            'middleware' => [
-                'web',
-                ResolveUi5Context::class,
-                'auth.odata'
-            ],
-        ],
-
-    ],
+    'force_auth' => env('FORCE_AUTH_4_UI5', true),
 
     'artifact_resolvers' => [
         PathBasedArtifactResolver::class,

@@ -11,6 +11,7 @@ use LaravelUi5\Core\Exceptions\InvalidODataException;
 use LaravelUi5\Core\Exceptions\MissingArtifactException;
 use LaravelUi5\Core\Exceptions\UndefinedEndpointException;
 use LaravelUi5\Core\Ui5\Contracts\Ui5RegistryInterface;
+use Symfony\Component\HttpFoundation\Response;
 
 final class ResolveODataEndpoint
 {
@@ -20,7 +21,12 @@ final class ResolveODataEndpoint
     {
     }
 
-    public function handle(Request $request, Closure $next)
+    /**
+     * Handle an incoming request.
+     *
+     * @param Closure(Request): (Response) $next
+     */
+    public function handle(Request $request, Closure $next): Response
     {
         $namespace = $request->route('namespace');
         $version = $request->route('version');

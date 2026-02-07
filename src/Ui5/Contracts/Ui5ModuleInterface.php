@@ -44,6 +44,17 @@ interface Ui5ModuleInterface
     public function getName(): string;
 
     /**
+     * Indicates whether this module requires an authenticated user
+     * in order to be served.
+     *
+     * Returning true means the module is only accessible to
+     * authenticated users. Public modules should return false.
+     *
+     * @return bool
+     */
+    public function requiresAuth(): bool;
+
+    /**
      * Returns the Ui5SourceStrategy used to resolve UI5 source artifacts
      * for this module.
      *

@@ -6,6 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use LaravelUi5\Core\Contracts\Ui5ContextInterface;
 use LaravelUi5\Core\Exceptions\OutdatedVersionException;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Ensures that only the latest version of a UI5 app artifact is accessible.
@@ -26,7 +27,12 @@ use LaravelUi5\Core\Exceptions\OutdatedVersionException;
  */
 class EnsureFrontendVersionIsLatest
 {
-    public function handle(Request $request, Closure $next)
+    /**
+     * Handle an incoming request.
+     *
+     * @param Closure(Request): (Response) $next
+     */
+    public function handle(Request $request, Closure $next): Response
     {
         /** @var Ui5ContextInterface|null $context */
         $context = app(Ui5ContextInterface::class);
