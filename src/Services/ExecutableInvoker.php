@@ -19,7 +19,9 @@ final readonly class ExecutableInvoker implements ExecutableInvokerInterface
         private Container                  $container,
         private ParameterResolverInterface $parameterResolver,
         private SettingResolverInterface   $settingResolver,
-    ) {}
+    )
+    {
+    }
 
     /**
      * @throws BindingResolutionException
@@ -46,8 +48,8 @@ final readonly class ExecutableInvoker implements ExecutableInvokerInterface
         $reflection = new ReflectionMethod($target, $method);
         $arguments = [];
 
-        foreach ($reflection->getParameters() as $parameter) {
-            $type = $parameter->getType();
+        foreach ($reflection->getParameters() as $argument) {
+            $type = $argument->getType();
 
             if (!$type instanceof ReflectionNamedType) {
                 throw new LogicException(
@@ -65,31 +67,39 @@ final readonly class ExecutableInvoker implements ExecutableInvokerInterface
                 // Triggers authorize() + validation()
                 $request->validateResolved();
 
-                $arguments[$parameter->getName()] = $request;
+                $arguments[$argument->getName()] = $request;
                 continue;
             }
 
             // Declarative parameters
-            if (!array_key_exists($parameter->getName(), $parameters)) {
-                throw new LogicException(
-                    sprintf(
-                        'Unable to resolve parameter $%s (%s) for %s::%s().',
-                        $parameter->getName(),
-                        $paramClass,
-                        $target::class,
-                        $method
-                    )
-                );
+            if (array_key_exists($argument->getName(), $parameters)) {
+
+                $value = $parameters[$argument->getName()];
+
+                // Type guard against method signature
+                if (!is_a($value, $paramClass)) {
+                    throw new InvalidParameterTypeException($argument->getName());
+                }
+
+                $arguments[$argument->getName()] = $value;
+                continue;
             }
 
-            $value = $parameters[$parameter->getName()];
-
-            // Type guard against method signature
-            if (!is_a($value, $paramClass)) {
-                throw new InvalidParameterTypeException($parameter->getName());
+            // Fallback: container-resolvable service
+            if ($this->container->has($paramClass)) {
+                $arguments[$argument->getName()] = $this->container->make($paramClass);
+                continue;
             }
 
-            $arguments[$parameter->getName()] = $value;
+            throw new LogicException(
+                sprintf(
+                    'Unable to resolve parameter $%s (%s) for %s::%s().',
+                    $argument->getName(),
+                    $paramClass,
+                    $target::class,
+                    $method
+                )
+            );
         }
 
         // 4. Invoke via container

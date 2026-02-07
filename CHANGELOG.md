@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [3.3.3] - 2026-02-
+- allow container service injection in executable handlers
+
 ## [3.3.2] - 2026-02-07
 - Corrected caller context for initModels
 
