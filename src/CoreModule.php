@@ -14,6 +14,11 @@ class CoreModule extends AbstractUi5Module implements Ui5Infrastructure
         return 'com.laravelui5.core';
     }
 
+    public function requiresAuth(): bool
+    {
+        return false;
+    }
+
     public function getLibrary(): ?Ui5LibraryInterface
     {
         return new CoreLibrary($this);
