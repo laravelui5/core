@@ -14,6 +14,11 @@ class HelloLibModule extends AbstractUi5Module
         return 'com.laravelui5.hello.lib';
     }
 
+    public function requiresAuth(): bool
+    {
+        return false;
+    }
+
     public function getLibrary(): ?Ui5LibraryInterface
     {
         return new HelloLibrary($this);

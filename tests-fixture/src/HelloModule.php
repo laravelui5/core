@@ -14,6 +14,11 @@ class HelloModule extends AbstractUi5Module
         return 'com.laravelui5.hello';
     }
 
+    public function requiresAuth(): bool
+    {
+        return false;
+    }
+
     public function getApp(): ?Ui5AppInterface
     {
         return new HelloApp($this);
