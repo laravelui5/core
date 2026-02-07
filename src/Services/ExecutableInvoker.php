@@ -85,7 +85,7 @@ final readonly class ExecutableInvoker implements ExecutableInvokerInterface
                 continue;
             }
 
-            // Fallback: container-resolvable service
+            // Container-resolvable service
             if ($this->container->has($paramClass)) {
                 $arguments[$argument->getName()] = $this->container->make($paramClass);
                 continue;
