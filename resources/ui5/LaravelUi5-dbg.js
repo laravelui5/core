@@ -1,6 +1,10 @@
 sap.ui.define([
-	"com/laravelui5/core/Connection"
-], function (Connection) {
+	"com/laravelui5/core/Connection",
+	"sap/ui/model/json/JSONModel"
+], function (
+	Connection,
+	JSONModel
+) {
 	"use strict";
 
 	/** @private */
@@ -45,10 +49,20 @@ sap.ui.define([
 
 			settings = component.getManifestEntry("/laravel.ui5/settings") || {};
 
+			this.initModels(ui5Component);
+			
 			// Core is immediately ready
 			resolveReady();
 
 			return Promise.resolve();
+		},
+
+		initModels(component) {
+			const routes = component.getManifestEntry("/laravel.ui5/routes") || {};
+			component.setModel(new JSONModel(routes), "routes");
+
+			const meta = component.getManifestEntry("/laravel.ui5/meta") || {};
+			component.setModel(new JSONModel(meta), "meta");
 		},
 
 		/**
