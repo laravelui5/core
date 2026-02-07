@@ -26,7 +26,7 @@ class Ui5AuthGate
         $context = app(Ui5ContextInterface::class);
 
         /** @var Ui5ModuleInterface $module */
-        $module = $context->getModule();
+        $module = $context->artifact()->getModule();
 
         // enforce authentication
         if ($module->requiresAuth()) {
