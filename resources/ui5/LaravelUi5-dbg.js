@@ -49,8 +49,8 @@ sap.ui.define([
 
 			settings = component.getManifestEntry("/laravel.ui5/settings") || {};
 
-			this.initModels(ui5Component);
-			
+			LaravelUi5.initModels(ui5Component);
+
 			// Core is immediately ready
 			resolveReady();
 
@@ -370,6 +370,8 @@ sap.ui.define([
 		if (shellOverride) {
 			shell = shellOverride;
 		}
+
+		LaravelUi5.initModels(componentOverride);
 
 		resolveReady();
 	};
