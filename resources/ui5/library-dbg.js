@@ -15,7 +15,7 @@ sap.ui.define([
 	// Hint: sap.ui.getCore() must still be used to support preload with sync bootstrap!
 	sap.ui.getCore().initLibrary({
 		name: "com.laravelui5.core",
-		version: "3.1.0",
+		version: "3.3.1",
 		dependencies: [
 			// keep in sync with the ui5.yaml and .library files
 			"sap.ui.core"
@@ -40,7 +40,7 @@ sap.ui.define([
 	 * @namespace
 	 * @alias com.laravelui5.core
 	 * @author Michael Gerzabek
-	 * @version 3.1.0
+	 * @version 3.3.1
 	 * @public
 	 */
 	return ObjectPath.get("com.laravelui5.core");

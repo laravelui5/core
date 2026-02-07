@@ -5,7 +5,7 @@
     "type": "library",
     "embeds": [],
     "applicationVersion": {
-      "version": "3.1.0"
+      "version": "3.3.1"
     },
     "title": "Laravel Ui5 Core Library",
     "description": "Takes care of the hard parts of integrating UI5 with Laravel: secure CSRF handling, session-aware fetch calls, and a clean way to connect your UIComponent to a backend service—ready to use, no hassle.",
