@@ -9,9 +9,7 @@ use Illuminate\Support\Str;
 class GenerateUi5Dashboard extends BaseGenerator
 {
     protected $signature = 'ui5:dashboard
-        {name : Dashboard name in App/Dashboard format (e.g. Offers/ProjectKpi)}
-        {--php-ns-prefix=Pragmatiqu : Root namespace prefix for PHP classes}
-        {--js-ns-prefix=io.pragmatiqu : Root namespace prefix for JS artifacts}';
+        {name : Dashboard name in App/Dashboard format (e.g. Offers/ProjectKpi)}';
 
     protected $description = 'Generates a new Ui5 Dashboard class using a predefined stub.';
 

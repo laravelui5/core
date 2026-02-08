@@ -2,6 +2,7 @@
 
 namespace LaravelUi5\Core\Ui5;
 
+use LaravelUi5\Core\Enums\ArtifactType;
 use LaravelUi5\Core\Exceptions\MissingCardManifestException;
 use LaravelUi5\Core\Traits\SluggedSource;
 use LaravelUi5\Core\Ui5\Contracts\Ui5CardInterface;
@@ -13,6 +14,11 @@ abstract class AbstractUi5Card implements Ui5CardInterface
 
     public function __construct(protected Ui5ModuleInterface $module)
     {
+    }
+
+    public function getType(): ArtifactType
+    {
+        return ArtifactType::Card;
     }
 
     public function getModule(): Ui5ModuleInterface

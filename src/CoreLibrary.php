@@ -10,11 +10,6 @@ class CoreLibrary extends AbstractUi5Library
 {
     use HasAssetsTrait;
 
-    public function getType(): ArtifactType
-    {
-        return ArtifactType::Library;
-    }
-
     public function getNamespace(): string
     {
         return 'com.laravelui5.core';

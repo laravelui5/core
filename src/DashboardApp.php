@@ -9,11 +9,6 @@ use LaravelUi5\Core\Ui5\Capabilities\LaravelUi5ManifestInterface;
 
 class DashboardApp extends AbstractUi5App
 {
-    public function getType(): ArtifactType
-    {
-        return ArtifactType::Application;
-    }
-
     public function getNamespace(): string
     {
         return 'com.laravelui5.dashboard';

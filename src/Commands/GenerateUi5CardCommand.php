@@ -68,8 +68,8 @@ class GenerateUi5CardCommand extends BaseGenerator
             'providerClass' => $providerClass,
             'ui5Namespace' => $ui5Namespace,
             'urlKey' => $slug,
-            'title' => $this->option('title') ?? Str::headline(Str::replaceLast('Card', '', $card)),
-            'description' => $this->option('description') ?? "Displays key data for " . Str::headline(Str::replaceLast('Card', '', $card)) . ".",
+            'title' => $this->option('title') ?? 'Card Title',
+            'description' => $this->option('description') ?? 'Card Description',
         ]));
 
         // Stub: Provider class
