@@ -9,7 +9,7 @@ class {{ moduleClass }} extends AbstractUi5Module
 {
     public function getName(): string
     {
-        return {{ ui5Namespace }};
+        return '{{ ui5Namespace }}';
     }
 
     public function getApp(): ?Ui5AppInterface

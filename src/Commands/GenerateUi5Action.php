@@ -11,7 +11,6 @@ class GenerateUi5Action extends BaseGenerator
     protected $signature = 'ui5:action
         {name : Action name in App/Action format (e.g. Offers/ToggleLock)}
         {--method=POST : The HTTP method to use for this action}
-        {--with-params : Allow uri encoded parameters}
         {--php-ns-prefix=Pragmatiqu : Root namespace prefix for PHP classes}
         {--js-ns-prefix=io.pragmatiqu : Root namespace prefix for JS artifacts}';
 
@@ -30,7 +29,6 @@ class GenerateUi5Action extends BaseGenerator
         $name = $this->argument('name');
         $phpPrefix = rtrim($this->option('php-ns-prefix'), '\\');
         $jsPrefix = rtrim($this->option('js-ns-prefix'), '.');
-        $withParams = $this->option('with-params') ?? false;
         [$app, $action] = $this->parseCamelCasePair($name);
 
         if (!$this->assertAppExists($app)) {
@@ -41,31 +39,31 @@ class GenerateUi5Action extends BaseGenerator
         $className = Str::studly($action);
         $urlKey = Str::snake($action);
         $slug = Str::kebab($action);
-        $phpNamespace = "{$phpPrefix}\\{$app}\\Actions\\{$className}";
-        $classDir = base_path("ui5/{$app}/src/Actions/{$className}");
-        $variant = $withParams ? 'extends AbstractUi5Action' : 'implements Ui5ActionInterface';
-        $useVariant = $withParams ? 'LaravelUi5\\Core\\Ui5\\AbstractUi5Action' : 'LaravelUi5\\Core\\Ui5\\Contracts\\Ui5ActionInterface';
+        $phpActionNamespace = "{$phpPrefix}\\{$app}\\Actions";
+        $phpHandlerNamespace = "{$phpPrefix}\\{$app}\\Actions\\Handler";
+        $classDir = base_path("ui5/{$app}/src/Actions");
 
-        $classPath = "{$classDir}/Action.php";
+        $classPath = "{$classDir}/{$className}Action.php";
         if (File::exists($classPath)) {
             $this->components->error("Action class already exists: {$classPath}");
             return self::FAILURE;
         }
 
-        File::ensureDirectoryExists($classDir);
+        File::ensureDirectoryExists("{$classDir}/Handler");
 
         $this->files->put($classPath, $this->compileStub('Ui5Action.stub', [
-            'phpNamespace' => $phpNamespace,
+            'phpActionNamespace' => $phpActionNamespace,
+            'phpHandlerNamespace' => $phpHandlerNamespace,
             'ui5Namespace' => implode('.', [$jsPrefix, Str::snake($app), 'actions', $urlKey]),
+            'className' => $className,
             'title' => Str::headline($className),
             'description' => "Action for " . Str::headline($className),
             'slug' => $slug,
-            'variant' => $variant,
-            'useVariant' => $useVariant,
             'method' => trim($this->option('method'))
         ]));
-        $this->files->put("{$classDir}/Handler.php", $this->compileStub('ActionHandler.stub', [
-            'phpNamespace' => $phpNamespace,
+        $this->files->put("{$classDir}/Handler/{$className}Handler.php", $this->compileStub('ActionHandler.stub', [
+            'phpHandlerNamespace' => $phpHandlerNamespace,
+            'className' => $className,
         ]));
 
         $this->components->success("Action created: {$classPath}");

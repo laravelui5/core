@@ -1,11 +1,11 @@
 <?php
 
-namespace {{ phpNamespace }};
+namespace {{ phpHandlerNamespace }};
 
 use LaravelUi5\Core\Ui5\AbstractConfigurable;
 use LaravelUi5\Core\Ui5\Capabilities\ActionHandlerInterface;
 
-class Handler extends AbstractConfigurable implements ActionHandlerInterface
+class {{ className }}Handler extends AbstractConfigurable implements ActionHandlerInterface
 {
     public function handle(): array
     {
