@@ -1,6 +1,6 @@
 <?php
 
-namespace {{ namespace }};
+namespace {{ namespace }}\Provider;
 
 use LaravelUi5\Core\Ui5\Capabilities\ProviderInterface;
 use LaravelUi5\Core\Ui5\Data\Payload;
@@ -9,7 +9,7 @@ use LaravelUi5\Core\Ui5\Enums\DeviationIndicator;
 use LaravelUi5\Core\Ui5\Enums\LoadState;
 use LaravelUi5\Core\Ui5\Enums\ValueColor;
 
-class Provider implements ProviderInterface
+class {{ class }}Provider implements ProviderInterface
 {
     public function calculate(): NumericContentData
     {

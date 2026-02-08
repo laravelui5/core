@@ -2,26 +2,11 @@
 
 namespace {{ namespace }};
 
-use LaravelUi5\Core\Ui5\Contracts\Ui5ModuleInterface;
-use LaravelUi5\Core\Ui5\Contracts\Ui5TileInterface;
-use LaravelUi5\Core\Enums\ArtifactType;
+use LaravelUi5\Core\Ui5\AbstractUi5Tile;
+use {{ namespace }}\Provider\{{ class }}Provider;
 
-class Tile implements Ui5TileInterface
+class {{ class }}Tile extends AbstractUi5Tile
 {
-    public function __construct(protected Ui5ModuleInterface $module)
-    {
-    }
-
-    public function getModule(): Ui5ModuleInterface
-    {
-        return $this->module;
-    }
-
-    public function getType(): ArtifactType
-    {
-        return ArtifactType::Library;
-    }
-
     public function getNamespace(): string
     {
         return '{{ ui5Namespace }}';
@@ -62,7 +47,7 @@ class Tile implements Ui5TileInterface
      */
     public function resolve(): string
     {
-        $provider = new Provider();
+        $provider = new {{ class }}Provider();
         $data = $provider->calculate();
         return $provider->render($data);
     }

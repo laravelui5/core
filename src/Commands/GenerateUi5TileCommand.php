@@ -11,8 +11,6 @@ class GenerateUi5TileCommand extends BaseGenerator
 {
     protected $signature = 'ui5:tile
         {name : Tile name in App/Tile format (e.g. Offers/ProjectKpi)}
-        {--php-ns-prefix=Pragmatiqu : Root namespace prefix for PHP classes}
-        {--js-ns-prefix=io.pragmatiqu : Root namespace prefix for JS artifacts}
         {--title= : The title of the tile}
         {--description= : The description of the tile}';
 
@@ -39,34 +37,36 @@ class GenerateUi5TileCommand extends BaseGenerator
             return self::FAILURE;
         }
 
-        $phpPrefix = rtrim($this->option('php-ns-prefix'), '\\');
-        $jsPrefix = rtrim($this->option('js-ns-prefix'), '.');
+        $phpPrefix = $this->getPhpNamespacePrefix();
+        $jsPrefix = $this->getJsNamespacePrefix();
         $urlKey = Str::snake($tile);
-        $namespace = "{$phpPrefix}\\{$app}\\Tiles\\{$tile}";
+        $namespace = "{$phpPrefix}\\Tiles";
+        $jsNamespace = "{$jsPrefix}.tiles.{$urlKey}";
         $title = $this->option('title') ?? $tile;
         $description = $this->option('description') ?? 'Tile generated via ui5:tile';
 
-        $targetPath = base_path("ui5/{$app}/src/Tiles/{$tile}");
-        if (File::exists("$targetPath/Tile.php")) {
-            $this->components->error("Tile {$name} already exists in Ui5App module {$app}.");
+        $targetPath = base_path("ui5/{$app}/src/Tiles");
+        if (File::exists("$targetPath/{$tile}Tile.php")) {
+            $this->components->error("Tile {$tile} already exists in Ui5App module {$app}.");
             return self::FAILURE;
         }
 
-        File::ensureDirectoryExists($targetPath);
+        File::ensureDirectoryExists("{$targetPath}/Provider");
 
         // Create Ui5Tile
-        $this->files->put("$targetPath/Tile.php", $this->compileStub('Ui5Tile.stub', [
+        $this->files->put("$targetPath/{$tile}Tile.php", $this->compileStub('Ui5Tile.stub', [
             'namespace' => $namespace,
             'class' => $tile,
-            'ui5Namespace' => implode('.', [$jsPrefix, Str::snake($app), 'tiles', $urlKey]),
+            'ui5Namespace' => $jsNamespace,
             'urlKey' => $urlKey,
             'title' => $title,
             'description' => $description,
         ]));
 
         // Create DataProvider
-        $this->files->put("$targetPath/Provider.php", $this->compileStub('TileProvider.stub', [
+        $this->files->put("$targetPath/Provider/{$tile}Provider.php", $this->compileStub('TileProvider.stub', [
             'namespace' => $namespace,
+            'class' => $tile,
         ]));
 
         $this->components->success("UI5 Tile '$tile' created successfully.");
