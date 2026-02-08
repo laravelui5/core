@@ -5,14 +5,13 @@ namespace LaravelUi5\Core\Commands;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
+use ReflectionException;
 
 class GenerateUi5Action extends BaseGenerator
 {
     protected $signature = 'ui5:action
         {name : Action name in App/Action format (e.g. Offers/ToggleLock)}
-        {--method=POST : The HTTP method to use for this action}
-        {--php-ns-prefix=Pragmatiqu : Root namespace prefix for PHP classes}
-        {--js-ns-prefix=io.pragmatiqu : Root namespace prefix for JS artifacts}';
+        {--method=POST : The HTTP method to use for this action}';
 
     protected $description = 'Generates a new Ui5 Action class using a predefined stub.';
 
@@ -24,11 +23,12 @@ class GenerateUi5Action extends BaseGenerator
         $this->files = $files;
     }
 
+    /**
+     * @throws ReflectionException
+     */
     public function handle(): int
     {
         $name = $this->argument('name');
-        $phpPrefix = rtrim($this->option('php-ns-prefix'), '\\');
-        $jsPrefix = rtrim($this->option('js-ns-prefix'), '.');
         [$app, $action] = $this->parseCamelCasePair($name);
 
         if (!$this->assertAppExists($app)) {
@@ -39,8 +39,10 @@ class GenerateUi5Action extends BaseGenerator
         $className = Str::studly($action);
         $urlKey = Str::snake($action);
         $slug = Str::kebab($action);
-        $phpActionNamespace = "{$phpPrefix}\\{$app}\\Actions";
-        $phpHandlerNamespace = "{$phpPrefix}\\{$app}\\Actions\\Handler";
+        $phpPrefix = $this->getPhpNamespacePrefix($app);
+        $jsPrefix = $this->getJsNamespacePrefix($app);
+        $phpActionNamespace = "{$phpPrefix}\\Actions";
+        $phpHandlerNamespace = "{$phpPrefix}\\Actions\\Handler";
         $classDir = base_path("ui5/{$app}/src/Actions");
 
         $classPath = "{$classDir}/{$className}Action.php";
@@ -54,7 +56,7 @@ class GenerateUi5Action extends BaseGenerator
         $this->files->put($classPath, $this->compileStub('Ui5Action.stub', [
             'phpActionNamespace' => $phpActionNamespace,
             'phpHandlerNamespace' => $phpHandlerNamespace,
-            'ui5Namespace' => implode('.', [$jsPrefix, Str::snake($app), 'actions', $urlKey]),
+            'ui5Namespace' => $jsPrefix . '.actions.' . $urlKey,
             'className' => $className,
             'title' => Str::headline($className),
             'description' => "Action for " . Str::headline($className),

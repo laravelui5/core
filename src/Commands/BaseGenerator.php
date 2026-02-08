@@ -2,17 +2,44 @@
 
 namespace LaravelUi5\Core\Commands;
 
-use Illuminate\Support\Str;
 use InvalidArgumentException;
 use Illuminate\Support\Facades\File;
 use Illuminate\Console\Command;
+use ReflectionClass;
+use ReflectionException;
 
 class BaseGenerator extends Command
 {
+    private ReflectionClass $class;
 
     protected function assertAppExists(string $app): bool
     {
-        return File::exists(base_path("ui5/{$app}"));
+        try {
+            $before = get_declared_classes();
+            require_once base_path("ui5/{$app}/src/{$app}Module.php");
+            $after = get_declared_classes();
+            $classes = array_diff($after, $before);
+            $class = reset($classes);
+            $this->class = new ReflectionClass($class);
+            return true;
+        }
+        catch (ReflectionException $e) {
+            return false;
+        }
+    }
+
+    protected function getPhpNamespacePrefix(string $app): string
+    {
+        return $this->class->getNamespaceName();
+    }
+
+    /**
+     * @throws ReflectionException
+     */
+    protected function getJsNamespacePrefix(string $app): string
+    {
+        $module = $this->class->newInstanceWithoutConstructor();
+        return $module->getName();
     }
 
     /**
