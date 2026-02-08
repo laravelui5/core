@@ -15,7 +15,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Refactored directory layout for `Ui5ReportInterface` instances
 - Refactored directory layout for `Ui5ResourceInterface` instances
 - Refactored directory layout for `Ui5TileInterface` instances (no final implementation yet!)
-- 
+- Added SP to composer extra section
+
 ## [3.4.2] - 2026-02-07
 - Allow public access to core lib
 

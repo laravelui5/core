@@ -74,5 +74,12 @@
             "Tests\\": "tests/",
             "Fixtures\\Hello\\": "tests-fixture/src"
         }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "LaravelUi5\\Core\\Ui5CoreServiceProvider"
+            ]
+        }
     }
 }
