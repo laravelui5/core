@@ -28,7 +28,7 @@ class BaseGenerator extends Command
         }
     }
 
-    protected function getPhpNamespacePrefix(string $app): string
+    protected function getPhpNamespacePrefix(): string
     {
         return $this->class->getNamespaceName();
     }
@@ -36,7 +36,7 @@ class BaseGenerator extends Command
     /**
      * @throws ReflectionException
      */
-    protected function getJsNamespacePrefix(string $app): string
+    protected function getJsNamespacePrefix(): string
     {
         $module = $this->class->newInstanceWithoutConstructor();
         return $module->getName();

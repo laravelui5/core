@@ -11,8 +11,6 @@ class GenerateUi5CardCommand extends BaseGenerator
 {
     protected $signature = 'ui5:card
                             {name : The card in the form App/Card}
-                            {--php-ns-prefix=Pragmatiqu : The prefix for the php package}
-                            {--js-ns-prefix=io.pragmatiqu : The prefix for the js package}
                             {--title= : The title of the card}
                             {--description= : The description of the card}';
 
@@ -39,19 +37,19 @@ class GenerateUi5CardCommand extends BaseGenerator
             return self::FAILURE;
         }
 
-        $phpNamespacePrefix = rtrim($this->option('php-ns-prefix'), '\\');;
-        $jsNamespacePrefix = rtrim($this->option('js-ns-prefix'), '.');
+        $phpNamespacePrefix = $this->getPhpNamespacePrefix();
+        $jsNamespacePrefix = $this->getJsNamespacePrefix();
 
         $root = base_path("ui5/{$app}");
         $src = "{$root}/src/Cards/";
         $res = "{$root}/resources/ui5/cards";
 
         $providerClass = "{$card}Provider";
-        $slug = Str::kebab(Str::replaceLast('Card', '', $card));
-        $ui5Namespace = $jsNamespacePrefix . '.' . Str::kebab($app) . '.' . $slug;
+        $slug = Str::snake($card);
+        $ui5Namespace = $jsNamespacePrefix . '.cards.' . $slug;
 
-        $phpCardNamespace = "{$phpNamespacePrefix}\\{$app}\\Cards";
-        $phpProviderNamespace = "{$phpNamespacePrefix}\\{$app}\\Cards\\Provider";
+        $phpCardNamespace = "{$phpNamespacePrefix}\\Cards";
+        $phpProviderNamespace = "{$phpNamespacePrefix}\\Cards\\Provider";
 
         if (File::exists("{$src}/{$card}Card.php")) {
             $this->components->error("Ui5Card {$card} already exists.");
@@ -59,13 +57,14 @@ class GenerateUi5CardCommand extends BaseGenerator
         }
 
         // Create directories
-        File::ensureDirectoryExists($src);
+        File::ensureDirectoryExists("{$src}/Provider");
         File::ensureDirectoryExists($res);
 
         // Stub: Card class
-        $this->files->put("{$src}/Card.php", $this->compileStub('Ui5Card.stub', [
+        $this->files->put("{$src}/{$card}Card.php", $this->compileStub('Ui5Card.stub', [
             'phpCardNamespace' => $phpCardNamespace,
             'phpProviderNamespace' => $phpProviderNamespace,
+            'className' => "{$card}Card",
             'providerClass' => $providerClass,
             'ui5Namespace' => $ui5Namespace,
             'urlKey' => $slug,
@@ -74,8 +73,9 @@ class GenerateUi5CardCommand extends BaseGenerator
         ]));
 
         // Stub: Provider class
-        $this->files->put("{$src}/Provider.php", $this->compileStub('CardProvider.stub', [
+        $this->files->put("{$src}/Provider/{$card}Provider.php", $this->compileStub('CardProvider.stub', [
             'phpProviderNamespace' => $phpProviderNamespace,
+            'className' => "{$card}Provider",
         ]));
 
         // Stub: manifest.blade.php

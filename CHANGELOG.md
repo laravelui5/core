@@ -9,7 +9,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Auth redirect only if login route exists
 - Refactored directory layout for `Ui5ActionInterface` instances
 - Feature artifacts from now on get their namespaces from their hosts 
-
+- Refactored directory layout for `Ui5CardInterface` instances
+- 
 ## [3.4.2] - 2026-02-07
 - Allow public access to core lib
 

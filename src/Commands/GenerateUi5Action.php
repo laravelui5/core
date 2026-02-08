@@ -39,8 +39,8 @@ class GenerateUi5Action extends BaseGenerator
         $className = Str::studly($action);
         $urlKey = Str::snake($action);
         $slug = Str::kebab($action);
-        $phpPrefix = $this->getPhpNamespacePrefix($app);
-        $jsPrefix = $this->getJsNamespacePrefix($app);
+        $phpPrefix = $this->getPhpNamespacePrefix();
+        $jsPrefix = $this->getJsNamespacePrefix();
         $phpActionNamespace = "{$phpPrefix}\\Actions";
         $phpHandlerNamespace = "{$phpPrefix}\\Actions\\Handler";
         $classDir = base_path("ui5/{$app}/src/Actions");

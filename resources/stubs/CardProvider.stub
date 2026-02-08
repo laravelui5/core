@@ -1,11 +1,11 @@
 <?php
 
-namespace {{ phpNamespace }};
+namespace {{ phpProviderNamespace }};
 
 use LaravelUi5\Core\Ui5\AbstractConfigurable;
 use LaravelUi5\Core\Ui5\Capabilities\DataProviderInterface;
 
-class Provider extends AbstractConfigurable implements DataProviderInterface
+class {{ className }} extends AbstractConfigurable implements DataProviderInterface
 {
     public function provide(): array
     {

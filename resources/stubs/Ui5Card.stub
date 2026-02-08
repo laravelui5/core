@@ -1,12 +1,13 @@
 <?php
 
-namespace {{ phpNamespace }};
+namespace {{ phpCardNamespace }};
 
 use LaravelUi5\Core\Enums\ArtifactType;
 use LaravelUi5\Core\Ui5\AbstractUi5Card;
 use LaravelUi5\Core\Ui5\Capabilities\DataProviderInterface;
+use {{ phpProviderNamespace }}\{{ providerClass }};
 
-class Card extends AbstractUi5Card
+class {{ className }} extends AbstractUi5Card
 {
     public function getType(): ArtifactType
     {
@@ -15,7 +16,7 @@ class Card extends AbstractUi5Card
 
     public function getProvider(): DataProviderInterface
     {
-        return new Provider();
+        return new {{ providerClass }}();
     }
 
     public function getNamespace(): string
