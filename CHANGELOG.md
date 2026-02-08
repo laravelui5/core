@@ -12,6 +12,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Refactored directory layout for `Ui5CardInterface` instances
 - Moved `getType` into abstract classes
 - Refactored directory layout for `Ui5DashboardInterface` instances
+- Refactored directory layout for `Ui5ReportInterface` instances
 - 
 ## [3.4.2] - 2026-02-07
 - Allow public access to core lib

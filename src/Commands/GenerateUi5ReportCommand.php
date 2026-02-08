@@ -11,12 +11,8 @@ class GenerateUi5ReportCommand extends BaseGenerator
 {
     protected $signature = 'ui5:report
                             {name : The report in the form App/Report}
-                            {--php-ns-prefix=Pragmatiqu : The namespace prefix for the php package}
-                            {--js-ns-prefix=io.pragmatiqu : Root namespace prefix for JS artifacts}
-                            {--actions=}
                             {--title=}
-                            {--description=}
-                            {--formats=html,pdf}';
+                            {--description=}';
 
     protected $description = 'Create a new UI5 report artifact with all related resources';
 
@@ -45,55 +41,42 @@ class GenerateUi5ReportCommand extends BaseGenerator
         $urlKey = Str::snake($reportName);
         $slug = Str::slug($app);
         $reportNamespace = Str::studly($reportName);
-        $targetPath = base_path("ui5/{$app}/src/Reports/{$reportNamespace}");
+        $targetPath = base_path("ui5/{$app}/src/Reports");
         $resourcesPath = base_path("ui5/{$app}/resources/ui5/reports/{$urlKey}");
-        $phpNamespacePrefix = rtrim($this->option('php-ns-prefix'), '\\');
-        $jsPrefix = rtrim($this->option('js-ns-prefix'), '.');
-        $phpNamespace = "{$phpNamespacePrefix}\\{$app}\\Reports\\$reportNamespace";
-        $jsNamespace = "{$jsPrefix}.reports.{$urlKey}";
+        $phpNamespacePrefix = $this->getPhpNamespacePrefix();
+        $jsNamespacePrefix = $this->getJsNamespacePrefix();
+        $phpNamespace = "{$phpNamespacePrefix}\\Reports";
+        $jsNamespace = "{$jsNamespacePrefix}.reports.{$urlKey}";
 
-        if (File::exists("$targetPath/Report.php")) {
+        if (File::exists("$targetPath/{$reportName}Report.php")) {
             $this->components->error("Ui5Report {$reportName} already exists.");
             return self::FAILURE;
         }
 
-        File::ensureDirectoryExists($targetPath);
+        File::ensureDirectoryExists("{$targetPath}/Provider");
 
         $title = $this->option('title') ?? $reportNamespace;
         $description = $this->option('description') ?? 'Report generated via ui5:report';
-        $formats = explode(',', $this->option('formats'));
-        $actions = explode(',', $this->option('actions'));
 
         // Create Ui5Report
-        $this->files->put("$targetPath/Report.php", $this->compileStub('Ui5Report.stub', [
+        $this->files->put("$targetPath/{$reportName}Report.php", $this->compileStub('Ui5Report.stub', [
             'namespace' => $phpNamespace,
             'ui5Namespace' => $jsNamespace,
+            'className' => "{$reportName}Report",
+            'providerName' => "{$reportName}Provider",
             'app' => Str::kebab($app),
             'urlKey' => $urlKey,
             'slug' => $slug,
             'title' => $title,
             'description' => $description,
-            'formats' => $this->formatArray($formats),
-            'actionEntry' => $this->formatActionEntry($actions),
         ]));
 
         // Create ReportDataProvider
-        $this->files->put("$targetPath/Provider.php", $this->compileStub('ReportProvider.stub', [
+        $this->files->put("$targetPath/Provider/{$reportName}Provider.php", $this->compileStub('ReportProvider.stub', [
             'namespace' => $phpNamespace,
+            'className' => "{$reportName}Provider",
             'name' => 'Report'
         ]));
-
-        // Create Actions
-        foreach ($actions as $action) {
-            if ('' !== $action) {
-                $actionClass = "{$action}Action";
-                $this->files->put("$targetPath/$actionClass.php", $this->compileStub('ReportAction.stub', [
-                    'name' => $actionClass,
-                    'namespace' => $phpNamespace,
-                    'action' => $action
-                ]));
-            }
-        }
 
         // Create UI5 blade templates
         File::ensureDirectoryExists($resourcesPath);
@@ -112,27 +95,5 @@ class GenerateUi5ReportCommand extends BaseGenerator
         $this->components->info("💡 Don’t forget to register this report in your module");
 
         return self::SUCCESS;
-    }
-
-    protected function formatArray(array $items): string
-    {
-        return '[' . implode(', ', array_map(fn($i) => "'{$i}'", $items)) . ']';
-    }
-
-    protected function formatActionEntry(array $actions): string
-    {
-        $actionEntries = [];
-
-        foreach ($actions as $action) {
-            $action = trim($action);
-            if ($action === '') continue;
-
-            $key = Str::snake($action);               // z.B. 'discard_hours'
-            $class = Str::studly($action) . 'Action'; // z.B. 'DiscardHoursAction'
-
-            $actionEntries[] = "'$key' => {$class}::class";
-        }
-
-        return implode(",\n            ", $actionEntries);
     }
 }

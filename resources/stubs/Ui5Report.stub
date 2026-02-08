@@ -2,32 +2,15 @@
 
 namespace {{ namespace }};
 
+use LaravelUi5\Core\Ui5\AbstractUi5Report;
 use LaravelUi5\Core\Ui5\Capabilities\DataProviderInterface;
-use LaravelUi5\Core\Ui5\Contracts\Ui5ModuleInterface;
-use LaravelUi5\Core\Ui5\Contracts\Ui5ReportInterface;
-use LaravelUi5\Core\Enums\ArtifactType;
+use {{ namespace }}\Provider\{{ providerName }};
 
-class Report implements Ui5ReportInterface
+class {{ className }} extends AbstractUi5Report
 {
-    private string $slug;
-
-    public function __construct(protected Ui5ModuleInterface $module)
-    {
-    }
-
-    public function getModule(): Ui5ModuleInterface
-    {
-        return $this->module;
-    }
-
     public function getNamespace(): string
     {
         return '{{ ui5Namespace }}';
-    }
-
-    public function getType(): ArtifactType
-    {
-        return ArtifactType::Report;
     }
 
     public function getVersion(): string
@@ -45,19 +28,9 @@ class Report implements Ui5ReportInterface
         return '{{ description }}';
     }
 
-    public function getSlug(): string
-    {
-        return $this->slug;
-    }
-
-    public function setSlug(string $slug): void
-    {
-        $this->slug = $slug;
-    }
-
     public function getProvider(): DataProviderInterface
     {
-        return new Provider();
+        return new {{ providerName }}();
     }
 
     public function getSelectionViewPath(): string
@@ -77,13 +50,11 @@ class Report implements Ui5ReportInterface
 
     public function getSupportedFormats(): array
     {
-        return {{ formats }};
+        return [];
     }
 
     public function getActions(): array
     {
-        return [
-            {{ actionEntry }}
-        ];
+        return [];
     }
 }
