@@ -31,12 +31,12 @@ class GenerateUi5Dashboard extends BaseGenerator
             return self::FAILURE;
         }
 
-        $phpPrefix = rtrim($this->option('php-ns-prefix'), '\\');
-        $jsPrefix = rtrim($this->option('js-ns-prefix'), '.');
+        $phpPrefix = $this->getPhpNamespacePrefix();
+        $jsPrefix = $this->getJsNamespacePrefix();
 
         $className = Str::studly($dashboard);
         $urlKey = Str::snake($dashboard);
-        $namespace = "{$phpPrefix}\\{$app}\\Dashboards";
+        $namespace = "{$phpPrefix}\\Dashboards";
         $classPath = base_path("ui5/{$app}/src/Dashboards");
         $bladePath = base_path("ui5/{$app}/resources/ui5/dashboards");
 
@@ -58,7 +58,7 @@ class GenerateUi5Dashboard extends BaseGenerator
         $this->files->put($filePath, $this->compileStub('Ui5Dashboard.stub', [
             'namespace' => $namespace,
             'class' => $className,
-            'ui5Namespace' => implode('.', [$jsPrefix, Str::snake($app), 'dashboards', Str::kebab($dashboard)]),
+            'ui5Namespace' => $jsPrefix . '.dashboards.' . Str::kebab($dashboard),
             'title' => Str::headline($className),
             'description' => "Dashboard for " . Str::headline($className),
             'url_key' => Str::kebab($dashboard),

@@ -2,16 +2,10 @@
 
 namespace {{ namespace }};
 
-use LaravelUi5\Core\Enums\ArtifactType;
 use LaravelUi5\Core\Ui5\AbstractUi5Dashboard;
 
 class {{ class }} extends AbstractUi5Dashboard
 {
-    public function getType(): ArtifactType
-    {
-        return ArtifactType::Dashboard;
-    }
-
     public function getNamespace(): string
     {
         return '{{ ui5Namespace }}';

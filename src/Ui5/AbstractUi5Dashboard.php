@@ -2,6 +2,7 @@
 
 namespace LaravelUi5\Core\Ui5;
 
+use LaravelUi5\Core\Enums\ArtifactType;
 use LaravelUi5\Core\Exceptions\MissingDashboardException;
 use LaravelUi5\Core\Traits\SluggedSource;
 use LaravelUi5\Core\Ui5\Contracts\Ui5DashboardInterface;
@@ -13,6 +14,11 @@ abstract class AbstractUi5Dashboard implements Ui5DashboardInterface
 
     public function __construct(protected Ui5ModuleInterface $module)
     {
+    }
+
+    public function getType(): ArtifactType
+    {
+        return ArtifactType::Dashboard;
     }
 
     public function getModule(): Ui5ModuleInterface
