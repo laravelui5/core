@@ -6,6 +6,7 @@ use Closure;
 use Flat3\Lodata\Endpoint;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 use LaravelUi5\Core\Ui5\Contracts\Ui5AppInterface;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -29,7 +30,7 @@ class ODataAuthGate
         $module = $context->getModule();
 
         // enforce authentication
-        if ($module->requiresAuth()) {
+        if ($module->requiresAuth() && Route::has('login')) {
             if (!Auth::check()) {
                 return redirect()->guest(route('login'));
             }

@@ -5,6 +5,7 @@ namespace LaravelUi5\Core\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 use LaravelUi5\Core\Contracts\Ui5ContextInterface;
 use LaravelUi5\Core\Ui5\Contracts\Ui5ModuleInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -29,7 +30,7 @@ class Ui5AuthGate
         $module = $context->artifact()->getModule();
 
         // enforce authentication
-        if ($module->requiresAuth()) {
+        if ($module->requiresAuth() && Route::has('login')) {
             if (!Auth::check()) {
                 return redirect()->guest(route('login'));
             }
