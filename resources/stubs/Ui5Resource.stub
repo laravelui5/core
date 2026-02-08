@@ -2,20 +2,15 @@
 
 namespace {{ phpNamespace }};
 
-use LaravelUi5\Core\Enums\ArtifactType;
 use LaravelUi5\Core\Ui5\AbstractUi5Resource;
 use LaravelUi5\Core\Ui5\Capabilities\DataProviderInterface;
+use {{ phpNamespace }}\Provider\{{ className }}Provider;
 
-class Resource extends AbstractUi5Resource
+class {{ className }}Resource extends AbstractUi5Resource
 {
     public function getNamespace(): string
     {
         return '{{ ui5Namespace }}';
-    }
-
-    public function getType(): ArtifactType
-    {
-        return ArtifactType::Resource;
     }
 
     public function getVersion(): string
@@ -35,6 +30,6 @@ class Resource extends AbstractUi5Resource
 
     public function getProvider(): DataProviderInterface
     {
-        return new Provider();
+        return new {{ className }}Provider();
     }
 }
