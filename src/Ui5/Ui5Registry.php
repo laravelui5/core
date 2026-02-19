@@ -91,7 +91,8 @@ class Ui5Registry implements Ui5RegistryInterface
      */
     protected function loadFromArray(array $config): void
     {
-        $modules = array_merge($config['modules'] ?? [], $this->collector->all());
+        // infrastructure before contributed modules
+        $modules = array_merge($this->collector->all(), $config['modules'] ?? []);
 
         // Pass 1: Instantiate modules
         foreach ($modules as $class) {
