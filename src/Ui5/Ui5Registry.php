@@ -63,11 +63,13 @@ class Ui5Registry implements Ui5RegistryInterface
     }
 
     /**
+     * @return static
+     *
      * @throws ReflectionException
      */
     public static function fromArray(array $config): self
     {
-        return new self(
+        return new static(
             app(Ui5SourceStrategyResolverInterface::class),
             app(Ui5InfrastructureCollector::class),
             $config

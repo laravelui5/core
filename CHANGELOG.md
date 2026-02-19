@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [3.5.1] - 2026-02-19
+- enable late static binding in fromArray() factory
+
 ## [3.5.0] - 2026-02-08
 - Adopted tests
 - Auth redirect only if login route exists
