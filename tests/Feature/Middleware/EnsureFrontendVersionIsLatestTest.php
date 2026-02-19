@@ -14,7 +14,7 @@ beforeEach(function () {
 });
 
 it('allows request when version matches (direct middleware test)', function () {
-    $hello = $this->registry->get('com.laravelui5.hello');
+    $hello = $this->registry->getArtifact('com.laravelui5.hello');
 
     $request = Request::create('/ui5/app/hello/1.0.0/index.html');
     $route = new Route('GET', 'ui5/app/{module}/{version}/index.html', []);
@@ -28,7 +28,7 @@ it('allows request when version matches (direct middleware test)', function () {
 });
 
 it('throws OutdatedVersionException when version does not match (direct middleware test)', function () {
-    $hello = $this->registry->get('com.laravelui5.hello');
+    $hello = $this->registry->getArtifact('com.laravelui5.hello');
 
     $request = Request::create('/ui5/app/hello/0.9.7/index.html');
     $route = new Route('GET', 'ui5/app/{module}/{version}/index.html', []);

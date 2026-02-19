@@ -39,14 +39,14 @@ describe('Lookup Layer — Modules', function () {
 describe('Lookup Layer — Artifacts', function () {
     it('returns artifact instance for known namespace', function () {
         $namespace = Hello::NAMESPACE;
-        $artifact = $this->registry->get($namespace);
+        $artifact = $this->registry->getArtifact($namespace);
 
         expect($artifact)->toBeInstanceOf(Ui5ArtifactInterface::class)
             ->and($artifact->getNamespace())->toBe($namespace);
     });
 
     it('returns null for unknown artifact namespace', function () {
-        expect($this->registry->get('App\\Ui5\\Foo\\Bar'))->toBeNull();
+        expect($this->registry->getArtifact('App\\Ui5\\Foo\\Bar'))->toBeNull();
     });
 
     it('returns all registered artifacts as array', function () {

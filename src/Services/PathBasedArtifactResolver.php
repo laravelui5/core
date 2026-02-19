@@ -28,6 +28,6 @@ readonly class PathBasedArtifactResolver implements Ui5ArtifactResolverInterface
 
         $namespace = $this->registry->pathToNamespace($path);
 
-        return $this->registry->get($namespace);
+        return $this->registry->getArtifact($namespace);
     }
 }

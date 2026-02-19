@@ -2,6 +2,8 @@
 
 namespace LaravelUi5\Core\Ui5\Contracts;
 
+use LogicException;
+
 /**
  * Interface Ui5RegistryInterface
  *
@@ -66,6 +68,16 @@ interface Ui5RegistryInterface
     public function getModule(string $namespace): ?Ui5ModuleInterface;
 
     /**
+     * Returns the registered artifact instance for the given class name.
+     *
+     * @param class-string<Ui5ModuleInterface> $class
+     *
+     * @throws LogicException if the given artifact class
+     *                        is not registered in this registry.
+     */
+    public function getModuleByClass(string $class): Ui5ModuleInterface;
+
+    /**
      * Returns all registered artifacts across all modules.
      *
      * @return array<string, Ui5ArtifactInterface>
@@ -78,7 +90,17 @@ interface Ui5RegistryInterface
      * @param string $namespace The fqn of the UI5 artifact
      * @return Ui5ArtifactInterface|null The instantiated artifact, or null if not found
      */
-    public function get(string $namespace): ?Ui5ArtifactInterface;
+    public function getArtifact(string $namespace): ?Ui5ArtifactInterface;
+
+    /**
+     * Returns the registered artifact instance for the given class name.
+     *
+     * @param class-string<Ui5ArtifactInterface> $class
+     *
+     * @throws LogicException if the given artifact class
+     *                        is not registered in this registry.
+     */
+    public function getArtifactByClass(string $class): Ui5ArtifactInterface;
 
     /**
      * Returns all settings declared via #[Setting] attributes,

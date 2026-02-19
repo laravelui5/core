@@ -20,9 +20,19 @@ class Ui5Registry implements Ui5RegistryInterface
     protected array $modules = [];
 
     /**
+     * @var array<class-string<Ui5ModuleInterface>, Ui5ModuleInterface>
+     */
+    protected array $modulesByClass = [];
+
+    /**
      * @var array<string, Ui5ArtifactInterface>
      */
     protected array $artifacts = [];
+
+    /**
+     * @var array<class-string<Ui5ArtifactInterface>, Ui5ArtifactInterface>
+     */
+    protected array $artifactsByClass = [];
 
     /**
      * @var array<string, string>
@@ -96,6 +106,7 @@ class Ui5Registry implements Ui5RegistryInterface
             $module = new $class($strategy);
 
             $this->modules[$module->getName()] = $module;
+            $this->modulesByClass[$class] = $module;
         }
 
         // Pass 2: Reflect everything else
@@ -128,6 +139,7 @@ class Ui5Registry implements Ui5RegistryInterface
         $namespace = $artifact->getNamespace();
         $moduleNamespace = $artifact->getModule()->getName();
         $this->artifacts[$namespace] = $artifact;
+        $this->artifactsByClass[$artifact::class] = $artifact;
         $this->namespaceToModule[$namespace] = $moduleNamespace;
         $this->artifactToModule[get_class($artifact)] = $moduleNamespace;
 
@@ -184,14 +196,32 @@ class Ui5Registry implements Ui5RegistryInterface
         return $this->modules[$namespace] ?? null;
     }
 
+    public function getModuleByClass(string $class): Ui5ModuleInterface
+    {
+        if (array_key_exists($class, $this->modulesByClass)) {
+            return $this->modulesByClass[$class];
+        }
+
+        throw new LogicException(sprintf('Module for class %s not found.', $class));
+    }
+
     public function artifacts(): array
     {
         return $this->artifacts;
     }
 
-    public function get(string $namespace): ?Ui5ArtifactInterface
+    public function getArtifact(string $namespace): ?Ui5ArtifactInterface
     {
         return $this->artifacts[$namespace] ?? null;
+    }
+
+    public function getArtifactByClass(string $class): Ui5ArtifactInterface
+    {
+        if (array_key_exists($class, $this->artifactsByClass)) {
+            return $this->artifactsByClass[$class];
+        }
+
+        throw new LogicException(sprintf('Artifact for class %s not found.', $class));
     }
 
     public function settings(?string $namespace = null): array
@@ -217,7 +247,7 @@ class Ui5Registry implements Ui5RegistryInterface
 
     public function resolve(string $namespace): ?string
     {
-        $artifact = $this->get($namespace);
+        $artifact = $this->getArtifact($namespace);
         if ($artifact) {
             $prefix = Ui5CoreServiceProvider::UI5_ROUTE_PREFIX;
             $typePrefix = $artifact->getType()->routePrefix();

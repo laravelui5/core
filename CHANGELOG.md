@@ -4,8 +4,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [4.0.0] - 2026-02-19
+- Changed `get` to `getArtifact` in `Ui5RegistryInterface`
+- Added `getModuleByClass` and `getArtifactByClass` in `Ui5RegistryInterface`
+
 ## [3.5.1] - 2026-02-19
-- enable late static binding in fromArray() factory
+- Enable late static binding in fromArray() factory
 
 ## [3.5.0] - 2026-02-08
 - Adopted tests

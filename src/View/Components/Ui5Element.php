@@ -21,7 +21,7 @@ class Ui5Element extends Component
      */
     public function render(): string
     {
-        $artifact = app(Ui5RegistryInterface::class)->get($this->id);
+        $artifact = app(Ui5RegistryInterface::class)->getArtifact($this->id);
 
         if ($artifact instanceof ResolvableInterface) {
             return $artifact->resolve();

@@ -37,7 +37,7 @@ final class ResolveODataEndpoint
 
         $key = $this->registry->pathToNamespace($namespace);
 
-        $artifact = $this->registry->get($key);
+        $artifact = $this->registry->getArtifact($key);
 
         if (!$artifact) {
             throw new MissingArtifactException($key);
