@@ -182,6 +182,7 @@ class Ui5Registry implements Ui5RegistryInterface
                 'scope' => ReadScope::Installation,
                 'level' => $setting->level,
                 'note' => $setting->note,
+                'model' => $setting->modelClass
             ];
         }
     }
