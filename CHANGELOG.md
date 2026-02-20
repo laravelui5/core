@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [4.1.0] - 2026-02-20
+- Reworked Setting infrastructure (clear separation of definition, persistence, and resolution)
+- Introduced `ReadScope` (replacing `SettingScope`) to explicitly model resolution hierarchy
+- Introduced `EditLevel` (replacing `SettingVisibilityRole`) to clearly separate edit authority from read scope
+- Aligned `EditLevel` hierarchy to ascending authority (`>=` comparison, higher value = higher privilege)
+- Made default values mandatory in `#[Setting]` attribute
+- Clarified separation between read resolution (`ReadScope`) and write authorization (`EditLevel`)
+- Simplified setting scope model (artifact-centric resolution; removed team scope)
+- Normalized terminology across settings (ValueType, ReadScope, EditLevel)
+
 ## [4.0.1] - 2026-02-19
 - infrastructure before contributed modules
 

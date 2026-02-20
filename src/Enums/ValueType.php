@@ -5,7 +5,7 @@ namespace LaravelUi5\Core\Enums;
 /**
  * Enum representing allowed primitive value types for settings.
  */
-enum SettingType: int
+enum ValueType: int
 {
     /**
      * A string value (e.g. 'EUR', 'dark', 'ProjectVH')

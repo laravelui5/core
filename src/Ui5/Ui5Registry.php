@@ -161,7 +161,7 @@ class Ui5Registry implements Ui5RegistryInterface
             return;
         }
 
-        $namespace = $artifact->getModule()->getArtifactRoot()->getNamespace();
+        $namespace = $artifact->getNamespace();
 
         foreach ($attributes as $attr) {
             /** @var Setting $setting */
@@ -179,7 +179,7 @@ class Ui5Registry implements Ui5RegistryInterface
                 'default' => $setting->default,
                 'type' => $setting->type,
                 'scope' => $setting->scope,
-                'role' => $setting->role,
+                'role' => $setting->level,
                 'note' => $setting->note,
             ];
         }

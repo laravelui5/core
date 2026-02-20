@@ -6,19 +6,18 @@ namespace LaravelUi5\Core\Enums;
  * Defines symbolic visibility roles for settings.
  *
  * These roles determine the minimum permission level required to edit a setting.
- * Lower integer values indicate higher privileges.
  */
-enum SettingVisibilityRole: int
+enum EditLevel: int
 {
     /**
      * Highest administrative role in the system.
      */
-    case SuperAdmin = 1;
+    case SuperAdmin = 5;
 
     /**
      * Mandate-level administrators (e.g., consultants or rollout coordinators).
      */
-    case TenantAdmin = 2;
+    case TenantAdmin = 4;
 
     /**
      * Local administrators within a tenant (e.g., site leads).
@@ -28,12 +27,12 @@ enum SettingVisibilityRole: int
     /**
      * Functional leads or team supervisors.
      */
-    case Supervisor = 4;
+    case Supervisor = 2;
 
     /**
      * Regular users with base-level permissions.
      */
-    case Employee = 5;
+    case Employee = 1;
 
     /**
      * Returns a human-readable label for the role.
@@ -59,11 +58,11 @@ enum SettingVisibilityRole: int
      * SiteAdmin->allows(Employee) => true
      * Supervisor->allows(SiteAdmin) => false
      *
-     * @param SettingVisibilityRole $required
+     * @param EditLevel $required
      * @return bool
      */
-    public function allows(SettingVisibilityRole $required): bool
+    public function allows(EditLevel $required): bool
     {
-        return $this->value <= $required->value;
+        return $this->value >= $required->value;
     }
 }

@@ -2,9 +2,10 @@
 
 namespace LaravelUi5\Core\Attributes;
 
-use LaravelUi5\Core\Enums\SettingScope;
-use LaravelUi5\Core\Enums\SettingType;
-use LaravelUi5\Core\Enums\SettingVisibilityRole;
+use Attribute;
+use LaravelUi5\Core\Enums\ReadScope;
+use LaravelUi5\Core\Enums\ValueType;
+use LaravelUi5\Core\Enums\EditLevel;
 
 /**
  * Declarative setting definition for Configurable classes.
@@ -46,28 +47,28 @@ use LaravelUi5\Core\Enums\SettingVisibilityRole;
  *      key: 'billing.settlement.validation.maxHours',
  *      type: ValueType::Integer,
  *      default: 8,
- *      scope: SettingScope::Tenant,
- *      visibilityRole: SettingVisibilityRole::TenantAdmin
+ *      scope: ReadScope::Tenant,
+ *      level: EditLevel::TenantAdmin
  *  )]```
  */
-#[\Attribute(\Attribute::TARGET_CLASS | \Attribute::IS_REPEATABLE)]
+#[Attribute(Attribute::TARGET_CLASS | Attribute::IS_REPEATABLE)]
 class Setting
 {
     /**
      * @param string $key Technical identifier, e.g. "module.service.setting.foo.bar"
-     * @param SettingType $type Type used to cast the JSON value (maps to `value_type`)
+     * @param ValueType $type Type used to cast the JSON value (maps to `value_type`)
      * @param mixed $default Default applied by package (developer)
      * @param string $note Description of the setting's purpose or scope.
-     * @param SettingScope $scope Intended/default scope for this setting (maps to `scope`)
-     * @param SettingVisibilityRole $role Minimum role allowed to edit (maps to `visibility_role`)
+     * @param ReadScope $scope Intended/default scope for this setting (maps to `scope`)
+     * @param EditLevel $level Minimum role allowed to edit (maps to `visibility_role`)
      */
     public function __construct(
-        public string                $key,
-        public SettingType           $type = SettingType::String,
-        public mixed                 $default,
-        public string                $note,
-        public SettingScope          $scope = SettingScope::Tenant,
-        public SettingVisibilityRole $role = SettingVisibilityRole::TenantAdmin,
+        public string    $key,
+        public ValueType $type,
+        public mixed     $default,
+        public string    $note,
+        public ReadScope $scope = ReadScope::Artifact,
+        public EditLevel $level = EditLevel::SiteAdmin,
     )
     {
     }

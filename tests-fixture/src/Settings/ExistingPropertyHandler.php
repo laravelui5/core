@@ -3,11 +3,11 @@
 namespace Fixtures\Hello\Settings;
 
 use LaravelUi5\Core\Attributes\Setting;
-use LaravelUi5\Core\Enums\SettingType;
+use LaravelUi5\Core\Enums\ValueType;
 
 #[Setting(
     key: 'foo',
-    type: SettingType::String,
+    type: ValueType::String,
     default: 'bar',
     note: 'Invalid target'
 )]
