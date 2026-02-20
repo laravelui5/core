@@ -3,6 +3,7 @@
 namespace LaravelUi5\Core\Attributes;
 
 use Attribute;
+use Illuminate\Database\Eloquent\Model;
 use LaravelUi5\Core\Enums\ValueType;
 use LaravelUi5\Core\Enums\EditLevel;
 
@@ -59,6 +60,7 @@ class Setting
      * @param mixed $default Default applied by package (developer)
      * @param string $note Description of the setting's purpose or scope.
      * @param EditLevel $level Minimum role allowed to edit (maps to `visibility_role`)
+     * @param class-string<Model>|null $modelClass
      */
     public function __construct(
         public string    $key,
@@ -66,6 +68,7 @@ class Setting
         public mixed     $default,
         public string    $note,
         public EditLevel $level = EditLevel::Organization,
+        public ?string   $modelClass = null,
     )
     {
     }
