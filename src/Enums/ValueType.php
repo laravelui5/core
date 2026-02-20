@@ -57,6 +57,8 @@ enum ValueType: int
      */
     case Model        = 10;
 
+    case ModelArray   = 11;
+
     /**
      * Returns a human-readable label for this type.
      *
@@ -75,6 +77,7 @@ enum ValueType: int
             self::BooleanArray => 'Boolean[]',
             self::Date         => 'Date',
             self::Model        => 'Model',
+            self::ModelArray   => 'Model[]',
         };
     }
 
@@ -99,11 +102,12 @@ enum ValueType: int
             self::IntegerArray,
             self::FloatArray,
             self::BooleanArray,
+            self::ModelArray,
         ], true);
     }
 
     public function requiresModelClass(): bool
     {
-        return $this === self::Model;
+        return $this === self::Model || $this === self::ModelArray;
     }
 }
