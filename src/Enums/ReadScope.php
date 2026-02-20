@@ -6,7 +6,7 @@ namespace LaravelUi5\Core\Enums;
  * Represents the applicability level (scope) of a setting.
  *
  * Resolution follows a strict precedence chain:
- * USER (3) > APP (2) > TENANT (1) > INSTALLTION (0)
+ * USER (3) > SITE (2) > TENANT (1) > INSTALLTION (0)
  *
  * Settings with a higher scope value override those with a lower value.
  */
@@ -29,7 +29,7 @@ enum ReadScope: int
      * The setting applies to a specific project or application configuration.
      * Typically set during rollout by a site_admin or tenant_admin.
      */
-    case Artifact = 2;
+    case Site = 2;
 
     /**
      * The setting applies to a single user (personalization).
@@ -45,7 +45,7 @@ enum ReadScope: int
         return match ($this) {
             self::Installation => 'Installation',
             self::Tenant       => 'Tenant',
-            self::Artifact     => 'Artifact',
+            self::Site         => 'Site',
             self::User         => 'User',
         };
     }

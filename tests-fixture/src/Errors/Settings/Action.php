@@ -12,8 +12,8 @@ use LaravelUi5\Core\Enums\ValueType;
 use LaravelUi5\Core\Ui5\AbstractUi5Action;
 use LaravelUi5\Core\Ui5\Capabilities\ActionHandlerInterface;
 
-#[Setting('darkMode', type: ValueType::Boolean, default: false, note: 'Something', scope: ReadScope::User, level: EditLevel::Employee)]
-#[Setting('darkMode', type: ValueType::Boolean, default: false, note: 'Something', scope: ReadScope::User, level: EditLevel::Employee)]
+#[Setting('darkMode', type: ValueType::Boolean, default: false, note: 'Something', level: EditLevel::User)]
+#[Setting('darkMode', type: ValueType::Boolean, default: false, note: 'Something', level: EditLevel::User)]
 class Action extends AbstractUi5Action
 {
     public function getNamespace(): string

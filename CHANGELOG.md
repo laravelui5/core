@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [4.1.1] - 2026-02-20
+- Renamed cases for enum `EditLevel`
+
 ## [4.1.0] - 2026-02-20
 - Reworked Setting infrastructure (clear separation of definition, persistence, and resolution)
 - Introduced `ReadScope` (replacing `SettingScope`) to explicitly model resolution hierarchy

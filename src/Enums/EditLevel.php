@@ -9,30 +9,11 @@ namespace LaravelUi5\Core\Enums;
  */
 enum EditLevel: int
 {
-    /**
-     * Highest administrative role in the system.
-     */
-    case SuperAdmin = 5;
-
-    /**
-     * Mandate-level administrators (e.g., consultants or rollout coordinators).
-     */
-    case TenantAdmin = 4;
-
-    /**
-     * Local administrators within a tenant (e.g., site leads).
-     */
-    case SiteAdmin = 3;
-
-    /**
-     * Functional leads or team supervisors.
-     */
-    case Supervisor = 2;
-
-    /**
-     * Regular users with base-level permissions.
-     */
-    case Employee = 1;
+    case User = 1;
+    case Administrator = 2;
+    case Organization = 3;
+    case Operator = 4;
+    case Platform = 5;
 
     /**
      * Returns a human-readable label for the role.
@@ -42,11 +23,11 @@ enum EditLevel: int
     public function label(): string
     {
         return match ($this) {
-            self::SuperAdmin => 'Super Admin',
-            self::TenantAdmin => 'Tenant Admin',
-            self::SiteAdmin => 'Site Admin',
-            self::Supervisor => 'Supervisor',
-            self::Employee => 'Employee',
+            self::Platform      => 'Platform',
+            self::Operator      => 'Operator',
+            self::Organization  => 'Organization',
+            self::Administrator => 'Administrator',
+            self::User      => 'User',
         };
     }
 

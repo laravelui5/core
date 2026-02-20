@@ -3,6 +3,7 @@
 namespace LaravelUi5\Core\Ui5;
 
 use LaravelUi5\Core\Attributes\Setting;
+use LaravelUi5\Core\Enums\ReadScope;
 use LaravelUi5\Core\Infrastructure\Contracts\Ui5SourceStrategyResolverInterface;
 use LaravelUi5\Core\Ui5\Contracts\Ui5ArtifactInterface;
 use LaravelUi5\Core\Ui5\Contracts\Ui5ModuleInterface;
@@ -178,8 +179,8 @@ class Ui5Registry implements Ui5RegistryInterface
             $this->settings[$namespace][$setting->key] = [
                 'default' => $setting->default,
                 'type' => $setting->type,
-                'scope' => $setting->scope,
-                'role' => $setting->level,
+                'scope' => ReadScope::Installation,
+                'level' => $setting->level,
                 'note' => $setting->note,
             ];
         }

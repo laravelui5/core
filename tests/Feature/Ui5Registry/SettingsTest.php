@@ -21,9 +21,9 @@ describe('Settings discovery', function () {
             ->and($settings[Hello::NAMESPACE]['darkMode'])
             ->toMatchArray([
                 'type' => ValueType::Boolean,
-                'scope' => ReadScope::User,
+                'scope' => ReadScope::Installation,
                 'default' => false,
-                'role' => EditLevel::Employee,
+                'level' => EditLevel::User,
                 'note' => 'Something'
             ]);
     });

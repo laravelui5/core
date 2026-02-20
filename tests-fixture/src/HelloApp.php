@@ -11,8 +11,8 @@ use LaravelUi5\Core\Traits\HasAssetsTrait;
 use LaravelUi5\Core\Ui5\AbstractUi5App;
 use LaravelUi5\Core\Ui5\Capabilities\LaravelUi5ManifestInterface;
 
-#[Setting('darkMode', type: ValueType::Boolean, default: false, scope: ReadScope::User, level: EditLevel::Employee, note: 'Something')]
-#[Setting('maxItems', type: ValueType::Integer, default: 10, scope: ReadScope::Installation, level: EditLevel::TenantAdmin, note: 'nobody knows')]
+#[Setting('darkMode', type: ValueType::Boolean, default: false, note: 'Something', level: EditLevel::User)]
+#[Setting('maxItems', type: ValueType::Integer, default: 10, note: 'nobody knows', level: EditLevel::Operator)]
 class HelloApp extends AbstractUi5App
 {
     use HasAssetsTrait;
