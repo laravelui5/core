@@ -6,7 +6,7 @@ use Fixtures\Hello\Actions\World\Handler;
 use LaravelUi5\Core\Attributes\Setting;
 use LaravelUi5\Core\Enums\ArtifactType;
 use LaravelUi5\Core\Enums\HttpMethod;
-use LaravelUi5\Core\Enums\ReadScope;
+use LaravelUi5\Core\Enums\Scope;
 use LaravelUi5\Core\Enums\EditLevel;
 use LaravelUi5\Core\Enums\ValueType;
 use LaravelUi5\Core\Ui5\AbstractUi5Action;

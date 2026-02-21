@@ -2,7 +2,7 @@
 
 use Fixtures\Hello\DuplicateSettingModule;
 use Fixtures\Hello\Hello;
-use LaravelUi5\Core\Enums\ReadScope;
+use LaravelUi5\Core\Enums\Scope;
 use LaravelUi5\Core\Enums\EditLevel;
 use LaravelUi5\Core\Enums\ValueType;
 use LaravelUi5\Core\Ui5\Ui5Registry;
@@ -21,7 +21,7 @@ describe('Settings discovery', function () {
             ->and($settings[Hello::NAMESPACE]['darkMode'])
             ->toMatchArray([
                 'type' => ValueType::Boolean,
-                'scope' => ReadScope::Installation,
+                'scope' => Scope::Platform,
                 'default' => false,
                 'level' => EditLevel::User,
                 'note' => 'Something'
