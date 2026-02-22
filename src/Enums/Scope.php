@@ -3,12 +3,35 @@
 namespace LaravelUi5\Core\Enums;
 
 /**
- * Represents the applicability level (scope) of a setting.
+ * Defines the override hierarchy level at which a configurable value is stored.
  *
- * Resolution follows a strict precedence chain:
- * USER (4) > SITE (3) > TENANT (2) > INSTALLATION (1) > PLATFORM (0)
+ * Scope represents the resolution layer of a Setting value.
+ * It determines WHICH value wins when multiple overrides exist.
  *
- * Settings with a higher scope value override those with a lower value.
+ * Scope is not related to identity (SystemLevel)
+ * and not related to governance (EditLevel).
+ * It strictly models override precedence.
+ *
+ * Resolution follows a deterministic hierarchy:
+ *
+ *   Platform < Installation < Tenant < Site < User
+ *
+ * When resolving a Setting, the value with the highest available
+ * Scope for the given key wins.
+ *
+ * Scope answers:
+ *   "At which structural layer was this value defined?"
+ *
+ * It does NOT answer:
+ *   - Who may edit it (EditLevel handles that)
+ *   - Who the partner is (SystemLevel handles that)
+ *   - What abilities are granted (SdkRole handles that)
+ *
+ * Scope is:
+ * - persisted per setting entry,
+ * - installation-wide and ordered,
+ * - used exclusively for override resolution,
+ * - compared numerically (higher value overrides lower value).
  */
 enum Scope: int
 {

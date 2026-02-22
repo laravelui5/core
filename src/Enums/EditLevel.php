@@ -3,9 +3,32 @@
 namespace LaravelUi5\Core\Enums;
 
 /**
- * Defines symbolic visibility roles for settings.
+ * Defines the governance threshold required to modify or view a resource.
  *
- * These roles determine the minimum permission level required to edit a setting.
+ * EditLevel represents a policy requirement — not an identity.
+ * It is used to declare the minimum structural authority needed
+ * to edit (and optionally see) a Setting or other configurable artifact.
+ *
+ * EditLevel values are compared against a partner's SystemLevel
+ * (mapped to EditLevel) to determine whether an operation is allowed.
+ *
+ * Conceptually:
+ *   SystemLevel → WHO the partner is (identity)
+ *   EditLevel   → WHICH authority level is required (policy)
+ *
+ * A partner may modify a resource if:
+ *
+ *     partner.system_level.toEditLevel() >= required EditLevel
+ *
+ * EditLevel is:
+ * - defined in Core (because Settings are declared in Core),
+ * - installation-wide and not module-scoped,
+ * - numeric and ordered (higher value = higher authority),
+ * - used purely for governance decisions,
+ * - independent of functional RBAC roles (SdkRole).
+ *
+ * EditLevel does NOT define abilities or access rights directly.
+ * It defines the structural threshold required to perform changes.
  */
 enum EditLevel: int
 {
