@@ -3,7 +3,6 @@
 namespace LaravelUi5\Core\Middleware;
 
 use Closure;
-use Illuminate\Contracts\Container\Container;
 use Illuminate\Http\Request;
 use LaravelUi5\Core\Contracts\Ui5ArtifactResolverInterface;
 use LaravelUi5\Core\Contracts\Ui5ContextFactoryInterface;
@@ -24,7 +23,7 @@ use Symfony\Component\HttpFoundation\Response;
  * - Build a Ui5Context (request, artifact, locale).
  *
  * Behavior:
- * - If no artifact is matched → no Ui5Context is bound, request proceeds normally.
+ * - If no artifact is matched → {@see MissingArtifactException}.
  * - If an artifact is matched but not found in the registry → {@see MissingArtifactException}.
  *
  * The resolved Ui5Context can be injected anywhere downstream
@@ -33,7 +32,6 @@ use Symfony\Component\HttpFoundation\Response;
 readonly class ResolveUi5Context
 {
     public function __construct(
-        private Container $container,
         private Ui5ContextFactoryInterface $factory,
     )
     {
@@ -49,17 +47,21 @@ readonly class ResolveUi5Context
         /** @var Ui5ArtifactResolverInterface[] $resolvers */
         $resolvers = app('ui5.artifact.resolvers');
 
+        $artifact = null;
         foreach ($resolvers as $resolver) {
             $artifact = $resolver->resolve($request);
-
             if ($artifact) {
-                $context = $this->factory->build($request, $artifact);
-
-                $this->container->instance(Ui5ContextInterface::class, $context);
-
                 break;
             }
         }
+
+        if (!$artifact) {
+            throw new MissingArtifactException($request->getRequestUri());
+        }
+
+        $context = $this->factory->build($request, $artifact);
+
+        app()->instance(Ui5ContextInterface::class, $context);
 
         return $next($request);
     }
