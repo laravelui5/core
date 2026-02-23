@@ -1,5 +1,7 @@
 <?php
 
+use LaravelUi5\Core\Services\CoreContextFactory;
+
 return [
 
     /*
@@ -58,6 +60,8 @@ return [
     |
     */
     'registry' => \LaravelUi5\Core\Ui5\Ui5Registry::class,
+
+    'context_factory' => CoreContextFactory::class,
 
     'middleware' => [
         'web',

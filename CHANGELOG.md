@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [] - 2026-02-
+- Added missing config switches
+
 ## [4.2.0] - 2026-02-23
 - Added factory interface for building a Ui5Context
 - Renamed authentication middlewares
