@@ -3,12 +3,12 @@
 namespace LaravelUi5\Core\Middleware;
 
 use Closure;
+use Illuminate\Contracts\Container\Container;
 use Illuminate\Http\Request;
 use LaravelUi5\Core\Contracts\Ui5ArtifactResolverInterface;
+use LaravelUi5\Core\Contracts\Ui5ContextFactoryInterface;
 use LaravelUi5\Core\Contracts\Ui5ContextInterface;
-use LaravelUi5\Core\Contracts\Ui5CoreContext;
 use LaravelUi5\Core\Exceptions\MissingArtifactException;
-use LaravelUi5\Core\Ui5\Contracts\Ui5ArtifactInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -30,8 +30,15 @@ use Symfony\Component\HttpFoundation\Response;
  * The resolved Ui5Context can be injected anywhere downstream
  * via type-hinting or app(Ui5Context::class).
  */
-class ResolveUi5Context
+readonly class ResolveUi5Context
 {
+    public function __construct(
+        private Container $container,
+        private Ui5ContextFactoryInterface $factory,
+    )
+    {
+    }
+
     /**
      * Handle an incoming request.
      *
@@ -46,18 +53,14 @@ class ResolveUi5Context
             $artifact = $resolver->resolve($request);
 
             if ($artifact) {
-                $this->bindContext($request, $artifact);
+                $context = $this->factory->build($request, $artifact);
+
+                $this->container->instance(Ui5ContextInterface::class, $context);
+
                 break;
             }
         }
 
         return $next($request);
-    }
-
-    protected function bindContext(Request $request, Ui5ArtifactInterface $artifact): void
-    {
-        $locale = $request->getLocale();
-
-        app()->instance(Ui5ContextInterface::class, new Ui5CoreContext($request, $artifact, $locale));
     }
 }
