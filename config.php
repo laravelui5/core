@@ -1,11 +1,5 @@
 <?php
 
-use LaravelUi5\Core\CoreModule;
-use LaravelUi5\Core\DashboardModule;
-use LaravelUi5\Core\Middleware\ResolveUi5Context;
-use LaravelUi5\Core\ReportModule;
-use LaravelUi5\Core\Services\PathBasedArtifactResolver;
-
 return [
 
     /*
@@ -65,6 +59,19 @@ return [
     */
     'registry' => \LaravelUi5\Core\Ui5\Ui5Registry::class,
 
+    'middleware' => [
+        'web',
+        \LaravelUi5\Core\Middleware\ResolveUi5Context::class,
+        \LaravelUi5\Core\Middleware\EnsureUi5Authenticated::class,
+    ],
+
+    'odata_middleware' => [
+        'web',
+        \LaravelUi5\Core\Middleware\FetchCsrfToken::class,
+        \LaravelUi5\Core\Middleware\ResolveODataEndpoint::class,
+        \LaravelUi5\Core\Middleware\EnsureODataAuthenticated::class,
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Registered UI5 Business Modules
@@ -104,10 +111,10 @@ return [
     | should be applied for the current environment.
     |
     */
-    'force_auth' => env('FORCE_AUTH_4_UI5', true),
+    'auth_enabled' => env('ENABLE_AUTH_4_UI5', true),
 
     'artifact_resolvers' => [
-        PathBasedArtifactResolver::class,
+        \LaravelUi5\Core\Services\PathBasedArtifactResolver::class,
     ],
 
     /*

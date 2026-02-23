@@ -29,10 +29,10 @@ use LaravelUi5\Core\Infrastructure\Contracts\Ui5SourceStrategyResolverInterface;
 use LaravelUi5\Core\Infrastructure\Ui5SourceOverrideStore;
 use LaravelUi5\Core\Infrastructure\Ui5SourceStrategyResolver;
 use LaravelUi5\Core\Middleware\FetchCsrfToken;
-use LaravelUi5\Core\Middleware\ODataAuthGate;
+use LaravelUi5\Core\Middleware\EnsureODataAuthenticated;
 use LaravelUi5\Core\Middleware\ResolveODataEndpoint;
 use LaravelUi5\Core\Middleware\ResolveUi5Context;
-use LaravelUi5\Core\Middleware\Ui5AuthGate;
+use LaravelUi5\Core\Middleware\EnsureUi5Authenticated;
 use LaravelUi5\Core\Services\CoreContextFactory;
 use LaravelUi5\Core\Services\ExecutableInvoker;
 use LaravelUi5\Core\Services\ParameterResolver;
@@ -101,19 +101,12 @@ class Ui5CoreServiceProvider extends ServiceProvider
             ->add(ReportModule::class);
 
         Route::prefix(self::UI5_ROUTE_PREFIX)
-            ->middleware([
-                'web',
-                ResolveUi5Context::class,
-                Ui5AuthGate::class
-            ])->group(__DIR__ . '/../routes/ui5.php');
+            ->middleware(config('ui5.middleware'))
+            ->group(__DIR__ . '/../routes/ui5.php');
 
         Route::prefix(self::ODATA_ROUTE_PREFIX)
-            ->middleware([
-                'web',
-                FetchCsrfToken::class,
-                ResolveODataEndpoint::class,
-                ODataAuthGate::class,
-            ])->group(__DIR__ . '/../routes/odata.php');
+            ->middleware(config('ui5.odata_middleware'))
+            ->group(__DIR__ . '/../routes/odata.php');
 
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'ui5');
 

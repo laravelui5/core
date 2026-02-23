@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Route;
 use LaravelUi5\Core\Ui5\Contracts\Ui5AppInterface;
 use Symfony\Component\HttpFoundation\Response;
 
-class ODataAuthGate
+class EnsureODataAuthenticated
 {
     /**
      * Handle an incoming request.
@@ -20,7 +20,7 @@ class ODataAuthGate
     public function handle(Request $request, Closure $next): Response
     {
         // opt-out for development
-        if (!config('ui5.force_auth', true)) {
+        if (!config('ui5.auth_enabled', true)) {
             return $next($request);
         }
 

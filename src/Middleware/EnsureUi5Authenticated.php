@@ -10,7 +10,7 @@ use LaravelUi5\Core\Contracts\Ui5ContextInterface;
 use LaravelUi5\Core\Ui5\Contracts\Ui5ModuleInterface;
 use Symfony\Component\HttpFoundation\Response;
 
-class Ui5AuthGate
+class EnsureUi5Authenticated
 {
     /**
      * Handle an incoming request.
@@ -20,7 +20,7 @@ class Ui5AuthGate
     public function handle(Request $request, Closure $next): Response
     {
         // opt-out for development
-        if (!config('ui5.force_auth', true)) {
+        if (!config('ui5.auth_enabled', true)) {
             return $next($request);
         }
 
