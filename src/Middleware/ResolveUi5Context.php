@@ -32,12 +32,6 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class ResolveUi5Context
 {
-    public const string SESSION_KEY_PARTNER_ID = 'impersonate.partner_id';
-
-    public function __construct()
-    {
-    }
-
     /**
      * Handle an incoming request.
      *
