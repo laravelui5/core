@@ -19,16 +19,10 @@ use LaravelUi5\Core\Ui5\Contracts\Ui5ArtifactInterface;
 final readonly class Ui5CoreContext implements Ui5ContextInterface
 {
     public function __construct(
-        private ?Request             $request = null,
         private Ui5ArtifactInterface $artifact,
-        private ?string              $locale = null,
+        private string              $locale,
     )
     {
-    }
-
-    public function request(): ?Request
-    {
-        return $this->request;
     }
 
     public function artifact(): Ui5ArtifactInterface
@@ -36,7 +30,7 @@ final readonly class Ui5CoreContext implements Ui5ContextInterface
         return $this->artifact;
     }
 
-    public function locale(): ?string
+    public function locale(): string
     {
         return $this->locale;
     }

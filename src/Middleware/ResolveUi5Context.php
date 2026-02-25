@@ -59,7 +59,7 @@ readonly class ResolveUi5Context
             throw new MissingArtifactException($request->getRequestUri());
         }
 
-        $context = $this->factory->build($request, $artifact);
+        $context = $this->factory->build($artifact);
 
         app()->instance(Ui5ContextInterface::class, $context);
 

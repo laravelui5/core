@@ -70,10 +70,7 @@ interface Ui5ContextInterface
      * The locale is used for technical rendering purposes
      * (e.g. UI5 bootstrap, resource resolution).
      *
-     * Implementations may return null when locale resolution
-     * is handled elsewhere.
-     *
-     * @return string|null
+     * @return string
      */
     public function locale(): string;
 }
