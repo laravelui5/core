@@ -4,8 +4,9 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-## [4.2.2] - 2026-02-
+## [4.2.2] - 2026-02-25
 - Added explicit check for `Ui5ActionInterface` in `ActionDispatchController`
+- Added `isAccessible` and `isExecutable` helpers to `ArtifactType`
 
 ## [4.2.1] - 2026-02-23
 - Added missing config switches

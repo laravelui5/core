@@ -8,10 +8,12 @@ use LaravelUi5\Core\Ui5\Contracts\Ui5AppInterface;
 use LaravelUi5\Core\Ui5\Contracts\Ui5ArtifactInterface;
 use LaravelUi5\Core\Ui5\Contracts\Ui5CardInterface;
 use LaravelUi5\Core\Ui5\Contracts\Ui5DashboardInterface;
+use LaravelUi5\Core\Ui5\Contracts\Ui5DialogInterface;
 use LaravelUi5\Core\Ui5\Contracts\Ui5KpiInterface;
 use LaravelUi5\Core\Ui5\Contracts\Ui5LibraryInterface;
 use LaravelUi5\Core\Ui5\Contracts\Ui5ModuleInterface;
 use LaravelUi5\Core\Ui5\Contracts\Ui5ReportInterface;
+use LaravelUi5\Core\Ui5\Contracts\Ui5ResourceInterface;
 use LaravelUi5\Core\Ui5\Contracts\Ui5TileInterface;
 
 /**
@@ -183,5 +185,25 @@ enum ArtifactType: int
             self::Action      => 'api',
             default => throw new NonRoutableArtifactException($this->name)
         };
+    }
+
+    public function isAccessible(): bool
+    {
+        return match ($this) {
+            self::Application,
+            self::Dialog,
+            self::Card,
+            self::Dashboard,
+            self::Report,
+            self::Resource,
+            self::Tile,
+            self::Kpi => true,
+            default   => false,
+        };
+    }
+
+    public function isExecutable(): bool
+    {
+        return $this === self::Action;
     }
 }
