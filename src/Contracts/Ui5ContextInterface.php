@@ -2,7 +2,6 @@
 
 namespace LaravelUi5\Core\Contracts;
 
-use Illuminate\Http\Request;
 use LaravelUi5\Core\Ui5\Contracts\Ui5ArtifactInterface;
 
 /**
@@ -54,17 +53,6 @@ use LaravelUi5\Core\Ui5\Contracts\Ui5ArtifactInterface;
  */
 interface Ui5ContextInterface
 {
-    /**
-     * Returns the current HTTP request, if available.
-     *
-     * Implementations must return null when the context
-     * was created outside of an HTTP lifecycle
-     * (e.g. console commands, queue jobs, tests).
-     *
-     * @return Request|null
-     */
-    public function request(): ?Request;
-
     /**
      * Returns the UI5 artifact resolved for the current execution.
      *

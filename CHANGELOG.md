@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [4.3.0] - 2026-02-25
+- Removed Request from `Ui5ContextInteface`
+
 ## [4.2.2] - 2026-02-25
 - Added explicit check for `Ui5ActionInterface` in `ActionDispatchController`
 - Added `isAccessible` and `isExecutable` helpers to `ArtifactType`
