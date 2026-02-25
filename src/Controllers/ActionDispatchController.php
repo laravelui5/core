@@ -6,6 +6,7 @@ use Illuminate\Http\JsonResponse;
 use LaravelUi5\Core\Contracts\ExecutableInvokerInterface;
 use LaravelUi5\Core\Contracts\Ui5ContextInterface;
 use LaravelUi5\Core\Ui5\Contracts\Ui5ActionInterface;
+use LogicException;
 
 /**
  * Controller responsible for dispatching UI5 Actions.
@@ -26,6 +27,10 @@ class ActionDispatchController
     {
         /** @var Ui5ActionInterface $action */
         $action = $context->artifact();
+
+        if (!$action instanceof Ui5ActionInterface) {
+            throw new LogicException(sprintf('%s must implement Ui5ActionInterface', get_class($action)));
+        }
 
         $result = $invoker->invoke(
             $action->getHandler(),
