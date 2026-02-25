@@ -21,7 +21,7 @@ it('allows request when version matches (direct middleware test)', function () {
     $route->bind($request);
     $request->setRouteResolver(fn () => $route);
 
-    app()->instance(Ui5ContextInterface::class, new Ui5CoreContext($request, $hello));
+    app()->instance(Ui5ContextInterface::class, new Ui5CoreContext($hello, 'en'));
 
     $response = $this->middleware->handle($request, fn() => response('OK', 200));
     expect($response->getStatusCode())->toBe(200);
@@ -35,7 +35,7 @@ it('throws OutdatedVersionException when version does not match (direct middlewa
     $route->bind($request);
     $request->setRouteResolver(fn () => $route);
 
-    app()->instance(Ui5ContextInterface::class, new Ui5CoreContext($request, $hello));
+    app()->instance(Ui5ContextInterface::class, new Ui5CoreContext($hello, 'en'));
 
     $this->middleware->handle($request, fn() => null);
 })->throws(OutdatedVersionException::class);
