@@ -75,5 +75,5 @@ interface Ui5ContextInterface
      *
      * @return string|null
      */
-    public function locale(): ?string;
+    public function locale(): string;
 }
