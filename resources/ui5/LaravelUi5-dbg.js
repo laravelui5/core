@@ -92,17 +92,6 @@ sap.ui.define([
 			return shell ? shell.can(ability) : true;
 		},
 
-		/**
-		 * View-level authorization check.
-		 * Core: always `true`
-		 *
-		 * @param {string} viewKey
-		 * @returns {boolean}
-		 */
-		authorize(viewKey) {
-			return shell ? shell.authorize(viewKey) : true;
-		},
-
 
 		// ---------------------------------------------------------------------
 		// Business Partner Context (Core defaults)
@@ -113,7 +102,7 @@ sap.ui.define([
 		 *
 		 * @returns {any|null}
 		 */
-		getPartner() {
+		getActor() {
 			return shell ? shell.getPartner() : null;
 		},
 
@@ -122,33 +111,13 @@ sap.ui.define([
 		 *
 		 * @returns {any|null}
 		 */
-		getAuthenticatedPartner() {
+		getPrincipal() {
 			return shell ? shell.getAuthenticatedPartner() : null;
 		},
-
-		/**
-		 * Partner representations (Core: empty list)
-		 *
-		 * @returns {Array}
-		 */
-		getRepresentations() {
-			return shell ? shell.getRepresentations() : [];
-		},
-
 
 		// ---------------------------------------------------------------------
 		// Settings (Core defaults)
 		// ---------------------------------------------------------------------
-
-		/**
-		 * Returns all resolved settings.
-		 * Core: empty object
-		 *
-		 * @returns {Object<string, any>}
-		 */
-		settings() {
-			return shell ? shell.settings() : settings;
-		},
 
 		/**
 		 * Returns a single resolved setting.

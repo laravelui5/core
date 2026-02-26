@@ -13,7 +13,7 @@ sap.ui.define([
 	 * Includes helpers for CSRF-safe fetch operations.
 	 *
 	 * @author Michael Gerzabek
-	 * @version 3.3.1
+	 * @version 4.3.2
 	 *
 	 * @public
 	 * @name com.laravelui5.core.Connection
