@@ -14,18 +14,58 @@ class BaseGenerator extends Command
 
     protected function assertAppExists(string $app): bool
     {
-        try {
-            $before = get_declared_classes();
-            require_once base_path("ui5/{$app}/src/{$app}Module.php");
-            $after = get_declared_classes();
-            $classes = array_diff($after, $before);
-            $class = reset($classes);
-            $this->class = new ReflectionClass($class);
-            return true;
-        }
-        catch (ReflectionException $e) {
+        $file = base_path("ui5/{$app}/src/{$app}Module.php");
+
+        if (!file_exists($file)) {
             return false;
         }
+
+        $namespace = $this->getNamespaceFromFile($file);
+        $class = "{$namespace}\\{$app}Module";
+
+        if (!class_exists($class)) {
+            return false;
+        }
+
+        $this->class = new ReflectionClass($class);
+
+        return true;
+    }
+
+    function getNamespaceFromFile(string $file): ?string
+    {
+        $src = file_get_contents($file);
+        $tokens = token_get_all($src);
+
+        $namespace = '';
+
+        $count = count($tokens);
+
+        for ($i = 0; $i < $count; $i++) {
+
+            $token = $tokens[$i];
+
+            if (!is_array($token)) {
+                continue;
+            }
+
+            // Namespace finden
+            if ($token[0] === T_NAMESPACE) {
+
+                for ($j = $i + 1; $j < $count; $j++) {
+
+                    if ($tokens[$j] === ';' || $tokens[$j] === '{') {
+                        break;
+                    }
+
+                    if (is_array($tokens[$j])) {
+                        $namespace .= $tokens[$j][1];
+                    }
+                }
+            }
+        }
+
+        return $namespace ? trim($namespace): null;
     }
 
     protected function getPhpNamespacePrefix(): string
