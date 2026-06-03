@@ -39,10 +39,10 @@ composer require laravelui5/core
 
 `laravelui5/odata` is pulled in automatically, and the service provider is registered via Laravel's package auto-discovery — no manual wiring. See the [full installation guide](https://laravelui5.com/core/installation) for configuration, OData integration, and verification.
 
-## Changelog & releases
+## Changelog
 
 - [`CHANGELOG.md`](./CHANGELOG.md) — the running ledger of every released version
-- [Releases](https://github.com/laravelui5/core/releases) — per-version notes; start with **[1.0.0](https://github.com/laravelui5/core/releases/tag/v1.0.0)**, the contract freeze
+- Release announcements are published at [laravelui5.com](https://laravelui5.com)
 
 ## Documentation
 
