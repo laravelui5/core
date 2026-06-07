@@ -33,13 +33,12 @@ disclosure.
 
 ## Supported versions
 
-Core is on the `0.9.x` line while the artifact contracts stabilize toward `1.0`.
 Security fixes are issued for the **latest released minor**.
 
 | Version | Supported |
 |:--|:--|
-| latest `0.9.x` | ✅ |
-| older `0.9.x` | ⚠️ by arrangement |
+| latest `1.x` | ✅ |
+| older `1.x` minors | ⚠️ by arrangement |
 
 ## Scope
 
