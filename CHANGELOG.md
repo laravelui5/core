@@ -37,7 +37,7 @@ While Core is on the `0.9.x` line, breaking contract changes ship as
 patch versions rather than majors. The rationale is the same as the
 Versioning reset above — `0.9.x` exists precisely *because* the artifact
 contracts are still moving, and consumers at this stage are all in-house
-(`laravelui5-host`, `pragmatiqu.io`, in-flight SDK work). There is no
+(`auth-host`, `pragmatiqu.io`, in-flight SDK work). There is no
 external surface for which the "breaking change → major bump" promise
 has been made and would be broken.
 
@@ -46,6 +46,109 @@ their version heading. They still list the breaking changes plainly in
 **Changed (breaking)** so in-house consumers can react. `1.0.0` is
 reserved for the moment the PLAN's deprecation phase completes and the
 artifact surface stabilizes.
+
+## [1.0.6] - 2026-06-27 — Multiple apps from one package
+
+A single Composer package can now ship more than one UI5 application. Alongside
+the existing single-app conventions, Core resolves each app in a multi-app
+package from its own `resources/ui5-<name>` folder, with the app's module living
+in a matching sub-namespace. Single-app packages are unchanged — the new layout
+is additive and opt-in.
+
+### Added
+
+- **Multi-app package source resolution.** Ship several apps from one package,
+  each served from a dedicated `resources/ui5-<name>` directory (the name derives
+  from the app's module). The convention is apps-only.
+
+This feature is available for the Sdk only. Consumers are encouraged to use the one 
+package = one app pattern.
+
+## [1.0.5] - 2026-06-25 — Asset hardening + config documentation
+
+A security fix and a documentation pass. In deployed environments Core now serves
+only built bundles (`*-preload.js`), stylesheets, and i18n property files over
+HTTP — raw module source and source maps are refused. The hardening is automatic
+everywhere except `local` and `testing` and needs no configuration (the previous
+opt-in key, which no host actually set, has been removed). The published
+`config/ui5.php` is also now documented on every key.
+
+### Security
+
+- **Raw UI5 source is no longer served in deployed environments** — only built
+  bundles, CSS, and `.properties`. The gate is driven by the application
+  environment instead of a config flag, closing a gap where deployed systems
+  could serve raw modules and source maps.
+
+### Changed
+
+- `config/ui5.php` is fully documented; the obsolete `ui5.active` key is removed.
+
+## [1.0.4] - 2026-06-09 — Per-request manifest extensions
+
+A new opt-in seam lets a manifest tailor its own `sap.ui5/extends/extensions`
+node per request and acting user — for example, flipping view-element visibility
+based on the current user's permissions. Existing manifests are untouched; the
+seam runs only for manifests that opt in.
+
+### Added
+
+- **`Ui5ManifestExtensionInterface`** — implement it on a manifest to receive and
+  rewrite its `extensions` node at request time. Only the extensions node is
+  exposed; Core stays stateless about identity.
+
+## [1.0.3] - 2026-06-09 — Cacheable registry data objects
+
+A new contract lets custom data objects survive the registry cache losslessly.
+Previously only modules and artifacts round-tripped through the cache cleanly; a
+plain data object could be flattened to its class name. Implement the contract
+and the cache serializes and rebuilds it structurally.
+
+### Added
+
+- **`CacheSerializable`** (`toCache(): array` / `static fromCache(array): static`)
+  — opt-in, scalar-only structural caching for registry data objects. Additive
+  and non-breaking.
+
+### Changed
+
+- The `ui5:app` base/leaf migration hint is now presented as a styled manual.
+
+## [1.0.2] - 2026-06-05 — `ui5:app --refresh` preserves your code
+
+`ui5:app --refresh` no longer overwrites hand-authored members of a generated App
+class. Each app is now split into a framework-owned base and a developer-owned
+leaf: a refresh rewrites only the base — re-syncing title, description, and
+bootstrap details after a UI5 rebuild — while your identity, OData configuration,
+access gates, and anything else you added in the leaf are never touched.
+
+### Changed
+
+- **`ui5:app` generates a base/leaf pair** — `{App}AppBase` (framework-owned,
+  rewritten on refresh) and `{App}App` (yours, created once). `--refresh` only
+  ever writes the base.
+
+### Migration
+
+- Running `--refresh` on an app created before this release creates the base from
+  current source, leaves your existing class untouched, and prints the members to
+  relocate into the base. Until you move them, your class harmlessly overrides the
+  base — nothing breaks mid-migration.
+
+## [1.0.1] - 2026-06-04 — Honest 401 for the OData layer
+
+An expired or missing session on an OData request now returns a proper `401` with
+an OData error envelope instead of a redirect to the login page. Because the OData
+layer is only ever called by the UI5 data model (never browser-navigated), the old
+redirect was parsed as data and surfaced as a misleading `Expected 'OData-Version'
+header` error. Clients can now detect a real authentication failure and
+re-authenticate gracefully. App (HTML) routes still redirect to login as before.
+
+### Fixed
+
+- **`EnsureODataAuthenticated` returns `401` JSON** on an unauthenticated request;
+  the app/index route keeps its `302 → login`. The rule: OData → 401 JSON; app
+  HTML → 302.
 
 ## [1.0.0] - 2026-06-03 — the freeze
 
@@ -559,7 +662,7 @@ Marked *SemVer credit spent* for narrowing the supported Laravel range to `^13.0
 
 - Supported Laravel range narrowed from `^12.0 || ^13.0` to `^13.0`
   (`illuminate/*`). Dev harness `orchestra/testbench` bumped `^10.6` → `^11.0`.
-  Downstream hosts still on Laravel 12 (e.g. `laravelui5-host`) must bump to
+  Downstream hosts still on Laravel 12 (e.g. `auth-host`) must bump to
   `^13.0` before updating Core.
 - `LaravelUi5\Core\Middleware\VerifyCsrfToken` now extends
   `Illuminate\Foundation\Http\Middleware\PreventRequestForgery` (was
@@ -1036,7 +1139,7 @@ A Core-only host (no SDK) creates neither file — `@includeIf(...)` silently do
 
 ## [0.9.32] - 2026-05-28
 
-**Generator parser fix — `getNamespaceFromFile` survives `const NAMESPACE`.** Surfaced while exercising the Library API V6 closer (a second authoring of `Ui5LibraryInterface` via `ui5:lib --create` + `--refresh` on a fresh `~/laravelui5-host/ui5/Address/`). `--refresh` rewrote line 3 of the generated `AddressLibrary.php` as `namespace Pragmatiqu\Address  'io.pragmatiqu.address';` — invalid PHP. Diagnosis: PHP keywords tokenize case-insensitively, so the `const NAMESPACE` introduced by `HasArtifactIdentity` (0.9.26) emits a second `T_NAMESPACE` token that `BaseGenerator::getNamespaceFromFile` re-entered on, appending the const's value onto the captured PHP-namespace string. Without this fix every `--refresh` against a 0.9.26+ artifact file corrupts the same way. Fix: `break` the outer loop after the first inner-loop match — PHP only allows one namespace declaration per file. One-line change in `src/Commands/BaseGenerator.php`. Library API V6 closer unblocked.
+**Generator parser fix — `getNamespaceFromFile` survives `const NAMESPACE`.** Surfaced while exercising the Library API V6 closer (a second authoring of `Ui5LibraryInterface` via `ui5:lib --create` + `--refresh` on a fresh `~/auth-host/ui5/Address/`). `--refresh` rewrote line 3 of the generated `AddressLibrary.php` as `namespace Pragmatiqu\Address  'io.pragmatiqu.address';` — invalid PHP. Diagnosis: PHP keywords tokenize case-insensitively, so the `const NAMESPACE` introduced by `HasArtifactIdentity` (0.9.26) emits a second `T_NAMESPACE` token that `BaseGenerator::getNamespaceFromFile` re-entered on, appending the const's value onto the captured PHP-namespace string. Without this fix every `--refresh` against a 0.9.26+ artifact file corrupts the same way. Fix: `break` the outer loop after the first inner-loop match — PHP only allows one namespace declaration per file. One-line change in `src/Commands/BaseGenerator.php`. Library API V6 closer unblocked.
 
 ### Fixed
 
