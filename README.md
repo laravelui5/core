@@ -1,5 +1,8 @@
 # LaravelUi5 Core
 
+[![Latest release](https://img.shields.io/github/v/release/laravelui5/core?sort=semver&label=release)](https://github.com/laravelui5/core/releases/latest)
+[![License: BSL 1.1](https://img.shields.io/badge/license-BSL%201.1-blue)](./LICENSE)
+
 Foundation layer for integrating [OpenUI5](https://openui5.org) into [Laravel](https://laravel.com). Provides runtime, routing, OData integration, and developer tooling for building enterprise UI5 apps in a Laravel-native workflow.
 
 > **What this repository is.** The public home for LaravelUi5 Core's **issues, changelog, and releases**. The package itself is a Composer dependency distributed via the private registry at `packages.pragmatiqu.io`; when you `composer require laravelui5/core`, the BSL-licensed source installs into your project's `vendor/`. This repo intentionally hosts **no source** — use it to track what changed, read release notes, and report bugs. Documentation lives at [laravelui5.com](https://laravelui5.com).
@@ -7,6 +10,7 @@ Foundation layer for integrating [OpenUI5](https://openui5.org) into [Laravel](h
 ## Features
 
 - **Artifact system** — Applications, Libraries, Cards, Dashboards, Tiles, Charts, Reports, Actions, and Resources as first-class, typed Laravel components
+- **Composable dashboards** — a `composer require`'d module can contribute its Tiles and Cards into *another* module's dashboard without editing it: compose across packages, not just within one
 - **OData v4** — Built on [laravelui5/odata](https://github.com/laravelui5/odata) (MIT); every UI5 app is an OData service out of the box
 - **Scaffold generators** — Artisan `ui5:*` commands to generate every artifact type, plus `ui5:assemble` for a self-contained launchpad app
 - **Contract-first design** — Clean interfaces and abstract bases for every artifact type; *attributes declare, classes do*

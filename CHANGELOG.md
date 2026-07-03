@@ -4,6 +4,28 @@ All notable changes to LaravelUi5 Core are documented here, newest first. The
 format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/); from
 1.0.0 onward Core adheres to [Semantic Versioning](https://semver.org/).
 
+## [1.1.0] - 2026-07-03 — Compose dashboards across modules
+
+Dashboards are no longer confined to the module that defines them. A module you
+`composer require` can now contribute its own Tiles and Cards into **another**
+module's dashboard group — without that dashboard knowing about it or being
+edited. Add a KPI from a new module onto an existing dashboard by registering a
+single line in your service provider, and the dashboard picks it up
+automatically. It's composition across packages, the way the rest of LaravelUi5
+already works — and the first minor release on the stable line.
+
+### Added
+
+- **Cross-module dashboard composition.** A new collector lets any module place a
+  Tile or Card into another module's dashboard group by namespace. Contributions
+  render after the group's own children, in registration order; a dashboard that
+  receives none behaves exactly as before, so nothing existing changes.
+
+### Changed
+
+- Core now runs on **`laravelui5/odata` 2.x** as well as 1.x — no change to your
+  code either way.
+
 ## [1.0.6] - 2026-06-27 — Multiple apps from one package
 
 A single Composer package can now ship more than one UI5 application. Alongside
