@@ -4,6 +4,27 @@ All notable changes to LaravelUi5 Core are documented here, newest first. The
 format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/); from
 1.0.0 onward Core adheres to [Semantic Versioning](https://semver.org/).
 
+## [1.2.0] - 2026-07-07 — Groundwork for intent-based navigation
+
+A small, additive release: it lays the client-side groundwork for **intent-based
+navigation** and smooths a TypeScript rough edge.
+
+### Added
+
+- **A navigation-intent entry point on the client facade.** Your app can now express
+  a navigation as an *intent* — "open this dialog," "switch to that app" — and let the
+  platform carry it out, instead of constructing the destination itself. On Core alone
+  it is inert (there is nothing to service it yet); it activates once you add the SDK,
+  whose shell authorizes and performs the navigation. Write against it now and it lights
+  up when the SDK is present — nothing existing changes in the meantime.
+
+### Fixed
+
+- **Extending the platform's base component in TypeScript compiles cleanly again.**
+  Apps that build on the base component — for example, to host a global dialog — now
+  typecheck, with the dialog-open helper properly typed. The type previously omitted its
+  UI5 component lineage, which broke strict-TypeScript builds.
+
 ## [1.1.0] - 2026-07-03 — Compose dashboards across modules
 
 Dashboards are no longer confined to the module that defines them. A module you
