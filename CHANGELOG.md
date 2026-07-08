@@ -4,6 +4,20 @@ All notable changes to LaravelUi5 Core are documented here, newest first. The
 format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/); from
 1.0.0 onward Core adheres to [Semantic Versioning](https://semver.org/).
 
+## [1.3.0] - 2026-07-08 — Export a table to a file
+
+A small, additive release: your app can now let people **download a table as a file**.
+
+### Added
+
+- **One-line table export.** Point the platform at a list — carrying whatever filters and
+  search the user has applied — and it hands back the matching rows as a file, saved straight
+  to the browser with no extra tab and no page navigation. The work happens on the server: it
+  collects the *full* filtered set (not just the rows currently loaded on screen), builds the
+  file, and confirms the user is allowed to export — so your front-end stays a single call. On
+  Core alone the entry point is present but inert; it activates once you add the SDK, which
+  provides the export itself. Write against it now and it lights up when the SDK is there.
+
 ## [1.2.0] - 2026-07-07 — Groundwork for intent-based navigation
 
 A small, additive release: it lays the client-side groundwork for **intent-based
