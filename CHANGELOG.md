@@ -4,6 +4,22 @@ All notable changes to LaravelUi5 Core are documented here, newest first. The
 format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/); from
 1.0.0 onward Core adheres to [Semantic Versioning](https://semver.org/).
 
+## [1.4.0] - 2026-07-10 — Validation errors land on the right fields
+
+A small, additive release: when a form submission is rejected, the platform can now show
+the errors **on the fields themselves**.
+
+### Added
+
+- **Server validation, shown inline.** Hand a form's model to the action call, and any
+  validation errors your backend returns are placed directly on the matching fields — each
+  one turns red with its message, and the full list is available to a message summary — with
+  no per-field wiring and no separate client-side validation rules to keep in sync. The rule
+  is simply that a field's name matches its place in the form, including rows in a table, so a
+  message about "the third row's rate" finds the third row's rate. Your Laravel validation
+  stays the single source of truth; the form just reflects it. Submissions that fail for other
+  reasons still surface as before, so nothing existing changes until you opt a form in.
+
 ## [1.3.0] - 2026-07-08 — Export a table to a file
 
 A small, additive release: your app can now let people **download a table as a file**.
