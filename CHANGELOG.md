@@ -4,6 +4,49 @@ All notable changes to LaravelUi5 Core are documented here, newest first. The
 format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/); from
 1.0.0 onward Core adheres to [Semantic Versioning](https://semver.org/).
 
+## [2.0.0] - 2026-07-12 — Artifacts name their code by class
+
+The first major since 1.0. One thing changes in how you write an artifact — a mechanical,
+one-line edit per class — and in return the declaration style gets cleaner and the platform
+gains the groundwork for the richer action feedback below. If you don't touch actions, cards,
+resources, reports, tiles, charts, or apps directly, there is nothing to do.
+
+### Changed — a one-line migration per artifact
+
+- **An artifact now *names* the class behind it instead of building it.** Where an action
+  handed back its handler — or a card / resource / report / tile / chart handed back its
+  provider, or an app its manifest — it now returns that **class name** and lets the platform
+  create it:
+
+  ```php
+  // before
+  public function getHandler(): ActionHandlerInterface { return app(CreatePartner::class); }
+  // after
+  public function getHandler(): string { return CreatePartner::class; }
+  ```
+
+  The same shape applies to `getProvider`, `getTileProvider`, `getChartProvider`, and an app's
+  `getLaravelUiManifest`. It reads truer — a declaration just declares, and the platform owns the
+  wiring — and it is what lets an action be dispatched with the richer contract the new feedback
+  builds on. Every generator (`ui5:action`, `ui5:card`, … `ui5:app`) already emits the new shape,
+  so freshly scaffolded code is correct out of the box; existing artifacts each take the one-line
+  edit above when you move to 2.0.
+
+### Added
+
+- **Actions can declare their form request.** An action may now name the request class that
+  validates its body — or `null` when it carries none — so the validation contract is explicit at
+  the declaration rather than implied by the handler's signature. Entirely optional: handlers that
+  type a request parameter keep validating exactly as before.
+
+- **Richer results from an action call — messages and automatic refresh.** When your backend
+  returns business messages — each with a severity, its own text, and an optional field it points
+  at — or tells the call which data it changed, the platform now acts on them for you: messages
+  land in the form's message area (and on the field itself, when targeted), and the lists showing
+  the changed data refresh on their own — all from the single action call you already make. It
+  stays completely dormant until your backend sends these, so nothing existing changes in the
+  meantime, and a ready-to-mount message popover is included for a form header.
+
 ## [1.4.0] - 2026-07-10 — Validation errors land on the right fields
 
 A small, additive release: when a form submission is rejected, the platform can now show
