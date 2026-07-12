@@ -1,6 +1,6 @@
 # Roadmap
 
-Core reached **1.0.0 — the freeze — on 2026-06-03**. The artifact contract surface that the entire `0.9.x` line existed to stabilise is now signed and under full semantic versioning. So this roadmap is not a march toward a release; it's a map of *what is already frozen*, *what is still provisional and how it graduates*, and *the license horizon*. Order is firm, timing follows the work.
+Core reached **1.0.0 — the freeze — on 2026-06-03**, and **2.0.0 on 2026-07-12**. The artifact contract surface that the entire `0.9.x` line existed to stabilise is signed and under full semantic versioning; 2.0.0 spent a single, deliberate major to mature *how an artifact names its code* (see the [changelog](./CHANGELOG.md)) — the kind of break the bar is now high for, and one we don't expect to repeat. So this roadmap is not a march toward a release; it's a map of *what is frozen*, *what is still provisional and how it graduates*, and *the license horizon*. Order is firm, timing follows the work.
 
 ## How Core stabilizes
 
@@ -22,11 +22,11 @@ Every public surface carries an honest stability label (from the 1.0 acceptance 
 | Resource API | Provisional | 🚧 Contract pinned; awaiting a production authoring consumer to freeze |
 | `AnalyticTile`, `Dialog`, `ValueHelp`, `AnalyticsSet`, `AnalyticCard` | Provisional | ⏳ Enum vocabulary only in Core; the data-binding implementations live in the SDK |
 
-The authoring keystone is frozen with the surface: **"attributes declare, classes do."** An interface *method* carries an artifact's intrinsic contract; a PHP *attribute* (`#[Slot]` / `#[Setting]` / `#[Parameter]`) carries an extrinsic declaration into another subsystem's catalog.
+The authoring keystone is frozen with the surface: **"attributes declare, classes do."** An interface *method* carries an artifact's intrinsic contract; a PHP *attribute* (`#[Slot]` / `#[Setting]` / `#[Parameter]`) carries an extrinsic declaration into another subsystem's catalog. **2.0.0 sharpened this:** an artifact's declaration method now *names* its class and the platform builds it, so a declaration only declares.
 
 ## What's next
 
-The 1.x line is the stable home — there is **no 2.0 planned**. Forward work is graduation and consolidation, not contract churn:
+**2.x is the stable home.** 2.0.0 matured the artifact declaration contract — methods name their class, the platform resolves it — the last planned break to that surface, made to lay the groundwork for richer action feedback. Forward work from here is graduation and consolidation, not contract churn:
 
 - **Resource API → Frozen.** Freezes when a production authoring consumer exercises it end-to-end. Until then it stays Provisional with the contract pinned.
 - **SDK-bound artifact types.** `AnalyticTile`, `Dialog`, `ValueHelp`, `AnalyticsSet`, and `AnalyticCard` remain enum cases in Core; their real implementations ship and stabilise in the SDK. Core holds the vocabulary so hosts can name them; it does not implement them.

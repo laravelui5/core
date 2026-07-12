@@ -4,6 +4,27 @@ All notable changes to LaravelUi5 Core are documented here, newest first. The
 format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/); from
 1.0.0 onward Core adheres to [Semantic Versioning](https://semver.org/).
 
+## [2.1.0] - 2026-07-12 — A brief confirmation on success, and room for packages to grow
+
+A small, additive release. One thing becomes visible to the people using your apps, and one
+thing opens up for packages built on Core. Nothing you already wrote needs to change.
+
+### Added
+
+- **A successful action can now say so.** When your backend returns a short summary line with a
+  successful result, the platform shows it as a brief, self-dismissing confirmation — the
+  familiar toast that slides in and fades. It's the counterpart to the inline messages and
+  auto-refresh from 2.0: those carry the detail, this is the at-a-glance "done." Purely
+  opt-in — a result that carries no summary line shows no toast, so nothing changes until your
+  backend sends one.
+
+- **Scaffolding is now extensible.** The `ui5:action`, `ui5:card`, `ui5:report`, `ui5:resource`,
+  `ui5:tile`, and `ui5:chart` generators still create the same files the same way — but the one
+  class each generates to hold your logic (a handler, a provider) can now be supplied by a package
+  built on Core, so a higher-level toolkit can scaffold a richer starting point for that class
+  without replacing the command or changing how you run it. If you use Core on its own, the
+  generators behave exactly as before.
+
 ## [2.0.0] - 2026-07-12 — Artifacts name their code by class
 
 The first major since 1.0. One thing changes in how you write an artifact — a mechanical,
