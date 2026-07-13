@@ -4,6 +4,33 @@ All notable changes to LaravelUi5 Core are documented here, newest first. The
 format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/); from
 1.0.0 onward Core adheres to [Semantic Versioning](https://semver.org/).
 
+## [2.2.0] - 2026-07-13 — Telling apart the slots a component needs from the ones it offers
+
+A small, additive release that sharpens one contract. If you build on Core's base classes — the
+usual path — there is nothing to change and nothing to notice.
+
+Core's "slot" capability quietly did two jobs through a single interface: declaring the slots a
+component *needs* in order to render, and *offering* slot values up into a dashboard composition.
+Most components only do the first. A report reads slots but contributes none — yet it still had to
+carry an empty "what do you offer?" method that never did anything. That capability is now two
+interfaces, so each component states only what is true of it.
+
+### Added
+
+- **`SlotProposableInterface`** — the "offers slot values to a dashboard" half, for the components
+  that actually compose one: dashboards, cards, tiles, charts, and groups. It extends the base slot
+  interface, so a composing component still declares both what it needs and what it offers through a
+  single `implements`.
+
+### Changed
+
+- **`SlottableInterface` is now the "declares the slots it needs" half, by itself.** A component
+  that only reads slots — a report is the first — implements this alone and no longer carries an
+  empty "offers nothing" method; reports have dropped it. Components that extend Core's base classes
+  are unaffected: each base already implements the right interface for its type, and every composing
+  component keeps working unchanged. Only code that implements the slot interfaces by hand sees the
+  split.
+
 ## [2.1.0] - 2026-07-12 — A brief confirmation on success, and room for packages to grow
 
 A small, additive release. One thing becomes visible to the people using your apps, and one
