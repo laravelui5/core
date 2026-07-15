@@ -4,6 +4,24 @@ All notable changes to LaravelUi5 Core are documented here, newest first. The
 format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/); from
 1.0.0 onward Core adheres to [Semantic Versioning](https://semver.org/).
 
+## [2.3.1] - 2026-07-15 — Value-help pickers show their own labels and data
+
+A small fix on top of 2.3.0's value help. A picker opens in a shared overlay area, detached from the
+app that owns it — so it could appear with raw label keys or an empty list. It now connects to that
+app's translation and data models the moment it opens, and renders with the right text and content.
+Nothing you wrote needs to change.
+
+### Fixed
+
+- **A value help picker now shows its own text and data.** It inherits the owning app's models
+  (translations included) as it opens, so labels and the list render correctly — whether the picker
+  belongs to the current app or to another module opened across the boundary. (Value help activates
+  with the SDK; on Core alone the entry points stay inert, as before.)
+
+- **The acting- and authenticated-partner accessors are wired to the shell.** `getActor()` and
+  `getPrincipal()` now resolve through the shell — they return the current partner once the SDK is
+  present; on Core alone they still return `null`, unchanged.
+
 ## [2.3.0] - 2026-07-15 — A field can open a picker and hand back a selection
 
 A small, additive release: it introduces **value help** — a modal picker a form field opens to
