@@ -4,6 +4,36 @@ All notable changes to LaravelUi5 Core are documented here, newest first. The
 format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/); from
 1.0.0 onward Core adheres to [Semantic Versioning](https://semver.org/).
 
+## [2.3.0] - 2026-07-15 — A field can open a picker and hand back a selection
+
+A small, additive release: it introduces **value help** — a modal picker a form field opens to
+browse a business object and return a selection. On Core alone the entry points are present but
+inert; they come alive once you add the SDK, which hosts the picker and carries the selection back.
+Write against them now and they light up when the SDK is there. Nothing you already wrote changes.
+
+A value help is, in one line, *a dialog that returns a selection*. A field offers a "browse…"
+affordance; the user opens a searchable list of whatever they're choosing, picks one or several, and
+the chosen `{ key, text }` — optionally with more — flows back to the field. Because it is built on
+the same global-dialog mechanism Core already ships, a picker can belong to the current app *or* to
+another module entirely; you open it by name and await the result.
+
+### Added
+
+- **The ValueHelp artifact.** A value help is a small view — a dialog with your list inside — plus a
+  short controller that shapes the list and returns the selection, declared alongside your app's
+  other artifacts. It can optionally carry its own access gate; that gate matters only when another
+  app opens the picker, so the picker itself decides who may browse it, not the field that calls it.
+
+- **`openValueHelp` on the client facade.** Open a picker by name and `await` the outcome: the
+  selected items, an empty list (a deliberate "cleared"), or nothing at all when the user backs out —
+  so a cancel needs no error handling. At most one picker is open at a time. On Core alone the call
+  is inert (there is no shell to host the picker); it activates with the SDK.
+
+- **A picker controller base.** A base controller supplies `confirmSelection` and `cancel` and reads
+  the mode and context the caller asked for, so a picker stays a short view and a short controller —
+  and the app's models (translations, data) are available inside it, whether it is your own picker or
+  one contributed by another module.
+
 ## [2.2.0] - 2026-07-13 — Telling apart the slots a component needs from the ones it offers
 
 A small, additive release that sharpens one contract. If you build on Core's base classes — the
