@@ -4,6 +4,33 @@ All notable changes to LaravelUi5 Core are documented here, newest first. The
 format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/); from
 1.0.0 onward Core adheres to [Semantic Versioning](https://semver.org/).
 
+## [2.5.0] - 2026-07-17 — The Related menu is now a single tag
+
+A small, additive release that turns 2.4.0's **Related** menu into a drop-in control. Where you
+previously wired the menu by hand — fetch the doorways, render the button, handle the click — you now
+write one tag on the detail page and it does all of it:
+
+```xml
+<lux:Weave concept="laravelui5.partner"/>
+```
+
+Give it the business object the page is about and drop it in. It renders the doorways declared toward
+that object, shows only the ones the current user may open, and on click takes you straight to that
+record in the other module — no controller code, no click handler, nothing to keep in sync. The
+record's key is read from the page the tag sits on, so there's nothing else to pass. When there are
+no doorways, it renders nothing.
+
+As before, this is inert on Core alone (the menu stays empty) and comes alive with the SDK. If you
+hand-wired the menu against 2.4.0's `getWeave`, that accessor is unchanged — keep it, or replace your
+wiring with the tag. Nothing you already wrote breaks.
+
+### Added
+
+- **`<lux:Weave>` — the Related menu as a control.** One tag renders a business object's related
+  doorways, filters them to what the user may open, and navigates on click; it reads the record's key
+  from the detail page it sits on and hides itself when there's nothing to show. Renders nothing on
+  Core alone; lights up with the SDK.
+
 ## [2.4.0] - 2026-07-17 — A record can show links to what relates to it
 
 A small, additive release. When you're looking at a business object — a partner, say — its detail
