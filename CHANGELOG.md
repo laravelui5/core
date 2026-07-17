@@ -4,6 +4,28 @@ All notable changes to LaravelUi5 Core are documented here, newest first. The
 format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/); from
 1.0.0 onward Core adheres to [Semantic Versioning](https://semver.org/).
 
+## [2.4.0] - 2026-07-17 — A record can show links to what relates to it
+
+A small, additive release. When you're looking at a business object — a partner, say — its detail
+can now offer a **Related** menu: doorways into the other modules that work with that same object
+(its orders, its invoices, its contracts). Each module declares the link toward the object once, and
+the object's detail grows the doorway on its own — the page you're looking at is never edited to know
+about the newcomer. The menu is filtered to what you're allowed to open, and clicking a doorway takes
+you straight to that object in the other module.
+
+On Core alone this is inert: there is no shell to resolve the links, so the menu is empty and the
+entry point stays quiet. It comes alive with the SDK, which knows the modules and the links between
+them. Write against it now and it lights up when the SDK is there. Nothing you already wrote changes.
+
+### Added
+
+- **`getWeave` on the client facade.** Ask for the related doorways declared toward a business
+  object and get back the list, already filtered to the ones the current user may open — ready to
+  render as a "Related" menu on a detail page. You never hold the destination's address: you hand
+  back only which object you're on, and the system resolves where each doorway leads, so a module
+  can offer a link into another without knowing its inner routes. On Core alone the list is empty;
+  it fills once the SDK is present.
+
 ## [2.3.1] - 2026-07-15 — Value-help pickers show their own labels and data
 
 A small fix on top of 2.3.0's value help. A picker opens in a shared overlay area, detached from the
