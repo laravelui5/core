@@ -4,6 +4,28 @@ All notable changes to LaravelUi5 Core are documented here, newest first. The
 format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/); from
 1.0.0 onward Core adheres to [Semantic Versioning](https://semver.org/).
 
+## [2.6.0] - 2026-07-20 — A value help can offer more than one list
+
+A small, additive release. A **value help** — the search-help a field pops open to pick a business
+object — used to be a single list. Now it can be one picker that offers **several named lists of the
+same shape**: a partner picker that shows *colleagues* in one place and *everyone with a login* in
+another — a different set underneath each, but the same columns and the same selection on top.
+
+To make that work, a value help now declares two things: the **shape** it presents (the columns your
+selection comes back with) and the **named lists** — scopes — it accepts. A field asks for the picker
+by name and the list it wants, and the right set is chosen, and authorized, on the server. One picker
+per business object, many facets — the same idea will carry products, projects, and the rest.
+
+This is the foundation the scoped picker builds on. Like the Related menu, it is inert on Core alone
+and comes alive with the SDK, which owns the value-help runtime. It's purely additive — nothing you
+already wrote changes.
+
+### Changed
+
+- **A value help now declares its shape and its scopes.** It states the columns its list returns and
+  the named lists it offers, so one picker can serve many server-defined, server-authorized lists of
+  the same shape. Existing value helps are unaffected.
+
 ## [2.5.0] - 2026-07-17 — The Related menu is now a single tag
 
 A small, additive release that turns 2.4.0's **Related** menu into a drop-in control. Where you
@@ -11,14 +33,14 @@ previously wired the menu by hand — fetch the doorways, render the button, han
 write one tag on the detail page and it does all of it:
 
 ```xml
-<lux:Weave concept="laravelui5.partner"/>
+<lux:Weave/>
 ```
 
-Give it the business object the page is about and drop it in. It renders the doorways declared toward
-that object, shows only the ones the current user may open, and on click takes you straight to that
-record in the other module — no controller code, no click handler, nothing to keep in sync. The
-record's key is read from the page the tag sits on, so there's nothing else to pass. When there are
-no doorways, it renders nothing.
+Drop it on the detail page — nothing to configure. It renders the doorways declared toward the record
+the page is about, shows only the ones the current user may open, and on click takes you straight to
+that record in the other module — no controller code, no click handler, nothing to keep in sync. The
+record and its key are read from the page the tag sits on, so there is nothing to pass at all. When
+there are no doorways, it renders nothing.
 
 As before, this is inert on Core alone (the menu stays empty) and comes alive with the SDK. If you
 hand-wired the menu against 2.4.0's `getWeave`, that accessor is unchanged — keep it, or replace your
