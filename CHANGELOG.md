@@ -4,6 +4,31 @@ All notable changes to LaravelUi5 Core are documented here, newest first. The
 format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/); from
 1.0.0 onward Core adheres to [Semantic Versioning](https://semver.org/).
 
+## [2.7.0] - 2026-07-21 — Opening a picker to a named list
+
+Building on 2.6.0's multi-list value helps: a field can now **open a picker to a named list**, and
+which list it opens — and which rows fill it — is decided and enforced on the server, not by the page.
+
+You ask for the picker by its business object and the list you want ("partners, the *colleagues*
+list"); the server resolves that to the right set, checks you're allowed to read it, and hands the
+picker the rows. The page names *which list*, never *which rows* — so a picker can't be steered to
+show more than it should. And a list you're not allowed to read comes back as a clear message **inside
+the dialog**, not a silently empty table that would read as "no matches."
+
+There's one thing to know if you already open pickers: the call now takes the **name of the list** —
+you say which list you want, where before there was only the picker. For the everyday "people in my
+own organization" list you pass nothing else — the server scopes it to whoever you're signed in as,
+never to anything the page hands it. The value-help runtime is the SDK's, so on Core alone a picker
+doesn't open and none of this changes for you.
+
+### Changed
+
+- **Opening a value-help picker now names the list (scope) it opens.** The server resolves the named
+  list to its underlying set, authorizes it, and returns the rows; a denied list surfaces as an
+  in-dialog message rather than an empty table. A picker that shows "your own organization" is scoped
+  to your signed-in identity — the page passes no id. The picker runtime is provided by the SDK; on
+  Core alone pickers don't open, so this is inert without it.
+
 ## [2.6.0] - 2026-07-20 — A value help can offer more than one list
 
 A small, additive release. A **value help** — the search-help a field pops open to pick a business
