@@ -4,6 +4,20 @@ All notable changes to LaravelUi5 Core are documented here, newest first. The
 format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/); from
 1.0.0 onward Core adheres to [Semantic Versioning](https://semver.org/).
 
+## [2.7.2] - 2026-07-22 — Signing back in returns you where you were
+
+A small follow-on to 2.7.1. When an expired session sent you to sign in again, you'd come back to a
+default landing page — not the screen you'd been on. Now the app remembers the exact place you were
+and takes you straight back there after you sign in, so an expired session is a brief detour rather
+than a lost spot.
+
+Nothing to configure — it works with the sign-in flow the platform already provides.
+
+### Changed
+
+- After re-authenticating on an expired session, the app resumes at the exact view you were on,
+  instead of dropping you on a default landing page.
+
 ## [2.7.1] - 2026-07-22 — A stale session no longer swallows a click
 
 If you left the app open long enough for your session to expire, some actions could quietly do
