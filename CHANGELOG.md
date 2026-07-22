@@ -4,6 +4,24 @@ All notable changes to LaravelUi5 Core are documented here, newest first. The
 format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/); from
 1.0.0 onward Core adheres to [Semantic Versioning](https://semver.org/).
 
+## [2.7.1] - 2026-07-22 — A stale session no longer swallows a click
+
+If you left the app open long enough for your session to expire, some actions could quietly do
+nothing — you'd click, and there'd be no error, no message, and no page change. That dead click
+is the problem this release closes. When your session has lapsed, the app is now told so plainly,
+instead of a background request being quietly bounced to the sign-in page and its answer lost —
+so an expired session can send you back to sign in and return you where you were, rather than
+leaving you staring at a button that seems broken.
+
+Nothing changes while you're signed in; this only touches the moment a session has already
+expired. There is nothing to configure.
+
+### Fixed
+
+- An expired session is now reported clearly to the app instead of silently redirecting its
+  background requests to the sign-in page — so a click made after a session has lapsed leads to a
+  clean return to sign-in, not a dead click that appears to do nothing.
+
 ## [2.7.0] - 2026-07-21 — Opening a picker to a named list
 
 Building on 2.6.0's multi-list value helps: a field can now **open a picker to a named list**, and
