@@ -4,6 +4,38 @@ All notable changes to LaravelUi5 Core are documented here, newest first. The
 format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/); from
 1.0.0 onward Core adheres to [Semantic Versioning](https://semver.org/).
 
+## [2.8.0] - 2026-08-18 — Wiring a scaffolded app into your host is two edits, not three
+
+When you scaffolded an app with `ui5:app` or `ui5:assemble`, the generator handed you the files and
+then asked you to introduce them to your host three separate times: repeat the app's namespace in your
+root `composer.json`, add the generated service provider to `bootstrap/providers.php`, and declare the
+module in `config/ui5.php`. Two of those three were work Composer and Laravel already know how to do.
+
+A generated app now ships a complete package manifest of its own. It declares its own autoload root and
+its own service provider, so the host only has to point at it: a `path` repository plus a `require`
+line, and the app is loaded — namespace resolved, provider registered by Laravel's package discovery.
+Your root `composer.json` keeps its `autoload` block untouched, and `bootstrap/providers.php` stays as
+it was. Because path repositories link rather than copy, the app stays live in your tree: edit, reload.
+
+What stays a manual step, on purpose, is listing the module in `config/ui5.php`. That entry is the
+statement that the app is in scope — visible, supported, part of your product. It is a decision, not
+plumbing, and the platform will not quietly make it for you.
+
+Both generators now close by printing the exact lines to add, so none of it is guesswork. Nothing is
+written into your root `composer.json` on your behalf — that file is yours.
+
+Existing apps are unaffected. However you wired them, they keep working; only newly generated apps get
+the fuller manifest.
+
+### Changed
+
+- A scaffolded app's `composer.json` is now a complete package manifest — it declares its own autoload
+  root and its service provider, so a `path` repository plus a `require` is all the host needs. No
+  namespace entry in your root `composer.json`, and no line in `bootstrap/providers.php`.
+- `ui5:app` and `ui5:assemble` finish with the exact host lines to add — the path repository, the
+  `require`, and the module entry for `config/ui5.php` — followed by the `composer update` that
+  installs it. `ui5:app` previously printed no registration guidance at all.
+
 ## [2.7.2] - 2026-07-22 — Signing back in returns you where you were
 
 A small follow-on to 2.7.1. When an expired session sent you to sign in again, you'd come back to a
