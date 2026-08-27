@@ -4,6 +4,27 @@ All notable changes to LaravelUi5 Core are documented here, newest first. The
 format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/); from
 1.0.0 onward Core adheres to [Semantic Versioning](https://semver.org/).
 
+## [2.8.2] - 2026-08-27 — Core asks for the PHP version it has always needed
+
+Core's `composer.json` said it ran on PHP 8.3 or newer. It never did. Core requires
+`laravelui5/odata`, and odata has asked for PHP 8.4 since the day it was published — so no
+installation of Core has resolved on 8.3 at any point.
+
+The declaration is now `^8.4`, which is what it always was in practice. Nothing breaks, because there
+is no working 8.3 installation anywhere to break. What changes is the message you get if you try: on
+PHP 8.3, Composer now tells you plainly that your PHP version is too old, instead of reporting a
+dependency conflict inside odata and leaving you to work out what it meant.
+
+`laravelui5/auth` moved to the same floor in the same pass.
+
+The floor moves again only when Laravel's own minimum reaches PHP 8.5 — we follow Laravel here rather
+than the newest release.
+
+### Fixed
+
+- `composer.json` requires `php ^8.4`, matching the version every Core install has actually needed
+  since the OData engine changed.
+
 ## [2.8.1] - 2026-08-27 — The wiring instructions now fit the host you actually have
 
 2.8.0 taught `ui5:app` and `ui5:assemble` to finish by printing the exact lines that wire a freshly
