@@ -4,6 +4,62 @@ All notable changes to LaravelUi5 Core are documented here, newest first. The
 format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/); from
 1.0.0 onward Core adheres to [Semantic Versioning](https://semver.org/).
 
+## [2.8.1] - 2026-08-27 — The wiring instructions now fit the host you actually have
+
+2.8.0 taught `ui5:app` and `ui5:assemble` to finish by printing the exact lines that wire a freshly
+scaffolded app into your host. Those lines were right in isolation and wrong in context, and this
+release fixes that.
+
+You reached Core by telling Composer where our registry lives:
+
+```bash
+composer config repositories.laravelui5 composer https://packages.pragmatiqu.io
+```
+
+That command writes your `repositories` section as a **named block** — each repository under a key.
+The generator then handed you a snippet in the other shape Composer accepts, a plain **list**. Both
+are valid, but a file holds one or the other, so pasting the list replaced the named block — and took
+your `laravelui5` entry out with it. Nothing complained at the time. The failure arrived one command
+later as `Could not find a matching version of package laravelui5/core`, which reads like a typo in a
+package name when in fact the registry it came from was no longer in the file.
+
+Both generators now print commands instead of a snippet:
+
+```bash
+composer config repositories.showcase path ui5/Showcase
+composer require example/showcase:@dev
+```
+
+Composer edits its own manifest, so the shape stays consistent whichever way you set it up. It places
+the app ahead of the registry, which is what you want from a local path repository — your own tree
+wins. And `composer require` installs in the same step, so the separate `composer update` that used to
+follow is gone. There is nothing left to "refresh" afterwards, which also removes a trap: reaching for
+`composer dump-autoload` at this point does nothing at all, because the app isn't in your lock file
+yet, and the app then fails to boot with a message pointing at the registry rather than at the
+autoloader.
+
+Listing the module in `config/ui5.php` is unchanged and still yours to do. It is now the only edit,
+and the generator says why it stays one: which apps a host serves is a product decision, not a
+directory listing.
+
+**If you already have apps wired, do nothing.** A list-shaped `repositories` section is perfectly
+valid where it is the only shape in the file, and hosts set up that way keep working exactly as
+before. This changes what newly scaffolded apps tell you to do.
+
+The Quickstart and the self-contained-app guide carried the same contradiction — telling you to run
+`composer config` for the registry, then to paste the list form for your app — and have been rewritten
+against the commands.
+
+### Fixed
+
+- `ui5:app` and `ui5:assemble` close with `composer config` + `composer require` instead of a
+  `composer.json` snippet whose shape could silently drop the registry you installed Core from.
+- The Quickstart and self-contained-app documentation were corrected to match.
+- API-reference corrections: the registry no longer describes modules as being keyed by a "slug"
+  (they are keyed by the namespace they declare), `getModuleByClass()` is documented as returning a
+  module rather than an artifact, the shape returned by `settings()` is described accurately, and the
+  example URL for `resolve()` uses the current `{path}@{version}` form.
+
 ## [2.8.0] - 2026-08-18 — Wiring a scaffolded app into your host is two edits, not three
 
 When you scaffolded an app with `ui5:app` or `ui5:assemble`, the generator handed you the files and
