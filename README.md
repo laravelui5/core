@@ -37,7 +37,7 @@ Add the registry to your `composer.json`:
 Bind your account credentials and install:
 
 ```bash
-composer config http-basic.packages.pragmatiqu.io your-email@example.com your-account-key
+composer config --global http-basic.packages.pragmatiqu.io your-email@example.com your-account-key
 composer require laravelui5/core
 ```
 

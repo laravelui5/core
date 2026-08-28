@@ -4,6 +4,67 @@ All notable changes to LaravelUi5 Core are documented here, newest first. The
 format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/); from
 1.0.0 onward Core adheres to [Semantic Versioning](https://semver.org/).
 
+## [2.9.0] - 2026-08-28 — Room for a second screen, and one keystroke to the UI5 docs
+
+Two changes, both additive. If you already have an assembled app, nothing about it changes; if you
+assemble a new one, you get a shape that has room in it.
+
+### `ui5:assemble` now gives you a shell, not just a screen
+
+The app the `launchpad-app` blueprint produced was complete and closed. `App.view.xml` held the
+dashboard directly, which is fine right up until you want a second screen — and the very next
+command you are likely to run, `ui5:wire`, exists to give you one. Getting there meant rearranging
+the file the generator had just written for you, which is a strange thing for a generator to ask.
+
+Now the generated app arrives already knowing how to grow:
+
+- `App.view.xml` is the shell. It holds a navigation container and nothing else.
+- `Dashboard.view.xml` and its controller are new, and carry the dashboard.
+- `manifest.json` ships a `routing` section that puts the dashboard on the app's initial route.
+
+Adding a screen is a route and a target — three lines in a list that already exists. That is also
+exactly what `ui5:wire` asks for when it prints the steps it will not take for you, so the two
+commands now fit together without an edit in between.
+
+`ui5:wire` still prints those steps rather than performing them. That is on purpose: lighting up
+OData is a decision, not plumbing, and a generator that made it silently would leave you without the
+one seam worth knowing about. It also means the command can be run in front of an audience.
+
+One smaller fix rides along: the generated `Component.js` now starts the router only after the Core
+front-end facade has finished initializing, so the first route never navigates into a view whose
+model is not ready yet.
+
+### The typed UI5 controls now link to SAP's documentation
+
+Core ships typed PHP mirrors of the UI5 controls — `GenericTile`, `NumericContent`, `Panel`, `Card`
+and the rest — so you build a dashboard with named arguments and IDE completion instead of XML. They
+are pleasant to write and were unpleasant to *discover*: hover one in your editor and you got its
+constructor, which for `GenericTile` is twenty-seven parameters with nothing above them explaining
+what any of it meant.
+
+We did not fix that by copying SAP's property documentation into PHP. It is better where it is, and
+a copy would be wrong by the next OpenUI5 release. Instead every control's constructor now carries
+the part SAP's page cannot tell you — that each parameter maps to the UI5 property of the same name,
+that leaving one `null` means "no opinion, take UI5's default", and which few seats are ours rather
+than SAP's — plus a link to that control's API page.
+
+The practical result: **put your caret on a control's class name and press Shift+F1**, and the
+OpenUI5 documentation for it opens in your browser. One keystroke, always the current version, never
+a stale copy.
+
+Nineteen controls, every one with a constructor.
+
+### Added
+
+- A `Dashboard` view and controller in the `launchpad-app` blueprint, with the app's routing
+  configured to land on it.
+- Constructor documentation and OpenUI5 API links on all nineteen typed control classes.
+
+### Changed
+
+- The blueprint's `App.view.xml` is now a navigation shell; the dashboard moved into its own view.
+- The generated `Component.js` starts the router after the Core facade is ready.
+
 ## [2.8.2] - 2026-08-27 — Core asks for the PHP version it has always needed
 
 Core's `composer.json` said it ran on PHP 8.3 or newer. It never did. Core requires
@@ -34,7 +95,7 @@ release fixes that.
 You reached Core by telling Composer where our registry lives:
 
 ```bash
-composer config repositories.laravelui5 composer https://packages.pragmatiqu.io
+composer config repositories.pragmatiqu composer https://packages.pragmatiqu.io
 ```
 
 That command writes your `repositories` section as a **named block** — each repository under a key.
