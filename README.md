@@ -34,10 +34,10 @@ Add the registry to your `composer.json`:
 }
 ```
 
-Bind your account credentials and install:
+Bind your account email and install token, then install:
 
 ```bash
-composer config --global http-basic.packages.pragmatiqu.io your-email@example.com your-account-key
+composer config --global http-basic.packages.pragmatiqu.io your-email@example.com YOUR-INSTALL-TOKEN
 composer require laravelui5/core
 ```
 
