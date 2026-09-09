@@ -4,7 +4,7 @@ Core reached **1.0.0 — the freeze — on 2026-06-03**, and **2.0.0 on 2026-07-
 
 ## How Core stabilizes
 
-Every public surface carries an honest stability label (from the 1.0 acceptance program, `docs/meta/specs/core-1.0-acceptance.md`):
+Every public surface carries an honest stability label, assigned during the internal 1.0 acceptance program:
 
 - **Frozen** — a public contract under full SemVer. Breaking it requires a **major** release. The `0.9.x` "SemVer credit spent" convention — where breaking changes shipped as patches — **ended at 1.0.0**.
 - **Provisional** — shipped and usable, but may still change in a minor, with notice. Labelled, never hidden. A Provisional surface freezes once it has a production authoring consumer that proves the contract.
