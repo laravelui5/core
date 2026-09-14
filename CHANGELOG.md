@@ -4,6 +4,86 @@ All notable changes to LaravelUi5 Core are documented here, newest first. The
 format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/); from
 1.0.0 onward Core adheres to [Semantic Versioning](https://semver.org/).
 
+## [2.11.0] - 2026-09-14 — A slot value always has the type its slot declares
+
+A minor. Slot values now arrive in one predictable form, a value that does not fit is refused instead
+of passed along, and a few declaration mistakes that used to surface much later now stop the
+application at boot. Read *What you may notice* before upgrading.
+
+### Every slot value arrives in one form
+
+Until now a provider received whatever the answering source happened to hold. The same date slot
+could be a string when the default answered and a date object when a stored value did, so there was
+no single way to write the code that reads it. Now every value leaves the resolution chain in the
+form its declared type names, whichever source filled it:
+
+| Type | You receive |
+|---|---|
+| `String` | `string` |
+| `Integer` | `int` |
+| `Float` | `float` |
+| `Boolean` | `bool` |
+| `Decimal` | a numeric `string`, e.g. `'19.99'` |
+| `Date` | a `string`, `Y-m-d`, e.g. `'2026-09-14'` |
+| `DateTime` | a `string`, ISO-8601 with offset, e.g. `'2026-09-14T08:30:00+02:00'` |
+
+Dates and decimals are strings on purpose. Slot values travel in URLs and JSON — a card's manifest
+URL is built from them — and a string survives that trip unchanged. A decimal stays a string because
+a float is exactly what a decimal type exists to avoid. Parse where you compute:
+`Carbon::parse($slots['date_from'])`.
+
+### A value that does not fit is refused, loudly
+
+- **From the request.** `?date_from=someday` for a date slot now answers **422**, with a message
+  that names the slot and the form it expected. It does not quietly fall back to the default: a
+  broken link that answers as if it were fine is the harder bug to find.
+- **From anywhere else.** A stored value or a dashboard's proposal of the wrong type raises
+  `InvalidSlotSourceValueException`, which names the source that produced it and reaches your log.
+
+The check is strict wherever a lenient parser would change the answer: `2026-02-30` is not rolled
+over into March, `true` is not the string `'1'`, and an unresolved `@today` is not read as a Unix
+timestamp.
+
+### Declaration mistakes stop the boot
+
+Each of these used to register without complaint and fail later, somewhere else:
+
+- **A slot default that does not fit its type** — `#[Slot(type: ParameterType::Integer, default:
+  'many')]`.
+- **An unknown date sentinel** — `@tomorow` used to survive as a literal string. `@today`, `@now`
+  and `@first-of-month` are the ones Core knows.
+- **A `#[Slot]` on an artifact class.** Slots belong on the module class; elsewhere the attribute
+  was silently ignored.
+- **A `Model` or `ModelArray` setting without a `modelClass`**, or with one that does not exist. It
+  used to register and then fail on every write.
+
+Each now raises an exception at boot that names the class to fix. And a slot an artifact requests
+must be in the catalog; an unknown name fails before any source is asked.
+
+### What you may notice
+
+- A value from the request is no longer passed through raw. An `Integer` slot sent as `?id=12`
+  arrives as `12`, not `'12'`; a `Boolean` sent as `?flag=false` arrives as `false`. Before, the
+  string `'false'` was truthy. Providers that cast their slot values (`(int) $slots['id']`) are
+  unaffected; code that compares them strictly as strings is not.
+- An application whose declarations contain one of the mistakes above no longer boots. Check your
+  `#[Slot]` and `#[Setting]` declarations before you upgrade — the message says exactly what to
+  change.
+
+### Deprecated
+
+- `ParameterPipelineCycleException`. Nothing throws it — the resolution chain cannot contain a cycle
+  — and it is removed in 3.0. A `catch` that names it keeps compiling until then.
+
+### Documentation in the code
+
+Several docblocks described behaviour the code does not have, which is what your IDE and the
+[API reference](https://laravelui5.com/api/core/index.html) showed you. Corrected: `#[Slot]` (what `editable`
+does, and the date sentinels spelled as Core matches them), `#[Setting]` (a working example, and no
+longer listing report providers as a target), `EditLevel::allows()`, `ParameterType` (which now says,
+per type, what a slot consumer receives), the `ui5:slot` command description, and the module and
+dialog contracts, which named a configuration key and a controller path that nothing reads.
+
 ## [2.10.0] - 2026-09-09 — An assembled app no longer locks itself out
 
 A minor: `ui5:assemble` writes a different module than it did in 2.9.1. Applications you have
