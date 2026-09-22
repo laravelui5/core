@@ -32,6 +32,23 @@ The authoring keystone is frozen with the surface: **"attributes declare, classe
 - **SDK-bound artifact types.** `AnalyticTile`, `Dialog`, `ValueHelp`, `AnalyticsSet`, and `AnalyticCard` remain enum cases in Core; their real implementations ship and stabilise in the SDK. Core holds the vocabulary so hosts can name them; it does not implement them.
 - **Patch / minor cadence.** Bug fixes and additive, backward-compatible surface land as patches and minors under SemVer. Anything that would break a Frozen contract waits for a major and a deprecation window — by design, that bar is now high.
 
+## Known gaps
+
+The documentation describes the **target** state of each surface, so a page may promise behaviour a
+release has not caught up with yet. Those places are marked **planned** and are listed here. None is
+a regression; each is queued under normal patch/minor cadence.
+
+| Gap | Today | Queued |
+|:---|:---|:---|
+| **`ui5:app` identity options** | `--vendor`, `--php-ns-prefix`, `--js-ns-prefix` and `--package-prefix` fall back to our own vendor names | The four become required on `--create`; a run without them aborts and names what to pass |
+| **Artifact URL slugs** | Tiles, charts, actions, reports and resources are slugged with `snake_case`; dashboards and groups with `kebab-case` | One convention — `kebab` — for newly scaffolded artifacts. Existing artifacts keep their namespace; nothing on the wire moves |
+| **Where `#[Setting]` is declared** | A setting on an artifact is catalogued but not injected; a setting on a handler or provider is injected but never stored, so no administrator can change it | One declaration site — the artifact — with the resolved values injected into the handler or provider on every invocation path |
+| **Scalar route parameters** | Only `Model` and `Date` reach a handler argument; the other `ParameterType` cases are refused | Every declared type arrives, as the documentation describes |
+| **Resource path parameters** | The manifest advertises a URL segment per `#[Parameter]` that the resource route does not accept | The route accepts them |
+| **Card providers and slots** | A card's provider is invoked without the slot values the dashboard already resolved for it | The values arrive, as they do for a report |
+| **OpenUI5 version** | `ui5.version` sets the CDN bootstrap only | The documented per-app override and use during scaffolding |
+| **Smaller ones** | Read-only settings are not enforced on write; a duplicate infrastructure key can slip through after an empty contribution; two generators print an incomplete or wrong registration hint | All queued as patches |
+
 ## License horizon
 
 Core is **BSL 1.1**: production use is permitted; repackaging as a competing UI5 toolkit/SDK is prohibited. Each release **converts to Apache 2.0 four years after it ships** — so the 1.0.0 surface (2026-06-03) opens fully on **2030-06-03**, and every later release on its own four-year clock. The fence is what makes giving Core away safe; the horizon is what makes it a fair trade.
