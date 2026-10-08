@@ -4,6 +4,114 @@ All notable changes to LaravelUi5 Core are documented here, newest first. The
 format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/); from
 1.0.0 onward Core adheres to [Semantic Versioning](https://semver.org/).
 
+## [3.0.0] - 2026-10-08 — The known gaps close, and a slot is one call away
+
+A major. It closes nearly every gap the roadmap listed between what the documentation promised and
+what Core did, and it removes a few things that were wrong rather than incomplete. Most applications
+upgrade with a few edits; *Upgrading from 2.x* lists them all.
+
+> **Using the LaravelUi5 SDK?** Stay on Core 2.x until the SDK release that supports Core 3. The SDK
+> implements Core's context contract, which gains a method in this release.
+
+### Upgrading from 2.x
+
+1. **Add the language middleware to your published `config/ui5.php`.** Put
+   `\LaravelUi5\Core\Http\Middleware\ResolveRequestLanguage::class` into `odata_middleware`, right
+   after `'web'`. `composer update` does not change a published config.
+2. **Stop reading the `currency` slot.** It is gone. A base currency is not a per-request value — an
+   installation has one — so a slot that let a URL override it either repeated it or claimed something
+   false. Core now ships six slots: `locale`, `timezone`, `period`, `date`, `date_from`, `date_to`.
+3. **A context of your own implements `slot()`.** If you bind your own `Ui5ContextInterface` through
+   `ui5.context_factory`, add `slot(string|BackedEnum $name): string|int|float|bool`; the one-line
+   implementation is in the documentation.
+4. **Send slot values in the query string.** Slots are no longer read from the request body or from
+   route parameters. A path segment that names a record belongs in `#[Parameter]`.
+5. **Remove `catch (ParameterPipelineCycleException)`.** The class is gone; nothing ever threw it.
+6. **Name your vendor when you scaffold.** `ui5:app --create` needs `--package-prefix`,
+   `--php-ns-prefix` and `--vendor`; `ui5:lib --create` needs the first two. They no longer default
+   to our names, and a run without them stops and prints the line to use. `--refresh` needs none.
+7. **Declare every `#[Setting]` on its artifact.** A setting on a handler or provider is no longer
+   read; the artifact is the one place a setting is declared.
+8. **An app that implements `Ui5AppInterface` directly adds `getUi5Version(): ?string`** — return
+   `null` to keep using `ui5.version`. Apps extending `AbstractUi5App` need nothing.
+9. **Catch Core's configuration faults as `LogicException`.** The exceptions that answered with a
+   500 — an unknown slot, a parameter of the wrong type, a module without a root artifact and their
+   siblings — are no longer HTTP exceptions, so they reach your log.
+
+### Read a slot anywhere
+
+`$context->slot(CoreSlots::Period)` returns a slot's value wherever you have the context — an action
+handler, a resource provider, an OData resolver. It is the same answer the dashboard's tiles get: the
+query string, else a dashboard's composition, else the declared default, typed as the slot declares.
+
+### Settings: one declaration, every provider
+
+A `#[Setting]` lives on the artifact — the card, the action, the report — and its value reaches the
+class that serves it on every path: actions, resources and cards as before, and now tiles, charts and
+reports too. A tile receives its own settings, not its dashboard's. Settings are read-only: assigning
+to one throws, and `isset()` answers for them.
+
+### The client's language reaches OData
+
+OData requests now take their language from `sap-language`, else from `Accept-Language` — which
+OpenUI5 sends on every request, code lists included. Translations, and anything that reads the
+application locale, follow the language of the UI.
+
+### Parameters and resources
+
+- **Every parameter type arrives.** A `#[Parameter]` typed `int`, `float`, `string` or `bool`,
+  `Decimal` (as a numeric string) or `DateTime` (as a Carbon) now reaches the handler. Until now
+  only models and dates got through. A segment that does not cast answers 400.
+- **Resources take path parameters.** The URL a resource's manifest advertises — one segment per
+  `#[Parameter]` — now exists.
+
+### Scaffolding
+
+- **A library is a package.** `ui5:lib --create` writes a `composer.json` and a service provider, and
+  prints how to register the library with your host, exactly as `ui5:app` does.
+- **The `composer.json` that `ui5:app` writes is valid.** Its autoload prefix lacked the closing
+  namespace separator.
+- **One registration hint, with the right line.** Every generator names the module method to edit
+  and a line you can paste — an instance, `new …($this)`. `ui5:dashboard` no longer points at
+  `config/ui5.php`.
+- **Kebab-case URL segments.** New actions, resources, cards, tiles, charts and reports are slugged
+  `next-best-action`, like dashboards and groups. Existing artifacts keep their names.
+- **Builds use your project's tools.** The build runs as `npm run build`, so a project whose build
+  tools are local devDependencies builds as well as one using a global CLI.
+- **Stable generated files.** Refreshing an app no longer rewrites unchanged arrays in a different
+  layout, and `.ui5-sources.php` is written cleanly.
+- **An app can name its OpenUI5 version.** `ui5:app` takes `framework.version` from your project's
+  `ui5.yaml`; in built mode the app loads that version, else `ui5.version`.
+
+### Errors that say what is wrong
+
+- **Unknown OData addresses answer as OData.** An unknown namespace (404) or an artifact without an
+  OData endpoint (400) now carries the OData error format and `OData-Version`, so the UI5 client
+  reports the real problem instead of a protocol error.
+- **Configuration faults are logged.** See step 9 above — including those of a dashboard child that
+  was left out.
+- **A source override that points nowhere** in `.ui5-sources.php` is logged instead of silently
+  ignored.
+- **A duplicate infrastructure key** is refused even when the first module contributed nothing.
+
+### Dashboards
+
+A new extension point decides visibility **after** a dashboard child is built, when its press-intent
+is known: register an `ElementGateInterface`, and a child it hides is simply left out. Nothing
+registered changes nothing.
+
+### Global dialogs save from anywhere
+
+A global dialog opened from another app saves through its own module's action. The bundled
+`@laravelui5/core` used to look the action up only in the hosting app and reported it as unknown.
+
+### Removed
+
+- The `currency` slot (step 2) and `ParameterPipelineCycleException` (step 5).
+- The multi-app source convention `resources/ui5-<slug>`; give each app its own module folder.
+- `EnsureFrontendVersionIsLatest` — it was not part of any default middleware stack.
+- Five exception classes that nothing threw any more, among them `InvalidSettingException`.
+
 ## [2.11.0] - 2026-09-14 — A slot value always has the type its slot declares
 
 A minor. Slot values now arrive in one predictable form, a value that does not fit is refused instead

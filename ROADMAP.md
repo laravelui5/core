@@ -1,6 +1,6 @@
 # Roadmap
 
-Core reached **1.0.0 — the freeze — on 2026-06-03**, and **2.0.0 on 2026-07-12**. The artifact contract surface that the entire `0.9.x` line existed to stabilise is signed and under full semantic versioning; 2.0.0 spent a single, deliberate major to mature *how an artifact names its code* (see the [changelog](./CHANGELOG.md)) — the kind of break the bar is now high for, and one we don't expect to repeat. So this roadmap is not a march toward a release; it's a map of *what is frozen*, *what is still provisional and how it graduates*, and *the license horizon*. Order is firm, timing follows the work.
+Core reached **1.0.0 — the freeze — on 2026-06-03**, **2.0.0 on 2026-07-12** and **3.0.0 on 2026-10-08**. The artifact contract surface that the entire `0.9.x` line existed to stabilise is signed and under full semantic versioning. 2.0.0 matured *how an artifact names its code*; 3.0.0 closed the gaps between what the documentation promised and what Core did, and removed what was wrong rather than incomplete — the currency slot first among them (see the [changelog](./CHANGELOG.md)). So this roadmap is not a march toward a release; it's a map of *what is frozen*, *what is still provisional and how it graduates*, and *the license horizon*. Order is firm, timing follows the work.
 
 ## How Core stabilizes
 
@@ -26,7 +26,7 @@ The authoring keystone is frozen with the surface: **"attributes declare, classe
 
 ## What's next
 
-**2.x is the stable home.** 2.0.0 matured the artifact declaration contract — methods name their class, the platform resolves it — the last planned break to that surface, made to lay the groundwork for richer action feedback. Forward work from here is graduation and consolidation, not contract churn:
+**3.x is the stable home.** 3.0.0 settled where values come from — a slot from the query string, a parameter from the path, a setting from its artifact — and gave the context a `slot()` to read them anywhere. Forward work from here is graduation and consolidation, not contract churn:
 
 - **Resource API → Frozen.** Freezes when a production authoring consumer exercises it end-to-end. Until then it stays Provisional with the contract pinned.
 - **SDK-bound artifact types.** `AnalyticTile`, `Dialog`, `ValueHelp`, `AnalyticsSet`, and `AnalyticCard` remain enum cases in Core; their real implementations ship and stabilise in the SDK. Core holds the vocabulary so hosts can name them; it does not implement them.
@@ -40,14 +40,12 @@ a regression; each is queued under normal patch/minor cadence.
 
 | Gap | Today | Queued |
 |:---|:---|:---|
-| **`ui5:app` identity options** | `--vendor`, `--php-ns-prefix`, `--js-ns-prefix` and `--package-prefix` fall back to our own vendor names | The four become required on `--create`; a run without them aborts and names what to pass |
-| **Artifact URL slugs** | Tiles, charts, actions, reports and resources are slugged with `snake_case`; dashboards and groups with `kebab-case` | One convention — `kebab` — for newly scaffolded artifacts. Existing artifacts keep their namespace; nothing on the wire moves |
-| **Where `#[Setting]` is declared** | A setting on an artifact is catalogued but not injected; a setting on a handler or provider is injected but never stored, so no administrator can change it | One declaration site — the artifact — with the resolved values injected into the handler or provider on every invocation path |
-| **Scalar route parameters** | Only `Model` and `Date` reach a handler argument; the other `ParameterType` cases are refused | Every declared type arrives, as the documentation describes |
-| **Resource path parameters** | The manifest advertises a URL segment per `#[Parameter]` that the resource route does not accept | The route accepts them |
 | **Card providers and slots** | A card's provider is invoked without the slot values the dashboard already resolved for it | The values arrive, as they do for a report |
-| **OpenUI5 version** | `ui5.version` sets the CDN bootstrap only | The documented per-app override and use during scaffolding |
-| **Smaller ones** | Read-only settings are not enforced on write; a duplicate infrastructure key can slip through after an empty contribution; two generators print an incomplete or wrong registration hint | All queued as patches |
+
+Closed in **3.0.0**: the `ui5:app` identity options, one convention for artifact URL slugs, one
+declaration site for `#[Setting]`, scalar route parameters, resource path parameters, the per-app
+OpenUI5 version, read-only settings, duplicate infrastructure keys and the generators' registration
+hints. See the [changelog](./CHANGELOG.md).
 
 ## License horizon
 
