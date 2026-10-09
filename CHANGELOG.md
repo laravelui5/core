@@ -4,6 +4,33 @@ All notable changes to LaravelUi5 Core are documented here, newest first. The
 format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/); from
 1.0.0 onward Core adheres to [Semantic Versioning](https://semver.org/).
 
+## [3.0.1] - 2026-10-09 — Core is checked by static analysis, and what that found
+
+A patch. Nothing to upgrade, no signature changed. From this release on, every Core build is checked
+by PHPStan at level 5 — over the source and the test suite, with nothing parked in a baseline. The
+check found one real fault and a handful of type declarations that said something false.
+
+### A model parameter without a model class fails the way it should
+
+`#[Parameter(type: ParameterType::Model)]` requires `model:` — the attribute says so. Leaving it out
+was never caught where it should have been: the request ended in a PHP `Error` and a bare 500. It now
+throws `InvalidParameterException`, which names the parameter and lands in your log as a
+configuration fault.
+
+### Type declarations you can rely on
+
+If your IDE or your own static analysis reads Core's types, these now tell the truth:
+
+- `Ui5AppInterface::getResourceNamespaces()` returns `list<string>` — a plain list of JS namespaces,
+  as the generated app has always written it. The declaration claimed an array keyed by namespace.
+  Nothing changes at runtime; an analyser that flagged your correct list will stop.
+- A few internal declarations no longer hide the checks behind them from analysis.
+
+> **Running PHPStan on your own app?** Reading a setting — `$this->maxItems` in a handler or
+> provider — is reported as an undefined property, because settings arrive through a magic getter
+> PHPStan cannot see. Core will ship a PHPStan extension that makes those reads known and
+> type-checked. Until then, an ignore for `property.notFound` on those classes is the honest answer.
+
 ## [3.0.0] - 2026-10-08 — The known gaps close, and a slot is one call away
 
 A major. It closes nearly every gap the roadmap listed between what the documentation promised and
