@@ -1,6 +1,6 @@
 # Roadmap
 
-Core reached **1.0.0 — the freeze — on 2026-06-03**, **2.0.0 on 2026-07-12** and **3.0.0 on 2026-10-08**. The artifact contract surface that the entire `0.9.x` line existed to stabilise is signed and under full semantic versioning. 2.0.0 matured *how an artifact names its code*; 3.0.0 closed the gaps between what the documentation promised and what Core did, and removed what was wrong rather than incomplete — the currency slot first among them (see the [changelog](./CHANGELOG.md)). So this roadmap is not a march toward a release; it's a map of *what is frozen*, *what is still provisional and how it graduates*, and *the license horizon*. Order is firm, timing follows the work.
+Core reached **1.0.0 — the freeze — on 2026-06-03**, **2.0.0 on 2026-07-12**, **3.0.0 on 2026-10-08** and **4.0.0 on 2026-10-22**. The artifact contract surface that the entire `0.9.x` line existed to stabilise is signed and under full semantic versioning. 2.0.0 matured *how an artifact names its code*; 3.0.0 closed the gaps between what the documentation promised and what Core did, and removed what was wrong rather than incomplete — the currency slot first among them; 4.0.0 gave a module one place to say what it contains (see the [changelog](./CHANGELOG.md)). So this roadmap is not a march toward a release; it's a map of *what is frozen*, *what is still provisional and how it graduates*, and *the license horizon*. Order is firm, timing follows the work.
 
 ## How Core stabilizes
 
@@ -20,16 +20,15 @@ Every public surface carries an honest stability label, assigned during the inte
 | Infrastructure Contributions | Frozen | ✅ Signed |
 | Command API / scaffolding (SCA) | Frozen | ✅ Signed |
 | Resource API | Provisional | 🚧 Contract pinned; awaiting a production authoring consumer to freeze |
-| `AnalyticTile`, `Dialog`, `ValueHelp`, `AnalyticsSet`, `AnalyticCard` | Provisional | ⏳ Enum vocabulary only in Core; the data-binding implementations live in the SDK |
 
 The authoring keystone is frozen with the surface: **"attributes declare, classes do."** An interface *method* carries an artifact's intrinsic contract; a PHP *attribute* (`#[Slot]` / `#[Setting]` / `#[Parameter]`) carries an extrinsic declaration into another subsystem's catalog. **2.0.0 sharpened this:** an artifact's declaration method now *names* its class and the platform builds it, so a declaration only declares.
 
 ## What's next
 
-**3.x is the stable home.** 3.0.0 settled where values come from — a slot from the query string, a parameter from the path, a setting from its artifact — and gave the context a `slot()` to read them anywhere. Forward work from here is graduation and consolidation, not contract churn:
+**4.x is the stable home.** 3.0.0 settled where values come from — a slot from the query string, a parameter from the path, a setting from its artifact; 4.0.0 settled how a module declares its artifacts and how an artifact names itself. Forward work from here is graduation and consolidation, not contract churn:
 
 - **Resource API → Frozen.** Freezes when a production authoring consumer exercises it end-to-end. Until then it stays Provisional with the contract pinned.
-- **SDK-bound artifact types.** `AnalyticTile`, `Dialog`, `ValueHelp`, `AnalyticsSet`, and `AnalyticCard` remain enum cases in Core; their real implementations ship and stabilise in the SDK. Core holds the vocabulary so hosts can name them; it does not implement them.
+- **Artifact types belong to the stack.** Since 4.0.0 Core declares only its own types; dialogs, value helps and the analytic types are the SDK's, with their contracts. A new type arrives with the layer that runs it.
 - **Patch / minor cadence.** Bug fixes and additive, backward-compatible surface land as patches and minors under SemVer. Anything that would break a Frozen contract waits for a major and a deprecation window — by design, that bar is now high.
 
 ## Known gaps

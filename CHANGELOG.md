@@ -4,18 +4,58 @@ All notable changes to LaravelUi5 Core are documented here, newest first. The
 format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/); from
 1.0.0 onward Core adheres to [Semantic Versioning](https://semver.org/).
 
+## [4.0.0] - 2026-10-22 — A module says what it contains, in one place
+
+A major. It changes how a module lists its artifacts and how an artifact names itself. Both mechanical edits. And it hands the artifact types that belong to the SDK over to the SDK. Most applications upgrade in a few minutes per module; *Upgrading from 3.x* lists every step.
+
+> **Using the LaravelUi5 SDK?** Stay on Core 3.x until SDK 2.0, which is built on Core 4.
+
+### Upgrading from 3.x
+
+1. **Replace the module's getters with two constants.** The root — what `getApp()` or `getLibrary()` returned — becomes `ARTIFACT_ROOT`; everything else is listed in `ARTIFACTS`, by class name:
+
+   ```php
+   class SalesModule extends AbstractUi5Module
+   {
+       public const string ARTIFACT_ROOT = SalesApp::class;
+
+       public const array ARTIFACTS = [
+           Cards\PipelineCard::class,
+           Actions\ApproveAction::class,
+       ];
+   }
+   ```
+
+   `getCards()`, `getTiles()`, `getCharts()`, `getActions()`, `getResources()`, `getDashboards()`, `getReports()`, `getDialogs()`, `getValueHelps()`, `getApp()`, `getLibrary()`, `hasApp()` and `hasLibrary()` are gone. To read a module's artifacts of one kind, ask `$module->get(Ui5ActionInterface::class)`.
+2. **Name the type of every identity constant.** `public const NAMESPACE = '…';` becomes `public const string NAMESPACE = '…';`, the same for `VERSION`, `TITLE` and `DESCRIPTION`. An untyped one no longer loads, and PHP's message names it.
+3. **`ArtifactType` is now `CoreArtifactType`.** `ArtifactType::Application` becomes `CoreArtifactType::Application`. A method that declares the type in its signature returns `ArtifactTypeInterface`. The numeric values changed; if you stored them, map them anew.
+4. **`Ui5DialogInterface` and `Ui5ValueHelpInterface` moved to the SDK**, with the dialog and value-help types. Core no longer names them.
+5. **The registry returns `ArtifactInterface`.** If you pass `getArtifact()`'s result on to an API that wants a UI5 artifact, check `instanceof Ui5ArtifactInterface` first.
+
+### A module that is half migrated fails at boot
+
+A module without its root — still written with the old getters, say — no longer loads empty with its app missing and its routes answering 404. The registry asks every module for its root as it loads, and names the module that has none. A second root in `ARTIFACTS` is refused the same way.
+
+### An artifact that forgets its name says so
+
+An artifact that leaves an identity constant empty now throws a message that names the class and the constant, and how to declare it — instead of PHP's bare *undefined constant*. Static analysis sees the constants too.
+
+### Faster lookups
+
+Asking a module for its namespace or its root builds the root alone; the rest of its artifacts are built once, when they are first needed.
+
+### Scaffolding
+
+- `ui5:app` and `ui5:lib` write the module in the new form, and every generator ends with the line to add to `ARTIFACTS`.
+- The generated `{App}AppBase` is marked `@internal`: it is rewritten on every refresh and is never a class to extend.
+
 ## [3.0.1] - 2026-10-09 — Core is checked by static analysis, and what that found
 
-A patch. Nothing to upgrade, no signature changed. From this release on, every Core build is checked
-by PHPStan at level 5 — over the source and the test suite, with nothing parked in a baseline. The
-check found one real fault and a handful of type declarations that said something false.
+A patch. Nothing to upgrade, no signature changed. From this release on, every Core build is checked by PHPStan at level 5 — over the source and the test suite, with nothing parked in a baseline. The check found one real fault and a handful of type declarations that said something false.
 
 ### A model parameter without a model class fails the way it should
 
-`#[Parameter(type: ParameterType::Model)]` requires `model:` — the attribute says so. Leaving it out
-was never caught where it should have been: the request ended in a PHP `Error` and a bare 500. It now
-throws `InvalidParameterException`, which names the parameter and lands in your log as a
-configuration fault.
+`#[Parameter(type: ParameterType::Model)]` requires `model:` — the attribute says so. Leaving it out was never caught where it should have been: the request ended in a PHP `Error` and a bare 500. It now throws `InvalidParameterException`, which names the parameter and lands in your log as a configuration fault.
 
 ### Type declarations you can rely on
 
