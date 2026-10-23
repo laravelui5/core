@@ -4,6 +4,23 @@ All notable changes to LaravelUi5 Core are documented here, newest first. The
 format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/); from
 1.0.0 onward Core adheres to [Semantic Versioning](https://semver.org/).
 
+## [4.3.0] - 2026-10-23 — The shell and the SDK speak your language
+
+A minor. Nothing to upgrade.
+
+### Texts for the shell and the server
+
+Core's UI5 library now carries the texts the LaravelUi5 shell shows and the messages the LaravelUi5 SDK sends: the search palette, the help viewer, why an action was refused. They come in English and German and follow the user's language. If you build on Core alone, nothing changes on screen.
+
+### Faster startup
+
+An app read its whole source — `ui5.yaml`, the manifest, `index.html`, every translation file — each time it was asked. It now reads it once. Large registries start noticeably faster.
+
+### For client code
+
+- `LaravelUi5.hasShell()` tells whether the LaravelUi5 shell is attached.
+- A business message that arrives with a finished `text` from the server shows that text as is.
+
 ## [4.2.0] - 2026-10-23 — Every UI5 route speaks the user's language
 
 A minor. Nothing to upgrade if your host keeps Core's default middleware. If you override it, add one line.
