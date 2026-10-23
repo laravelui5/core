@@ -4,6 +4,40 @@ All notable changes to LaravelUi5 Core are documented here, newest first. The
 format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/); from
 1.0.0 onward Core adheres to [Semantic Versioning](https://semver.org/).
 
+## [4.1.0] - 2026-10-23 — The server reads your translations the way UI5 does
+
+A minor. Nothing to upgrade, no signature broke. Core reads an app's `i18n` bundles on the server, for the app's title and description and for whatever you read through `getI18n()`. Until now that reader was much simpler than UI5's own. From this release on both sides read the same file the same way.
+
+### Umlauts and other non-ASCII text come through
+
+The UI5 build writes every non-ASCII character as an escape: `Geschäftspartner` becomes `Gesch\u00e4ftspartner`. The old reader passed the escape through. Any German, French or Czech text read on the server showed it. The reader is now a port of UI5's own `Properties.js` and decodes it, emoji included. Your source bundles stay as they are: type `ä`, `é` and `ß` in UTF-8, and both the plain and the escaped form read correctly.
+
+The rest of the `.properties` format is read the same way:
+
+- `key: value` and `key value` alongside `key=value`
+- `!` comments alongside `#`
+- a trailing `\` that continues the line
+- escaped `\=` and `\:` inside a key
+- whitespace at the end of a value is kept
+
+### A missing translation falls back like the browser does
+
+`get('key', 'de_AT')` now tries `de_AT`, then `de`, then `en`, then the base bundle. That is the order UI5 follows on the client, so server and screen never show two languages for one key. `de-AT` and `de_AT` are the same locale. Without a locale the base bundle answers, as before.
+
+### Placeholders, formatted like the client
+
+`Ui5I18n::formatMessage($pattern, $args)` formats a text exactly as UI5's `formatMessage` does, and `get()` takes the arguments as third parameter:
+
+```php
+$i18n->get('order.created', 'de', [$order->number]);
+```
+
+`{0}` takes the first argument, and `''` writes one apostrophe. A single `'` starts a quoted section, just as on the client: `partner's {0}` shows its placeholder literally. Write `partner''s {0}`.
+
+### Broken bundles fail loudly
+
+A bundle that is not UTF-8, or that has an incomplete `\u` escape, now throws an exception that names the file. Before, it was read with mangled text. `all()` without a locale returns the base bundle, where it returned an empty array before.
+
 ## [4.0.0] - 2026-10-22 — A module says what it contains, in one place
 
 A major. It changes how a module lists its artifacts and how an artifact names itself. Both mechanical edits. And it hands the artifact types that belong to the SDK over to the SDK. Most applications upgrade in a few minutes per module; *Upgrading from 3.x* lists every step.
