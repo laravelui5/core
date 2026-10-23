@@ -4,6 +4,31 @@ All notable changes to LaravelUi5 Core are documented here, newest first. The
 format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/); from
 1.0.0 onward Core adheres to [Semantic Versioning](https://semver.org/).
 
+## [4.2.0] - 2026-10-23 — Every UI5 route speaks the user's language
+
+A minor. Nothing to upgrade if your host keeps Core's default middleware. If you override it, add one line.
+
+### The request's language reaches the UI5 routes
+
+Core already read the language of an OData request. Now every `ui5/*` route does too: app, manifest, card, report and action. `ResolveRequestLanguage` sits in the default `middleware` stack, before the context is built. It takes `sap-language`, else the browser's `Accept-Language`, and keeps the language part: `de-AT` becomes `de`.
+
+What you will notice: on these routes `app()->getLocale()` now follows the user. Laravel's own texts, such as the rule sentences of a 422 from `lang/`, arrive in the user's language wherever you ship that language.
+
+> **Overriding `middleware` in `config/ui5.php`?** Add the line after `'web'` and before `ResolveUi5Context`:
+>
+> ```php
+> 'middleware' => [
+>     'web',
+>     \LaravelUi5\Core\Http\Middleware\ResolveRequestLanguage::class,
+>     \LaravelUi5\Core\Http\Middleware\ResolveUi5Context::class,
+>     // …
+> ],
+> ```
+
+### The fallback order, as an API
+
+`Ui5I18n::fallbackChain($locale)` returns the order in which `get()` looks for a text: `de-AT` gives `de_at`, `de`, `en`, then the base bundle. Use it when you keep texts per language yourself, so they fall back in the same order as the bundles.
+
 ## [4.1.0] - 2026-10-23 — The server reads your translations the way UI5 does
 
 A minor. Nothing to upgrade, no signature broke. Core reads an app's `i18n` bundles on the server, for the app's title and description and for whatever you read through `getI18n()`. Until now that reader was much simpler than UI5's own. From this release on both sides read the same file the same way.
