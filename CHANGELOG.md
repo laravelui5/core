@@ -4,6 +4,16 @@ All notable changes to LaravelUi5 Core are documented here, newest first. The
 format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/); from
 1.0.0 onward Core adheres to [Semantic Versioning](https://semver.org/).
 
+## [4.4.0] - 2026-10-23 — The client knows which languages a company works in
+
+A minor. Nothing to upgrade.
+
+`LaravelUi5.getLanguages()` tells an app the company's base language and the further languages its master data is
+kept in, so a form can offer one input per language beside a translatable field. With the LaravelUi5 SDK the
+answer comes from the company's configuration; on Core alone it is the user's language and nothing more.
+
+The API reference reads cleaner: docblocks no longer cite internal planning documents you could not open.
+
 ## [4.3.0] - 2026-10-23 — The shell and the SDK speak your language
 
 A minor. Nothing to upgrade.
