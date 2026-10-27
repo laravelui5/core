@@ -4,6 +4,42 @@ All notable changes to LaravelUi5 Core are documented here, newest first. The
 format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/); from
 1.0.0 onward Core adheres to [Semantic Versioning](https://semver.org/).
 
+## [6.0.0] - 2026-10-27 — Route parameters live on the declaration
+
+A major, with one contract change: `#[Parameter]` moves from the class that runs to the class that declares. An
+action's route parameters sit on the action, a resource's on the resource. The upgrade is mechanical, and the URL of
+every action and resource stays as it is.
+
+> **Using the LaravelUi5 SDK?** SDK 2.0 is built on Core 6. Move the two together.
+
+### Upgrading from 5.x
+
+1. **Move every `#[Parameter]` from a handler to its action**, with the `use` lines it needs. Order and names stay:
+
+   ```php
+   #[Parameter(name: 'offer', uriKey: 'offer', type: ParameterType::Model, model: Offer::class)]
+   class ApproveAction extends AbstractUi5Action
+   {
+       public const HttpMethod METHOD = HttpMethod::POST;
+       public const string HANDLER    = ApproveHandler::class;
+   }
+   ```
+
+   The handler keeps receiving the value as the `handle()` argument of the same name.
+2. **Move every `#[Parameter]` from a resource's provider to the resource**, the same way.
+3. **Boot the app once.** A handler or provider that still carries `#[Parameter]` stops the registry at boot, with a
+   message that names the class and the declaration it belongs on. Nothing fails later, in a request.
+
+Cards and reports are untouched: their providers take slots, never route parameters.
+
+### Why
+
+An action already declared everything about itself in one place — its namespace and version, its verb, its handler,
+its request. Only the route was left on the class that runs. Now the declaration carries all of it, and the handler
+is plain logic: it can be called from somewhere other than its route. The manifest builds the URL from the
+declaration, and the dispatcher binds the same attributes, so the URL the client calls and the values the handler
+receives cannot disagree.
+
 ## [5.0.0] - 2026-10-26 — The doctor, and Core's library speaks only for Core
 
 A major. It brings `ui5:doctor`, a diagnosis of your checkout, and it hands two shell controls and their texts over to the LaravelUi5 SDK, where they always worked. On Core alone the upgrade is two lines in `.gitignore`; *Upgrading from 4.x* lists every step.
