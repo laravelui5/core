@@ -1,6 +1,6 @@
 # Roadmap
 
-Core reached **1.0.0 — the freeze — on 2026-06-03**, **2.0.0 on 2026-07-12**, **3.0.0 on 2026-10-08** and **4.0.0 on 2026-10-22**. The artifact contract surface that the entire `0.9.x` line existed to stabilise is signed and under full semantic versioning. 2.0.0 matured *how an artifact names its code*; 3.0.0 closed the gaps between what the documentation promised and what Core did, and removed what was wrong rather than incomplete — the currency slot first among them; 4.0.0 gave a module one place to say what it contains (see the [changelog](./CHANGELOG.md)). So this roadmap is not a march toward a release; it's a map of *what is frozen*, *what is still provisional and how it graduates*, and *the license horizon*. Order is firm, timing follows the work.
+Core reached **1.0.0 — the freeze — on 2026-06-03**, **2.0.0 on 2026-07-12**, **3.0.0 on 2026-10-08**, **4.0.0 on 2026-10-22** and **5.0.0 on 2026-10-26**. The artifact contract surface that the entire `0.9.x` line existed to stabilise is signed and under full semantic versioning. 2.0.0 matured *how an artifact names its code*; 3.0.0 closed the gaps between what the documentation promised and what Core did, and removed what was wrong rather than incomplete — the currency slot first among them; 4.0.0 gave a module one place to say what it contains; 5.0.0 brought `ui5:doctor` and left the shell's controls to the SDK (see the [changelog](./CHANGELOG.md)). So this roadmap is not a march toward a release; it's a map of *what is frozen*, *what is still provisional and how it graduates*, and *the license horizon*. Order is firm, timing follows the work.
 
 ## How Core stabilizes
 
@@ -25,7 +25,7 @@ The authoring keystone is frozen with the surface: **"attributes declare, classe
 
 ## What's next
 
-**4.x is the stable home.** 3.0.0 settled where values come from — a slot from the query string, a parameter from the path, a setting from its artifact; 4.0.0 settled how a module declares its artifacts and how an artifact names itself. Forward work from here is graduation and consolidation, not contract churn:
+**5.x is the stable home.** 3.0.0 settled where values come from — a slot from the query string, a parameter from the path, a setting from its artifact; 4.0.0 settled how a module declares its artifacts and how an artifact names itself. Forward work from here is graduation and consolidation, not contract churn:
 
 - **Resource API → Frozen.** Freezes when a production authoring consumer exercises it end-to-end. Until then it stays Provisional with the contract pinned.
 - **Artifact types belong to the stack.** Since 4.0.0 Core declares only its own types; dialogs, value helps and the analytic types are the SDK's, with their contracts. A new type arrives with the layer that runs it.
@@ -37,9 +37,10 @@ The documentation describes the **target** state of each surface, so a page may 
 release has not caught up with yet. Those places are marked **planned** and are listed here. None is
 a regression; each is queued under normal patch/minor cadence.
 
-| Gap | Today | Queued |
-|:---|:---|:---|
-| **Card providers and slots** | A card's provider is invoked without the slot values the dashboard already resolved for it | The values arrive, as they do for a report |
+No gap is open today.
+
+Closed in **5.0.0**: card providers receive the slot values the dashboard resolved for them, as a report's provider
+does.
 
 Closed in **3.0.0**: the `ui5:app` identity options, one convention for artifact URL slugs, one
 declaration site for `#[Setting]`, scalar route parameters, resource path parameters, the per-app

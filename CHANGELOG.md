@@ -4,6 +4,53 @@ All notable changes to LaravelUi5 Core are documented here, newest first. The
 format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/); from
 1.0.0 onward Core adheres to [Semantic Versioning](https://semver.org/).
 
+## [5.0.0] - 2026-10-26 — The doctor, and Core's library speaks only for Core
+
+A major. It brings `ui5:doctor`, a diagnosis of your checkout, and it hands two shell controls and their texts over to the LaravelUi5 SDK, where they always worked. On Core alone the upgrade is two lines in `.gitignore`; *Upgrading from 4.x* lists every step.
+
+> **Using the LaravelUi5 SDK?** Move to SDK 2.0 with this major. SDK 1.x apps use the two controls Core no longer carries.
+
+### Upgrading from 4.x
+
+1. **Keep `.ui5-sources.php` out of git.** The file is the workspace state of one checkout, not code. Add it to `.gitignore` and remove it from the index where it is checked in: `git rm --cached .ui5-sources.php`. A new host gets the line from `ui5:app` or `ui5:lib`, which now write it for you.
+2. **Implemented `Ui5SourceOverrideStoreInterface` yourself?** Add `ignored()`, which lists the entries whose path is not a directory, and let `put()` return `bool`: `true` when it created the file and added it to `.gitignore`.
+3. **Using `com.laravelui5.core.Context` or `com.laravelui5.core.controls.Weave` in a view?** Both are gone from Core's library, with the texts of the shell and the SDK. They live in the SDK's library as `com.laravelui5.sdk.Context` and `com.laravelui5.sdk.Weave`. Without the SDK's shell neither did anything. `LaravelUi5.getWeave()`, `showHelp()` and `hasShell()` stay in the facade.
+4. **Catching dashboard faults as an `HttpException`?** A card manifest URL that cannot be formed, a dashboard namespace of the wrong shape and a group child its module never registered are declaration faults. They now extend Core's wiring exception, a `LogicException`, and leave a line in the log. They still answer 500.
+5. **Run `php artisan ui5:doctor` once.**
+
+### `ui5:doctor`
+
+`php artisan ui5:doctor` reads the UI5 projects your modules resolve, their manifests, yamls and translation files, and `.ui5-sources.php`. It writes nothing and touches no database. The report is grouped by severity, every error and warning ends in its fix, and it exits `1` on an error only, so it fits a CI step. Core checks five things:
+
+- every `sap.*` library is declared in `manifest.json` **and** in every ui5 yaml (the cause of *failed to load 'library.js'*);
+- workspace links point to UI5 projects, `.ui5-sources.php` stays out of git, and which strategy resolved each project;
+- the component calls `LaravelUi5.init(this)`;
+- every key of a bundle is present in each locale;
+- no broken characters, no placeholder that differs between locales, no key twice.
+
+When the registry does not load, the doctor says so and goes on, so it can still name the broken link behind it. A package or your host adds a rule of its own by tagging a class `DoctorRuleInterface`. The generators `ui5:app`, `ui5:lib` and `ui5:assemble` end their next steps with the doctor.
+
+### A card sees the dashboard's period
+
+A card's provider now receives its slot values as `provide(array $slots, …)`, the way a report's does: the period, the locale, whatever the dashboard resolved for it. Until now only `$context->slot()` reached them.
+
+### An action names its verb, handler and request as constants
+
+```php
+class ApproveAction extends AbstractUi5Action
+{
+    public const HttpMethod METHOD = HttpMethod::POST;
+    public const string HANDLER    = ApproveHandler::class;
+    public const string REQUEST    = ApproveRequest::class;
+}
+```
+
+The same form an artifact's identity already has, and the one `ui5:action` writes. A missing `METHOD` or `HANDLER` throws a message that names the constant. An action that still overrides the getters keeps working.
+
+### For translation files
+
+`Ui5I18n::readEntries()` returns every entry of a `.properties` file in order, with its line, so a duplicate key stays visible; `Ui5I18n::placeholders()` returns the `{N}` indices a pattern uses. What the server reads from a bundle is unchanged.
+
 ## [4.4.0] - 2026-10-23 — The client knows which languages a company works in
 
 A minor. Nothing to upgrade.
