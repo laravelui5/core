@@ -4,6 +4,81 @@ All notable changes to LaravelUi5 Core are documented here, newest first. The
 format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/); from
 1.0.0 onward Core adheres to [Semantic Versioning](https://semver.org/).
 
+## [7.0.0] - 2026-11-03 — The version belongs to the module
+
+A major that makes one idea true everywhere: **an artifact has a name, a module has a version.** Every artifact of a
+module runs under the module's version, and that version is what tells a browser to fetch your files again. Addresses
+keep their form, so URLs, bookmarks and manifests stay as they are. The upgrade is mechanical, and Core refuses the old
+shape loudly at boot rather than letting it slip through.
+
+> **Using the LaravelUi5 SDK?** SDK 2.0 is built on Core 6 — stay there until SDK 3.0, which builds on Core 7. Move the
+> two together.
+>
+> **Using `laravelui5/chiron`?** Its next release teaches Core 7. Until then the installed one keeps Composer on Core 6.
+
+### Upgrading from 6.x
+
+1. **Move the version to the module.** Put it on each module class and take it off every artifact — usually the app or
+   library that carried it, plus any other artifact that declared one:
+
+   ```php
+   class OffersModule extends AbstractUi5Module
+   {
+       public const string ARTIFACT_ROOT = OffersApp::class;
+       public const string VERSION       = '1.0.0';   // the value your app had
+
+       public const array ARTIFACTS = [
+           Actions\ApproveAction::class,
+       ];
+   }
+   ```
+
+   A module without a version stops the registry at boot; an artifact that still declares `VERSION` does too, with a
+   message that names the module whose version applies. A package that ships several modules names its version once
+   and lets the others refer to it: `public const string VERSION = MainModule::VERSION;`.
+2. **Read Core's own version from `CoreModule::VERSION`** (it was `CoreLibrary::VERSION`).
+3. **Replace `Ui5ArtifactInterface` with `ArtifactInterface`.** Every artifact interface extends `ArtifactInterface`
+   directly now. Where you checked `instanceof Ui5ArtifactInterface` to mean *is this an app?*, ask `Ui5AppInterface`.
+4. **Wrote your own emitter, registry or module?** A caller of `EmitterInterface::emit()` handles `null` (nothing to
+   show); a registry of your own adds `buildFingerprint()`; a module that implements `Ui5ModuleInterface` without
+   extending `AbstractUi5Module` adds `getVersion()`.
+5. **Move to `laravelui5/odata` 5.0** — a service that extends `ODataService` needs no change. Run `php artisan
+   odata:cache` on your development machine: each UI5 app now keeps its `$metadata` document in its own package, at
+   `resources/ui5/Metadata.xml`. Delete the app's old document under `resources/edmx/` and commit both.
+6. **Run `php artisan ui5:doctor` once.**
+
+### Fresh files after every deploy
+
+Browsers kept your files longer than they should. A built file under its module's version is now served `immutable`
+— cached for good, never asked for again — and anything else is revalidated: a source served live from your
+workspace, or a file asked for under an old version, goes out `no-cache` with an `ETag` and is answered `304` when
+unchanged. Before, files carried no expiry, so a browser could keep yesterday's copy for hours after a deploy; and a
+card's translations were cached for a year on a version nobody bumped, so a corrected text never arrived.
+
+The rule this asks of you is one line: **bump the module's version with every release that changes a served file.**
+Core helps you keep it. `ui5:doctor` gained a rule, **core.W7**, that reports a module of your own whose served files
+changed since its version was last bumped (it reads Git; installed packages are their authors' to bump).
+
+A page left open across a deploy keeps running the old code until it reloads. Every `ui5` response now carries the
+installation's build fingerprint in `X-LaravelUi5-Build` — a short hash over all modules' versions — so a client can
+tell that a newer build is live.
+
+### Also in this release
+
+- **A group with nothing left in it disappears.** When every tile, card or chart of a dashboard group is hidden or
+  fails, the group drops out instead of leaving an empty panel behind. A failure is still reported.
+- **The right controller, or a 404.** An address answers only for an artifact of its own type: a card's namespace under
+  `report/` used to reach the report controller; now it is a 404.
+- `ui5:app` and `ui5:lib` write the version onto the module they generate, taken once from your UI5 project.
+
+### Why
+
+A version on every artifact promised something PHP cannot keep: there is only ever one live version of a class. What
+an artifact needs is a name — for its address, for the audit trail, for other modules that call it. What a version is
+good for is telling a browser that something changed, and that is a property of what you release together: the
+module. Putting it there removed a constant from every artifact, made the cache rule hold for every file, and gave the
+version one place where you will remember to bump it.
+
 ## [6.0.0] - 2026-10-27 — Route parameters live on the declaration
 
 A major, with one contract change: `#[Parameter]` moves from the class that runs to the class that declares. An
