@@ -25,7 +25,7 @@ The authoring keystone is frozen with the surface: **"attributes declare, classe
 
 ## What's next
 
-**7.x is the stable home.** 3.0.0 settled where values come from — a slot from the query string, a parameter from the path, a setting from its artifact; 4.0.0 settled how a module declares its artifacts and how an artifact names itself; 6.0.0 finished it, the route included; 7.0.0 gave the version to the module, where it decides how browsers cache your files. Forward work from here is graduation and consolidation, not contract churn:
+**8.x is the stable home.** 3.0.0 settled where values come from — a slot from the query string, a parameter from the path, a setting from its artifact; 4.0.0 settled how a module declares its artifacts and how an artifact names itself; 6.0.0 finished it, the route included; 7.0.0 gave the version to the module, where it decides how browsers cache your files; 8.0.0 made the namespace the key that translates what the client shows. Forward work from here is graduation and consolidation, not contract churn:
 
 - **Resource API → Frozen.** Freezes when a production authoring consumer exercises it end-to-end. Until then it stays Provisional with the contract pinned.
 - **Artifact types belong to the stack.** Since 4.0.0 Core declares only its own types; dialogs, value helps and the analytic types are the SDK's, with their contracts. A new type arrives with the layer that runs it.

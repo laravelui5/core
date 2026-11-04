@@ -4,6 +4,45 @@ All notable changes to LaravelUi5 Core are documented here, newest first. The
 format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/); from
 1.0.0 onward Core adheres to [Semantic Versioning](https://semver.org/).
 
+## [8.0.0] - 2026-11-04 — What the client shows is translated by its namespace
+
+A short major with one idea: **a title in your code is the text you mean, and its translation lives in the bundle under the artifact's name.** A dashboard group's panel header and a chart's header are now bound to the artifact's namespace in your app's i18n bundle, so `TITLE = 'Open items'` reads as what it is, and German users see *Offene Posten*. The upgrade is a list of bundle keys, and `ui5:doctor` writes that list for you.
+
+> **Using the LaravelUi5 SDK?** SDK 3.0 builds on Core 8 (SDK 2.0 stays on Core 6). Move the two together.
+>
+> **Using `laravelui5/chiron`?** Its next release teaches Core 8. Until then the installed one keeps Composer on Core 7.
+
+### Upgrading from 7.x
+
+1. **Run `php artisan ui5:doctor`.** The new rule **core.W8** lists every key that is missing — one line per key, naming the bundle file. It reads the bundles of the UI5 projects you work on (a workspace or self-contained app); for an installed package its author keeps the keys:
+
+   ```
+   core.W8 …/webapp/i18n/i18n.properties: com.acme.sales.groups.performance is missing; com.acme.sales.groups.performance shows it as its title — add com.acme.sales.groups.performance to i18n.properties and its locale files
+   ```
+
+2. **Add the keys to your app's bundles**, in every language you ship. A group needs its title, a chart its title and its subtitle:
+
+   ```properties
+   # webapp/i18n/i18n_de.properties
+   com.acme.sales.groups.performance=Leistung
+   com.acme.sales.charts.revenue_trend=Umsatzentwicklung
+   com.acme.sales.charts.revenue_trend.description=Umsatz der letzten zwölf Monate
+   ```
+
+   Until a key is there, the screen shows the key itself — visible, never silently wrong.
+3. **Keep your literal titles.** `TITLE` and `DESCRIPTION` stay plain text. If you had written them as a binding, `TITLE = '{i18n>performance.title}'`, nothing changes: an explicit key is used as it is. You may turn it back into a literal and move the text to the namespace key whenever it suits you.
+4. **Overrode `getPanel()` or set a chart header in its provider?** Then you choose the text yourself, as before; nothing
+   to do.
+
+### Also in this release
+
+- `I18nBinding` gives the same binding to your own controls: `I18nBinding::title($artifact)` and `I18nBinding::description($artifact)`.
+- The dashboard manifest keeps the title and description as you wrote them; no client renders them.
+
+### Why
+
+A title written as a binding told the reader of the code nothing: `{i18n>performance.title}` hides the word behind a key. A title written as a literal told the user nothing in their own language. The artifact already has a name that is unique across your installation — its namespace — so that name is the key. Core binds it without looking into the bundle: that keeps every request free of file reads, and a missing translation shows up on screen and in `ui5:doctor` instead of passing unnoticed.
+
 ## [7.0.0] - 2026-11-03 — The version belongs to the module
 
 A major that makes one idea true everywhere: **an artifact has a name, a module has a version.** Every artifact of a
